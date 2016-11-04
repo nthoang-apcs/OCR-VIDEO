@@ -1,0 +1,13 @@
+﻿Build started 04-Nov-16 10:13:54 PM.
+     1>Project "D:\Code-2\OCR-VIDEO-GIT\OCR-Five\OCR-Five\OCR-Five.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\OpenCVFolders\opencv-plus-extra\install\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
+         Source.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Code-2\OCR-VIDEO-GIT\OCR-Five\Debug\OCR-Five.exe" /INCREMENTAL /NOLOGO /LIBPATH:"D:\OpenCVFolders\opencv-plus-extra\install\x86\vc12\lib" opencv_aruco310d.lib opencv_bgsegm310d.lib opencv_bioinspired310d.lib opencv_calib3d310d.lib opencv_ccalib310d.lib opencv_core310d.lib opencv_datasets310d.lib opencv_dnn310d.lib opencv_dpm310d.lib opencv_face310d.lib opencv_features2d310d.lib opencv_flann310d.lib opencv_fuzzy310d.lib opencv_highgui310d.lib opencv_imgcodecs310d.lib opencv_imgproc310d.lib opencv_line_descriptor310d.lib opencv_ml310d.lib opencv_objdetect310d.lib opencv_optflow310d.lib opencv_photo310d.lib opencv_plot310d.lib opencv_reg310d.lib opencv_rgbd310d.lib opencv_saliency310d.lib opencv_shape310d.lib opencv_stereo310d.lib opencv_stitching310d.lib opencv_structured_light310d.lib opencv_superres310d.lib opencv_surface_matching310d.lib opencv_text310d.lib opencv_tracking310d.lib opencv_video310d.lib opencv_videoio310d.lib opencv_videostab310d.lib opencv_xfeatures2d310d.lib opencv_ximgproc310d.lib opencv_xobjdetect310d.lib opencv_xphoto310d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Code-2\OCR-VIDEO-GIT\OCR-Five\Debug\OCR-Five.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Code-2\OCR-VIDEO-GIT\OCR-Five\Debug\OCR-Five.lib" /MACHINE:X86 Debug\Source.obj
+         OCR-Five.vcxproj -> D:\Code-2\OCR-VIDEO-GIT\OCR-Five\Debug\OCR-Five.exe
+     1>Done Building Project "D:\Code-2\OCR-VIDEO-GIT\OCR-Five\OCR-Five\OCR-Five.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.08

@@ -25,3 +25,8 @@
 # Executables
 *.out
 *.app
+*.sdf
+*.pdb
+*.ilk
+*.tlog
+*.idb
