@@ -89,9 +89,12 @@ int main()
 
 	CannyAlgorithms *c = new CannyAlgorithms("D:\\document\\LVTN2016\\DataOCR\\ICDA-2003\\SceneTrialTest\\ryoungt_13.08.2002\\dPICT0082.JPG", "TestGaussianFilter-1.jpg");
 	Mat x = c->GaussianFilter(3);
-	imshow("Gaussian filter.", x);
+	vector<double> Gx, Gy, G;
+	c->FindGradient(x, Gx, Gy, G, 3);
+	
 
 	waitKey(0);
+	
 	return 0;
 }
 

@@ -13,6 +13,8 @@
 using namespace std;
 using namespace cv;
 
+#define M_PI 3.14159265358979323846264338327
+
 
 class CannyAlgorithms
 {
@@ -49,6 +51,36 @@ private:
 			}
 		}
 		
+		return sizes;
+	}
+	vector<double> boxesForGx()
+	{
+		vector<double>sizes;
+		sizes.push_back(-1);
+		sizes.push_back(0);
+		sizes.push_back(1);
+		sizes.push_back(-2);
+		sizes.push_back(0);
+		sizes.push_back(2);
+		sizes.push_back(-1);
+		sizes.push_back(0);
+		sizes.push_back(1);
+
+		return sizes;
+	}
+	vector<double> boxesForGy()
+	{
+		vector<double>sizes;
+		sizes.push_back(1);
+		sizes.push_back(2);
+		sizes.push_back(1);
+		sizes.push_back(0);
+		sizes.push_back(0);
+		sizes.push_back(0);
+		sizes.push_back(-1);
+		sizes.push_back(-2);
+		sizes.push_back(-1);
+
 		return sizes;
 	}
 	// scl = source channel - source image gray channel
@@ -147,6 +179,37 @@ private:
 		}
 	}
 
+	// copy all channel value into src and also create 1 extra vector that contains all value is 0;
+	void ConvertGrayScaleImageToOneChannel(Mat &x, vector<int> &src, vector<int> &extra)
+	{
+		int w = x.cols;
+		int h = x.rows;
+		for (int i = 0; i < h; i++)
+		{
+			for (int j = 0; j < w; j++)
+			{
+				src.push_back(x.at<uchar>(Point(j, i)));
+				//cout << scl.size() << endl;
+				extra.push_back(0);
+			}
+		}
+		return;
+	}
+	void CreateKernelForFindGradient(vector<double> &Kernel)
+	{
+		int sigma = 1;
+		int n = 2 * (int)(2 * sigma) + 3;
+		float mean = (float)floor(n / 2.0);
+		size_t c = 0;
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < n; j++) 
+			{
+				Kernel.push_back(exp(-0.5 * (pow((i - mean) / sigma, 2.0) + pow((j - mean) / sigma, 2.0))) / (2 * M_PI * sigma * sigma));
+			}
+		}
+	}
+
 public:
 	CannyAlgorithms()
 	{
@@ -170,7 +233,7 @@ public:
 	}
 
 
-	/*		Gaussian Filter		*/
+	/*		Run step by step		*/
 	Mat GaussianFilter(int kernelsize)
 	{
 		Mat src = imread(sourcePath, IMREAD_GRAYSCALE);
@@ -185,18 +248,101 @@ public:
 		int h = src.rows;
 		
 		// create an array gray channel for source channels
-		for (int i = 0; i < h; i++)
-		{
-			for (int j = 0; j < w; j++)
-			{
-				scl.push_back(src.at<uchar>(Point(j, i)));
-				//cout << scl.size() << endl;
-				tcl.push_back(0);
-			}
-		}
+		ConvertGrayScaleImageToOneChannel(src, scl, tcl);
 		// Run gaussian blur
 		gaussBlur_4(scl, tcl, w, h, 3);
 		// convert target channel to image
+		src = ConvertOneChannelToGrayScaleImage(tcl, w, h);
+		cout << "Finish Gaussian filter." << endl;
+		scl.clear();
+		tcl.clear();
+		return src;
+	}
+
+	void FindGradient(Mat &afterFilter, vector<double> &After_Gx, vector<double> &After_Gy, vector<double> &G, int kernelsize)
+	{
+		int khalf = kernelsize / 2;
+		int ny = afterFilter.cols;
+		int nx = afterFilter.rows;
+		// create an array gray channel for source channels
+		vector<int> in;
+		vector<double> kernel;
+		CreateKernelForFindGradient(kernel);
+
+		for (int i = 0; i < nx; i++)
+		{
+			for (int j = 0; j < ny; j++)
+			{
+				in.push_back(afterFilter.at<uchar>(Point(j, i)));
+				//cout << scl.size() << endl;
+				After_Gx.push_back(0);
+				After_Gy.push_back(0);
+				G.push_back(0);
+			}
+		}
+
+		for (int m = khalf; m < nx - khalf; m++)
+		{
+			for (int n = khalf; n < ny - khalf; n++) 
+			{
+				float pixel = 0.0;
+				size_t c = 0;
+				for (int j = -khalf; j <= khalf; j++)
+				{ 
+					for (int i = -khalf; i <= khalf; i++) 
+					{
+						int k1 = (n - j) * nx + m - i;
+						pixel += in[k1] * kernel[c];
+						c++;
+					}
+				}
+				int k2 = n * nx + m;
+				After_Gx[k2] = pixel;
+			}
+		}
+		cout << "Finish Gx" << endl;
+		for (int m = khalf; m < nx - khalf; m++)
+		{
+			for (int n = khalf; n < ny - khalf; n++)
+			{
+				float pixel = 0.0;
+				size_t c = 0;
+				for (int j = -khalf; j <= khalf; j++)
+				{
+					for (int i = -khalf; i <= khalf; i++)
+					{
+						pixel += in[(n - j) * nx + m - i] * kernel[c];
+						c++;
+					}
+				}
+				After_Gy[n * nx + m] = pixel;
+			}
+		}
+		cout << "Finish Gy" << endl;
+		for (int i = 1; i < nx - 1; i++)
+		{
+			for (int j = 1; j < ny - 1; j++) {
+				const int c = i + nx * j;
+				// G[c] = abs(after_Gx[c]) + abs(after_Gy[c]);
+				G[c] = hypot(After_Gx[c], After_Gy[c]);
+			}
+		}
+		cout << "Finish G" << endl;
+		kernel.clear();
+		in.clear();
+	}
+
+
+	/*		Fast run - all in one		*/
+	void CannyRun(int kernelsize)
+	{
+
+	}
+
+	
+	Mat ConvertOneChannelToGrayScaleImage(vector<int> &tcl, int w, int h)
+	{
+		Mat src = Mat(h, w, CV_8U);
 		int m = 0;
 		for (int i = 0; i < h; i++)
 		{
@@ -206,11 +352,23 @@ public:
 				m++;
 			}
 		}
-		
 		return src;
 	}
-
-
+	Mat ConvertOneChannelToGrayScaleImage(vector<double> &tcl, int w, int h)
+	{
+		Mat src = Mat(h, w, CV_8U);
+		int m = 0;
+		for (int i = 0; i < h; i++)
+		{
+			for (int j = 0; j < w; j++)
+			{
+				src.at<uchar>(Point(j, i)) = (int)tcl[m];
+				m++;
+			}
+		}
+		return src;
+	}
+	
 
 	~CannyAlgorithms()
 	{
