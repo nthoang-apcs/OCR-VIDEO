@@ -8,6 +8,7 @@
 #include <string>
 #include "SupportFunctions.h"
 #include "MyMSER.h"
+#include "CannyAlgorithms.h"
 
 using namespace std;
 using namespace cv;
@@ -72,6 +73,7 @@ int main()
 	waitKey(0);
 	*/
 
+	/*
 	char srcVietDir[] = "D:\\document\\LVTN2016\\DataOCR\\CurrentUse\\Vietnamese";
 	char srcEngDir[] = "D:\\document\\LVTN2016\\DataOCR\\CurrentUse\\English";
 	int srcVietCount = 60;
@@ -83,6 +85,10 @@ int main()
 	char groupboxesEngFilePath[] = "D:\\document\\LVTN2016\\DataOCR\\CurrentResult-DefaultMser\\English-data.txt";
 	MyMSER* b = new MyMSER(srcVietDir, srcEngDir, srcVietCount, srcEngCount, destResultViet, destResultEng, errorPath, groupboxesVietFilePath, groupboxesEngFilePath);
 	b->RunOneSample("D:\\document\\LVTN2016\\DataOCR\\CurrentUse\\Vietnamese\\32.jpg", false);
+	*/
+
+	CannyAlgorithms *c = new CannyAlgorithms("D:\\document\\LVTN2016\\DataOCR\\ICDA-2003\\SceneTrialTest\\ryoungt_13.08.2002\\dPICT0082.JPG", "TestGaussianFilter-1.jpg");
+	c->GaussianFilter(3);
 
 	return 0;
 }
