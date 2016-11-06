@@ -24,6 +24,7 @@ private:
 	/*		support methods		*/
 
 	// reference: http://blog.ivank.net/fastest-gaussian-blur.html
+	// Code is convert to c++
 	vector<double> boxesForGauss(double sigma, int n)  // standard deviation, number of boxes
 	{
 		double wIdeal = sqrt((12 * sigma*sigma / n) + 1);  // Ideal averaging filter width 
@@ -170,20 +171,20 @@ public:
 
 
 	/*		Gaussian Filter		*/
-	void GaussianFilter(int kernelsize)
+	Mat GaussianFilter(int kernelsize)
 	{
 		Mat src = imread(sourcePath, IMREAD_GRAYSCALE);
 		if (!src.data)
 		{
 			cout << "Cannot load immage at path " << sourcePath << endl;
-			return;
+			return src;
 		}
 		vector<int> scl;
 		vector<int> tcl;
 		int w = src.cols;
 		int h = src.rows;
 		
-		// ~ 58s to run
+		// create an array gray channel for source channels
 		for (int i = 0; i < h; i++)
 		{
 			for (int j = 0; j < w; j++)
@@ -193,9 +194,20 @@ public:
 				tcl.push_back(0);
 			}
 		}
+		// Run gaussian blur
 		gaussBlur_4(scl, tcl, w, h, 3);
+		// convert target channel to image
+		int m = 0;
+		for (int i = 0; i < h; i++)
+		{
+			for (int j = 0; j < w; j++)
+			{
+				src.at<uchar>(Point(j, i)) = tcl[m];
+				m++;
+			}
+		}
 		
-		waitKey(0);
+		return src;
 	}
 
 

@@ -88,8 +88,10 @@ int main()
 	*/
 
 	CannyAlgorithms *c = new CannyAlgorithms("D:\\document\\LVTN2016\\DataOCR\\ICDA-2003\\SceneTrialTest\\ryoungt_13.08.2002\\dPICT0082.JPG", "TestGaussianFilter-1.jpg");
-	c->GaussianFilter(3);
+	Mat x = c->GaussianFilter(3);
+	imshow("Gaussian filter.", x);
 
+	waitKey(0);
 	return 0;
 }
 
