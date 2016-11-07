@@ -87,14 +87,8 @@ int main()
 	b->RunOneSample("D:\\document\\LVTN2016\\DataOCR\\CurrentUse\\Vietnamese\\32.jpg", false);
 	*/
 
-	CannyAlgorithms *c = new CannyAlgorithms("D:\\document\\LVTN2016\\DataOCR\\ICDA-2003\\SceneTrialTest\\ryoungt_13.08.2002\\dPICT0082.JPG", "TestGaussianFilter-1.jpg");
-	Mat x = c->GaussianFilter(3);
-	vector<double> Gx, Gy, G;
-	c->FindGradient(x, Gx, Gy, G, 3);
-	
-
-	waitKey(0);
-	
+	CannyAlgorithms *c = new CannyAlgorithms("D:\\document\\LVTN2016\\DataOCR\\ICDA-2003\\SceneTrialTest\\ryoungt_13.08.2002\\dPICT0082.JPG", "TestCanny-1.jpg");
+	c->AllInOneRun(3);
 	return 0;
 }
 
