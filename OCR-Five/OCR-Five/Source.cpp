@@ -9,6 +9,8 @@
 #include "SupportFunctions.h"
 #include "MyMSER.h"
 #include "CannyAlgorithms.h"
+#include "BackGround.h"
+#include "MyAlgorithms.h"
 
 using namespace std;
 using namespace cv;
@@ -87,8 +89,8 @@ int main()
 	b->RunOneSample("D:\\document\\LVTN2016\\DataOCR\\CurrentUse\\Vietnamese\\32.jpg", false);
 	*/
 
-	CannyAlgorithms *c = new CannyAlgorithms("D:\\document\\LVTN2016\\DataOCR\\ICDA-2003\\SceneTrialTest\\ryoungt_13.08.2002\\dPICT0082.JPG", "TestCanny-1.jpg");
-	c->AllInOneRun(3);
+	
+	
 	return 0;
 }
 

@@ -87,7 +87,9 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BackGround.h" />
     <ClInclude Include="CannyAlgorithms.h" />
+    <ClInclude Include="MyAlgorithms.h" />
     <ClInclude Include="MyMSER.h" />
     <ClInclude Include="SupportFunctions.h" />
   </ItemGroup>

@@ -10,13 +10,14 @@
 #include <cstdio>
 #include <ctime>
 #include <cmath>
+#include "MyAlgorithms.h"
 using namespace std;
 using namespace cv;
 
 #define M_PI 3.14159265358979323846264338327
 #define MAX_BRIGHTNESS 255
 
-class CannyAlgorithms
+class CannyAlgorithms : public MyAlgorithms
 {
 private:
 	char* sourcePath;
@@ -734,8 +735,18 @@ public:
 		G.clear();
 		nms.clear();
 		cout << "Show result: " << endl;
+		namedWindow("result", WINDOW_AUTOSIZE);
 		imshow("result", y);
 		waitKey(0);
+
+	}
+
+
+
+
+	void Run()
+	{
+
 	}
 
 	/*		Other methods		*/
