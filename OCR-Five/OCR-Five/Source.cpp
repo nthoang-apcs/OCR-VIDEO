@@ -39,8 +39,6 @@ int main()
 	a->RunForEnglishSample(false);
 	*/
 
-
-
 	// Get statistic
 	/*
 	char englishDataPath[] = "D:\\document\\LVTN2016\\DataOCR\\CurrentResult-DefaultInOCR\\English-data.txt";
@@ -49,8 +47,7 @@ int main()
 	SupportFunctions* spfunc = new SupportFunctions();
 	spfunc->ReadDataGroupBoxesFromFileText(List, vietnameseDataPath);
 	*/
-
-
+	
 	/*
 	// Mser detection
 
