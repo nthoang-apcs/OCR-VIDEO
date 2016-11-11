@@ -1,4 +1,4 @@
-﻿Build started 09-Nov-16 10:02:29 AM.
+﻿Build started 11-Nov-16 12:59:38 PM.
      1>Project "D:\Code-2\OCR-VIDEO-GIT\OCR-Five\OCR-Five\OCR-Five.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\OpenCVFolders\opencv-plus-extra\install\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
@@ -20,9 +20,17 @@
      1>d:\code-2\ocr-video-git\ocr-five\ocr-five\cannyalgorithms.h(622): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
      1>d:\code-2\ocr-video-git\ocr-five\ocr-five\cannyalgorithms.h(642): warning C4018: '<' : signed/unsigned mismatch
      1>d:\code-2\ocr-video-git\ocr-five\ocr-five\cannyalgorithms.h(680): warning C4018: '<' : signed/unsigned mismatch
-     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(184): warning C4244: '=' : conversion from 'double' to 'uchar', possible loss of data
-     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(204): warning C4244: '=' : conversion from 'double' to 'uchar', possible loss of data
-     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(228): warning C4244: '=' : conversion from 'double' to 'uchar', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(187): warning C4244: '=' : conversion from 'double' to 'uchar', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(207): warning C4244: '=' : conversion from 'double' to 'uchar', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(231): warning C4244: '=' : conversion from 'double' to 'uchar', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(371): warning C4244: 'argument' : conversion from 'double' to 'unsigned int', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(375): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(377): warning C4244: 'argument' : conversion from 'double' to 'unsigned int', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(381): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(405): warning C4244: 'argument' : conversion from 'double' to 'unsigned int', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(411): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(413): warning C4244: 'argument' : conversion from 'double' to 'unsigned int', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\background.h(418): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Code-2\OCR-VIDEO-GIT\OCR-Five\Debug\OCR-Five.exe" /INCREMENTAL /NOLOGO /LIBPATH:"D:\OpenCVFolders\opencv-plus-extra\install\x86\vc12\lib" opencv_aruco310d.lib opencv_bgsegm310d.lib opencv_bioinspired310d.lib opencv_calib3d310d.lib opencv_ccalib310d.lib opencv_core310d.lib opencv_datasets310d.lib opencv_dnn310d.lib opencv_dpm310d.lib opencv_face310d.lib opencv_features2d310d.lib opencv_flann310d.lib opencv_fuzzy310d.lib opencv_highgui310d.lib opencv_imgcodecs310d.lib opencv_imgproc310d.lib opencv_line_descriptor310d.lib opencv_ml310d.lib opencv_objdetect310d.lib opencv_optflow310d.lib opencv_photo310d.lib opencv_plot310d.lib opencv_reg310d.lib opencv_rgbd310d.lib opencv_saliency310d.lib opencv_shape310d.lib opencv_stereo310d.lib opencv_stitching310d.lib opencv_structured_light310d.lib opencv_superres310d.lib opencv_surface_matching310d.lib opencv_text310d.lib opencv_tracking310d.lib opencv_video310d.lib opencv_videoio310d.lib opencv_videostab310d.lib opencv_xfeatures2d310d.lib opencv_ximgproc310d.lib opencv_xobjdetect310d.lib opencv_xphoto310d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Code-2\OCR-VIDEO-GIT\OCR-Five\Debug\OCR-Five.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Code-2\OCR-VIDEO-GIT\OCR-Five\Debug\OCR-Five.lib" /MACHINE:X86 Debug\Source.obj
          OCR-Five.vcxproj -> D:\Code-2\OCR-VIDEO-GIT\OCR-Five\Debug\OCR-Five.exe
@@ -30,4 +38,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.10
+Time Elapsed 00:00:02.16

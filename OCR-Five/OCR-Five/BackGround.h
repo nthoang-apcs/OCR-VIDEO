@@ -250,6 +250,14 @@ private:
 		system("cls");
 		OutputConsoleListKeyboardFeature();
 	}
+	void SmoothByOpenCV(Mat& a, Mat& dest1, Mat& dest2)
+	{
+
+	}
+	void SmoothByMe(Mat& a, Mat& dest1, Mat& dest2)
+	{
+
+	}
 
 	Mat ConvertOneChannelToGrayScaleImage(vector<int> &tcl, int w, int h)
 	{
@@ -279,7 +287,25 @@ private:
 		}
 		return src;
 	}
+	// copy all channel value into src and also create 1 extra vector that contains all value is 0;
+	void ConvertGrayScaleImageToOneChannel(Mat &x, vector<int> &src, vector<int> &extra)
+	{
+		int w = x.cols;
+		int h = x.rows;
+		for (int i = 0; i < h; i++)
+		{
+			for (int j = 0; j < w; j++)
+			{
+				src.push_back(x.at<uchar>(Point(j, i)));
+				//cout << scl.size() << endl;
+				extra.push_back(0);
+			}
+		}
+		return;
+	}
 
+
+	/*		Gaussian Filter by me		*/
 	// scl = source channel - source image gray channel
 	// tcl = target channel - dest image gray channel
 	// w = width
@@ -398,6 +424,31 @@ private:
 			}
 		}
 	}
+	Mat GaussianFilter(int kernelsize, char *sourcePath)
+	{
+		Mat src = imread(sourcePath, IMREAD_GRAYSCALE);
+		if (!src.data)
+		{
+			cout << "Cannot load immage at path " << sourcePath << endl;
+			return src;
+		}
+		vector<int> scl;
+		vector<int> tcl;
+		int w = src.cols;
+		int h = src.rows;
+
+		// create an array gray channel for source channels
+		ConvertGrayScaleImageToOneChannel(src, scl, tcl);
+		// Run gaussian blur
+		gaussBlur_4(scl, tcl, w, h, 3);
+		// convert target channel to image
+		src = ConvertOneChannelToGrayScaleImage(tcl, w, h);
+		cout << "Finish Gaussian filter." << endl;
+		scl.clear();
+		tcl.clear();
+		return src;
+	}
+
 
 public:
 	BackGround()
@@ -454,8 +505,10 @@ public:
 				ClearScreen();
 				break;
 			case 's':
+				SmoothByOpenCV(a, dest1, dest2);
 				break;
 			case 'S':
+				SmoothByMe(a, dest1, dest2);
 				break;
 			case 'x':
 				break;
@@ -479,30 +532,7 @@ public:
 		
 	}
 
-	Mat GaussianFilter(int kernelsize)
-	{
-		Mat src = imread(sourcePath, IMREAD_GRAYSCALE);
-		if (!src.data)
-		{
-			cout << "Cannot load immage at path " << sourcePath << endl;
-			return src;
-		}
-		vector<int> scl;
-		vector<int> tcl;
-		int w = src.cols;
-		int h = src.rows;
-
-		// create an array gray channel for source channels
-		ConvertGrayScaleImageToOneChannel(src, scl, tcl);
-		// Run gaussian blur
-		gaussBlur_4(scl, tcl, w, h, 3);
-		// convert target channel to image
-		src = ConvertOneChannelToGrayScaleImage(tcl, w, h);
-		cout << "Finish Gaussian filter." << endl;
-		scl.clear();
-		tcl.clear();
-		return src;
-	}
+	
 
 
 	~BackGround()
