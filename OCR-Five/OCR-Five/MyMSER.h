@@ -549,3 +549,43 @@ public:
 		}
 	}
 };
+
+/*		Sample Main			*/
+
+/*
+char srcVietDir[] = "D:\\document\\LVTN2016\\DataOCR\\CurrentUse\\Vietnamese";
+char srcEngDir[] = "D:\\document\\LVTN2016\\DataOCR\\CurrentUse\\English";
+int srcVietCount = 60;
+int srcEngCount = 350;
+char destResultViet[] = "D:\\document\\LVTN2016\\DataOCR\\CurrentResult-DefaultMser\\Vietnamese";
+char destResultEng[] = "D:\\document\\LVTN2016\\DataOCR\\CurrentResult-DefaultMser\\English";
+char errorPath[] = "D:\\document\\LVTN2016\\DataOCR\\CurrentResult-DefaultMser\\error-log.txt";
+char groupboxesVietFilePath[] = "D:\\document\\LVTN2016\\DataOCR\\CurrentResult-DefaultMser\\Vietnamese-data.txt";
+char groupboxesEngFilePath[] = "D:\\document\\LVTN2016\\DataOCR\\CurrentResult-DefaultMser\\English-data.txt";
+MyMSER* b = new MyMSER(srcVietDir, srcEngDir, srcVietCount, srcEngCount, destResultViet, destResultEng, errorPath, groupboxesVietFilePath, groupboxesEngFilePath);
+b->RunOneSample("D:\\document\\LVTN2016\\DataOCR\\CurrentUse\\Vietnamese\\32.jpg", false);
+*/
+
+/*
+// Mser detection
+
+Mat inImg = imread("D:\\document\\LVTN2016\\DataOCR\\CurrentUse\\Vietnamese\\31.jpg");
+Mat textImg = inImg;
+
+// convert to grey image
+//cvtColor(inImg, textImg, CV_BGR2GRAY);
+
+// Extract MSER
+vector< vector< Point> > contours;
+vector< Rect> bboxes;
+Ptr< MSER> mser = MSER::create(21, (int)(0.00002*textImg.cols*textImg.rows), (int)(0.05*textImg.cols*textImg.rows), 1, 0.7);
+
+mser->detectRegions(textImg, contours, bboxes);
+for (int i = 0; i < bboxes.size(); i++)
+{
+rectangle(inImg, bboxes[i], CV_RGB(0, 255, 0));
+}
+
+imshow("Mser Detection", inImg);
+waitKey(0);
+*/

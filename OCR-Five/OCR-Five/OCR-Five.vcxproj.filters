@@ -32,7 +32,10 @@
     <ClInclude Include="BackGround.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyAlgorithms.h">
+    <ClInclude Include="GaussianBlur.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HarrisDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
