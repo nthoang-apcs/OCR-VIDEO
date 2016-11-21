@@ -242,6 +242,80 @@ public:
 		kernel.clear();
 		in.clear();
 	}
+	void FindGradient(Mat &afterFilter, vector<double> &G, int kernelsize, bool outputkernel)
+	{
+		int khalf = kernelsize / 2;
+		int ny = afterFilter.cols;
+		int nx = afterFilter.rows;
+		// create an array gray channel for source channels
+		vector<int> in;
+		vector<double> kernel, After_Gx, After_Gy;
+		CreateKernelForFindGradient(kernel, kernelsize);
+		if (outputkernel == true)
+		{
+			// output kernel to console
+			PrintKernelConsole(kernel);
+		}
+
+		for (int i = 0; i < nx; i++)
+		{
+			for (int j = 0; j < ny; j++)
+			{
+				in.push_back(afterFilter.at<uchar>(Point(j, i)));
+				//cout << scl.size() << endl;
+				After_Gx.push_back(0);
+				After_Gy.push_back(0);
+				G.push_back(0);
+			}
+		}
+
+		for (int m = khalf; m < nx - khalf; m++)
+		{
+			for (int n = khalf; n < ny - khalf; n++)
+			{
+				float pixel = 0.0;
+				size_t c = 0;
+				for (int j = -khalf; j <= khalf; j++)
+				{
+					for (int i = -khalf; i <= khalf; i++)
+					{
+						int k1 = (n - j) * nx + m - i;
+						pixel += in[k1] * kernel[c];
+						c++;
+					}
+				}
+				int k2 = n * nx + m;
+				After_Gx[k2] = pixel;
+			}
+		}
+		for (int m = khalf; m < nx - khalf; m++)
+		{
+			for (int n = khalf; n < ny - khalf; n++)
+			{
+				float pixel = 0.0;
+				size_t c = 0;
+				for (int j = -khalf; j <= khalf; j++)
+				{
+					for (int i = -khalf; i <= khalf; i++)
+					{
+						pixel += in[(n - j) * nx + m - i] * kernel[c];
+						c++;
+					}
+				}
+				After_Gy[n * nx + m] = pixel;
+			}
+		}
+		for (int i = 1; i < nx - 1; i++)
+		{
+			for (int j = 1; j < ny - 1; j++) {
+				const int c = i + nx * j;
+				// G[c] = abs(after_Gx[c]) + abs(after_Gy[c]);
+				G[c] = hypot(After_Gx[c], After_Gy[c]);
+			}
+		}
+		kernel.clear();
+		in.clear();
+	}
 	void FindMagnitude(Mat &afterFilter, vector<double> &After_Gx, vector<double> &After_Gy, int kernelsize, bool outputkernel)
 	{
 		int khalf = kernelsize / 2;
@@ -253,6 +327,7 @@ public:
 		CreateKernelForFindGradient(kernel, kernelsize);
 		if (outputkernel == true)
 		{
+			cout << "Output kernel to console" << endl;
 			// output kernel to console
 			PrintKernelConsole(kernel);
 		}
@@ -307,9 +382,93 @@ public:
 		kernel.clear();
 		in.clear();
 	}
-	void FindGradient(Mat &afterFilter, vector<double> &After_Gx, int kernelsize, bool outputkernel)
+	void FindGradientX(Mat &afterFilter, vector<double> &After_Gx, int kernelsize, bool outputkernel)
 	{
-
+		int khalf = kernelsize / 2;
+		int ny = afterFilter.cols;
+		int nx = afterFilter.rows;
+		// create an array gray channel for source channels
+		vector<int> in;
+		vector<double> kernel;
+		CreateKernelForFindGradient(kernel, kernelsize);
+		if (outputkernel == true)
+		{
+			// output kernel to console
+			PrintKernelConsole(kernel);
+		}
+		for (int i = 0; i < nx; i++)
+		{
+			for (int j = 0; j < ny; j++)
+			{
+				in.push_back(afterFilter.at<uchar>(Point(j, i)));
+				//cout << scl.size() << endl;
+				After_Gx.push_back(0);
+			}
+		}
+		for (int m = khalf; m < nx - khalf; m++)
+		{
+			for (int n = khalf; n < ny - khalf; n++)
+			{
+				float pixel = 0.0;
+				size_t c = 0;
+				for (int j = -khalf; j <= khalf; j++)
+				{
+					for (int i = -khalf; i <= khalf; i++)
+					{
+						int k1 = (n - j) * nx + m - i;
+						pixel += in[k1] * kernel[c];
+						c++;
+					}
+				}
+				int k2 = n * nx + m;
+				After_Gx[k2] = pixel;
+			}
+		}
+		kernel.clear();
+		in.clear();
+	}
+	void FindGradientY(Mat &afterFilter, vector<double> &After_Gy, int kernelsize, bool outputkernel)
+	{
+		int khalf = kernelsize / 2;
+		int ny = afterFilter.cols;
+		int nx = afterFilter.rows;
+		// create an array gray channel for source channels
+		vector<int> in;
+		vector<double> kernel;
+		CreateKernelForFindGradient(kernel, kernelsize);
+		if (outputkernel == true)
+		{
+			// output kernel to console
+			PrintKernelConsole(kernel);
+		}
+		for (int i = 0; i < nx; i++)
+		{
+			for (int j = 0; j < ny; j++)
+			{
+				in.push_back(afterFilter.at<uchar>(Point(j, i)));
+				//cout << scl.size() << endl;
+				After_Gy.push_back(0);
+			}
+		}
+		for (int m = khalf; m < nx - khalf; m++)
+		{
+			for (int n = khalf; n < ny - khalf; n++)
+			{
+				float pixel = 0.0;
+				size_t c = 0;
+				for (int j = -khalf; j <= khalf; j++)
+				{
+					for (int i = -khalf; i <= khalf; i++)
+					{
+						pixel += in[(n - j) * nx + m - i] * kernel[c];
+						c++;
+					}
+				}
+				After_Gy[n * nx + m] = pixel;
+			}
+		}
+		kernel.clear();
+		in.clear();
 	}
 	/* determine size of kernel (odd #)
 		* 0.0 <= sigma < 0.5 : 3

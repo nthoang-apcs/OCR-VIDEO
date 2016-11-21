@@ -1,13 +1,17 @@
-﻿Build started 21-Nov-16 2:07:00 PM.
+﻿Build started 21-Nov-16 5:50:54 PM.
      1>Project "D:\Code-2\OCR-VIDEO-GIT\OCR-Five\OCR-Five\OCR-Five.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\OpenCVFolders\opencv-plus-extra\install\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
          Source.cpp
      1>d:\code-2\ocr-video-git\ocr-five\ocr-five\supportfunctions.h(209): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
      1>d:\code-2\ocr-video-git\ocr-five\ocr-five\supportfunctions.h(227): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\supportfunctions.h(282): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\supportfunctions.h(300): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\supportfunctions.h(379): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\supportfunctions.h(283): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\supportfunctions.h(301): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\supportfunctions.h(357): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\supportfunctions.h(375): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\supportfunctions.h(419): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\supportfunctions.h(463): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\code-2\ocr-video-git\ocr-five\ocr-five\supportfunctions.h(541): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
      1>d:\code-2\ocr-video-git\ocr-five\ocr-five\gaussianblur.h(119): warning C4244: 'argument' : conversion from 'double' to 'unsigned int', possible loss of data
      1>d:\code-2\ocr-video-git\ocr-five\ocr-five\gaussianblur.h(123): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
      1>d:\code-2\ocr-video-git\ocr-five\ocr-five\gaussianblur.h(125): warning C4244: 'argument' : conversion from 'double' to 'unsigned int', possible loss of data
@@ -29,4 +33,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.82
+Time Elapsed 00:00:01.13

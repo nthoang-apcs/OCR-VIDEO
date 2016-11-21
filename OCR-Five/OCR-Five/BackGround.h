@@ -297,6 +297,87 @@ private:
 		}
 	}
 
+	void ConvolutionX(Mat& a, Mat& dest1, Mat& dest2)
+	{
+		ConvertGrayScaleByOpencv(a, dest1, dest2);
+		SupportFunctions sf;
+		vector<double> After_Gx;
+		if (!dest1.data)
+		{
+			sf.FindGradientX(a, After_Gx, 3, false);
+			sf.NormalizeToRange0a255(After_Gx, 255, 0);
+			dest1 = sf.ConvertOneChannelToGrayScaleImage(After_Gx, a.cols, a.rows);
+		}
+		else if (!dest2.data)
+		{
+			sf.FindGradientX(dest1, After_Gx, 3, false);
+			dest2 = sf.ConvertOneChannelToGrayScaleImage(After_Gx, a.cols, a.rows);
+		}
+		else
+		{
+			dest1.release();
+			dest1 = dest2;
+			dest2.release();
+			sf.FindGradientX(dest1, After_Gx, 3, false);
+			sf.NormalizeToRange0a255(After_Gx, 255, 0);
+			dest2 = sf.ConvertOneChannelToGrayScaleImage(After_Gx, a.cols, a.rows);
+		}
+	}
+	void ConvolutionY(Mat& a, Mat& dest1, Mat& dest2)
+	{
+		ConvertGrayScaleByOpencv(a, dest1, dest2);
+		SupportFunctions sf;
+		vector<double> After_Gy;
+		if (!dest1.data)
+		{
+			sf.FindGradientY(a, After_Gy, 3, false);
+			sf.NormalizeToRange0a255(After_Gy, 255, 0);
+			dest1 = sf.ConvertOneChannelToGrayScaleImage(After_Gy, a.cols, a.rows);
+		}
+		else if (!dest2.data)
+		{
+			sf.FindGradientY(dest1, After_Gy, 3, false);
+			sf.NormalizeToRange0a255(After_Gy, 255, 0);
+			dest2 = sf.ConvertOneChannelToGrayScaleImage(After_Gy, a.cols, a.rows);
+		}
+		else
+		{
+			dest1.release();
+			dest1 = dest2;
+			dest2.release();
+			sf.FindGradientY(dest1, After_Gy, 3, false);
+			sf.NormalizeToRange0a255(After_Gy, 255, 0);
+			dest2 = sf.ConvertOneChannelToGrayScaleImage(After_Gy, a.cols, a.rows);
+		}
+	}
+	void Convolution(Mat& a, Mat& dest1, Mat& dest2)
+	{
+		ConvertGrayScaleByOpencv(a, dest1, dest2);
+		SupportFunctions sf;
+		vector<double> G;
+		if (!dest1.data)
+		{
+			sf.FindGradient(a, G, 3, false);
+			sf.NormalizeToRange0a255(G, 255, 0);
+			dest1 = sf.ConvertOneChannelToGrayScaleImage(G, a.cols, a.rows);
+		}
+		else if (!dest2.data)
+		{
+			sf.FindGradient(dest1, G, 3, false);
+			sf.NormalizeToRange0a255(G, 255, 0);
+			dest2 = sf.ConvertOneChannelToGrayScaleImage(G, a.cols, a.rows);
+		}
+		else
+		{
+			dest1.release();
+			dest1 = dest2;
+			dest2.release();
+			sf.FindGradient(dest1, G, 3, false);
+			sf.NormalizeToRange0a255(G, 255, 0);
+			dest2 = sf.ConvertOneChannelToGrayScaleImage(G, a.cols, a.rows);
+		}
+	}
+
 	void Runalgorithm()
 	{
 		// Get destination file path for the result of this algorithm
@@ -309,6 +390,12 @@ private:
 		MyCannyAlgorithms *c = new MyCannyAlgorithms(src, dest);
 		c->Run(3);
 		cout << "Finish running algorithm." << endl;
+	}
+
+	void Description()
+	{
+		cout << "This project runs my own functions and built-in functions in opencv" << endl;
+		cout << "The current algorithm in this project is Canny algorithm. In the later submission, there will be more algorithms." << endl;
 	}
 
 public:
@@ -371,19 +458,25 @@ public:
 				SmoothByMe(a, dest1, dest2);
 				break;
 			case 'x':
+				ConvolutionX(a, dest1, dest2);
 				break;
 			case 'y':
+				ConvolutionY(a, dest1, dest2);
 				break;
 			case 'm':
+				Convolution(a, dest1, dest2);
 				break;
 			case 'p':
+				cout << "Not do yet!!!" << endl;
 				break;
 			case 'r':
+				cout << "Not do yet!!!" << endl;
 				break;
 			case 'R':
 				Runalgorithm();
 				break;
 			case 'h':
+				Description();
 				break;
 			default:
 				break;
