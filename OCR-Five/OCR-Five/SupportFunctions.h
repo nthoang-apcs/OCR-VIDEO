@@ -31,6 +31,25 @@ public:
 
 
 	// Methods
+	// max-value the max value after normalize
+	void NormalizeToRange0a255(vector<double> &x, int MAX_Value, int MIN_Value)
+	{
+		// get max
+		double k = 0;
+		int m = x.size();
+		for (int i = 0; i < m; i++)
+		{
+			if (x[i] > k)
+			{
+				k = x[i];
+			}
+		}
+		for (int i = 0; i < m; i++)
+		{
+			x[i] = MAX_Value * (x[i] - MIN_Value) / (k - MIN_Value);
+		}
+		return;
+	}
 
 	void ReadDataGroupBoxesFromFileText(vector<string> &List, char* pathFile)
 	{
@@ -288,7 +307,10 @@ public:
 		kernel.clear();
 		in.clear();
 	}
-	
+	void FindGradient(Mat &afterFilter, vector<double> &After_Gx, int kernelsize, bool outputkernel)
+	{
+
+	}
 	/* determine size of kernel (odd #)
 		* 0.0 <= sigma < 0.5 : 3
 		* 0.5 <= sigma < 1.0 : 5

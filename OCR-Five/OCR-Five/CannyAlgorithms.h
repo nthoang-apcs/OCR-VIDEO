@@ -30,11 +30,6 @@ private:
 
 	/*		support methods		*/
 
-	
-	
-	
-
-
 	void WriteDownResult(vector<double> &After_Gx, vector<double> &After_Gy, vector<double> &G, vector<double> &nms, Mat &afterFilter, vector<int> &out, Mat &afterCanny)
 	{
 		imwrite("After-gaussian-filter.jpg", afterFilter);
@@ -106,10 +101,6 @@ public:
 		for (int i = 0; i < k2; i++)
 			destPath[i] = dest[i];
 	}
-
-
-
-	
 
 	// Non-Maximal Suppression
 	void NMS(vector<double> &After_Gx, vector<double> &After_Gy, vector<double> &G, vector<double> &nms, Mat &afterFilter)
@@ -259,10 +250,10 @@ public:
 			nms.push_back(0);
 		}
 		NMS(Gx, Gy, G, nms, x);
-
+		// normalize
+		sf.NormalizeToRange0a255(nms, 255, 0);
 		// input tmin, tmax
-		cout << "Minimum value for threshold is: 0.0" << endl;
-		cout << "Maximum value for threshold is: " << sf.GetMaximumValueInVector(nms) << endl;
+		cout << "Input threshold. Range from (0,255)" << endl;
 		double tmin, tmax;
 		cout << "Input tmin: ";
 		cin >> tmin;
@@ -274,8 +265,9 @@ public:
 		Mat y = sf.ConvertOneChannelToGrayScaleImage(out, x.cols, x.rows);
 
 		// write down result
-		cout << "Write down result." << endl;
+		cout << "Write down result. It will take few minutes. Name of file: After-gaussian-filter.jpg; Gx.txt; Gy.txt; G.txt; nms.txt; out.txt & the destination path" << endl;
 		WriteDownResult(Gx, Gy, G, nms, x, out, y);
+		cout << "Finish writing down result." << endl;
 		cout << "Clear memory." << endl;
 
 		Gx.clear();
@@ -332,7 +324,7 @@ public:
 /*		Main function sample	*/
 
 /*
-CannyAlgorithms *c = new CannyAlgorithms("D:\\document\\LVTN2016\\DataOCR\\ICDA-2003\\SceneTrialTest\\ryoungt_13.08.2002\\dPICT0082.JPG", "TestCanny-1.jpg");
+MyCannyAlgorithms *c = new MyCannyAlgorithms("D:\\document\\LVTN2016\\DataOCR\\ICDA-2003\\SceneTrialTest\\ryoungt_13.08.2002\\dPICT0082.JPG", "TestCanny-1.jpg");
 // canny by opencv
 c->DefaultCanny();
 // or

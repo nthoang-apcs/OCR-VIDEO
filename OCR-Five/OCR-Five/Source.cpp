@@ -23,8 +23,8 @@ using namespace cv::text;
 
 int main()
 {
-	
-	
+	BackGround *a = new BackGround();
+	a->Run();
 	return 0;
 }
 

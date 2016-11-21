@@ -223,6 +223,33 @@ public:
 		return src;
 	}
 
+	Mat Run(int kernelsize, Mat input)
+	{
+		Mat src;
+		cvtColor(input, src, CV_BGR2GRAY);
+		if (!src.data)
+		{
+			cout << "Can't load input Mat" << endl;
+			return src;
+		}
+		vector<int> scl;
+		vector<int> tcl;
+		int w = src.cols;
+		int h = src.rows;
+
+		// create an array gray channel for source channels
+		SupportFunctions sf;
+		sf.ConvertGrayScaleImageToOneChannelWithExtra(src, scl, tcl);
+		// Run gaussian blur
+		gaussBlur_4(scl, tcl, w, h, 3);
+		// convert target channel to image
+		src = sf.ConvertOneChannelToGrayScaleImage(tcl, w, h);
+		cout << "Finish Gaussian filter." << endl;
+		scl.clear();
+		tcl.clear();
+		return src;
+	}
+
 	~MyGaussianBlur()
 	{
 	}

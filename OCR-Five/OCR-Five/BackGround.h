@@ -11,6 +11,8 @@
 #include <ctime>
 #include <cstdlib>
 #include "SupportFunctions.h"
+#include "GaussianBlur.h"
+#include "CannyAlgorithms.h"
 using namespace std;
 using namespace cv;
 
@@ -127,6 +129,7 @@ private:
 		PreviousOption.clear();
 		return true;
 	}
+	
 	void WriteCurrentProcessedImage(Mat& a, Mat& dest1, Mat& dest2)
 	{
 		if (dest2.data)
@@ -142,6 +145,7 @@ private:
 			imwrite("out.jpg", a);
 		}
 	}
+	
 	bool ConvertGrayScaleByOpencv(Mat& a, Mat& dest1, Mat& dest2)
 	{
 		try
@@ -240,6 +244,7 @@ private:
 			return false;
 		}
 	}
+	
 	void CycleColorChannelImage(Mat& a, Mat& dest1, Mat& dest2)
 	{
 
@@ -251,13 +256,60 @@ private:
 	}
 	void SmoothByOpenCV(Mat& a, Mat& dest1, Mat& dest2)
 	{
-
+		ConvertGrayScaleByOpencv(a, dest1, dest2);
+		if (!dest1.data)
+		{
+			blur(a, dest1, Size(3,3));
+		}
+		else if (!dest2.data)
+		{
+			blur(dest1, dest2, Size(3, 3));
+		}
+		else
+		{
+			dest1.release();
+			dest1 = dest2;
+			dest2.release();
+			blur(dest1, dest2, Size(3, 3));
+		}
 	}
 	void SmoothByMe(Mat& a, Mat& dest1, Mat& dest2)
 	{
+		ConvertGrayScaleBySelf(a, dest1, dest2);
+		if (!dest1.data)
+		{
+			MyGaussianBlur gb;
+			dest1 = gb.Run(3, a);
+		}
+		else if (!dest2.data)
+		{
+			MyGaussianBlur gb;
+			dest2 = gb.Run(3, dest1);
+		}
+		else
+		{
+			dest1.release();
+			dest1 = dest2;
+			dest2.release();
 
+			MyGaussianBlur gb;
+			dest2 = gb.Run(3, dest1);
+		}
 	}
 
+	void Runalgorithm()
+	{
+		// Get destination file path for the result of this algorithm
+		char src[1000];
+		cout << "Input image source file path for this algorithm: ";
+		cin.getline(src, 1000);
+		char dest[1000];
+		cout << "Input result image full name of path for this algorithm: ";
+		cin.getline(dest, 1000);
+		MyCannyAlgorithms *c = new MyCannyAlgorithms(src, dest);
+		c->Run(3);
+		cout << "Finish running algorithm." << endl;
+	}
 
 public:
 	BackGround()
@@ -329,6 +381,7 @@ public:
 			case 'r':
 				break;
 			case 'R':
+				Runalgorithm();
 				break;
 			case 'h':
 				break;
