@@ -38,5 +38,8 @@
     <ClInclude Include="HarrisDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AssignmentTwo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -551,6 +551,38 @@ public:
 			cout << endl;
 		}
 	}
+	
+	// This function complete these 2 step
+	// 2: Compute products of derivatives every pixels : X2 = Gx * Gx, Y2 = Gy * Gy, XY = Gx * Gy
+	// 3 : Compute sum of products of derivatives every pixels : Sx2 = After_G * X2, Sy2 = After_G * Y2, Sxy = After_G * XY
+	void CreateSx2Sy2Sxy(int ny, int nx, vector<double> &After_Gx, vector<double> &After_Gy, vector<double> &After_G, vector<double> &Sxx, vector<double> &Syy, vector<double> &Sxy)
+	{
+		//int ny = afterFilter.cols;
+		//int nx = afterFilter.rows;
+		int size = nx*ny;
+		for (int c = 0; c < size; c++)
+		{
+				Sxx[c] = After_Gx[c] * After_Gx[c] * After_G[c];
+				Syy[c] = After_Gy[c] * After_Gy[c] * After_G[c];
+				Sxy[c] = After_Gx[c] * After_Gy[c] * After_G[c];
+		}
+	}
+	
+	//4: Define at each pixel matrix: H(x,y) = 
+	//	[	Sx2		Sxy
+	//		Sxy		Sy2		]
+	// 5: Computer the response of the detector at each pixel: R = det(H) - k*(Trace(H))^2
+	void ComputeResponseOfDetector(int ny, int nx, vector<double> &Sxx, vector<double> &Syy, vector<double> &Sxy, vector<double> &R)
+	{
+		double k = 0.05;
+		//int ny = afterFilter.cols;
+		//int nx = afterFilter.rows;
+		int size = nx*ny;
+		for (int c = 0; c < size; c++)
+		{
+			
+		}
+	}
 
 	// Destructor
 	~SupportFunctions()

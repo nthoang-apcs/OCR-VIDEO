@@ -12,6 +12,7 @@
 #include "BackGround.h"
 #include "GaussianBlur.h"
 #include "HarrisDetector.h"
+#include "AssignmentTwo.h"
 
 using namespace std;
 using namespace cv;
@@ -21,10 +22,21 @@ using namespace cv::text;
 /*			Note		*/
 // all algorithms have named 'My' before their filenames
 
-int main()
+int main(char* argv)
 {
-	BackGround *a = new BackGround();
-	a->Run();
+	//BackGround *a = new BackGround();
+	//a->Run();
+	int ny = 10;
+	int nx = 20;
+	for (int m = 0; m < nx; m++)
+	{
+		for (int n = 0; n < ny; n++)
+		{
+			int c = m + nx * n;
+			cout << c << " ";
+		}
+		cout << endl;
+	}
 	return 0;
 }
 

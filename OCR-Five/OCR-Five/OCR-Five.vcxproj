@@ -87,6 +87,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AssignmentTwo.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="CannyAlgorithms.h" />
     <ClInclude Include="GaussianBlur.h" />
