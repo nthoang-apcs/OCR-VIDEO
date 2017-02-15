@@ -552,6 +552,7 @@ public:
 		}
 	}
 	
+
 	// This function complete these 2 step
 	// 2: Compute products of derivatives every pixels : X2 = Gx * Gx, Y2 = Gy * Gy, XY = Gx * Gy
 	// 3 : Compute sum of products of derivatives every pixels : Sx2 = After_G * X2, Sy2 = After_G * Y2, Sxy = After_G * XY
@@ -566,6 +567,8 @@ public:
 				Syy[c] = After_Gy[c] * After_Gy[c] * After_G[c];
 				Sxy[c] = After_Gx[c] * After_Gy[c] * After_G[c];
 		}
+
+		return;
 	}
 	
 	//4: Define at each pixel matrix: H(x,y) = 
@@ -580,8 +583,10 @@ public:
 		int size = nx*ny;
 		for (int c = 0; c < size; c++)
 		{
-			
+			R[c] = (Sxx[c] * Syy[c] - Sxy[c] * Sxy[c]) - k * (Sxx[c] + Syy[c]) * (Sxx[c] + Syy[c]);
 		}
+
+		return;
 	}
 
 	// Destructor
