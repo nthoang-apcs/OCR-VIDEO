@@ -30,3 +30,5 @@
 *.ilk
 *.tlog
 *.idb
+*.db
+*.opendb
