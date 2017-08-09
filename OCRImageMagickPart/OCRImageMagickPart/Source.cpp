@@ -35,20 +35,21 @@ int main()
 	cout << "Hello world." << endl;
 	string cropboxesfolder = "D:\\Document\\Thesis-2017\\Data\\Result-cropboxes-experiment\\";
 	string cropboxesresamplefolder = "D:\\Document\\Thesis-2017\\Data\\Result-cropboxes-resample-experiment\\";
+	string resampleComputingTimeFolder = "D:\\Document\\Thesis-2017\\Data\\Result-resample-calculating-run-time\\";
 	string cropboxesrecognizefolder = "D:\\Document\\Thesis-2017\\Data\\Result-cropboxes-resample-recognize-experiment\\";
-	string filelist = "E:\\Code\\OCRImageMagickPart\\OCRImageMagickPart\\file.txt";
-	string fileresamplelist = "E:\\Code\\OCRImageMagickPart\\OCRImageMagickPart\\file-resample.txt";
+	string filelist = "E:\\Code\\OCR-Five-Git\\OCRImageMagickPart\\OCRImageMagickPart\\file.txt";
+	string fileresamplelist = "E:\\Code\\OCR-Five-Git\\OCRImageMagickPart\\OCRImageMagickPart\\file-resample.txt";
 	string filesummary = "D:\\Document\\Thesis-2017\\Data\\Result-cropboxes-resample-recognize-experiment\\Summary-Resample-Recognize-Purely.txt";
 	// resample the crop boxes folder
-	//ResampleFolder(cropboxesfolder, cropboxesresamplefolder, filelist, fileresamplelist);
-
+	ResampleFolder(resampleComputingTimeFolder, filelist, fileresamplelist);
+	
 	// recognize text in the resample folder
 	// need to bring the .exe file to the folder resampling
 	//RecognizeEngFolder(cropboxesresamplefolder, fileresamplelist);
 	//RecognizeVieFolder(cropboxesresamplefolder, fileresamplelist);
 
 	// merge -vie and -eng into 1 file
-	MergeVieAndEngTxt(fileresamplelist, cropboxesrecognizefolder, cropboxesresamplefolder);
+	//MergeVieAndEngTxt(fileresamplelist, cropboxesrecognizefolder, cropboxesresamplefolder);
 
 
 	return 0;
@@ -130,6 +131,7 @@ bool ResampleFolder(string resampleFolder, string filelist, string fileresamplel
 	}
 	// start resample
 	cout << "Start resampling each file." << endl;
+	vector<double> resampleTime;
 	int k = PathIn.size();
 	for (int i = 0; i < k; i++)
 	{
@@ -140,13 +142,39 @@ bool ResampleFolder(string resampleFolder, string filelist, string fileresamplel
 			continue;
 		}
 		string pathOut = resampleFolder + name + ".tiff";
+		time_t begin, end;
+		time(&begin);
 		bool check = ResampleOneFile(PathIn[i], pathOut);
+		time(&end);
+		resampleTime.push_back(difftime(end, begin));
 		if (check == false)
 		{
 			cout << "False 1 file above here: " << PathIn[i] << endl;
 		}
 	}
-
+	// compute the average running time
+	cout << "start writing calculating time." << endl;
+	double average = 0;
+	for (int i = 0; i < k; i++)
+	{
+		average = average + resampleTime[i];
+	}
+	average = average / k;
+	// write time calculating to file
+	ofstream ofs;
+	ofs.open(resampleFolder + "running-time.txt");
+	if (ofs.is_open())
+	{
+		ofs << "AVERAGE-TIME-RUNNING: " << average << " seconds.\n";
+		for (int i = 0; i < k; i++)
+		{
+			ofs << PathIn[i] << "\n";
+			ofs << "TIME-RUNNING: " << resampleTime[i] << " seconds.\n";
+		}
+		ofs.close();
+	}
+	resampleTime.clear();
+	PathIn.clear();
 	return true;
 
 }
