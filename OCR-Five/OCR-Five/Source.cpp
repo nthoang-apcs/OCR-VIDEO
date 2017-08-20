@@ -11,7 +11,7 @@
 using namespace std;
 using namespace cv;
 
-void RefineVNTestingSet();
+void InitVNTestingSet();
 
 void SharpenImage(string pathIn, string pathOut);
 
@@ -23,18 +23,16 @@ int display_dst(int delay);
 
 int main(char* argv)
 {
-	string input = "D:\\Document\\Thesis-2017\\Data\\500sceneimages\\thesis-scene-images-1-250\\img8.jpg";
-	string output1 = "E:\\Code\\OCR-Five-Git\\OCR-Five\\OCR-Five\\testsharpen.jpg";
-	string output2 = "E:\\Code\\OCR-Five-Git\\OCR-Five\\OCR-Five\\testblur.jpg";
-	SharpenImage(input, output1);
-	BlurImage(input, output2);
+	PartOneProcess *one = new PartOneProcess();
+	one->MSERCropboxesImages("D:\\Document\\Thesis-2017\\Data\\500sceneimages\\thesis-scene-images-1-250\\file.txt", "D:\\Document\\Thesis-2017\\Data\\Result-MSERwithoutpreprocessing-cropboxes-experiment\\");
+
 
 	return 0;
 }
 
 
 
-void RefineVNTestingSet()
+void InitVNTestingSet()
 {
 	vector<string> fileList;
 	fileList.push_back("D:\\Document\\Thesis-2017\\Data\\500sceneimages\\Vietnamese-testing-set\\img250.jpg");
