@@ -3,7 +3,7 @@
 
 
 
-/*		Private		*/
+/*					Private					*/
 
 string PartOneProcess::ExtractNameOfFileFromPathIn(string PathIn)
 {
@@ -41,17 +41,23 @@ string PartOneProcess::ExtractNameOfFileFromPathIn(string PathIn)
 
 
 
-/*		Public		*/
+/*					Public					*/
+
+/*		Constructor		*/
 
 PartOneProcess::PartOneProcess()
 {
 
 }
 
+/*		Destructor		*/
+
 PartOneProcess::~PartOneProcess()
 {
 
 }
+
+/*		Practice method		*/
 
 void PartOneProcess::ConvertandResizeOneFile(string pathIn, string pathOut)
 {
@@ -213,3 +219,20 @@ void PartOneProcess::MSERCropboxesImages(string fileListPath, string cropboxesFo
 }
 
 
+
+/*		Process method		*/
+
+void PartOneProcess::doProcessOneImage(string PathIn, string resultFolder)
+{
+
+}
+
+void PartOneProcess::SharpenOneImage(Mat &Input, Mat &Output)
+{
+
+}
+
+void PartOneProcess::MSEROneImage(Mat &Input, Mat &Output)
+{
+
+}

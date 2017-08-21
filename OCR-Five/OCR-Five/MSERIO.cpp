@@ -207,8 +207,90 @@ vector<Rect> MSERFILESTREAM::GetBoundingBoxes(string line)
 	while (i < k)
 	{
 		// read one by one, each seperate by ' ; '
-
+		int x, y, width, height;
+		vector<char> tmp;
+		// get x
+		while (i < k && line[i] != ' ')
+		{
+			tmp.push_back(line[i]);
+			i++;
+		}
+		i++;
+		int k1 = tmp.size();
+		char *tmp2 = new char[k1 + 1];
+		for (int j = 0; j < k1; j++)
+		{
+			tmp2[j] = tmp[j];
+		}
+		tmp2[k1] = 0;
+		tmp.clear();
+		x = atoi(tmp2);
+		delete[] tmp2;
+		// get y
+		while (i < k && line[i] != ' ')
+		{
+			tmp.push_back(line[i]);
+			i++;
+		}
+		i++;
+		k1 = tmp.size();
+		tmp2 = new char[k1 + 1];
+		for (int j = 0; j < k1; j++)
+		{
+			tmp2[j] = tmp[j];
+		}
+		tmp2[k1] = 0;
+		tmp.clear();
+		y = atoi(tmp2);
+		delete[] tmp2;
+		// get width
+		while (i < k && line[i] != ' ')
+		{
+			tmp.push_back(line[i]);
+			i++;
+		}
+		i++;
+		k1 = tmp.size();
+		tmp2 = new char[k1 + 1];
+		for (int j = 0; j < k1; j++)
+		{
+			tmp2[j] = tmp[j];
+		}
+		tmp2[k1] = 0;
+		tmp.clear();
+		width = atoi(tmp2);
+		delete[] tmp2;
+		// get height
+		while (i < k && line[i] != ' ')
+		{
+			tmp.push_back(line[i]);
+			i++;
+		}
+		i++;
+		k1 = tmp.size();
+		tmp2 = new char[k1 + 1];
+		for (int j = 0; j < k1; j++)
+		{
+			tmp2[j] = tmp[j];
+		}
+		tmp2[k1] = 0;
+		tmp.clear();
+		height = atoi(tmp2);
+		delete[] tmp2;
+		// add rect
+		Result.push_back(Rect(x, y, width, height));
+		// ignore ' ; '
+		while (i < k && line[i] == ';')
+		{
+			i++;
+		}
+		while (i < k && line[i] == ' ')
+		{
+			i++;
+		}
+		// next box
 	}
+	return Result;
 }
 
 

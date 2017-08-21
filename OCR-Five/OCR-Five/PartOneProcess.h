@@ -22,7 +22,11 @@ private:
 	string ExtractNameOfFileFromPathIn(string PathIn);
 
 public:
+
+	/*		Constructor		*/
 	PartOneProcess();
+
+	/*		Practice method		*/
 
 	void ConvertandResizeOneFile(string pathIn, string pathOut);
 
@@ -36,6 +40,15 @@ public:
 
 	void MSERCropboxesImages(string fileListPath, string cropboxesFolder);
 
+	/*		Process method		*/
+
+	void doProcessOneImage(string PathIn, string resultFolder);
+
+	void SharpenOneImage(Mat &Input, Mat &Output);
+
+	void MSEROneImage(Mat &Input, Mat &Output);
+
+	/*		Destructor		*/
 	~PartOneProcess();
 };
 
