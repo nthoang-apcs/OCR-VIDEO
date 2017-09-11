@@ -1,4 +1,5 @@
-﻿  MSERIO.cpp
-e:\code\ocr-five-git\ocr-five\ocr-five\mserio.cpp(192): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+﻿  PartOneProcess.cpp
+e:\code\ocr-five-git\ocr-five\ocr-five\partoneprocess.cpp(126): warning C4018: '<': signed/unsigned mismatch
+e:\code\ocr-five-git\ocr-five\ocr-five\partoneprocess.cpp(307): warning C4018: '<': signed/unsigned mismatch
   OCR-Five.vcxproj -> E:\Code\OCR-Five-Git\OCR-Five\Debug\OCR-Five.exe
   OCR-Five.vcxproj -> E:\Code\OCR-Five-Git\OCR-Five\Debug\OCR-Five.pdb (Full PDB)

@@ -42,12 +42,22 @@ public:
 	// ...
 	/*		Format of vector of boxes		*/
 	// [x1 y1 width1 height1] ; [x2 y2 width2 height2] ; ... ; [xn yn widthn heightn] ;
+	
 	// write to path
-	void WriteToFile(string path, string srcFolder, vector<string> &PathIn, vector<vector<Rect>> &BBoxes, vector<double> &TimeRunning);
+	// srcFolder = Folder to get the resource
+	void WriteImagesToFile(string path, string srcFolder, vector<string> &PathIn, vector<vector<Rect>> &BBoxes, vector<double> &TimeRunning);
+	
+	void WriteOneImageToFile(string pathIn, string srcPath, vector<Rect> &BBoxes, double &TimeRunning);
+	
+	void WriteOneImageToFile(string pathIn, string srcPath, vector<vector<Rect>> &LinesText, double &TimeRunning);
+
 	// read from path
-	void ReadFromFile(string path, string &srcFolder, double &averagetime, vector<string> &PathIn, vector<vector<Rect>> &BBoxes, vector<double> &TimeRunning);
+	void ReadImagesFromFile(string path, string &srcFolder, double &averagetime, vector<string> &PathIn, vector<vector<Rect>> &BBoxes, vector<double> &TimeRunning);
 
+	void ReadOneImageFromFile(string pathIn, string &srcPath, vector<Rect> &BBoxes, double &TimeRunning);
 
+	// not finish yet
+	void ReadOneImageFromFile(string pathIn, string &srcPath, vector<vector<Rect>> &LinesText, double &TimeRunning);
 
 	~MSERFILESTREAM();
 };

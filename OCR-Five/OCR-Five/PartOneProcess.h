@@ -4,6 +4,7 @@
 #include <opencv2\imgcodecs.hpp> 
 #include "opencv2/core/utility.hpp"
 #include "opencv2/highgui.hpp"
+#include "MSERIO.h"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -17,14 +18,11 @@ class PartOneProcess
 {
 private:
 	
+	void WriteOneImageToFile(string PathIn, string resultFolder, vector<Rect> &BBoxes, double &TimeRunning, int index);
 
+	void WriteOneImageToFile(string PathIn, string resultFolder, vector<vector<Rect>> &LinesText, double &TimeRunning, int index);
 
 	string ExtractNameOfFileFromPathIn(string PathIn);
-
-public:
-
-	/*		Constructor		*/
-	PartOneProcess();
 
 	/*		Practice method		*/
 
@@ -40,13 +38,27 @@ public:
 
 	void MSERCropboxesImages(string fileListPath, string cropboxesFolder);
 
-	/*		Process method		*/
-
-	void doProcessOneImage(string PathIn, string resultFolder);
+	void RemoveSingleBoxes(vector<Rect> &BBoxes);
 
 	void SharpenOneImage(Mat &Input, Mat &Output);
 
-	void MSEROneImage(Mat &Input, Mat &Output);
+	void MSEROneImage(Mat &Input, Mat &Output, vector<Rect> &BBoxes, double &TimeRunning);
+
+	// result is in LinesText, BBoxes is the same as before input
+	void PostMserProcessing(Mat& input, vector<Rect> &BBoxes, double &TimeRunning);
+
+public:
+
+	/*		Constructor		*/
+	PartOneProcess();
+
+	/*		Process method		*/
+
+	void doProcessOneImageWithPostProcessing(string PathIn, string resultFolder);
+
+	
+
+	
 
 	/*		Destructor		*/
 	~PartOneProcess();

@@ -306,7 +306,7 @@ MSERFILESTREAM::~MSERFILESTREAM()
 
 }
 
-void MSERFILESTREAM::WriteToFile(string path, string srcFolder, vector<string> &PathIn, vector<vector<Rect>> &BBoxes, vector<double> &TimeRunning)
+void MSERFILESTREAM::WriteImagesToFile(string path, string srcFolder, vector<string> &PathIn, vector<vector<Rect>> &BBoxes, vector<double> &TimeRunning)
 {
 	// get the average
 	double average = 0.00000;
@@ -341,7 +341,60 @@ void MSERFILESTREAM::WriteToFile(string path, string srcFolder, vector<string> &
 	}
 }
 
-void MSERFILESTREAM::ReadFromFile(string path, string &srcFolder, double &averagetime, vector<string> &PathIn, vector<vector<Rect>> &BBoxes, vector<double> &TimeRunning)
+void MSERFILESTREAM::WriteOneImageToFile(string pathIn, string srcPath, vector<Rect> &BBoxes, double &TimeRunning)
+{
+	ofstream ofs;
+	ofs.open(pathIn);
+	if (ofs.is_open())
+	{
+		int k = BBoxes.size();
+		ofs << "SRC: " << srcPath << "\n";
+		ofs << "TIME-RUNNING: " << TimeRunning << " seconds.\n";
+		ofs << "TOTAL-BBOXES: " << k << "\n";
+		ofs << "BOUNDING-BOXES: ";
+		for (int j = 0; j < k; j++)
+		{
+			ofs << BBoxes[j].x << " " << BBoxes[j].y << " " << BBoxes[j].width << " " << BBoxes[j].height << " ; ";
+		}
+		ofs << "\n";
+		ofs.close();
+	}
+}
+
+void MSERFILESTREAM::WriteOneImageToFile(string pathIn, string srcPath, vector<vector<Rect>> &LinesText, double &TimeRunning)
+{
+	ofstream ofs;
+	ofs.open(pathIn);
+	if (ofs.is_open())
+	{
+		int k = LinesText.size();
+		// get total boxes
+		int total = 0;
+		for (int i = 0; i < k; i++)
+		{
+			total += LinesText[i].size();
+		}
+		// write
+		ofs << "SRC: " << srcPath << "\n";
+		ofs << "TIME-RUNNING: " << TimeRunning << " seconds.\n";
+		ofs << "TOTAL-BBOXES: " << total << "\n";
+		ofs << "BOUNDING-BOXES: " << "\n";
+		for (int i = 0; i < k; i++)
+		{
+			ofs << "Lines-" << to_string(i + 1) << ": ";
+			int k1 = LinesText[i].size();
+			for (int j = 0; j < k1; j++)
+			{
+				ofs << LinesText[i][j].x << " " << LinesText[i][j].y << " " << LinesText[i][j].width << " " << LinesText[i][j].height << " ; ";
+			}
+			ofs << "\n";
+		}
+		ofs << "\n";
+		ofs.close();
+	}
+}
+
+void MSERFILESTREAM::ReadImagesFromFile(string path, string &srcFolder, double &averagetime, vector<string> &PathIn, vector<vector<Rect>> &BBoxes, vector<double> &TimeRunning)
 {
 	// read
 	ifstream ifs;
@@ -377,4 +430,33 @@ void MSERFILESTREAM::ReadFromFile(string path, string &srcFolder, double &averag
 		}
 		ifs.close();
 	}
+}
+
+void MSERFILESTREAM::ReadOneImageFromFile(string pathIn, string &srcPath, vector<Rect> &BBoxes, double &TimeRunning)
+{
+	// read
+	ifstream ifs;
+	ifs.open(pathIn);
+	if (ifs.is_open())
+	{
+		string line;
+		getline(ifs, line);
+		srcPath = GetSrcPath(line);
+		// read time running
+		getline(ifs, line);
+		TimeRunning = GetTimeRunning(line);
+		// read total boxes
+		getline(ifs, line);
+		// not necessary
+		//double totalboxes = GetTotalBoxes(line);
+		// read bounding boxes
+		getline(ifs, line);
+		BBoxes = GetBoundingBoxes(line);
+		ifs.close();
+	}
+}
+
+void MSERFILESTREAM::ReadOneImageFromFile(string pathIn, string &srcPath, vector<vector<Rect>> &LinesText, double &TimeRunning)
+{
+
 }
