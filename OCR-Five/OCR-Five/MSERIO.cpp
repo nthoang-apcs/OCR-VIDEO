@@ -2,38 +2,6 @@
 
 /*		Private		*/
 
-string MSERFILESTREAM::ExtractNameOfFileFromPathIn(string PathIn)
-{
-	int leng = PathIn.length();
-	int pos = leng - 1;
-	do
-	{
-		pos--;
-	} while (PathIn[pos] != '.' && pos > 0);
-	// pos at char '.'
-	int pos2 = pos - 1;
-	do
-	{
-		pos2--;
-	} while (PathIn[pos2] != '\\' && pos2 > 0);
-	// pos2 at char '\'
-	pos2++;
-	// get name
-	vector<char> tmp;
-	for (int i = pos2; i < pos; i++)
-	{
-		tmp.push_back(PathIn[i]);
-	}
-	int tmplen = tmp.size();
-	char *tmp2 = new char[tmplen + 1];
-	for (int i = 0; i < tmplen; i++)
-	{
-		tmp2[i] = tmp[i];
-	}
-	tmp2[tmplen] = '\0';
-	tmp.clear();
-	return string(tmp2);
-}
 
 string MSERFILESTREAM::GetSrcFolder(string line)
 {

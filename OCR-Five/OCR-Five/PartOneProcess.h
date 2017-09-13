@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+#include "CommonStructAndFunction.h"
 using namespace std;
 using namespace cv;
 
@@ -22,7 +23,7 @@ private:
 
 	void WriteOneImageToFile(string PathIn, string resultFolder, vector<vector<Rect>> &LinesText, double &TimeRunning, int index);
 
-	string ExtractNameOfFileFromPathIn(string PathIn);
+	
 
 	/*		Practice method		*/
 
@@ -30,19 +31,10 @@ private:
 
 	void ConvertandResizeMultipleFiles(vector<string> fileList, string resultFolder);
 
-	void SharpenOneImage(string pathIn, string pathOut);
-
-	void MSEROneImage(string pathIn, string pathOut);
-
 	void MSERCropboxesOneImage(string pathIn, string cropboxesFolder);
 
 	void MSERCropboxesImages(string fileListPath, string cropboxesFolder);
 
-	void RemoveSingleBoxes(vector<Rect> &BBoxes);
-
-	void SharpenOneImage(Mat &Input, Mat &Output);
-
-	void MSEROneImage(Mat &Input, Mat &Output, vector<Rect> &BBoxes, double &TimeRunning);
 
 	// result is in LinesText, BBoxes is the same as before input
 	void PostMserProcessing(Mat& input, vector<Rect> &BBoxes, double &TimeRunning);
@@ -63,9 +55,3 @@ public:
 	/*		Destructor		*/
 	~PartOneProcess();
 };
-
-
-// ratio for line height and width:
-/*
-
-*/

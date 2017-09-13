@@ -1,5 +1,9 @@
-﻿  PartOneProcess.cpp
-e:\code\ocr-five-git\ocr-five\ocr-five\partoneprocess.cpp(126): warning C4018: '<': signed/unsigned mismatch
-e:\code\ocr-five-git\ocr-five\ocr-five\partoneprocess.cpp(307): warning C4018: '<': signed/unsigned mismatch
+﻿  CommonStructAndFunction.cpp
+e:\code\ocr-five-git\ocr-five\ocr-five\commonstructandfunction.cpp(35): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  Source.cpp
+  PartOneProcess.cpp
+  MSERIO.cpp
   OCR-Five.vcxproj -> E:\Code\OCR-Five-Git\OCR-Five\Debug\OCR-Five.exe
   OCR-Five.vcxproj -> E:\Code\OCR-Five-Git\OCR-Five\Debug\OCR-Five.pdb (Full PDB)

@@ -5,38 +5,7 @@
 
 /*					Private					*/
 
-string PartOneProcess::ExtractNameOfFileFromPathIn(string PathIn)
-{
-	int leng = PathIn.length();
-	int pos = leng - 1;
-	do
-	{
-		pos--;
-	} while (PathIn[pos] != '.' && pos > 0);
-	// pos at char '.'
-	int pos2 = pos - 1;
-	do
-	{
-		pos2--;
-	} while (PathIn[pos2] != '\\' && pos2 > 0);
-	// pos2 at char '\'
-	pos2++;
-	// get name
-	vector<char> tmp;
-	for (int i = pos2; i < pos; i++)
-	{
-		tmp.push_back(PathIn[i]);
-	}
-	int tmplen = tmp.size();
-	char *tmp2 = new char[tmplen + 1];
-	for (int i = 0; i < tmplen; i++)
-	{
-		tmp2[i] = tmp[i];
-	}
-	tmp2[tmplen] = '\0';
-	tmp.clear();
-	return string(tmp2);
-}
+
 
 void PartOneProcess::WriteOneImageToFile(string PathIn, string resultFolder, vector<Rect> &BBoxes, double &TimeRunning, int index)
 {
@@ -95,41 +64,6 @@ void PartOneProcess::ConvertandResizeMultipleFiles(vector<string> fileList, stri
 		pathOut.clear();
 	}
 	return;
-}
-
-void PartOneProcess::SharpenOneImage(string pathIn, string pathOut)
-{
-	// changing values of sigma, threshold, amount will give different results
-	// sharpen image using "unsharp mask" algorithm
-	Mat blurred; double sigma = 1, threshold = 5, amount = 1;
-	Mat img = imread(pathIn);
-	GaussianBlur(img, blurred, Size(), sigma, sigma);
-	Mat lowContrastMask = abs(img - blurred) < threshold;
-	Mat sharpened = img*(1 + amount) + blurred*(-amount);
-	img.copyTo(sharpened, lowContrastMask);
-	imwrite(pathOut, sharpened);
-}
-
-void PartOneProcess::MSEROneImage(string pathIn, string pathOut)
-{
-
-	Mat inImg = imread(pathIn);
-	// convert gray from inImg to textImg
-	Mat textImg;
-	cvtColor(inImg, textImg, CV_BGR2GRAY);
-	//Extract MSER
-	vector< vector< Point> > contours;
-	vector< Rect> bboxes;
-	Ptr< MSER> mser = MSER::create(21, (int)(0.00002*textImg.cols*textImg.rows), (int)(0.05*textImg.cols*textImg.rows), 1, 0.7);
-	mser->detectRegions(textImg, contours, bboxes);
-
-	for (int i = 0; i < bboxes.size(); i++)
-	{
-		rectangle(inImg, bboxes[i], CV_RGB(0, 255, 0));
-	}
-	imwrite(pathOut, inImg);
-	contours.clear();
-	bboxes.clear();
 }
 
 void PartOneProcess::MSERCropboxesOneImage(string pathIn, string cropboxesFolder)
@@ -259,7 +193,7 @@ void PartOneProcess::doProcessOneImageWithPostProcessing(string PathIn, string r
 	// post processing to reduce bboxes
 	PostMserProcessing(dest1, BBoxes, timerun);
 	totaltimerun += timerun;
-	// add BBoxes in BBoxes to dest2
+	// add Boxes in BBoxes to dest2
 
 	// write mser image to file - after postprocessing
 	string pathout2 = resultFolder + filename + "-mser-after-postprocessing.png";
@@ -271,107 +205,17 @@ void PartOneProcess::doProcessOneImageWithPostProcessing(string PathIn, string r
 	BBoxes.clear();
 }
 
-void PartOneProcess::SharpenOneImage(Mat &Input, Mat &Output)
-{
-	Mat blurred; 
-	double sigma = 1;
-	double threshold = 5;
-	double amount = 1;
-	GaussianBlur(Input, blurred, Size(), sigma, sigma);
-
-	Mat lowContrastMask = abs(Input - blurred) < threshold;
-
-	Output = Input*(1 + amount) + blurred*(-amount);
-
-	Input.copyTo(Output, lowContrastMask);
-}
 
 void PartOneProcess::PostMserProcessing(Mat& input, vector<Rect> &BBoxes, double &TimeRunning)
 {
 	clock_t start = clock();
 	// remove areas of stand alone single box
 	RemoveSingleBoxes(BBoxes);
+	// stroke width
 
-
+	// merge inside box
+	MergeInsideBoxes(BBoxes);
 
 	TimeRunning = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
 }
 
-void PartOneProcess::MSEROneImage(Mat &Input, Mat &Output, vector<Rect> &BBoxes, double &TimeRunning)
-{
-	clock_t start = clock();
-	// convert gray from src to textImg
-	Mat textImg;
-	cvtColor(Input, textImg, CV_BGR2GRAY);
-	// sharpen
-	SharpenOneImage(textImg, Input);
-	// run mser
-	vector<vector<Point>> contours;
-	Ptr<MSER> mser = MSER::create(
-		21,
-		(int)(0.00002*Input.cols*Input.rows),
-		(int)(0.05*Input.cols*Input.rows),
-		1, 0.7
-	);
-	mser->detectRegions(Input, contours, BBoxes);
-	TimeRunning = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
-	Output = Input.clone();
-	for (int i = 0; i < BBoxes.size(); i++)
-	{
-		rectangle(Output, BBoxes[i], CV_RGB(0, 255, 0));
-	}
-	contours.clear();
-}
-
-void PartOneProcess::RemoveSingleBoxes(vector<Rect> &BBoxes)
-{
-	int k1 = BBoxes.size();
-	vector<Rect> tmpBoxes;
-	// sort list area
-	for (int i = 0; i < (k1 - 1); i++)
-	{
-		bool checked = false;
-		for (int j = 0; j < (k1 - i - 1); j++)
-		{
-			if ((BBoxes[j].width * BBoxes[j].height) > (BBoxes[j + 1].width * BBoxes[j + 1].height))
-			{
-				// swap
-				int x = BBoxes[j].x;
-				int y = BBoxes[j].y;
-				int w = BBoxes[j].width;
-				int h = BBoxes[j].height;
-				BBoxes[j].x = BBoxes[j + 1].x;
-				BBoxes[j].y = BBoxes[j + 1].y;
-				BBoxes[j].width = BBoxes[j + 1].width;
-				BBoxes[j].height = BBoxes[j + 1].height;
-				BBoxes[j + 1].x = x;
-				BBoxes[j + 1].y = y;
-				BBoxes[j + 1].width = w;
-				BBoxes[j + 1].height = h;
-			}
-		}
-		if (checked == false)
-		{
-			break;
-		}
-	}
-	// start to check the condition: 
-	// if a single box areas[i] stands alone and have areas / areas[i - 1] > 4 && have areas / areas[i + 1] > 4
-	// => not add to tmpboxes
-	int i = 0;
-	while (i < k1)
-	{
-		if (i == 0)
-		{
-
-		}
-		else if (i == (k1 - 1))
-		{
-
-		}
-		else
-		{
-
-		}
-	}
-}

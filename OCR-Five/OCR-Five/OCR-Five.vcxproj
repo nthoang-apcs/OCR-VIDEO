@@ -84,11 +84,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CommonStructAndFunction.cpp" />
     <ClCompile Include="MSERIO.cpp" />
     <ClCompile Include="PartOneProcess.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommonStructAndFunction.h" />
     <ClInclude Include="MSERIO.h" />
     <ClInclude Include="PartOneProcess.h" />
   </ItemGroup>

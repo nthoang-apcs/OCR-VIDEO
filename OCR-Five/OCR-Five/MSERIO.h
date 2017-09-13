@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+#include "CommonStructAndFunction.h"
 using namespace std;
 using namespace cv;
 
@@ -14,7 +15,6 @@ class MSERFILESTREAM
 private:
 	// variable for mser store
 
-	string ExtractNameOfFileFromPathIn(string PathIn);
 
 	// support ReadFromFile function
 	string GetSrcFolder(string line);
