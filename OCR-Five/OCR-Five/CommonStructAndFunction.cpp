@@ -1,5 +1,11 @@
 #include "CommonStructAndFunction.h"
 
+const double PI = 3.14159265;
+
+const Scalar BLUE(255, 0, 0);
+const Scalar GREEN(0, 255, 0);
+const Scalar RED(0, 0, 255);
+
 
 void SharpenOneImage(Mat &input, Mat &output, double sigma, double threshold, double amount)
 {
@@ -130,8 +136,112 @@ void RemoveSingleBoxes(vector<Rect> &BBoxes)
 
 void MergeInsideBoxes(vector<Rect> &BBoxes)
 {
+	// sort Y
+	SortYCoordinate(BBoxes);
+	// check boxes inside
+	vector<Rect> tmpBoxes;
+	vector<int> IgnoreBoxes;
+	int k1 = BBoxes.size();
+	for (int i = 0; i < (k1 - 1); i++)
+	{
+		bool checkedignore = false;
+		int k2 = IgnoreBoxes.size();
+		for (int j = 0; j < k2; j++)
+		{
+			if (IgnoreBoxes[j] == i)
+			{
+				checkedignore = true;
+				break;
+			}
+		}
+		if (checkedignore == true)
+			continue;
+		for (int j = i + 1; j < k1; j++)
+		{
+			checkedignore = false;
+			//int k2 = IgnoreBoxes.size();
+			// not change k2 because it is not necessary
+			for (int j1 = 0; j1 < k2; j1++)
+			{
+				if (IgnoreBoxes[j1] == i)
+				{
+					checkedignore = true;
+					break;
+				}
+			}
+			if (checkedignore == true)
+				continue;
+			else
+			{
+				// check if inside
+				if (IsB1insideB2(BBoxes[j], BBoxes[i]))
+				{
+					IgnoreBoxes.push_back(j);
+				}
+			}
+		}
+	}
+	// new BBoxes
+	int k2 = IgnoreBoxes.size();
+	for (int i = 0; i < k1; i++)
+	{
+		bool checkedIgnore = false;
+		for (int j = 0; j < k2; j++)
+		{
+			if (IgnoreBoxes[j] == i)
+			{
+				checkedIgnore = true;
+				break;
+			}
+		}
+		if (checkedIgnore == false)
+		{
+			tmpBoxes.push_back(BBoxes[i]);
+		}
+	}
+	BBoxes.clear();
+	BBoxes = tmpBoxes;
+	tmpBoxes.clear();
+}
+
+void CheckStrokeWidthVariation(vector<Rect> &BBoxes)
+{
 
 }
+
+
+
+
+
+void SortYCoordinate(vector<Rect> &BBoxes)
+{
+	bool checked = false;
+	int k1 = BBoxes.size();
+	int k2 = k1 - 1;
+	for (int i = 0; i < k2; i++)
+	{
+		checked = false;
+		k2 = k1 - 1 - i;
+		for (int j = 0; j < k2; j++)
+		{
+			if (BBoxes[j].y > BBoxes[j + 1].y)
+			{
+				checked = true;
+				int x = BBoxes[j].x;
+				int y = BBoxes[j].y;
+				int w = BBoxes[j].width;
+				int h = BBoxes[j].height;
+				BBoxes[j] = Rect(BBoxes[j + 1].x, BBoxes[j + 1].y, BBoxes[j + 1].width, BBoxes[j + 1].height);
+				BBoxes[j + 1] = Rect(x, y, w, h);
+			}
+		}
+		if (checked == false)
+		{
+			break;
+		}
+	}
+}
+
 
 
 bool IsB1insideB2(Rect B1, Rect B2)
@@ -139,12 +249,32 @@ bool IsB1insideB2(Rect B1, Rect B2)
 	if (B1.x >= B2.x && B1.y >= B2.y)
 	{
 		// B1 is on the right and below side of B2
-
+		// check limit of B1
+		if ((B1.x + B1.width) <= (B2.x + B2.width) && (B1.y + B1.height) <= (B2.y + B2.height))
+		{
+			return true;
+		}
+		return false;
 	}
 	else
 	{
 		return false;
 	}
+}
+
+bool Point2dSort(SWTPoint2d const & lhs, SWTPoint2d const & rhs)
+{
+	return lhs.SWT < rhs.SWT;
+}
+
+bool chainSortDist(const Chain &lhs, const Chain &rhs) 
+{
+	return lhs.dist < rhs.dist;
+}
+
+bool chainSortLength(const Chain &lhs, const Chain &rhs) 
+{
+	return lhs.components.size() > rhs.components.size();
 }
 
 

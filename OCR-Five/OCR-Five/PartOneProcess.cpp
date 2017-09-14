@@ -212,7 +212,7 @@ void PartOneProcess::PostMserProcessing(Mat& input, vector<Rect> &BBoxes, double
 	// remove areas of stand alone single box
 	RemoveSingleBoxes(BBoxes);
 	// stroke width
-
+	CheckStrokeWidthVariation(BBoxes);
 	// merge inside box
 	MergeInsideBoxes(BBoxes);
 
