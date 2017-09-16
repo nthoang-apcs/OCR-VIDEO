@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <ctime>
 using namespace std;
 using namespace cv;
@@ -35,19 +36,48 @@ struct Chain {
 };
 
 
+/*		Main functions		*/
+
 void SharpenOneImage(Mat &input, Mat &output, double sigma = 1, double threshold = 5, double amount = 1);
 
 void MSEROneImage(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeRunning);
 
-void RemoveSingleBoxes(vector<Rect> &BBoxes);
+void PostProcessing(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeRunning);
+
+
+/*		Statistic functions		*/
+
+void GetListName(vector<string> &Paths, string resultFolder, string filename);
+
+void GetListTotalBoxes(vector<string> &Paths, string resultFolder, string filename);
+
+void GetListRunTime(vector<string> &Paths, string resultFolder, string filename);
+
+
+/*		Support functions		*/
+
+void RemoveUnusualAreaBoxes(vector<Rect> &BBoxes);
+
+void RemoveSingleBoxTextLine(vector<Rect> &BBoxes);
 
 void MergeInsideBoxes(vector<Rect> &BBoxes);
 
 void CheckStrokeWidthVariation(vector<Rect> &BBoxes);
 
+void AddRectToMat(vector<Rect> &BBoxes, Mat &input, Mat &output);
+
+void AddListPath(vector<string> &Paths, string filepath);
+
+/*		Sort functions		*/
+
 void SortYCoordinate(vector<Rect> &BBoxes);
 
+void SortArea(vector<Rect> &BBoxes);
 
+
+/*		Check functions		*/
+
+// check if B1 is inside B2 and B1.area * 3 >= B2
 bool IsB1insideB2(Rect B1, Rect B2);
 
 bool Point2dSort(SWTPoint2d const & lhs, SWTPoint2d const & rhs);
@@ -57,6 +87,10 @@ bool chainSortDist(const Chain &lhs, const Chain &rhs);
 bool chainSortLength(const Chain &lhs, const Chain &rhs);
 
 
+/*		Others		*/
+
 string ExtractNameOfFileFromPathIn(string PathIn);
 
+int ExtractTotalBoxesFromString(string line);
 
+double ExtractTimeRunningFromString(string line);

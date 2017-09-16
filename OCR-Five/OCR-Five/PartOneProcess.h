@@ -36,8 +36,6 @@ private:
 	void MSERCropboxesImages(string fileListPath, string cropboxesFolder);
 
 
-	// result is in LinesText, BBoxes is the same as before input
-	void PostMserProcessing(Mat& input, vector<Rect> &BBoxes, double &TimeRunning);
 
 public:
 
@@ -48,7 +46,9 @@ public:
 
 	void doProcessOneImageWithPostProcessing(string PathIn, string resultFolder);
 
-	
+	void doProcessOneImageWithoutPostProcessing(string PathIn, string resultFolder);
+
+	void doProcessImagesWithoutPostProcessing(vector<string> PathIn, string resultFolder);
 
 	
 

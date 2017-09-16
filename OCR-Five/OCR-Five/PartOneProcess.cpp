@@ -191,31 +191,53 @@ void PartOneProcess::doProcessOneImageWithPostProcessing(string PathIn, string r
 	WriteOneImageToFile(PathIn, resultFolder, BBoxes, timerun, 0);
 	
 	// post processing to reduce bboxes
-	PostMserProcessing(dest1, BBoxes, timerun);
+	PostProcessing(src, dest2, BBoxes, timerun);
 	totaltimerun += timerun;
-	// add Boxes in BBoxes to dest2
-
 	// write mser image to file - after postprocessing
 	string pathout2 = resultFolder + filename + "-mser-after-postprocessing.png";
 	imwrite(pathout2, dest2);
 	// write to file after reduce bboxes and possible Lines of Texts
 	WriteOneImageToFile(PathIn, resultFolder, BBoxes, timerun, 1);
+
 	cout << "Total run time: " << totaltimerun << endl;
 	// clear memory
 	BBoxes.clear();
 }
 
 
-void PartOneProcess::PostMserProcessing(Mat& input, vector<Rect> &BBoxes, double &TimeRunning)
+void PartOneProcess::doProcessOneImageWithoutPostProcessing(string PathIn, string resultFolder)
 {
-	clock_t start = clock();
-	// remove areas of stand alone single box
-	RemoveSingleBoxes(BBoxes);
-	// stroke width
-	CheckStrokeWidthVariation(BBoxes);
-	// merge inside box
-	MergeInsideBoxes(BBoxes);
+	Mat src = imread(PathIn);
+	// dest 1 = sharpen + mser
+	// dest 2 = post processing
+	Mat dest1;
+	// all bounding boxes need to check in ocr
+	vector<Rect> BBoxes;
+	// total time run, time running does not include time write image output to have a clear view to result
+	double totaltimerun = 0;
+	double timerun = 0;
 
-	TimeRunning = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
+	// mser
+	MSEROneImage(src, dest1, BBoxes, timerun);
+	totaltimerun += timerun;
+	// write sharpen and mser images to file
+	string filename = ExtractNameOfFileFromPathIn(PathIn);
+	string pathout1 = resultFolder + filename + "-mser-before-postprocessing.png";
+	imwrite(pathout1, dest1);
+	// write to file bboxes, time run
+	WriteOneImageToFile(PathIn, resultFolder, BBoxes, timerun, 0);
+	
+	// cleaning
+	BBoxes.clear();
 }
 
+
+void PartOneProcess::doProcessImagesWithoutPostProcessing(vector<string> PathIn, string resultFolder)
+{
+	int k = PathIn.size();
+	for (int i = 0; i < k; i++)
+	{
+		cout << "Run index: " << i << endl;
+		doProcessOneImageWithoutPostProcessing(PathIn[i], resultFolder);
+	}
+}
