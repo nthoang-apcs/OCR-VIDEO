@@ -31,10 +31,7 @@ private:
 
 	void ConvertandResizeMultipleFiles(vector<string> fileList, string resultFolder);
 
-	void MSERCropboxesOneImage(string pathIn, string cropboxesFolder);
-
-	void MSERCropboxesImages(string fileListPath, string cropboxesFolder);
-
+	
 
 
 public:

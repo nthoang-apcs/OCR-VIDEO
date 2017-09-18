@@ -1,10 +1,3 @@
-﻿  Source.cpp
-  PartOneProcess.cpp
-  CommonStructAndFunction.cpp
-  Generating Code...
-  Compiling...
-  MSERIO.cpp
-e:\code\ocr-five-git\ocr-five\ocr-five\mserio.cpp(160): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-  Generating Code...
+﻿  CommonStructAndFunction.cpp
   OCR-Five.vcxproj -> E:\Code\OCR-Five-Git\OCR-Five\Debug\OCR-Five.exe
   OCR-Five.vcxproj -> E:\Code\OCR-Five-Git\OCR-Five\Debug\OCR-Five.pdb (Full PDB)

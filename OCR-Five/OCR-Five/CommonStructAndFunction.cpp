@@ -24,22 +24,26 @@ void MSEROneImage(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeRun
 	clock_t start = clock();
 	// convert gray from src to textImg
 	Mat textImg;
-	Mat origin = input.clone();
 	cvtColor(input, textImg, CV_BGR2GRAY);
 	// sharpen
-	SharpenOneImage(textImg, input);
+	Mat sharpened;
+	SharpenOneImage(textImg, sharpened);
 	// run mser
 	vector<vector<Point>> contours;
 	Ptr<MSER> mser = MSER::create(
 		21,
-		(int)(0.00002*input.cols*input.rows),
-		(int)(0.05*input.cols*input.rows),
+		(int)(0.00002*sharpened.cols*sharpened.rows),
+		(int)(0.05*sharpened.cols*sharpened.rows),
 		1, 0.7
 	);
-	mser->detectRegions(input, contours, BBoxes);
+	mser->detectRegions(sharpened, contours, BBoxes);
+
+	// remove duplicated Rects
+	RemoveDuplicatedBoxes(BBoxes);
+
 	TimeRunning = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
 	// add rect to output Mat
-	AddRectToMat(BBoxes, origin, output);
+	AddRectToMat(BBoxes, input, output);
 	// cleaning
 	contours.clear();
 }
@@ -48,9 +52,9 @@ void PostProcessing(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeR
 {
 	clock_t start = clock();
 	// sort area ascending
-	SortArea(BBoxes);
+	//SortArea(BBoxes);
 	// remove areas of stand alone single box
-	RemoveUnusualAreaBoxes(BBoxes);
+	//RemoveUnusualAreaBoxes(BBoxes);
 	// sort y coordinate ascending
 	SortYCoordinate(BBoxes);
 	// remove single box text line
@@ -271,6 +275,12 @@ void GetListBoxesInOneImage(vector<Rect> &BBoxes, string filepath)
 /*		****************************************		*/
 
 
+void RemoveDuplicatedBoxes(vector<Rect> &BBoxes)
+{
+	vector<Rect> tmpBoxes;
+	int k = BBoxes.size();
+}
+
 void RemoveUnusualAreaBoxes(vector<Rect> &BBoxes)
 {
 	int k1 = BBoxes.size();
@@ -371,6 +381,10 @@ void MergeInsideBoxes(vector<Rect> &BBoxes)
 				continue;
 			if (IsB1insideB2(BBoxes[i], BBoxes[j]))
 			{
+				cout << "Rect (" << BBoxes[i].x << ", " << BBoxes[i].y << ", " << BBoxes[i].width << ", " << BBoxes[i].height;
+				cout << ") is inside Rect (";
+				cout << BBoxes[j].x << ", " << BBoxes[j].y << ", " << BBoxes[j].width << ", " << BBoxes[j].height;
+				cout << ")" << endl;
 				checked = true;
 				break;
 			}
@@ -433,6 +447,23 @@ void CropBoxesInOneImage(Mat &input, vector<Rect> &BBoxes, string resultFolder, 
 
 }
 
+void writeBoxesToTmpFile(vector<Rect> &BBoxes, string filename)
+{
+	ofstream ofs;
+	ofs.open(filename);
+	if (ofs.is_open())
+	{
+		int k = BBoxes.size();
+		for (int i = 0; i < k; i++)
+		{
+			ofs << "Rect: " << BBoxes[i].x << ", " << BBoxes[i].y << ", " << BBoxes[i].width << ", " << BBoxes[i].height;
+			ofs << "\n";
+		}
+
+		ofs.close();
+	}
+}
+
 
 
 /*		****************************************		*/
@@ -458,6 +489,7 @@ void SortYCoordinate(vector<Rect> &BBoxes)
 				int h = BBoxes[j].height;
 				BBoxes[j] = Rect(BBoxes[j + 1].x, BBoxes[j + 1].y, BBoxes[j + 1].width, BBoxes[j + 1].height);
 				BBoxes[j + 1] = Rect(x, y, w, h);
+
 			}
 		}
 		if (checked == false)
@@ -523,38 +555,16 @@ bool IsB1onsamelineB2(Rect B1, Rect B2)
 {
 	// range from center to upper or lower
 	int range1 = B1.height / 4;
-	int c1x = B1.x + B1.width / 2;
-	int c1y = B1.y + B1.height / 2;
+	int c1y = B1.y + (B1.height / 2);
 	int range2 = B2.height / 4;
-	int c2x = B2.x + B2.width / 2;
-	int c2y = B2.y + B2.height / 2;
+	int c2y = B2.y + (B2.height / 2);
 	// check
-	if (c2y == c1y)
+	int dif = abs(c2y - c1y);
+	if (dif < (range1 + range2))
+	{
 		return true;
-	if (c2y > c1y)
-	{
-		if (c2y <= (c1y + range1))	// c2y in range [c1y, c1y + range1]
-		{
-			return true;
-		}
-		else if ((c2y - range2) <= (c1y + range1))	// c2y - range2 in range [0, c1y + range1]
-		{
-			return true;
-		}
-		return false;
 	}
-	else
-	{
-		if (c2y >= (c1y - range1))	// c2y in range [c1y - range1, c1y]
-		{
-			return true;
-		}
-		else if ((c2y + range2) <= (c1y - range1))	// c2y + range2 in range [c1y - range1, ...]
-		{
-			return true;
-		}
-		return false;
-	}
+	return false;
 }
 
 bool Point2dSort(SWTPoint2d const & lhs, SWTPoint2d const & rhs)

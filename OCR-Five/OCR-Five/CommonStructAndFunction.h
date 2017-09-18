@@ -66,9 +66,12 @@ void GetListBoxesInOneImage(vector<Rect> &BBoxes, string filepath);
 
 /*		Support functions		*/
 
+
+void RemoveDuplicatedBoxes(vector<Rect> &BBoxes);
+
 void RemoveUnusualAreaBoxes(vector<Rect> &BBoxes);
 
-// from center of Rect, text 2 lines, 1 upper 25%, 1 lower 25% 
+// from center of Rect, text 2 lines, 1 upper 25%, 1 lower 25%
 // to check if that space created by 2 lines cuts any other spaces
 // if cut -> on same line
 void RemoveSingleBoxTextLine(vector<Rect> &BBoxes);
@@ -84,6 +87,7 @@ void AddListPath(vector<string> &Paths, string filepath);
 // file name format: [namedefault]-[box-index].jpg
 void CropBoxesInOneImage(Mat &input, vector<Rect> &BBoxes, string resultFolder, string namedefault);
 
+void writeBoxesToTmpFile(vector<Rect> &BBoxes, string filename);
 
 /*		Sort functions		*/
 

@@ -66,89 +66,6 @@ void PartOneProcess::ConvertandResizeMultipleFiles(vector<string> fileList, stri
 	return;
 }
 
-void PartOneProcess::MSERCropboxesOneImage(string pathIn, string cropboxesFolder)
-{
-	time_t begin, end;
-	time(&begin);
-	Mat inImg = imread(pathIn);
-	// convert gray from inImg to textImg
-	Mat textImg;
-	cvtColor(inImg, textImg, CV_BGR2GRAY);
-	//Extract MSER
-	vector< vector< Point> > contours;
-	vector< Rect> bboxes;
-	Ptr< MSER> mser = MSER::create(21, (int)(0.00002*textImg.cols*textImg.rows), (int)(0.05*textImg.cols*textImg.rows), 1, 0.7);
-	mser->detectRegions(textImg, contours, bboxes);
-	// crop bboxes
-	string name = ExtractNameOfFileFromPathIn(pathIn);
-	int k = bboxes.size();
-	for (int i = 0; i < k; i++)
-	{
-		cv::Rect myROI(bboxes[i].x, bboxes[i].y, bboxes[i].width, bboxes[i].height);
-		if (myROI.x >= 0 && myROI.y >= 0 && (myROI.width + myROI.x) < inImg.cols && (myROI.height + myROI.y) < inImg.rows)
-		{
-			// your code
-			cv::Mat croppedImage = inImg(myROI);
-			imwrite(cropboxesFolder + name + "-" + to_string(i) + ".jpg", croppedImage);
-		}
-	}
-	time(&end);
-	double timerun = difftime(end, begin);
-	fstream myFile(cropboxesFolder + "Time-Running-Calculation.txt", fstream::out | fstream::app);
-	if (myFile.is_open())
-	{
-		myFile << "RUNNING_FILE: " << pathIn << "\n";
-		myFile << "MSER_TIME_RUNNING: " << to_string(timerun) << " seconds.\n";
-		myFile.close();
-	}
-	contours.clear();
-	bboxes.clear();
-}
-
-void PartOneProcess::MSERCropboxesImages(string fileListPath, string cropboxesFolder)
-{
-	// init all path in from file list
-	cout << "Init all pathIn." << endl;
-	vector<string> PathIn;
-	ifstream ifs;
-	ifs.open(fileListPath);
-	if (ifs.is_open())
-	{
-		string line;
-		while (getline(ifs, line))
-		{
-			PathIn.push_back(line);
-		}
-		ifs.close();
-		line.clear();
-	}
-	else
-	{
-		cout << "Cant open the file: " << fileListPath << endl;
-	}
-	int k = PathIn.size();
-	// run mser
-	time_t begin, end;
-	time(&begin);
-	cout << "Run 100 indexes." << endl;
-	for (int i = 0; i < k; i++)
-	{
-		cout << "Run index: " << i << endl;
-		MSERCropboxesOneImage(PathIn[i], cropboxesFolder);
-	}
-	time(&end);
-	double totaltime = difftime(end, begin);
-	double average = totaltime / 100;
-	fstream myFile(cropboxesFolder + "Time-Running-Calculation.txt", fstream::out | fstream::app);
-	if (myFile.is_open())
-	{
-		myFile << "TOTAL_TIME_RUNNING: " << to_string(totaltime) << " seconds.\n";
-		myFile << "AVERAGE_TIME_RUNNING: " << to_string(average) << " seconds.\n";
-		myFile.close();
-	}
-	PathIn.clear();
-}
-
 
 /*					Public					*/
 
@@ -245,7 +162,7 @@ void PartOneProcess::doProcessImagesWithoutPostProcessing(vector<string> PathIn,
 void PartOneProcess::doProcessImagesWithPostProcessing(vector<string> &PathIn, string resultFolder)
 {
 	int k = PathIn.size();
-	for (int i = 0; i < k; i++)
+	for (int i = 4; i < k; i++)
 	{
 		cout << "Run index: " << i << endl;
 		doProcessOneImageWithPostProcessing(PathIn[i], resultFolder);
