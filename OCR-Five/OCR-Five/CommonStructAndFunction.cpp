@@ -278,7 +278,28 @@ void GetListBoxesInOneImage(vector<Rect> &BBoxes, string filepath)
 void RemoveDuplicatedBoxes(vector<Rect> &BBoxes)
 {
 	vector<Rect> tmpBoxes;
-	int k = BBoxes.size();
+	int k1 = BBoxes.size();
+	int k2 = tmpBoxes.size();
+	for (int i = 0; i < k1; i++)
+	{
+		k2 = tmpBoxes.size();
+		bool existed = false;
+		for (int j = 0; j < k2; j++)
+		{
+			if (tmpBoxes[j].x == BBoxes[i].x && tmpBoxes[j].y == BBoxes[i].y && tmpBoxes[j].width == BBoxes[i].width && tmpBoxes[j].height == BBoxes[i].height)
+			{
+				existed = true;
+				break;
+			}
+		}
+		if (existed == false)
+		{
+			tmpBoxes.push_back(BBoxes[i]);
+		}
+	}
+	BBoxes.clear();
+	BBoxes = tmpBoxes;
+	tmpBoxes.clear();
 }
 
 void RemoveUnusualAreaBoxes(vector<Rect> &BBoxes)
@@ -381,10 +402,10 @@ void MergeInsideBoxes(vector<Rect> &BBoxes)
 				continue;
 			if (IsB1insideB2(BBoxes[i], BBoxes[j]))
 			{
-				cout << "Rect (" << BBoxes[i].x << ", " << BBoxes[i].y << ", " << BBoxes[i].width << ", " << BBoxes[i].height;
-				cout << ") is inside Rect (";
-				cout << BBoxes[j].x << ", " << BBoxes[j].y << ", " << BBoxes[j].width << ", " << BBoxes[j].height;
-				cout << ")" << endl;
+				//cout << "Rect (" << BBoxes[i].x << ", " << BBoxes[i].y << ", " << BBoxes[i].width << ", " << BBoxes[i].height;
+				//cout << ") is inside Rect (";
+				//cout << BBoxes[j].x << ", " << BBoxes[j].y << ", " << BBoxes[j].width << ", " << BBoxes[j].height;
+				//cout << ")" << endl;
 				checked = true;
 				break;
 			}
