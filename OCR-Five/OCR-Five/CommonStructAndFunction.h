@@ -53,11 +53,24 @@ void GetListTotalBoxes(vector<string> &Paths, string resultFolder, string filena
 
 void GetListRunTime(vector<string> &Paths, string resultFolder, string filename);
 
+// line format: img[number].jpg
+// number range: [start, end)
+void SetListName(int start, int end, string filepath);
+
+// line format: [fileformat]img[number].jpg
+// number range: [start, end)
+void SetListPath(int start, int end, string filepath, string fileformat);
+
+void GetListBoxesInOneImage(vector<Rect> &BBoxes, string filepath);
+
 
 /*		Support functions		*/
 
 void RemoveUnusualAreaBoxes(vector<Rect> &BBoxes);
 
+// from center of Rect, text 2 lines, 1 upper 25%, 1 lower 25% 
+// to check if that space created by 2 lines cuts any other spaces
+// if cut -> on same line
 void RemoveSingleBoxTextLine(vector<Rect> &BBoxes);
 
 void MergeInsideBoxes(vector<Rect> &BBoxes);
@@ -67,6 +80,10 @@ void CheckStrokeWidthVariation(vector<Rect> &BBoxes);
 void AddRectToMat(vector<Rect> &BBoxes, Mat &input, Mat &output);
 
 void AddListPath(vector<string> &Paths, string filepath);
+
+// file name format: [namedefault]-[box-index].jpg
+void CropBoxesInOneImage(Mat &input, vector<Rect> &BBoxes, string resultFolder, string namedefault);
+
 
 /*		Sort functions		*/
 
@@ -79,6 +96,11 @@ void SortArea(vector<Rect> &BBoxes);
 
 // check if B1 is inside B2 and B1.area * 3 >= B2
 bool IsB1insideB2(Rect B1, Rect B2);
+
+// from center of Rect, text 2 lines, 1 upper 25%, 1 lower 25% 
+// to check if that space created by 2 lines cuts any other spaces
+// if cut -> on same line
+bool IsB1onsamelineB2(Rect B1, Rect B2);
 
 bool Point2dSort(SWTPoint2d const & lhs, SWTPoint2d const & rhs);
 

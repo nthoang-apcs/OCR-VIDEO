@@ -50,7 +50,7 @@ public:
 
 	void doProcessImagesWithoutPostProcessing(vector<string> PathIn, string resultFolder);
 
-	
+	void doProcessImagesWithPostProcessing(vector<string> &PathIn, string resultFolder);
 
 	/*		Destructor		*/
 	~PartOneProcess();

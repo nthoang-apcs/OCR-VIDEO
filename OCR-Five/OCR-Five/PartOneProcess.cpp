@@ -241,3 +241,14 @@ void PartOneProcess::doProcessImagesWithoutPostProcessing(vector<string> PathIn,
 		doProcessOneImageWithoutPostProcessing(PathIn[i], resultFolder);
 	}
 }
+
+void PartOneProcess::doProcessImagesWithPostProcessing(vector<string> &PathIn, string resultFolder)
+{
+	int k = PathIn.size();
+	for (int i = 0; i < k; i++)
+	{
+		cout << "Run index: " << i << endl;
+		doProcessOneImageWithPostProcessing(PathIn[i], resultFolder);
+	}
+}
+

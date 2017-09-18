@@ -24,6 +24,7 @@ void MSEROneImage(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeRun
 	clock_t start = clock();
 	// convert gray from src to textImg
 	Mat textImg;
+	Mat origin = input.clone();
 	cvtColor(input, textImg, CV_BGR2GRAY);
 	// sharpen
 	SharpenOneImage(textImg, input);
@@ -38,7 +39,7 @@ void MSEROneImage(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeRun
 	mser->detectRegions(input, contours, BBoxes);
 	TimeRunning = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
 	// add rect to output Mat
-	AddRectToMat(BBoxes, input, output);
+	AddRectToMat(BBoxes, origin, output);
 	// cleaning
 	contours.clear();
 }
@@ -156,6 +157,116 @@ void GetListRunTime(vector<string> &Paths, string resultFolder, string filename)
 	}
 }
 
+void SetListName(int start, int end, string filepath)
+{
+	ofstream ofs;
+	ofs.open(filepath);
+	if (ofs.is_open())
+	{
+		for (int i = start; i < end; i++)
+		{
+			ofs << "img" << i << ".jpg" << "\n";
+		}
+
+		ofs.close();
+	}
+}
+
+void SetListPath(int start, int end, string filepath, string fileformat)
+{
+	ofstream ofs;
+	ofs.open(filepath);
+	if (ofs.is_open())
+	{
+		for (int i = start; i < end; i++)
+		{
+			ofs << fileformat << "img" << i << ".jpg" << "\n";
+		}
+
+		ofs.close();
+	}
+}
+
+void GetListBoxesInOneImage(vector<Rect> &BBoxes, string filepath)
+{
+	ifstream ifs;
+	ifs.open(filepath);
+	if (ifs.is_open())
+	{
+		string line;
+		// ignore first 3 information
+		getline(ifs, line);
+		getline(ifs, line);
+		getline(ifs, line);
+		// get bounding boxes
+		getline(ifs, line);
+		int k = line.length();
+		int i = 0;
+		// ignore text + ':'
+		while (i < k && line[i] != ':')
+		{
+			i++;
+		}
+		i++;
+		// ignore space
+		while (i < k && line[i] == ' ')
+		{
+			i++;
+		}
+		// start to read rect
+		int x = 0;
+		int y = 0;
+		int w = 0;
+		int h = 0;
+		while (i < k)
+		{
+			// exception
+			if (line[i] < '0' && line[i] > '9')
+			{
+				break;
+			}
+			x = 0;
+			y = 0;
+			w = 0;
+			h = 0;
+			// read x
+			while (line[i] != ' ')
+			{
+				x = x * 10 + (int)(line[i] - '0');
+				i++;
+			}
+			i++;
+			// read y
+			while (line[i] != ' ')
+			{
+				y = y * 10 + (int)(line[i] - '0');
+				i++;
+			}
+			i++;
+			// read w
+			while (line[i] != ' ')
+			{
+				w = w * 10 + (int)(line[i] - '0');
+				i++;
+			}
+			i++;
+			// read h
+			while (line[i] != ' ')
+			{
+				h = h * 10 + (int)(line[i] - '0');
+				i++;
+			}
+			i++;
+			BBoxes.push_back(Rect(x, y, w, h));
+			// ignore seperated string ' - '
+			i += 3;
+		}
+
+		ifs.close();
+	}
+}
+
+
 
 /*		****************************************		*/
 
@@ -223,7 +334,27 @@ void RemoveUnusualAreaBoxes(vector<Rect> &BBoxes)
 
 void RemoveSingleBoxTextLine(vector<Rect> &BBoxes)
 {
-	
+	int k = BBoxes.size();
+	vector<Rect> tmpBoxes;
+	for (int i = 0; i < k; i++)
+	{
+		bool checked = false;
+		for (int j = 0; j < k; j++)
+		{
+			if (i == j)
+				continue;
+			if (IsB1onsamelineB2(BBoxes[i], BBoxes[j]))
+			{
+				checked = true;
+				break;
+			}
+		}
+		if (checked == true)
+			tmpBoxes.push_back(BBoxes[i]);
+	}
+	BBoxes.clear();
+	BBoxes = tmpBoxes;
+	tmpBoxes.clear();
 }
 
 void MergeInsideBoxes(vector<Rect> &BBoxes)
@@ -285,6 +416,23 @@ void AddListPath(vector<string> &Paths, string filepath)
 		ifs.close();
 	}
 }
+
+void CropBoxesInOneImage(Mat &input, vector<Rect> &BBoxes, string resultFolder, string namedefault)
+{
+	int k = BBoxes.size();
+	for (int i = 0; i < k; i++)
+	{
+		cv::Rect myROI(BBoxes[i].x, BBoxes[i].y, BBoxes[i].width, BBoxes[i].height);
+		if (myROI.x >= 0 && myROI.y >= 0 && (myROI.width + myROI.x) < input.cols && (myROI.height + myROI.y) < input.rows)
+		{
+			// your code
+			cv::Mat croppedImage = input(myROI);
+			imwrite(resultFolder + namedefault + "-" + to_string(i) + ".jpg", croppedImage);
+		}
+	}
+
+}
+
 
 
 /*		****************************************		*/
@@ -367,6 +515,44 @@ bool IsB1insideB2(Rect B1, Rect B2)
 	}
 	else
 	{
+		return false;
+	}
+}
+
+bool IsB1onsamelineB2(Rect B1, Rect B2)
+{
+	// range from center to upper or lower
+	int range1 = B1.height / 4;
+	int c1x = B1.x + B1.width / 2;
+	int c1y = B1.y + B1.height / 2;
+	int range2 = B2.height / 4;
+	int c2x = B2.x + B2.width / 2;
+	int c2y = B2.y + B2.height / 2;
+	// check
+	if (c2y == c1y)
+		return true;
+	if (c2y > c1y)
+	{
+		if (c2y <= (c1y + range1))	// c2y in range [c1y, c1y + range1]
+		{
+			return true;
+		}
+		else if ((c2y - range2) <= (c1y + range1))	// c2y - range2 in range [0, c1y + range1]
+		{
+			return true;
+		}
+		return false;
+	}
+	else
+	{
+		if (c2y >= (c1y - range1))	// c2y in range [c1y - range1, c1y]
+		{
+			return true;
+		}
+		else if ((c2y + range2) <= (c1y - range1))	// c2y + range2 in range [c1y - range1, ...]
+		{
+			return true;
+		}
 		return false;
 	}
 }
