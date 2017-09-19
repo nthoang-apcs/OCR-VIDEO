@@ -49,9 +49,15 @@ void PostProcessing(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeR
 
 void GetListName(vector<string> &Paths, string resultFolder, string filename);
 
+void GetListName(vector<string> &Paths, vector<string> &ListName);
+
 void GetListTotalBoxes(vector<string> &Paths, string resultFolder, string filename);
 
+void GetListTotalBoxes(vector<string> &Paths, string resultFolder, vector<int> &ListBoxes, int index);
+
 void GetListRunTime(vector<string> &Paths, string resultFolder, string filename);
+
+void GetListRunTime(vector<string> &Paths, string resultFolder, vector<double> &runTime, int index);
 
 // line format: img[number].jpg
 // number range: [start, end)
@@ -87,7 +93,11 @@ void AddListPath(vector<string> &Paths, string filepath);
 // file name format: [namedefault]-[box-index].jpg
 void CropBoxesInOneImage(Mat &input, vector<Rect> &BBoxes, string resultFolder, string namedefault);
 
-void writeBoxesToTmpFile(vector<Rect> &BBoxes, string filename);
+void writeBBoxesToFile(vector<Rect> &BBoxes, string filename);
+
+void writeTotalBoxesToFile(vector<int> &TotalBoxes, string filename);
+
+void writeRunTimeToFile(vector<double> &RunTime, string filename);
 
 /*		Sort functions		*/
 

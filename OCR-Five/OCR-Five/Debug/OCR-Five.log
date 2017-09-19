@@ -1,7 +1,7 @@
-﻿  CommonStructAndFunction.cpp
+﻿  Source.cpp
+  CommonStructAndFunction.cpp
   Generating Code...
   Compiling...
-  Source.cpp
   PartOneProcess.cpp
   MSERIO.cpp
 e:\code\ocr-five-git\ocr-five\ocr-five\mserio.cpp(160): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data

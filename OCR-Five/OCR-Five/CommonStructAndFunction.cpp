@@ -90,6 +90,17 @@ void GetListName(vector<string> &Paths, string resultFolder, string filename)
 	}
 }
 
+void GetListName(vector<string> &Paths, vector<string> &ListName)
+{
+	int k = Paths.size();
+	for (int i = 0; i < k; i++)
+	{
+		// extract name
+		string name = ExtractNameOfFileFromPathIn(Paths[i]);
+		ListName.push_back(name);
+	}
+}
+
 void GetListTotalBoxes(vector<string> &Paths, string resultFolder, string filename)
 {
 	int k = Paths.size();
@@ -126,6 +137,30 @@ void GetListTotalBoxes(vector<string> &Paths, string resultFolder, string filena
 	}
 }
 
+void GetListTotalBoxes(vector<string> &Paths, string resultFolder, vector<int> &ListBoxes, int index)
+{
+	int k = Paths.size();
+	for (int i = 0; i < k; i++)
+	{
+		// extract name
+		string name = ExtractNameOfFileFromPathIn(Paths[i]);
+		// access result file
+		string tmpPath = resultFolder + name + "-" + to_string(index) + ".txt";
+		string totalBoxes;
+		ifstream ifs;
+		ifs.open(tmpPath);
+		if (ifs.is_open())
+		{
+			getline(ifs, totalBoxes);	// ignore src
+			getline(ifs, totalBoxes);	// ignore time
+			getline(ifs, totalBoxes);	// get boxes
+			ifs.close();
+		}
+		int boxes = ExtractTotalBoxesFromString(totalBoxes);
+		ListBoxes.push_back(boxes);
+	}
+}
+
 void GetListRunTime(vector<string> &Paths, string resultFolder, string filename)
 {
 	int k = Paths.size();
@@ -158,6 +193,29 @@ void GetListRunTime(vector<string> &Paths, string resultFolder, string filename)
 			ofs << timerun[i] << "\n";
 		}
 		ofs.close();
+	}
+}
+
+void GetListRunTime(vector<string> &Paths, string resultFolder, vector<double> &runTime, int index)
+{
+	int k = Paths.size();
+	for (int i = 0; i < k; i++)
+	{
+		// extract name
+		string name = ExtractNameOfFileFromPathIn(Paths[i]);
+		// access result file
+		string tmpPath = resultFolder + name + "-" + to_string(index) + ".txt";
+		string totalBoxes;
+		ifstream ifs;
+		ifs.open(tmpPath);
+		if (ifs.is_open())
+		{
+			getline(ifs, totalBoxes);	// ignore src
+			getline(ifs, totalBoxes);	// get time
+			ifs.close();
+		}
+		double time = ExtractTimeRunningFromString(totalBoxes);
+		runTime.push_back(time);
 	}
 }
 
@@ -468,7 +526,7 @@ void CropBoxesInOneImage(Mat &input, vector<Rect> &BBoxes, string resultFolder, 
 
 }
 
-void writeBoxesToTmpFile(vector<Rect> &BBoxes, string filename)
+void writeBBoxesToFile(vector<Rect> &BBoxes, string filename)
 {
 	ofstream ofs;
 	ofs.open(filename);
@@ -478,6 +536,40 @@ void writeBoxesToTmpFile(vector<Rect> &BBoxes, string filename)
 		for (int i = 0; i < k; i++)
 		{
 			ofs << "Rect: " << BBoxes[i].x << ", " << BBoxes[i].y << ", " << BBoxes[i].width << ", " << BBoxes[i].height;
+			ofs << "\n";
+		}
+
+		ofs.close();
+	}
+}
+
+void writeTotalBoxesToFile(vector<int> &TotalBoxes, string filename)
+{
+	ofstream ofs;
+	ofs.open(filename);
+	if (ofs.is_open())
+	{
+		int k = TotalBoxes.size();
+		for (int i = 0; i < k; i++)
+		{
+			ofs << TotalBoxes[i];
+			ofs << "\n";
+		}
+
+		ofs.close();
+	}
+}
+
+void writeRunTimeToFile(vector<double> &RunTime, string filename)
+{
+	ofstream ofs;
+	ofs.open(filename);
+	if (ofs.is_open())
+	{
+		int k = RunTime.size();
+		for (int i = 0; i < k; i++)
+		{
+			ofs << RunTime[i];
 			ofs << "\n";
 		}
 
