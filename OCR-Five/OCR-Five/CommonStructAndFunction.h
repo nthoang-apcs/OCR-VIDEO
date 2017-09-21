@@ -38,18 +38,26 @@ struct Chain {
 
 /*		Main functions		*/
 
+
 void SharpenOneImage(Mat &input, Mat &output, double sigma = 1, double threshold = 5, double amount = 1);
 
 void MSEROneImage(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeRunning);
 
 void PostProcessing(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeRunning);
 
+// file name format: [namedefault]-[box-index].jpg
+void CropBoxesInOneImage(Mat &input, vector<Rect> &BBoxes, double &TimeRunning, string resultFolder, string namedefault);
+
+
 
 /*		Statistic functions		*/
+
 
 void GetListName(vector<string> &Paths, string resultFolder, string filename);
 
 void GetListName(vector<string> &Paths, vector<string> &ListName);
+
+void GetListBoxes(string filePath, vector<Rect> &BBoxes);
 
 void GetListTotalBoxes(vector<string> &Paths, string resultFolder, string filename);
 
@@ -84,14 +92,12 @@ void RemoveSingleBoxTextLine(vector<Rect> &BBoxes);
 
 void MergeInsideBoxes(vector<Rect> &BBoxes);
 
+// not finish
 void CheckStrokeWidthVariation(vector<Rect> &BBoxes);
 
 void AddRectToMat(vector<Rect> &BBoxes, Mat &input, Mat &output);
 
 void AddListPath(vector<string> &Paths, string filepath);
-
-// file name format: [namedefault]-[box-index].jpg
-void CropBoxesInOneImage(Mat &input, vector<Rect> &BBoxes, string resultFolder, string namedefault);
 
 void writeBBoxesToFile(vector<Rect> &BBoxes, string filename);
 
@@ -99,7 +105,9 @@ void writeTotalBoxesToFile(vector<int> &TotalBoxes, string filename);
 
 void writeRunTimeToFile(vector<double> &RunTime, string filename);
 
+
 /*		Sort functions		*/
+
 
 void SortYCoordinate(vector<Rect> &BBoxes);
 

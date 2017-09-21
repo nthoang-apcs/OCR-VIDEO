@@ -329,6 +329,25 @@ void MSERFILESTREAM::WriteOneImageToFile(string pathIn, string srcPath, vector<R
 	}
 }
 
+void MSERFILESTREAM::WriteOneImageCropBoxesToFile(string pathIn, string srcPath, int numberboxes, double &TimeRunning)
+{
+	ofstream ofs;
+	ofs.open(pathIn);
+	if (ofs.is_open())
+	{
+		string name = ExtractNameOfFileFromPathIn(srcPath);
+		ofs << "SRC: " << srcPath << "\n";
+		ofs << "TIME-RUNNING: " << TimeRunning << " seconds.\n";
+		ofs << "TOTAL-BBOXES: " << numberboxes << "\n";
+		ofs << "BBOXES-PATH:" << "\n";
+		for (int i = 0; i < numberboxes; i++)
+		{
+			ofs << name << "-" << i << ".jpg" << "\n";
+		}
+		ofs.close();
+	}
+}
+
 void MSERFILESTREAM::WriteOneImageToFile(string pathIn, string srcPath, vector<vector<Rect>> &LinesText, double &TimeRunning)
 {
 	ofstream ofs;

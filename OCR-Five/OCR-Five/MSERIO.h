@@ -48,6 +48,14 @@ public:
 	void WriteImagesToFile(string path, string srcFolder, vector<string> &PathIn, vector<vector<Rect>> &BBoxes, vector<double> &TimeRunning);
 	
 	void WriteOneImageToFile(string pathIn, string srcPath, vector<Rect> &BBoxes, double &TimeRunning);
+
+	/*		Format		*/
+	// SRC: [PathSource]
+	// TIME-RUNNING: [time] seconds
+	// TOTAL-BBOXES: [number of boxes]
+	// BBOXES-PATH:
+	// ... (each line is a filename)
+	void WriteOneImageCropBoxesToFile(string pathIn, string srcPath, int numberboxes, double &TimeRunning);
 	
 	void WriteOneImageToFile(string pathIn, string srcPath, vector<vector<Rect>> &LinesText, double &TimeRunning);
 

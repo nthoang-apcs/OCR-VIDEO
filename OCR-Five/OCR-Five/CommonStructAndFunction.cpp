@@ -69,6 +69,23 @@ void PostProcessing(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeR
 	AddRectToMat(BBoxes, input, output);
 }
 
+void CropBoxesInOneImage(Mat &input, vector<Rect> &BBoxes, double &TimeRunning, string resultFolder, string namedefault)
+{
+	clock_t start = clock();
+	int k = BBoxes.size();
+	for (int i = 0; i < k; i++)
+	{
+		cv::Rect myROI(BBoxes[i].x, BBoxes[i].y, BBoxes[i].width, BBoxes[i].height);
+		if (myROI.x >= 0 && myROI.y >= 0 && (myROI.width + myROI.x) < input.cols && (myROI.height + myROI.y) < input.rows)
+		{
+			// your code
+			cv::Mat croppedImage = input(myROI);
+			imwrite(resultFolder + namedefault + "-" + to_string(i) + ".jpg", croppedImage);
+		}
+	}
+	TimeRunning = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
+}
+
 
 /*		****************************************		*/
 
@@ -98,6 +115,69 @@ void GetListName(vector<string> &Paths, vector<string> &ListName)
 		// extract name
 		string name = ExtractNameOfFileFromPathIn(Paths[i]);
 		ListName.push_back(name);
+	}
+}
+
+void GetListBoxes(string filePath, vector<Rect> &BBoxes)
+{
+	ifstream ifs;
+	ifs.open(filePath);
+	if (ifs.is_open())
+	{
+		string line;
+		// ignore first 3 lines
+		getline(ifs, line);
+		getline(ifs, line);
+		getline(ifs, line);
+		// get list boxes
+		getline(ifs, line);
+		// parse
+		int k = line.length();
+		int i = 0;
+		while (i < k && line[i] != ':')
+		{
+			i++;
+		}
+		i++;
+		// ignore space
+		while (i < k && line[i] == ' ')
+		{
+			i++;
+		}
+		int x = 0;
+		int y = 0;
+		int w = 0;
+		int h = 0;
+		while (i < k)
+		{
+			x = 0;
+			y = 0;
+			w = 0;
+			h = 0;
+			// get one rect
+			while (i < k && line[i] >= '0' && line[i] <= '9')
+			{
+				x = (x * 10) + ((int)(line[i] - '0'));
+			}
+			i++;
+			while (i < k && line[i] >= '0' && line[i] <= '9')
+			{
+				y = (y * 10) + ((int)(line[i] - '0'));
+			}
+			i++;
+			while (i < k && line[i] >= '0' && line[i] <= '9')
+			{
+				w = (w * 10) + ((int)(line[i] - '0'));
+			}
+			i++;
+			while (i < k && line[i] >= '0' && line[i] <= '9')
+			{
+				h = (h * 10) + ((int)(line[i] - '0'));
+			}
+			i++;
+			BBoxes.push_back(Rect(x, y, w, h));
+		}
+		ifs.close();
 	}
 }
 
@@ -479,6 +559,7 @@ void MergeInsideBoxes(vector<Rect> &BBoxes)
 	tmpBoxes.clear();
 }
 
+// not finish
 void CheckStrokeWidthVariation(vector<Rect> &BBoxes)
 {
 
@@ -508,22 +589,6 @@ void AddListPath(vector<string> &Paths, string filepath)
 
 		ifs.close();
 	}
-}
-
-void CropBoxesInOneImage(Mat &input, vector<Rect> &BBoxes, string resultFolder, string namedefault)
-{
-	int k = BBoxes.size();
-	for (int i = 0; i < k; i++)
-	{
-		cv::Rect myROI(BBoxes[i].x, BBoxes[i].y, BBoxes[i].width, BBoxes[i].height);
-		if (myROI.x >= 0 && myROI.y >= 0 && (myROI.width + myROI.x) < input.cols && (myROI.height + myROI.y) < input.rows)
-		{
-			// your code
-			cv::Mat croppedImage = input(myROI);
-			imwrite(resultFolder + namedefault + "-" + to_string(i) + ".jpg", croppedImage);
-		}
-	}
-
 }
 
 void writeBBoxesToFile(vector<Rect> &BBoxes, string filename)

@@ -23,6 +23,8 @@ private:
 
 	void WriteOneImageToFile(string PathIn, string resultFolder, vector<vector<Rect>> &LinesText, double &TimeRunning, int index);
 
+	// file name format: [name]-[subname].txt
+	void WriteOneImageCropBoxesInfoToFile(string PathIn, string resultFolder, int numberboxes, double &TimeRunning, string subname);
 	
 
 	/*		Practice method		*/
@@ -48,6 +50,8 @@ public:
 	void doProcessImagesWithoutPostProcessing(vector<string> PathIn, string resultFolder);
 
 	void doProcessImagesWithPostProcessing(vector<string> &PathIn, string resultFolder);
+
+	void CropBoxesImages(vector<string> &PathImages, string resultFolder, vector<string> &PathInfos);
 
 	/*		Destructor		*/
 	~PartOneProcess();

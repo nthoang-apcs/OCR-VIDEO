@@ -5,7 +5,14 @@
 
 /*					Private					*/
 
-
+void PartOneProcess::WriteOneImageCropBoxesInfoToFile(string PathIn, string resultFolder, int numberboxes, double &TimeRunning, string subname)
+{
+	// get pathout
+	string filename = ExtractNameOfFileFromPathIn(PathIn);
+	string pathout = resultFolder + filename + "-" + subname + ".txt";
+	MSERFILESTREAM* one = new MSERFILESTREAM();
+	one->WriteOneImageCropBoxesToFile(pathout, PathIn, numberboxes, TimeRunning);
+}
 
 void PartOneProcess::WriteOneImageToFile(string PathIn, string resultFolder, vector<Rect> &BBoxes, double &TimeRunning, int index)
 {
@@ -159,6 +166,7 @@ void PartOneProcess::doProcessImagesWithoutPostProcessing(vector<string> PathIn,
 	}
 }
 
+
 void PartOneProcess::doProcessImagesWithPostProcessing(vector<string> &PathIn, string resultFolder)
 {
 	int k = PathIn.size();
@@ -169,3 +177,22 @@ void PartOneProcess::doProcessImagesWithPostProcessing(vector<string> &PathIn, s
 	}
 }
 
+
+void PartOneProcess::CropBoxesImages(vector<string> &PathImages, string resultFolder, vector<string> &PathInfos)
+{
+	int k = PathImages.size();
+	for (int i = 0; i < k; i++)
+	{
+		double runtime = 0;
+		string name = ExtractNameOfFileFromPathIn(PathImages[i]);
+		Mat input = imread(PathImages[i]);
+		vector<Rect> BBoxes;
+		GetListBoxesInOneImage(BBoxes, PathInfos[i]);
+		CropBoxesInOneImage(input, BBoxes, runtime, resultFolder, name);
+		// statistic
+		int k = BBoxes.size();
+		WriteOneImageCropBoxesInfoToFile(PathImages[i], resultFolder, k, runtime, "info");
+		// cleaning
+		BBoxes.clear();
+	}
+}
