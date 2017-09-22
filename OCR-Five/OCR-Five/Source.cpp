@@ -57,7 +57,7 @@ int main(char* argv)
 
 
 	/*		MSER and Geometric part		*/
-	resultFolder = "D:\\Document\\Thesis-2017\\Data2\\ResultExperimentSharpenMSERGeometric\\";
+	resultFolder = "D:\\Document\\Thesis-2017\\Data2\\ResExpSharpMSERGeoVer3\\";
 	one->doProcessImagesWithPostProcessing(Paths, resultFolder);
 	GetListName(Paths, resultFolder, "listname.txt");
 	GetListTotalBoxes(Paths, resultFolder, B1, 1);

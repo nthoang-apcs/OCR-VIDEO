@@ -90,7 +90,14 @@ void RemoveUnusualAreaBoxes(vector<Rect> &BBoxes);
 // if cut -> on same line
 void RemoveSingleBoxTextLine(vector<Rect> &BBoxes);
 
+// h / w or w / h > 6 -> remove
+void RemoveUnbalancedRatio(vector<Rect> &BBoxes);
+
 void MergeInsideBoxes(vector<Rect> &BBoxes);
+
+// multiple boxes on the same line text and overlap to each other -> comebine into 1 box and check the line text
+// have a high chance to become from 1 char / 1 box -> > 1 word / 1 box
+void MergeOverlapOnTextLineNearRatioBoxes(vector<Rect> &BBoxes);
 
 // not finish
 void CheckStrokeWidthVariation(vector<Rect> &BBoxes);
@@ -123,6 +130,15 @@ bool IsB1insideB2(Rect B1, Rect B2);
 // to check if that space created by 2 lines cuts any other spaces
 // if cut -> on same line
 bool IsB1onsamelineB2(Rect B1, Rect B2);
+
+// B1 is unbalanced if h / w > 6 || w / h > 6
+bool IsB1Balanced(Rect B1);
+
+// return true if B1.y < B2.y
+bool CompareYCoordinate(Rect B1, Rect B2);
+
+// return true if B1.area() < B2.area()
+bool CompareArea(Rect B1, Rect B2);
 
 bool Point2dSort(SWTPoint2d const & lhs, SWTPoint2d const & rhs);
 

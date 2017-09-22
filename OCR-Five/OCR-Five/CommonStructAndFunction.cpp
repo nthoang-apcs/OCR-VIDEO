@@ -52,18 +52,21 @@ void PostProcessing(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeR
 {
 	clock_t start = clock();
 	// sort area ascending
-	//SortArea(BBoxes);
+	SortArea(BBoxes);
 	// remove areas of stand alone single box
-	//RemoveUnusualAreaBoxes(BBoxes);
+	RemoveUnusualAreaBoxes(BBoxes);
+	// remove unbalanced ratio width, height
+	RemoveUnbalancedRatio(BBoxes);
 	// sort y coordinate ascending
 	SortYCoordinate(BBoxes);
 	// remove single box text line
 	RemoveSingleBoxTextLine(BBoxes);
-	// stroke width
-	CheckStrokeWidthVariation(BBoxes);
 	// merge inside box
 	MergeInsideBoxes(BBoxes);
-
+	// stroke width
+	CheckStrokeWidthVariation(BBoxes);
+	// merge overlap on 1 line text box with nearly the same ratio h/w
+	MergeOverlapOnTextLineNearRatioBoxes(BBoxes);
 	TimeRunning = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
 
 	AddRectToMat(BBoxes, input, output);
@@ -526,6 +529,22 @@ void RemoveSingleBoxTextLine(vector<Rect> &BBoxes)
 	tmpBoxes.clear();
 }
 
+void RemoveUnbalancedRatio(vector<Rect> &BBoxes)
+{
+	vector<Rect> tmpBoxes;
+	int k = BBoxes.size();
+	for (int i = 0; i < k; i++)
+	{
+		if (IsB1Balanced(BBoxes[i]) == true)
+		{
+			tmpBoxes.push_back(BBoxes[i]);
+		}
+	}
+	BBoxes.clear();
+	BBoxes = tmpBoxes;
+	tmpBoxes.clear();
+}
+
 void MergeInsideBoxes(vector<Rect> &BBoxes)
 {
 	vector<Rect> tmpBoxes;
@@ -540,10 +559,6 @@ void MergeInsideBoxes(vector<Rect> &BBoxes)
 				continue;
 			if (IsB1insideB2(BBoxes[i], BBoxes[j]))
 			{
-				//cout << "Rect (" << BBoxes[i].x << ", " << BBoxes[i].y << ", " << BBoxes[i].width << ", " << BBoxes[i].height;
-				//cout << ") is inside Rect (";
-				//cout << BBoxes[j].x << ", " << BBoxes[j].y << ", " << BBoxes[j].width << ", " << BBoxes[j].height;
-				//cout << ")" << endl;
 				checked = true;
 				break;
 			}
@@ -557,6 +572,11 @@ void MergeInsideBoxes(vector<Rect> &BBoxes)
 	BBoxes.clear();
 	BBoxes = tmpBoxes;
 	tmpBoxes.clear();
+}
+
+void MergeOverlapOnTextLineNearRatioBoxes(vector<Rect> &BBoxes)
+{
+
 }
 
 // not finish
@@ -649,61 +669,12 @@ void writeRunTimeToFile(vector<double> &RunTime, string filename)
 
 void SortYCoordinate(vector<Rect> &BBoxes)
 {
-	bool checked = false;
-	int k1 = BBoxes.size();
-	int k2 = k1 - 1;
-	for (int i = 0; i < k2; i++)
-	{
-		checked = false;
-		k2 = k1 - 1 - i;
-		for (int j = 0; j < k2; j++)
-		{
-			if (BBoxes[j].y > BBoxes[j + 1].y)
-			{
-				checked = true;
-				int x = BBoxes[j].x;
-				int y = BBoxes[j].y;
-				int w = BBoxes[j].width;
-				int h = BBoxes[j].height;
-				BBoxes[j] = Rect(BBoxes[j + 1].x, BBoxes[j + 1].y, BBoxes[j + 1].width, BBoxes[j + 1].height);
-				BBoxes[j + 1] = Rect(x, y, w, h);
-
-			}
-		}
-		if (checked == false)
-		{
-			break;
-		}
-	}
+	sort(BBoxes.begin(), BBoxes.end(), CompareYCoordinate);
 }
 
 void SortArea(vector<Rect> &BBoxes)
 {
-	bool checked = false;
-	int k1 = BBoxes.size();
-	int k2 = k1 - 1;
-	for (int i = 0; i < k2; i++)
-	{
-		checked = false;
-		k2 = k1 - 1 - i;
-		for (int j = 0; j < k2; j++)
-		{
-			if (BBoxes[j].area() > BBoxes[j + 1].area())
-			{
-				checked = true;
-				int x = BBoxes[j].x;
-				int y = BBoxes[j].y;
-				int w = BBoxes[j].width;
-				int h = BBoxes[j].height;
-				BBoxes[j] = Rect(BBoxes[j + 1].x, BBoxes[j + 1].y, BBoxes[j + 1].width, BBoxes[j + 1].height);
-				BBoxes[j + 1] = Rect(x, y, w, h);
-			}
-		}
-		if (checked == false)
-		{
-			break;
-		}
-	}
+	sort(BBoxes.begin(), BBoxes.end(), CompareArea);
 }
 
 
@@ -743,6 +714,29 @@ bool IsB1onsamelineB2(Rect B1, Rect B2)
 		return true;
 	}
 	return false;
+}
+
+bool IsB1Balanced(Rect B1)
+{
+	if ((B1.width / B1.height) >= 6)
+	{
+		return false;
+	}
+	if ((B1.height / B1.width) >= 6)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool CompareYCoordinate(Rect B1, Rect B2)
+{
+	return (B1.y < B2.y);
+}
+
+bool CompareArea(Rect B1, Rect B2)
+{
+	return (B1.area() < B2.area());
 }
 
 bool Point2dSort(SWTPoint2d const & lhs, SWTPoint2d const & rhs)
