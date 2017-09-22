@@ -57,8 +57,6 @@ void GetListName(vector<string> &Paths, string resultFolder, string filename);
 
 void GetListName(vector<string> &Paths, vector<string> &ListName);
 
-void GetListBoxes(string filePath, vector<Rect> &BBoxes);
-
 void GetListTotalBoxes(vector<string> &Paths, string resultFolder, string filename);
 
 void GetListTotalBoxes(vector<string> &Paths, string resultFolder, vector<int> &ListBoxes, int index);
@@ -76,6 +74,8 @@ void SetListName(int start, int end, string filepath);
 void SetListPath(int start, int end, string filepath, string fileformat);
 
 void GetListBoxesInOneImage(vector<Rect> &BBoxes, string filepath);
+
+void GetListCentroids(vector<Rect> &BBoxes, vector<Point> &Centroids);
 
 
 /*		Support functions		*/
@@ -133,6 +133,8 @@ bool IsB1onsamelineB2(Rect B1, Rect B2);
 
 // B1 is unbalanced if h / w > 6 || w / h > 6
 bool IsB1Balanced(Rect B1);
+
+bool IsB1OverlappingB2(Rect B1, Rect B2);
 
 // return true if B1.y < B2.y
 bool CompareYCoordinate(Rect B1, Rect B2);

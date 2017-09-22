@@ -121,69 +121,6 @@ void GetListName(vector<string> &Paths, vector<string> &ListName)
 	}
 }
 
-void GetListBoxes(string filePath, vector<Rect> &BBoxes)
-{
-	ifstream ifs;
-	ifs.open(filePath);
-	if (ifs.is_open())
-	{
-		string line;
-		// ignore first 3 lines
-		getline(ifs, line);
-		getline(ifs, line);
-		getline(ifs, line);
-		// get list boxes
-		getline(ifs, line);
-		// parse
-		int k = line.length();
-		int i = 0;
-		while (i < k && line[i] != ':')
-		{
-			i++;
-		}
-		i++;
-		// ignore space
-		while (i < k && line[i] == ' ')
-		{
-			i++;
-		}
-		int x = 0;
-		int y = 0;
-		int w = 0;
-		int h = 0;
-		while (i < k)
-		{
-			x = 0;
-			y = 0;
-			w = 0;
-			h = 0;
-			// get one rect
-			while (i < k && line[i] >= '0' && line[i] <= '9')
-			{
-				x = (x * 10) + ((int)(line[i] - '0'));
-			}
-			i++;
-			while (i < k && line[i] >= '0' && line[i] <= '9')
-			{
-				y = (y * 10) + ((int)(line[i] - '0'));
-			}
-			i++;
-			while (i < k && line[i] >= '0' && line[i] <= '9')
-			{
-				w = (w * 10) + ((int)(line[i] - '0'));
-			}
-			i++;
-			while (i < k && line[i] >= '0' && line[i] <= '9')
-			{
-				h = (h * 10) + ((int)(line[i] - '0'));
-			}
-			i++;
-			BBoxes.push_back(Rect(x, y, w, h));
-		}
-		ifs.close();
-	}
-}
-
 void GetListTotalBoxes(vector<string> &Paths, string resultFolder, string filename)
 {
 	int k = Paths.size();
@@ -403,12 +340,17 @@ void GetListBoxesInOneImage(vector<Rect> &BBoxes, string filepath)
 			}
 			i++;
 			BBoxes.push_back(Rect(x, y, w, h));
-			// ignore seperated string ' - '
+			// ignore seperated string ' ; '
 			i += 3;
 		}
 
 		ifs.close();
 	}
+}
+
+void GetListCentroids(vector<Rect> &BBoxes, vector<Point> &Centroids)
+{
+
 }
 
 
@@ -576,7 +518,7 @@ void MergeInsideBoxes(vector<Rect> &BBoxes)
 
 void MergeOverlapOnTextLineNearRatioBoxes(vector<Rect> &BBoxes)
 {
-
+	
 }
 
 // not finish
@@ -727,6 +669,11 @@ bool IsB1Balanced(Rect B1)
 		return false;
 	}
 	return true;
+}
+
+bool IsB1OverlappingB2(Rect B1, Rect B2)
+{
+	return ((B1 & B2).area() > 0);
 }
 
 bool CompareYCoordinate(Rect B1, Rect B2)
