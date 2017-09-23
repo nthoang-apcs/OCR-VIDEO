@@ -35,6 +35,25 @@ struct Chain {
 	std::vector<int> components;
 };
 
+// ax + by + c = 0
+struct Line {
+	float a;
+	float b;
+	float c;
+	Line()
+	{
+		a = 0;
+		b = 0;
+		c = 0;
+	}
+	Line(float a1, float b1, float c1)
+	{
+		a = a1;
+		b = b1;
+		c = c1;
+	}
+};
+
 
 /*		Main functions		*/
 
@@ -112,6 +131,10 @@ void writeTotalBoxesToFile(vector<int> &TotalBoxes, string filename);
 
 void writeRunTimeToFile(vector<double> &RunTime, string filename);
 
+Line GetLineEquation(Point A, Point B);
+
+Line GetLineEquation(vector<int> &ListPos, vector<Rect> &BBoxes);
+
 
 /*		Sort functions		*/
 
@@ -141,6 +164,12 @@ bool CompareYCoordinate(Rect B1, Rect B2);
 
 // return true if B1.area() < B2.area()
 bool CompareArea(Rect B1, Rect B2);
+
+// 2 boxes are seperated, check condition about ratio, inside or outside
+bool CheckConditionOfBoxLine(Rect B1, Rect B2);
+
+// check if point B on Line A or stay outside but have the angle <= threshold
+bool CheckLineEquation(Line A, Point B, int threshold);
 
 bool Point2dSort(SWTPoint2d const & lhs, SWTPoint2d const & rhs);
 

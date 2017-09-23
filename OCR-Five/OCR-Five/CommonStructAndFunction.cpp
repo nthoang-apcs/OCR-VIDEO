@@ -350,7 +350,13 @@ void GetListBoxesInOneImage(vector<Rect> &BBoxes, string filepath)
 
 void GetListCentroids(vector<Rect> &BBoxes, vector<Point> &Centroids)
 {
-
+	int k = BBoxes.size();
+	for (int i = 0; i < k; i++)
+	{
+		int x = BBoxes[i].x + (BBoxes[i].width / 2);
+		int y = BBoxes[i].y + (BBoxes[i].height / 2);
+		Centroids.push_back(Point(x, y));
+	}
 }
 
 
@@ -604,6 +610,30 @@ void writeRunTimeToFile(vector<double> &RunTime, string filename)
 	}
 }
 
+Line GetLineEquation(Point A, Point B)
+{
+	if (A.x == B.x)
+	{
+		return Line(1, 0, A.x);
+	}
+	else if (A.y == B.y)
+	{
+		return Line(0, 1, A.y);
+	}
+	else
+	{
+		float a = (B.y - A.y) / (B.x - A.x);
+		float b = -1;
+		float c = B.y - (a*B.x);
+		return Line(a, b, c);
+	}
+}
+
+Line GetLineEquation(vector<int> &ListPos, vector<Rect> &BBoxes);
+{
+
+}
+
 
 
 /*		****************************************		*/
@@ -685,6 +715,22 @@ bool CompareArea(Rect B1, Rect B2)
 {
 	return (B1.area() < B2.area());
 }
+
+bool CheckConditionOfBoxLine(Rect B1, Rect B2)
+{
+
+
+
+	return true;
+}
+
+bool CheckLineEquation(Line A, Point B, int threshold)
+{
+
+
+	return true;
+}
+
 
 bool Point2dSort(SWTPoint2d const & lhs, SWTPoint2d const & rhs)
 {

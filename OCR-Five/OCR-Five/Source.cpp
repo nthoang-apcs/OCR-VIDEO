@@ -34,13 +34,47 @@ int main(char* argv)
 
 	// get list boxes
 	vector<Rect> BBoxes;
-	vector<Point> Centroids
+	vector<Point> Centroids;
 	int k1 = boxesPaths.size();
 	for (int i = 0; i < k1; i++)
 	{
 		GetListBoxesInOneImage(BBoxes, boxesPaths[i]);
 		
 		// create vector centroid
+		GetListCentroids(BBoxes, Centroids);
+
+		// build all possible path
+		int k2 = BBoxes.size();
+		vector<vector<int>> PointLines;
+		vector<Line> EquationLines;
+		
+		for (int t1 = 0; t1 < k2; t1++)
+		{
+			vector<int> onelinepoint;
+			for (int t2 = 0; t2 < k2; t2++)
+			{
+				if (t1 == t2)
+					continue;
+				// satisfy conditions to build path
+				if (CheckConditionOfBoxLine(BBoxes[t1], BBoxes[t2]))
+				{
+					// first point
+					if (onelinepoint.size() == 0)
+					{
+						onelinepoint.push_back(t2);
+						// form an equation
+
+					}
+					else
+					{
+						// check line equation and threshold
+						
+					}
+				}
+
+			}
+
+		}
 
 
 	}
