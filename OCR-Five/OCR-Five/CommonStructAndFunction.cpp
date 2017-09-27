@@ -65,8 +65,11 @@ void PostProcessing(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeR
 	MergeInsideBoxes(BBoxes);
 	// stroke width
 	CheckStrokeWidthVariation(BBoxes);
+	
 	// merge overlap on 1 line text box with nearly the same ratio h/w
 	MergeOverlapOnTextLineNearRatioBoxes(BBoxes);
+	MergeNonOverlapTextLineNearRatioBoxes(BBoxes);
+
 	TimeRunning = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
 
 	AddRectToMat(BBoxes, input, output);
@@ -340,8 +343,8 @@ void GetListBoxesInOneImage(vector<Rect> &BBoxes, string filepath)
 			}
 			i++;
 			BBoxes.push_back(Rect(x, y, w, h));
-			// ignore seperated string ' ; '
-			i += 3;
+			// ignore seperated string '; '
+			i += 2;
 		}
 
 		ifs.close();
@@ -405,10 +408,12 @@ void RemoveUnusualAreaBoxes(vector<Rect> &BBoxes)
 	{
 		if (i == 0)
 		{
-			if ((BBoxes[i].area() / BBoxes[i + 1].area()) >= 5 || (BBoxes[i + 1].area() / BBoxes[i].area()) >= 5)
+			// limit
+			if ((BBoxes[i].area() / BBoxes[i + 1].area()) >= 5 || (BBoxes[i + 1].area() / BBoxes[i].area()) >= 5 || BBoxes[i].area() < 30)
 			{
 
 			}
+			// get result
 			else
 			{
 				tmpBoxes.push_back(BBoxes[i]);
@@ -418,7 +423,7 @@ void RemoveUnusualAreaBoxes(vector<Rect> &BBoxes)
 		}
 		else if (i == (k1 - 1))
 		{
-			if ((BBoxes[i].area() / BBoxes[i - 1].area()) >= 5 || (BBoxes[i - 1].area() / BBoxes[i].area()) >= 5)
+			if ((BBoxes[i].area() / BBoxes[i - 1].area()) >= 5 || (BBoxes[i - 1].area() / BBoxes[i].area()) >= 5 || BBoxes[i].area() < 30)
 			{
 
 			}
@@ -431,9 +436,9 @@ void RemoveUnusualAreaBoxes(vector<Rect> &BBoxes)
 		}
 		else
 		{
-			if ((BBoxes[i].area() / BBoxes[i + 1].area()) >= 5 || (BBoxes[i + 1].area() / BBoxes[i].area()) >= 5)
+			if ((BBoxes[i].area() / BBoxes[i + 1].area()) >= 5 || (BBoxes[i + 1].area() / BBoxes[i].area()) >= 5 || BBoxes[i].area() < 30)
 			{
-				if ((BBoxes[i].area() / BBoxes[i - 1].area()) >= 5 || (BBoxes[i - 1].area() / BBoxes[i].area()) >= 5)
+				if ((BBoxes[i].area() / BBoxes[i - 1].area()) >= 5 || (BBoxes[i - 1].area() / BBoxes[i].area()) >= 5 || BBoxes[i].area() < 30)
 				{
 
 				}
@@ -450,6 +455,9 @@ void RemoveUnusualAreaBoxes(vector<Rect> &BBoxes)
 			continue;
 		}
 	}
+	BBoxes.clear();
+	BBoxes = tmpBoxes;
+	tmpBoxes.clear();
 }
 
 void RemoveSingleBoxTextLine(vector<Rect> &BBoxes)
@@ -525,6 +533,11 @@ void MergeInsideBoxes(vector<Rect> &BBoxes)
 void MergeOverlapOnTextLineNearRatioBoxes(vector<Rect> &BBoxes)
 {
 	
+}
+
+void MergeNonOverlapTextLineNearRatioBoxes(vector<Rect> &BBoxes)
+{
+
 }
 
 // not finish
@@ -629,10 +642,6 @@ Line GetLineEquation(Point A, Point B)
 	}
 }
 
-Line GetLineEquation(vector<int> &ListPos, vector<Rect> &BBoxes);
-{
-
-}
 
 
 
@@ -647,6 +656,11 @@ void SortYCoordinate(vector<Rect> &BBoxes)
 void SortArea(vector<Rect> &BBoxes)
 {
 	sort(BBoxes.begin(), BBoxes.end(), CompareArea);
+}
+
+void SortXCoordinate(vector<Rect> &BBoxes)
+{
+	sort(BBoxes.begin(), BBoxes.end(), CompareXCoordinate);
 }
 
 
@@ -714,6 +728,11 @@ bool CompareYCoordinate(Rect B1, Rect B2)
 bool CompareArea(Rect B1, Rect B2)
 {
 	return (B1.area() < B2.area());
+}
+
+bool CompareXCoordinate(Rect B1, Rect B2)
+{
+	return (B1.x < B2.x);
 }
 
 bool CheckConditionOfBoxLine(Rect B1, Rect B2)

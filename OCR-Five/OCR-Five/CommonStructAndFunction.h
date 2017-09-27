@@ -114,9 +114,13 @@ void RemoveUnbalancedRatio(vector<Rect> &BBoxes);
 
 void MergeInsideBoxes(vector<Rect> &BBoxes);
 
+/*		Also remove areas that have many bboxes assembling as a curve		*/
 // multiple boxes on the same line text and overlap to each other -> comebine into 1 box and check the line text
 // have a high chance to become from 1 char / 1 box -> > 1 word / 1 box
 void MergeOverlapOnTextLineNearRatioBoxes(vector<Rect> &BBoxes);
+// multiple boxes on horizontal or vertical line and is not overlap / intersect each other -> combine into 1 box
+// have a high chance to become from 1 char / 1 box -> 1 word / 1 box
+void MergeNonOverlapTextLineNearRatioBoxes(vector<Rect> &BBoxes);
 
 // not finish
 void CheckStrokeWidthVariation(vector<Rect> &BBoxes);
@@ -131,9 +135,8 @@ void writeTotalBoxesToFile(vector<int> &TotalBoxes, string filename);
 
 void writeRunTimeToFile(vector<double> &RunTime, string filename);
 
+// get line equation by 2 points
 Line GetLineEquation(Point A, Point B);
-
-Line GetLineEquation(vector<int> &ListPos, vector<Rect> &BBoxes);
 
 
 /*		Sort functions		*/
@@ -142,6 +145,8 @@ Line GetLineEquation(vector<int> &ListPos, vector<Rect> &BBoxes);
 void SortYCoordinate(vector<Rect> &BBoxes);
 
 void SortArea(vector<Rect> &BBoxes);
+
+void SortXCoordinate(vector<Rect> &BBoxes);
 
 
 /*		Check functions		*/
@@ -164,6 +169,9 @@ bool CompareYCoordinate(Rect B1, Rect B2);
 
 // return true if B1.area() < B2.area()
 bool CompareArea(Rect B1, Rect B2);
+
+// return true if B1.x < B2.x
+bool CompareXCoordinate(Rect B1, Rect B2);
 
 // 2 boxes are seperated, check condition about ratio, inside or outside
 bool CheckConditionOfBoxLine(Rect B1, Rect B2);

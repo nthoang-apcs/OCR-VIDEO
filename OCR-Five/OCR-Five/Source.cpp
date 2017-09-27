@@ -16,69 +16,16 @@ void SharpenPart();
 void SharpMSERPart();
 void SharpMSERGeoPart();
 void CropBoxesPart();
+void TestPart1();
+
 
 int main(char* argv)
 {
 	//SetListName(1, 500, "D:\\Document\\Thesis-2017\\Data\\500sceneimages\\vietnamese-images\\filestext.txt");
 	//SetListPath(1, 500, "D:\\Document\\Thesis-2017\\Data\\500sceneimages\\vietnamese-images\\files.txt", "D:\\Document\\Thesis-2017\Data\\500sceneimages\\vietnamese-images\\");
 
-	// get list boxes paths
-	vector<string> boxesPaths;
-	string fileboxes = "D:\\Document\\Thesis-2017\\Data2\\ResExpSharpMSERGeoVer3\\filesboxes.txt";
-	AddListPath(boxesPaths, fileboxes);
-
-	// get list file image paths
-	vector<string> Paths;
-	string filepath = "D:\\Document\\Thesis-2017\\Data\\500sceneimages\\vietnamese-images\\files.txt";
-	AddListPath(Paths, filepath);
-
-	// get list boxes
-	vector<Rect> BBoxes;
-	vector<Point> Centroids;
-	int k1 = boxesPaths.size();
-	for (int i = 0; i < k1; i++)
-	{
-		GetListBoxesInOneImage(BBoxes, boxesPaths[i]);
-		
-		// create vector centroid
-		GetListCentroids(BBoxes, Centroids);
-
-		// build all possible path
-		int k2 = BBoxes.size();
-		vector<vector<int>> PointLines;
-		vector<Line> EquationLines;
-		
-		for (int t1 = 0; t1 < k2; t1++)
-		{
-			vector<int> onelinepoint;
-			for (int t2 = 0; t2 < k2; t2++)
-			{
-				if (t1 == t2)
-					continue;
-				// satisfy conditions to build path
-				if (CheckConditionOfBoxLine(BBoxes[t1], BBoxes[t2]))
-				{
-					// first point
-					if (onelinepoint.size() == 0)
-					{
-						onelinepoint.push_back(t2);
-						// form an equation
-
-					}
-					else
-					{
-						// check line equation and threshold
-						
-					}
-				}
-
-			}
-
-		}
-
-
-	}
-
+	
+	SharpMSERGeoPart();
 	
 
 
@@ -131,7 +78,7 @@ void SharpMSERGeoPart()
 	AddListPath(Paths, filepath);
 	PartOneProcess *one = new PartOneProcess();
 
-	resultFolder = "D:\\Document\\Thesis-2017\\Data2\\ResExpSharpMSERGeoVer3\\";
+	resultFolder = "D:\\Document\\Thesis-2017\\Data2\\ResExpSharpMSERGeoVer5\\";
 	one->doProcessImagesWithPostProcessing(Paths, resultFolder);
 	GetListName(Paths, resultFolder, "listname.txt");
 	GetListTotalBoxes(Paths, resultFolder, B1, 1);
@@ -165,3 +112,68 @@ void CropBoxesPart()
 	one->CropBoxesImages(Paths, resultFolder, boxesPaths);
 }
 
+void TestPart1()
+{
+	// get list boxes paths
+	vector<string> boxesPaths;
+	string fileboxes = "D:\\Document\\Thesis-2017\\Data2\\ResExpSharpMSERGeoVer3\\filesboxes.txt";
+	AddListPath(boxesPaths, fileboxes);
+
+	// get list file image paths
+	vector<string> Paths;
+	string filepath = "D:\\Document\\Thesis-2017\\Data\\500sceneimages\\vietnamese-images\\files.txt";
+	AddListPath(Paths, filepath);
+	string resultFolder = "D:\\Document\\Thesis-2017\\Data2\\ResExpSharpMSERGeoVer4\\";
+
+	// get list boxes
+	vector<Rect> BBoxes;
+	int k1 = boxesPaths.size();
+	for (int i = 0; i < k1; i++)
+	{
+		GetListBoxesInOneImage(BBoxes, boxesPaths[i]);
+		SortArea(BBoxes);
+		Mat input = imread(Paths[i]);
+		Mat output;
+
+		// before
+		string pathout = resultFolder + ExtractNameOfFileFromPathIn(Paths[i]) + "-before.png";
+		AddRectToMat(BBoxes, input, output);
+		imwrite(pathout, output);
+
+		double timerun = 0;
+		vector<Rect> tmpBoxes;
+		int k2 = BBoxes.size();
+		for (int j = 0; j < k2; j++)
+		{
+			if (BBoxes[j].area() < 30)
+			{
+				//cout << "Area < 15 at index: " << j << " and area: " << BBoxes[j].area() 
+				//	<< ", and (w,h): " << BBoxes[j].width << "," << BBoxes[j].height << endl;
+			}
+			else
+			{
+				tmpBoxes.push_back(BBoxes[j]);
+			}
+		}
+		BBoxes.clear();
+		BBoxes = tmpBoxes;
+		tmpBoxes.clear();
+
+		// after
+		pathout = resultFolder + ExtractNameOfFileFromPathIn(Paths[i]) + "-improve-remove-unusual-area.png";
+		AddRectToMat(BBoxes, input, output);
+		imwrite(pathout, output);
+
+
+		string pathout2 = resultFolder + ExtractNameOfFileFromPathIn(Paths[i]) + "-1" + ".txt";
+		MSERFILESTREAM* one = new MSERFILESTREAM();
+		one->WriteOneImageToFile(pathout2, Paths[i], BBoxes, timerun);
+
+		BBoxes.clear();
+
+		cout << "Finish index: " << i << endl;
+		//MergeOverlapOnTextLineNearRatioBoxes(BBoxes);
+		//MergeNonOverlapTextLineNearRatioBoxes(BBoxes);
+
+	}
+}
