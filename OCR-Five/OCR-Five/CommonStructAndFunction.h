@@ -54,6 +54,12 @@ struct Line {
 	}
 };
 
+struct TreeNode
+{
+	int ID;
+	vector<int> ListOverlap;
+};
+
 
 /*		Main functions		*/
 
@@ -114,16 +120,16 @@ void RemoveUnbalancedRatio(vector<Rect> &BBoxes);
 
 void MergeInsideBoxes(vector<Rect> &BBoxes);
 
-/*		Also remove areas that have many bboxes assembling as a curve		*/
-// multiple boxes on the same line text and overlap to each other -> comebine into 1 box and check the line text
-// have a high chance to become from 1 char / 1 box -> > 1 word / 1 box
-void MergeOverlapOnTextLineNearRatioBoxes(vector<Rect> &BBoxes);
+
+void RemoveTrashBoxes(vector<Rect> &BBoxes);
+
 // multiple boxes on horizontal or vertical line and is not overlap / intersect each other -> combine into 1 box
 // have a high chance to become from 1 char / 1 box -> 1 word / 1 box
 void MergeNonOverlapTextLineNearRatioBoxes(vector<Rect> &BBoxes);
 
 // not finish
 void CheckStrokeWidthVariation(vector<Rect> &BBoxes);
+
 
 void AddRectToMat(vector<Rect> &BBoxes, Mat &input, Mat &output);
 
@@ -151,6 +157,7 @@ void SortXCoordinate(vector<Rect> &BBoxes);
 
 /*		Check functions		*/
 
+
 // check if B1 is inside B2 and B1.area * 3 >= B2
 bool IsB1insideB2(Rect B1, Rect B2);
 
@@ -174,7 +181,15 @@ bool CompareArea(Rect B1, Rect B2);
 bool CompareXCoordinate(Rect B1, Rect B2);
 
 // 2 boxes are seperated, check condition about ratio, inside or outside
-bool CheckConditionOfBoxLine(Rect B1, Rect B2);
+// return -1: not satisfy condition
+// return -2: B2 is inside B1
+// return -3: B1 is inside B2
+// return 0-360: return overlap degree direction (counter clock-wise), B1 is center, B2 is object.
+int CheckConditionOfOverlappingBoxLine(Rect B1, Rect B2);
+
+// return true if the difference between area ratio is < 2.5 & w / h is near
+// return false else
+bool CheckRatioBox(Rect B1, Rect B2);
 
 // check if point B on Line A or stay outside but have the angle <= threshold
 bool CheckLineEquation(Line A, Point B, int threshold);

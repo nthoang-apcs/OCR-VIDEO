@@ -65,9 +65,9 @@ void PostProcessing(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeR
 	MergeInsideBoxes(BBoxes);
 	// stroke width
 	CheckStrokeWidthVariation(BBoxes);
-	
-	// merge overlap on 1 line text box with nearly the same ratio h/w
-	MergeOverlapOnTextLineNearRatioBoxes(BBoxes);
+	// remove trash boxes
+
+	// merge on 1 line text box with nearly the same ratio h/w
 	MergeNonOverlapTextLineNearRatioBoxes(BBoxes);
 
 	TimeRunning = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
@@ -530,14 +530,95 @@ void MergeInsideBoxes(vector<Rect> &BBoxes)
 	tmpBoxes.clear();
 }
 
-void MergeOverlapOnTextLineNearRatioBoxes(vector<Rect> &BBoxes)
+void RemoveTrashBoxes(vector<Rect> &BBoxes)
 {
-	
+
 }
 
 void MergeNonOverlapTextLineNearRatioBoxes(vector<Rect> &BBoxes)
 {
+	int k = BBoxes.size();
+	vector<Rect> tmpBoxes;
+	for (int i = 0; i < k; i++)
+	{
+		// check if BBoxes[i] already exists
+		int k1 = tmpBoxes.size();
+		bool checked = false;
+		for (int m = 0; m < k1; m++)
+		{
+			Rect x = BBoxes[i] & tmpBoxes[m];
+			if (x.area() == BBoxes[i].area())
+			{
+				checked = true;
+				break;
+			}
+		}
+		if (checked == true)
+		{
+			continue;
+		}
 
+		TreeNode tmp;
+		tmp.ID = i;
+		int cenx = BBoxes[i].x + (BBoxes[i].width / 2);
+		int ceny = BBoxes[i].y + (BBoxes[i].height / 2);
+		for (int j = i + 1; j < k; j++)
+		{
+			int cen1x = BBoxes[j].x + (BBoxes[j].width / 2);
+			int cen1y = BBoxes[j].y + (BBoxes[j].height / 2);
+			if (ceny == cen1y && CheckRatioBox(BBoxes[i], BBoxes[j]) == true)
+			{
+				tmp.ListOverlap.push_back(j);
+			}
+			else if (ceny < cen1y)
+			{
+				if ((ceny + (BBoxes[i].height / 5)) >= cen1y && CheckRatioBox(BBoxes[i], BBoxes[j]) == true)
+				{
+					tmp.ListOverlap.push_back(j);
+				}
+			}
+			else if (ceny > cen1y)
+			{
+				if ((ceny - (BBoxes[i].height / 5)) >= cen1y && CheckRatioBox(BBoxes[i], BBoxes[j]) == true)
+				{
+					tmp.ListOverlap.push_back(j);
+				}
+			}
+		}
+		if (tmp.ListOverlap.size() == 0)
+		{
+			tmpBoxes.push_back(BBoxes[i]);
+		}
+		else
+		{
+			// build a rect from i and list overlap
+			vector<Rect> tmp2;
+			tmp2.push_back(BBoxes[tmp.ID]);
+			int k2 = tmp.ListOverlap.size();
+			for (int l = 0; l < k2; l++)
+			{
+				tmp2.push_back(BBoxes[tmp.ListOverlap[l]]);
+			}
+			Rect ne;
+			for (int l = 0; l < k2; l++)
+			{
+				if (l == 0)
+				{
+					ne = tmp2[l];
+				}
+				else
+				{
+					ne = ne | tmp2[l];
+				}
+			}
+			tmpBoxes.push_back(ne);
+			tmp2.clear();
+			tmp.ListOverlap.clear();
+		}
+	}
+	BBoxes.clear();
+	BBoxes = tmpBoxes;
+	tmpBoxes.clear();
 }
 
 // not finish
@@ -545,6 +626,7 @@ void CheckStrokeWidthVariation(vector<Rect> &BBoxes)
 {
 
 }
+
 
 void AddRectToMat(vector<Rect> &BBoxes, Mat &input, Mat &output)
 {
@@ -735,12 +817,124 @@ bool CompareXCoordinate(Rect B1, Rect B2)
 	return (B1.x < B2.x);
 }
 
-bool CheckConditionOfBoxLine(Rect B1, Rect B2)
+int CheckConditionOfOverlappingBoxLine(Rect B1, Rect B2)
 {
+	// check overlapping
+	Rect B3 = (B1 & B2);
+	if (B3.area() > 0)
+	{
+		// have area in common
+		if (B3.area() == B2.area())
+		{
+			return -2;
+		}
+		else if (B3.area() == B1.area())
+		{
+			return -3;
+		}
+		// get 2 centroids
+		Point c1;
+		c1.x = B1.x + (B1.width / 2);
+		c1.y = B1.y + (B1.height / 2);
+		Point c2;
+		c2.x = B2.x + (B2.width / 2);
+		c2.y = B2.y + (B2.height / 2);
+
+		if (c1.y == c2.y)
+		{
+			if (c1.x < c2.x)
+			{
+				return 0;
+			}
+			else
+			{
+				return 180;
+			}
+		}
+		if (c1.x == c2.x)
+		{
+			if (c1.y < c2.y)
+			{
+				return 270;
+			}
+			else
+			{
+				return 90;
+			}
+		}
+		if (c1.x < c2.x)
+		{
+			if (c1.y < c2.y)
+			{
+				// 271-359 degree
+				double tmp = (c2.y - c1.y) / (c2.x - c1.x);
+				double tmp2 = atan(tmp);
+				double result = 360 - (tmp2 * 180 / PI);
+				return result;
+			}
+			else
+			{
+				// 0-89 degree
+				double tmp = (c2.y - c1.y) / (c2.x - c1.x);
+				double tmp2 = atan(tmp);
+				double result = tmp2 * 180 / PI;
+				return result;
+			}
+		}
+		else
+		{
+			if (c1.y < c2.y)
+			{
+				// 181-269 degree
+				double tmp = (c2.y - c1.y) / (c2.x - c1.x);
+				double tmp2 = atan(tmp);
+				double result = 180 + tmp2 * 180 / PI;
+				return result;
+			}
+			else
+			{
+				// 91-179 degree
+				double tmp = (c2.y - c1.y) / (c2.x - c1.x);
+				double tmp2 = atan(tmp);
+				double result = 90 + tmp2 * 180 / PI;
+				return result;
+			}
+		}
+
+	}
 
 
+	return -1;
+}
 
-	return true;
+bool CheckRatioBox(Rect B1, Rect B2)
+{
+	if (B1.area() < B2.area() && (B2.area() / B1.area()) < 2.5)
+	{
+		// check w / h for 2 rect
+		double tmp1 = B1.height / B1.width;
+		double tmp2 = B2.height / B2.width;
+		if (abs(tmp2 - tmp1) < 1.2)
+		{
+			return true;
+		}
+		return false;
+	}
+	else if (B2.area() <= B1.area() && (B1.area() / B2.area()) < 2.5)
+	{
+		// check w / h for 2 rect
+		double tmp1 = B1.height / B1.width;
+		double tmp2 = B2.height / B2.width;
+		if (abs(tmp2 - tmp1) < 1.2)
+		{
+			return true;
+		}
+		return false;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 bool CheckLineEquation(Line A, Point B, int threshold)

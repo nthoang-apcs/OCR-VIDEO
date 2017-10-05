@@ -1,6 +1,10 @@
 ﻿  CommonStructAndFunction.cpp
-e:\code\ocr-five-git\ocr-five\ocr-five\commonstructandfunction.cpp(630): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\code\ocr-five-git\ocr-five\ocr-five\commonstructandfunction.cpp(634): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\code\ocr-five-git\ocr-five\ocr-five\commonstructandfunction.cpp(638): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+e:\code\ocr-five-git\ocr-five\ocr-five\commonstructandfunction.cpp(714): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\code\ocr-five-git\ocr-five\ocr-five\commonstructandfunction.cpp(718): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\code\ocr-five-git\ocr-five\ocr-five\commonstructandfunction.cpp(722): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+e:\code\ocr-five-git\ocr-five\ocr-five\commonstructandfunction.cpp(875): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+e:\code\ocr-five-git\ocr-five\ocr-five\commonstructandfunction.cpp(883): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+e:\code\ocr-five-git\ocr-five\ocr-five\commonstructandfunction.cpp(894): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+e:\code\ocr-five-git\ocr-five\ocr-five\commonstructandfunction.cpp(902): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
   OCR-Five.vcxproj -> E:\Code\OCR-Five-Git\OCR-Five\Debug\OCR-Five.exe
   OCR-Five.vcxproj -> E:\Code\OCR-Five-Git\OCR-Five\Debug\OCR-Five.pdb (Full PDB)

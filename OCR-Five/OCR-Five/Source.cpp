@@ -24,8 +24,9 @@ int main(char* argv)
 	//SetListName(1, 500, "D:\\Document\\Thesis-2017\\Data\\500sceneimages\\vietnamese-images\\filestext.txt");
 	//SetListPath(1, 500, "D:\\Document\\Thesis-2017\\Data\\500sceneimages\\vietnamese-images\\files.txt", "D:\\Document\\Thesis-2017\Data\\500sceneimages\\vietnamese-images\\");
 
-	
+
 	SharpMSERGeoPart();
+	
 	
 
 
@@ -78,7 +79,7 @@ void SharpMSERGeoPart()
 	AddListPath(Paths, filepath);
 	PartOneProcess *one = new PartOneProcess();
 
-	resultFolder = "D:\\Document\\Thesis-2017\\Data2\\ResExpSharpMSERGeoVer5\\";
+	resultFolder = "D:\\Document\\Thesis-2017\\Data2\\ResExpSharpMSERGeoVer6\\";
 	one->doProcessImagesWithPostProcessing(Paths, resultFolder);
 	GetListName(Paths, resultFolder, "listname.txt");
 	GetListTotalBoxes(Paths, resultFolder, B1, 1);
