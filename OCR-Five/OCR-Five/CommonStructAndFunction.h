@@ -121,7 +121,7 @@ void RemoveUnbalancedRatio(vector<Rect> &BBoxes);
 void MergeInsideBoxes(vector<Rect> &BBoxes);
 
 
-void RemoveTrashBoxes(vector<Rect> &BBoxes);
+void FindTextRegions(vector<Rect> &BBoxes);
 
 // multiple boxes on horizontal or vertical line and is not overlap / intersect each other -> combine into 1 box
 // have a high chance to become from 1 char / 1 box -> 1 word / 1 box

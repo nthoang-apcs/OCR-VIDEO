@@ -65,10 +65,20 @@ void PostProcessing(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeR
 	MergeInsideBoxes(BBoxes);
 	// stroke width
 	CheckStrokeWidthVariation(BBoxes);
-	// remove trash boxes
 
+	/**/
+	/*		Vu part		*/
+	// remove trash boxes
+	FindTextRegions(BBoxes);
 	// merge on 1 line text box with nearly the same ratio h/w
 	MergeNonOverlapTextLineNearRatioBoxes(BBoxes);
+	/**/
+
+	/**/
+	/*		Hoang part		*/
+
+
+	/**/
 
 	TimeRunning = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
 
@@ -530,7 +540,7 @@ void MergeInsideBoxes(vector<Rect> &BBoxes)
 	tmpBoxes.clear();
 }
 
-void RemoveTrashBoxes(vector<Rect> &BBoxes)
+void FindTextRegions(vector<Rect> &BBoxes)
 {
 
 }
@@ -547,7 +557,7 @@ void MergeNonOverlapTextLineNearRatioBoxes(vector<Rect> &BBoxes)
 		for (int m = 0; m < k1; m++)
 		{
 			Rect x = BBoxes[i] & tmpBoxes[m];
-			if (x.area() == BBoxes[i].area())
+			if (x.area() == BBoxes[i].area() && (tmpBoxes[m].area() / x.area()) <= 3)
 			{
 				checked = true;
 				break;
@@ -568,20 +578,23 @@ void MergeNonOverlapTextLineNearRatioBoxes(vector<Rect> &BBoxes)
 			int cen1y = BBoxes[j].y + (BBoxes[j].height / 2);
 			if (ceny == cen1y && CheckRatioBox(BBoxes[i], BBoxes[j]) == true)
 			{
-				tmp.ListOverlap.push_back(j);
+				if(abs(BBoxes[j].x - BBoxes[i].x) <= (BBoxes[i].width *3))
+					tmp.ListOverlap.push_back(j);
 			}
 			else if (ceny < cen1y)
 			{
 				if ((ceny + (BBoxes[i].height / 5)) >= cen1y && CheckRatioBox(BBoxes[i], BBoxes[j]) == true)
 				{
-					tmp.ListOverlap.push_back(j);
+					if (abs(BBoxes[j].x - BBoxes[i].x) <= (BBoxes[i].width * 3))
+						tmp.ListOverlap.push_back(j);
 				}
 			}
 			else if (ceny > cen1y)
 			{
 				if ((ceny - (BBoxes[i].height / 5)) >= cen1y && CheckRatioBox(BBoxes[i], BBoxes[j]) == true)
 				{
-					tmp.ListOverlap.push_back(j);
+					if (abs(BBoxes[j].x - BBoxes[i].x) <= (BBoxes[i].width * 3))
+						tmp.ListOverlap.push_back(j);
 				}
 			}
 		}
@@ -752,6 +765,7 @@ void SortXCoordinate(vector<Rect> &BBoxes)
 
 bool IsB1insideB2(Rect B1, Rect B2)
 {
+	/*
 	if (B1.x >= B2.x && B1.y >= B2.y)
 	{
 		// B1 is on the right and below side of B2
@@ -766,6 +780,12 @@ bool IsB1insideB2(Rect B1, Rect B2)
 	{
 		return false;
 	}
+	*/
+	Rect a = B1 & B2;
+	if (a.area() == B1.area() && (B2.area() / B1.area()) <= 3)
+		return true;
+	return false;
+
 }
 
 bool IsB1onsamelineB2(Rect B1, Rect B2)
