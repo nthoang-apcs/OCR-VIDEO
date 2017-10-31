@@ -68,10 +68,8 @@ void PostProcessing(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeR
 
 	/**/
 	/*		Vu part		*/
-	// remove trash boxes
-	FindTextRegions(BBoxes);
-	// merge on 1 line text box with nearly the same ratio h/w
-	MergeNonOverlapTextLineNearRatioBoxes(BBoxes);
+	vector<Rect> TextRgions;
+	FindTextRegions(BBoxes, TextRgions);
 	/**/
 
 	/**/
@@ -538,100 +536,38 @@ void MergeInsideBoxes(vector<Rect> &BBoxes)
 	BBoxes.clear();
 	BBoxes = tmpBoxes;
 	tmpBoxes.clear();
-}
-
-void FindTextRegions(vector<Rect> &BBoxes)
-{
-
-}
-
-void MergeNonOverlapTextLineNearRatioBoxes(vector<Rect> &BBoxes)
-{
-	int k = BBoxes.size();
-	vector<Rect> tmpBoxes;
+	// check too big box
+	k = BBoxes.size();
 	for (int i = 0; i < k; i++)
 	{
-		// check if BBoxes[i] already exists
-		int k1 = tmpBoxes.size();
-		bool checked = false;
-		for (int m = 0; m < k1; m++)
+		int count = 0;
+		for (int j = 0; j < k; j++)
 		{
-			Rect x = BBoxes[i] & tmpBoxes[m];
-			if (x.area() == BBoxes[i].area() && (tmpBoxes[m].area() / x.area()) <= 3)
-			{
-				checked = true;
-				break;
-			}
+			if (i == j)
+				continue;
+			Rect A = BBoxes[i] & BBoxes[j];
+			if (A.area() == BBoxes[j].area())
+				count++;
 		}
-		if (checked == true)
-		{
-			continue;
-		}
-
-		TreeNode tmp;
-		tmp.ID = i;
-		int cenx = BBoxes[i].x + (BBoxes[i].width / 2);
-		int ceny = BBoxes[i].y + (BBoxes[i].height / 2);
-		for (int j = i + 1; j < k; j++)
-		{
-			int cen1x = BBoxes[j].x + (BBoxes[j].width / 2);
-			int cen1y = BBoxes[j].y + (BBoxes[j].height / 2);
-			if (ceny == cen1y && CheckRatioBox(BBoxes[i], BBoxes[j]) == true)
-			{
-				if(abs(BBoxes[j].x - BBoxes[i].x) <= (BBoxes[i].width *3))
-					tmp.ListOverlap.push_back(j);
-			}
-			else if (ceny < cen1y)
-			{
-				if ((ceny + (BBoxes[i].height / 5)) >= cen1y && CheckRatioBox(BBoxes[i], BBoxes[j]) == true)
-				{
-					if (abs(BBoxes[j].x - BBoxes[i].x) <= (BBoxes[i].width * 3))
-						tmp.ListOverlap.push_back(j);
-				}
-			}
-			else if (ceny > cen1y)
-			{
-				if ((ceny - (BBoxes[i].height / 5)) >= cen1y && CheckRatioBox(BBoxes[i], BBoxes[j]) == true)
-				{
-					if (abs(BBoxes[j].x - BBoxes[i].x) <= (BBoxes[i].width * 3))
-						tmp.ListOverlap.push_back(j);
-				}
-			}
-		}
-		if (tmp.ListOverlap.size() == 0)
+		if (count < 7)
 		{
 			tmpBoxes.push_back(BBoxes[i]);
 		}
-		else
-		{
-			// build a rect from i and list overlap
-			vector<Rect> tmp2;
-			tmp2.push_back(BBoxes[tmp.ID]);
-			int k2 = tmp.ListOverlap.size();
-			for (int l = 0; l < k2; l++)
-			{
-				tmp2.push_back(BBoxes[tmp.ListOverlap[l]]);
-			}
-			Rect ne;
-			for (int l = 0; l < k2; l++)
-			{
-				if (l == 0)
-				{
-					ne = tmp2[l];
-				}
-				else
-				{
-					ne = ne | tmp2[l];
-				}
-			}
-			tmpBoxes.push_back(ne);
-			tmp2.clear();
-			tmp.ListOverlap.clear();
-		}
 	}
+	// cleaning
 	BBoxes.clear();
 	BBoxes = tmpBoxes;
 	tmpBoxes.clear();
+}
+
+void FindTextRegions(vector<Rect> &BBoxes, vector<Rect> &TextRegions)
+{
+	
+}
+
+void SupportFindTextRegions1(vector<Rect> &BBoxes)
+{
+	
 }
 
 // not finish
@@ -811,6 +747,10 @@ bool IsB1Balanced(Rect B1)
 		return false;
 	}
 	if ((B1.height / B1.width) >= 6)
+	{
+		return false;
+	}
+	if (B1.height < 9)
 	{
 		return false;
 	}

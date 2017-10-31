@@ -118,14 +118,15 @@ void RemoveSingleBoxTextLine(vector<Rect> &BBoxes);
 // h / w or w / h > 6 -> remove
 void RemoveUnbalancedRatio(vector<Rect> &BBoxes);
 
+// merge inside boxes
+// remove too big size
 void MergeInsideBoxes(vector<Rect> &BBoxes);
 
 
-void FindTextRegions(vector<Rect> &BBoxes);
+void FindTextRegions(vector<Rect> &BBoxes, vector<Rect> &TextRegions);
 
-// multiple boxes on horizontal or vertical line and is not overlap / intersect each other -> combine into 1 box
-// have a high chance to become from 1 char / 1 box -> 1 word / 1 box
-void MergeNonOverlapTextLineNearRatioBoxes(vector<Rect> &BBoxes);
+
+void SupportFindTextRegions1(vector<Rect> &BBoxes);
 
 // not finish
 void CheckStrokeWidthVariation(vector<Rect> &BBoxes);
