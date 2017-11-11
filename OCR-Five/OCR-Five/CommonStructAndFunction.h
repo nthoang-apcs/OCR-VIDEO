@@ -60,6 +60,12 @@ struct TreeNode
 	vector<int> ListOverlap;
 };
 
+struct BBoxNode
+{
+	Rect a;
+	int id;
+};
+
 
 /*		Main functions		*/
 
@@ -145,6 +151,16 @@ void writeRunTimeToFile(vector<double> &RunTime, string filename);
 // get line equation by 2 points
 Line GetLineEquation(Point A, Point B);
 
+vector<int> AllInteractWithRect(int index, vector<Rect> &BBoxes);
+
+void FindLineTextBBoxes(vector<Rect> &BBoxes, vector<BBoxNode> &PreLines, vector<Rect> &Lines);
+
+int NextNearestHorizontal(int index, vector<Rect> &BBoxes);
+
+// find the next point interact with Indexes[1] -> if form a line -> add to Indexes
+void FindTextLineInteract(vector<int> &Indexes, vector<Rect> &BBoxes);
+
+
 
 /*		Sort functions		*/
 
@@ -209,3 +225,7 @@ string ExtractNameOfFileFromPathIn(string PathIn);
 int ExtractTotalBoxesFromString(string line);
 
 double ExtractTimeRunningFromString(string line);
+
+int GetDegreeFromCenterOfAToB(Rect A, Rect B);
+
+bool IsOnSameLine(int input, vector<int> &line);
