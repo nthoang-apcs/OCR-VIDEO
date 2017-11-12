@@ -2,8 +2,11 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <opencv2\highgui.hpp>
+#include <opencv2\imgproc.hpp>
+#include <opencv2\features2d.hpp>
+#include <opencv2\imgcodecs.hpp> 
 #include "MyProcess.h"
-#include "MyMSER.h"
 
 using namespace std;
 using namespace cv;
@@ -22,6 +25,14 @@ int main(int argc, const char * argv[])
 	{
 		return 0;
 	}
+
+	/*		Setting variables		*/
+	bool bRemoveUnusual = true;
+	bool bRemoveUnbalancedRatio = true;
+	bool bRemoveSingleBox = true;
+	bool bMergeInside = true;
+	bool bMergeTextLine = true;
+	bool bRecheckVowel = true;
 
 	
 	/*		Get paths of files		*/
@@ -45,7 +56,139 @@ int main(int argc, const char * argv[])
 	delete[] fCapturePath;
 
 
-	/*		MSER		*/
+	/*		Read setting file or input new setting		*/
+	ifstream ifs1("ctrsetting.ini");
+	if (ifs1.is_open())
+	{
+		// load
+		// ignore first 2 line
+		// 0 - false
+		// 1 - true
+		string line;
+		int k;
+		getline(ifs1, line);
+		getline(ifs1, line);
+		// bool bRemoveUnusual
+		getline(ifs1, line);
+		k = line.length();
+		if (line[k - 1] == '0')
+		{
+			bRemoveUnusual = false;
+		}
+		else
+		{
+			bRemoveUnusual = true;
+		}
+		// bool bRemoveUnbalancedRatio
+		getline(ifs1, line);
+		k = line.length();
+		if (line[k - 1] == '0')
+		{
+			bRemoveUnbalancedRatio = false;
+		}
+		else
+		{
+			bRemoveUnbalancedRatio = true;
+		}
+		// bool bRemoveSingleBox
+		getline(ifs1, line);
+		k = line.length();
+		if (line[k - 1] == '0')
+		{
+			bRemoveSingleBox = false;
+		}
+		else
+		{
+			bRemoveSingleBox = true;
+		}
+		// bool bMergeInside
+		getline(ifs1, line);
+		k = line.length();
+		if (line[k - 1] == '0')
+		{
+			bMergeInside = false;
+		}
+		else
+		{
+			bMergeInside = true;
+		}
+		// bool bMergeTextLine
+		getline(ifs1, line);
+		k = line.length();
+		if (line[k - 1] == '0')
+		{
+			bMergeTextLine = false;
+		}
+		else
+		{
+			bMergeTextLine = true;
+		}
+		// bool bRecheckVowel
+		getline(ifs1, line);
+		k = line.length();
+		if (line[k - 1] == '0')
+		{
+			bRecheckVowel = false;
+		}
+		else
+		{
+			bRecheckVowel = true;
+		}
+		// others
+
+
+		ifs1.close();
+	}
+	else
+	{
+		ifs1.close();
+		ofstream ofs("ctrsetting.ini");
+		if (ofs.is_open())
+		{
+			// create new
+			ofs << "Dang Tuan Vu - Application Control Setting\n";
+			ofs << "0 is false, 1 is true\n";
+
+			// bool bRemoveUnusual
+			ofs << "Remove unusual area: 1\n";
+			// bool bRemoveUnbalancedRatio
+			ofs << "Remove unbalanced ratio: 1\n";
+			// bool bRemoveSingleBox
+			ofs << "Remove single box line: 1\n";
+			// bool bMergeInside
+			ofs << "Merge inside boxes: 1\n";
+			// bool bMergeTextLine
+			ofs << "Merge boxes on a line: 1\n";
+			// bool bRecheckVowel
+			ofs << "Recheck Vowel: 1\n";
+			// others
+
+			ofs.close();
+		}
+	}
+
+
+	/*		Load image		*/
+	vector<Mat> mOriginImages;
+	vector<Mat> mOutputImages;
+	vector<Rect> rGeneralBBoxes;
+	vector<Rect> rWordBBoxes;
+
+	int tmp2 = fPaths.size();
+	for (int i = 0; i < tmp2; i++)
+	{
+		mOriginImages.push_back(imread(fPaths[i]));
+	}
+
+	if (tmp2 == 1)
+	{
+
+	}
+	else
+	{
+		// not run yet
+	}
+	
 
 
 
