@@ -5,23 +5,32 @@
 #include <opencv2\highgui.hpp>
 #include <opencv2\imgproc.hpp>
 #include <opencv2\features2d.hpp>
-#include <opencv2\imgcodecs.hpp> 
+#include <opencv2\imgcodecs.hpp>
 #include "MyProcess.h"
 
 using namespace std;
 using namespace cv;
 
+/////////////////////////////////
+/*
+- Support main function
+*/
+/////////////////////////////////
+
+void LoadSetting(bool &bRemoveUnusual, bool &bRemoveUnbalancedRatio, bool &bRemoveSingleBox, bool &bMergeInside, bool &bMergeTextLine, bool &bRecheckVowel);
+
 
 /////////////////////////////////
 /*
+- Main Function
 - Input argument is the file path of filecapture.txt
 - The return value of this main function is 1 if success, 0 if failed.
 */
-////////////////////////////////
+/////////////////////////////////
 
 int main(int argc, const char * argv[])
 {
-	if (argc < 2)
+	if (argc != 2)
 	{
 		return 0;
 	}
@@ -34,9 +43,37 @@ int main(int argc, const char * argv[])
 	bool bMergeTextLine = true;
 	bool bRecheckVowel = true;
 
-	
+
 	/*		Get paths of files		*/
 	char *fCapturePath = new char[200];
+	char *CurrentFolder = new char[200];
+	int itmp1 = 0;
+	// get CurrentFolder
+	while(argv[0][itmp1] != 0)
+	{
+		itmp1++;
+	}
+	while(argv[0][itmp1] != '\\' && argv[0][itmp1] != '/')
+	{
+		itmp1--;
+	}
+	itmp1++;
+	for(int i = 0; i < itmp1; i++)
+	{
+		CurrentFolder[i] == argv[0][itmp1];
+	}
+	CurrentFolder[itmp1] = 0;
+	// get fCapturePath
+	itmp1 = 0;
+	while(argv[1][itmp1] != 0)
+	{
+		fCapturePath[itmp1] = argv[1][itmp1];
+		itmp1++;
+	}
+	fCapturePath[itmp1] = 0;
+	itmp1 = 0;
+
+	// get list of path files
 	vector<string> fPaths;
 	string tmp1;
 	ifstream ifs(fCapturePath);
@@ -57,6 +94,39 @@ int main(int argc, const char * argv[])
 
 
 	/*		Read setting file or input new setting		*/
+	LoadSetting(bRemoveUnusual, bRemoveUnbalancedRatio, bRemoveSingleBox, bMergeInside, bMergeTextLine, bRecheckVowel);
+
+
+	/*		Load image		*/
+	vector<Mat> mOriginImages;
+
+	int tmp2 = fPaths.size();
+	for (int i = 0; i < tmp2; i++)
+	{
+		mOriginImages.push_back(imread(fPaths[i]));
+	}
+
+	/*		Check mode		*/
+	if (tmp2 == 1)
+	{
+		Mat mOutputImage;
+		// 1 image
+		RunProcessOne(mOriginImages[0], mOutputImage, CurrentFolder);
+	}
+	else
+	{
+		vector<Mat> mOutputImages;
+		// multiple image
+		RunProcessAll(mOriginImages, mOutputImages, CurrentFolder);
+	}
+
+	delete[] CurrentFolder
+
+	return 1;
+}
+
+void LoadSetting(bool &bRemoveUnusual, bool &bRemoveUnbalancedRatio, bool &bRemoveSingleBox, bool &bMergeInside, bool &bMergeTextLine, bool &bRecheckVowel)
+{
 	ifstream ifs1("ctrsetting.ini");
 	if (ifs1.is_open())
 	{
@@ -166,32 +236,4 @@ int main(int argc, const char * argv[])
 			ofs.close();
 		}
 	}
-
-
-	/*		Load image		*/
-	vector<Mat> mOriginImages;
-	vector<Mat> mOutputImages;
-	vector<Rect> rGeneralBBoxes;
-	vector<Rect> rWordBBoxes;
-
-	int tmp2 = fPaths.size();
-	for (int i = 0; i < tmp2; i++)
-	{
-		mOriginImages.push_back(imread(fPaths[i]));
-	}
-
-	if (tmp2 == 1)
-	{
-
-	}
-	else
-	{
-		// not run yet
-	}
-	
-
-
-
-
-	return 1;
 }
