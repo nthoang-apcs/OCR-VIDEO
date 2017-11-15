@@ -5,15 +5,12 @@
 #include <string>
 #include <iostream>
 #include <ctime>
+#include "MySupPro.h"
 
 using namespace std;
 using namespace cv;
 
 
-void MSEROneImage(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeRunning);
-
-void SharpenOneImage(Mat &input, Mat &output, double sigma = 1, double threshold = 5, double amount = 1);
+void MSEROneImage(Mat &input, vector<Rect> &BBoxes, double &TimeRunning);
 
 void RemoveDuplicatedBoxes(vector<Rect> &BBoxes);
-
-void AddRectToMat(vector<Rect> &BBoxes, Mat &input, Mat &output);

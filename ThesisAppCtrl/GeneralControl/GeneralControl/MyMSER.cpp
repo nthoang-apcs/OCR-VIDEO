@@ -1,7 +1,7 @@
 #include "MyMSER.h"
 
 
-void MSEROneImage(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeRunning)
+void MSEROneImage(Mat &input, vector<Rect> &BBoxes, double &TimeRunning)
 {
 	clock_t start = clock();
 	// convert gray from src to textImg
@@ -24,22 +24,8 @@ void MSEROneImage(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeRun
 	RemoveDuplicatedBoxes(BBoxes);
 
 	TimeRunning = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
-	// add rect to output Mat
-	AddRectToMat(BBoxes, input, output);
 	// cleaning
 	contours.clear();
-}
-
-void SharpenOneImage(Mat &input, Mat &output, double sigma, double threshold, double amount)
-{
-	Mat blurred;
-	GaussianBlur(input, blurred, Size(), sigma, sigma);
-
-	Mat lowContrastMask = abs(input - blurred) < threshold;
-
-	output = input*(1 + amount) + blurred*(-amount);
-
-	input.copyTo(output, lowContrastMask);
 }
 
 void RemoveDuplicatedBoxes(vector<Rect> &BBoxes)
@@ -67,14 +53,4 @@ void RemoveDuplicatedBoxes(vector<Rect> &BBoxes)
 	BBoxes.clear();
 	BBoxes = tmpBoxes;
 	tmpBoxes.clear();
-}
-
-void AddRectToMat(vector<Rect> &BBoxes, Mat &input, Mat &output)
-{
-	output = input.clone();
-	int k = BBoxes.size();
-	for (int i = 0; i < k; i++)
-	{
-		rectangle(output, BBoxes[i], CV_RGB(0, 255, 0), 2);
-	}
 }

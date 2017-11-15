@@ -8,6 +8,9 @@
 #include <opencv2\features2d.hpp>
 #include <opencv2\imgcodecs.hpp>
 #include "MyMSER.h"
+#include "MySupPro.h"
+#include "RectDList.h"
+#include "MySort.h"
 
 using namespace std;
 using namespace cv;
@@ -20,3 +23,13 @@ int RunProcessAll(vector<Mat> &mOriginImage, vector<Mat> &mOutputImage, char *Cu
 // return 1 - success
 // processing of 1 image from preprocessing to postprocessing
 int RunProcessOne(Mat &mOriginImage, Mat &mOutputImage, char *CurrentFolder);
+
+
+// Pre processing
+void PreProcessing(Mat mOriginImage, vector<Rect> &BBoxes, double &TimeRunning);
+
+
+// Post processing step 1: reduce non-text BBoxes
+void PostProcessing(vector<Rect> &BBoxes, double &TimeRunning);
+
+// Post processing step 2: combine text line BBoxes, bind BBoxes to IDs
