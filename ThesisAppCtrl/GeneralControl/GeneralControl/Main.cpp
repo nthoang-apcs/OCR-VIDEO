@@ -125,6 +125,9 @@ int main(int argc, const char * argv[])
 	return 1;
 }
 
+
+/*		Additional functions		*/
+
 void LoadSetting(bool &bRemoveUnusual, bool &bRemoveUnbalancedRatio, bool &bRemoveSingleBox, bool &bMergeInside, bool &bMergeTextLine, bool &bRecheckVowel)
 {
 	ifstream ifs1("ctrsetting.ini");

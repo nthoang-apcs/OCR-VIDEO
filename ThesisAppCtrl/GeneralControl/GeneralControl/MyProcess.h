@@ -33,3 +33,4 @@ void PreProcessing(Mat mOriginImage, vector<Rect> &BBoxes, double &TimeRunning);
 void PostProcessing(vector<Rect> &BBoxes, double &TimeRunning);
 
 // Post processing step 2: combine text line BBoxes, bind BBoxes to IDs
+void PostProcessingStepTwo(vector<Rect> &BBoxes, double &TimeRunning, RectDList &OtherBoxes, vector<RectDList> &Lines);

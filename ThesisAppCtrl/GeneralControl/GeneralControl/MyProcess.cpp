@@ -24,7 +24,10 @@ int RunProcessOne(Mat &mOriginImage, Mat &mOutputImage, char *CurrentFolder)
     PreProcessing(mOriginImage, BBoxes, timerunning);
 
     /*      Post processing step 1    */
+    PostProcessing(BBoxes, timerunning);
 
+
+    /*      Merge line text, bind ID    */
 
 
     return 1;
@@ -63,4 +66,14 @@ void PostProcessing(vector<Rect> &BBoxes, double &TimeRunning)
 	MergeInsideBoxes(BBoxes);
 
     TimeRunning += (double)(clock() - start) / (double)CLOCKS_PER_SEC;
+}
+
+void PostProcessingStepTwo(vector<Rect> &BBoxes, double &TimeRunning, RectDList &OtherBoxes, vector<RectDList> &Lines)
+{
+    // binding ID
+    int nSize = BBoxes.size();
+    for(int i = 0; i < nSize; i++)
+    {
+
+    }
 }

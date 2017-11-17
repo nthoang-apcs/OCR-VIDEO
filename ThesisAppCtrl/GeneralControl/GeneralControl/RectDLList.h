@@ -18,6 +18,14 @@ struct RectNode
     Rect a;
     RectNode *next;
     RectNode *prev;
+
+    RectNode(int id, Rect input)
+    {
+        ID = id;
+        a = input;
+        next = NULL;
+        prev = NULL;
+    }
 };
 
 class RectDLL
@@ -31,6 +39,22 @@ public:
     {
         Head = NULL;
     }
+
+    void push_back(int ID, Rect input)
+    {
+        if(Head == NULL)
+        {
+            Head = new RectNode(ID, input);
+            return;
+        }
+        
+    }
+
+    void push_back(int ID, RectNode &X)
+    {
+
+    }
+
 
 
     void Destroy()
