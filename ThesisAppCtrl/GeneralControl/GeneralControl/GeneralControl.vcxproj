@@ -153,18 +153,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MyCondition.cpp" />
-    <ClCompile Include="MyMSER.cpp" />
     <ClCompile Include="MyProcess.cpp" />
-    <ClCompile Include="MySort.cpp" />
     <ClCompile Include="MySupPro.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyCondition.h" />
-    <ClInclude Include="MyMSER.h" />
     <ClInclude Include="MyProcess.h" />
-    <ClInclude Include="MySort.h" />
     <ClInclude Include="MySupPro.h" />
+    <ClInclude Include="RectDLList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

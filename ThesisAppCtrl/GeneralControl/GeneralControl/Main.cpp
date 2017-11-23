@@ -7,6 +7,8 @@
 #include <opencv2\features2d.hpp>
 #include <opencv2\imgcodecs.hpp>
 #include "MyProcess.h"
+#include "MySupPro.h"
+#include "RectDLList.h"
 
 using namespace std;
 using namespace cv;
@@ -120,7 +122,7 @@ int main(int argc, const char * argv[])
 		RunProcessAll(mOriginImages, mOutputImages, CurrentFolder);
 	}
 
-	delete[] CurrentFolder
+	delete[] CurrentFolder;
 
 	return 1;
 }

@@ -47,7 +47,7 @@ public:
             Head = new RectNode(ID, input);
             return;
         }
-        
+          
     }
 
     void push_back(int ID, RectNode &X)
@@ -85,4 +85,4 @@ public:
     {
         Destroy();
     }
-}
+};

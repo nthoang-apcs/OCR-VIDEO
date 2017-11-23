@@ -1,16 +1,21 @@
 #include "MyProcess.h"
 
 
-int RunProcessAll(vector<Mat> &mOriginImage, vector<Mat> &mOutputImage, char *CurrentFolder)
+int RunProcessAll(vector<Mat> &mOriginImages, vector<Mat> &mOutputImages, char *CurrentFolder)
 {
     int k = mOriginImages.size();
     for(int i = 0; i < k; i++)
     {
-        int checked = RunProcessOne(mOriginImages[i]);
+		Mat mResultImage;
+        int checked = RunProcessOne(mOriginImages[i], mResultImage, CurrentFolder);
         if(checked == 0)
         {
             return 0;
         }
+		else
+		{
+			mOutputImages.push_back(mResultImage);
+		}
     }
     return 1;
 }
@@ -43,10 +48,10 @@ void PreProcessing(Mat mOriginImage, vector<Rect> &BBoxes, double &TimeRunning)
 	// sharpen
 	Mat mTmp2;
 	SharpenOneImage(mTmp1, mTmp2);
-    timerunning += (double)(clock() - start) / (double)CLOCKS_PER_SEC;
+	TimeRunning += (double)(clock() - start) / (double)CLOCKS_PER_SEC;
 
     /*      MSER    */
-    MSEROneImage(mTmp2, BBoxes, timerunning);
+    MSEROneImage(mTmp2, BBoxes, TimeRunning);
 }
 
 void PostProcessing(vector<Rect> &BBoxes, double &TimeRunning)
@@ -68,7 +73,7 @@ void PostProcessing(vector<Rect> &BBoxes, double &TimeRunning)
     TimeRunning += (double)(clock() - start) / (double)CLOCKS_PER_SEC;
 }
 
-void PostProcessingStepTwo(vector<Rect> &BBoxes, double &TimeRunning, RectDList &OtherBoxes, vector<RectDList> &Lines)
+void PostProcessingStepTwo(vector<Rect> &BBoxes, double &TimeRunning, RectDLL &OtherBoxes, vector<RectDLL> &Lines)
 {
     // binding ID
     int nSize = BBoxes.size();
@@ -76,4 +81,6 @@ void PostProcessingStepTwo(vector<Rect> &BBoxes, double &TimeRunning, RectDList 
     {
 
     }
+
+	return;
 }

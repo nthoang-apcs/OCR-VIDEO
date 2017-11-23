@@ -18,16 +18,7 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MySort.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MyCondition.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MyProcess.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MyMSER.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MySupPro.cpp">
@@ -35,19 +26,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MySort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MyCondition.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MyProcess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyMSER.h">
+    <ClInclude Include="MySupPro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MySupPro.h">
+    <ClInclude Include="RectDLList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

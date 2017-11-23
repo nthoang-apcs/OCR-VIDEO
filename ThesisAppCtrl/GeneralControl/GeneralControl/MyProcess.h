@@ -7,17 +7,15 @@
 #include <opencv2\imgproc.hpp>
 #include <opencv2\features2d.hpp>
 #include <opencv2\imgcodecs.hpp>
-#include "MyMSER.h"
 #include "MySupPro.h"
-#include "RectDList.h"
-#include "MySort.h"
+#include "RectDLList.h"
 
 using namespace std;
 using namespace cv;
 
 // return 0 - failed
 // return 1 - success
-int RunProcessAll(vector<Mat> &mOriginImage, vector<Mat> &mOutputImage, char *CurrentFolder);
+int RunProcessAll(vector<Mat> &mOriginImages, vector<Mat> &mOutputImages, char *CurrentFolder);
 
 // return 0 - failed
 // return 1 - success
@@ -33,4 +31,4 @@ void PreProcessing(Mat mOriginImage, vector<Rect> &BBoxes, double &TimeRunning);
 void PostProcessing(vector<Rect> &BBoxes, double &TimeRunning);
 
 // Post processing step 2: combine text line BBoxes, bind BBoxes to IDs
-void PostProcessingStepTwo(vector<Rect> &BBoxes, double &TimeRunning, RectDList &OtherBoxes, vector<RectDList> &Lines);
+void PostProcessingStepTwo(vector<Rect> &BBoxes, double &TimeRunning, RectDLL &OtherBoxes, vector<RectDLL> &Lines);
