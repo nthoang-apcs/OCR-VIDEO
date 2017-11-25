@@ -194,7 +194,12 @@ void BindingID(vector<Rect> &BBoxes, RectDLL &OtherBoxes, int start)
 
 void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> Lines)
 {
+	int nSize = OtherBoxes.size();
+	int	HandleSize = nSize - 2;
+	for (int i = 0; i < HandleSize; i++)
+	{
 
+	}
 }
 
 

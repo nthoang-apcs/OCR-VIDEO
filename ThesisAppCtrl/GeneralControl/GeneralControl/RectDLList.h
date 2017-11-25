@@ -269,6 +269,22 @@ public:
 		}
 	}
 
+	int size()
+	{
+		if (Head == NULL)
+			return 0;
+		int nCount = 0;
+		RectNode* tmp = Head;
+		while (tmp != NULL)
+		{
+			tmp = tmp->next;
+			nCount++;
+		}
+		return nCount;
+	}
+
+
+
     void Destroy()
     {
         if(Head == NULL)

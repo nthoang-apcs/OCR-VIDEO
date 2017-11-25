@@ -39,6 +39,9 @@ void BindingID(vector<Rect> &BBoxes, RectDLL &OtherBoxes, int start);
 
 void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> Lines);
 
+void ComputeHorizontalAngle(RectDLL &OtherBoxes, int firstIndex, int secondIndex);
+
+
 
 ///////////////////////////////////////
 /*
@@ -67,6 +70,8 @@ bool CompareArea(Rect B1, Rect B2);
 bool CompareXCoordinate(Rect B1, Rect B2);
 
 
+
+
 ///////////////////////////////////////
 /*
 				Sort
@@ -78,9 +83,6 @@ void SortYCoordinate(vector<Rect> &BBoxes);
 void SortArea(vector<Rect> &BBoxes);
 
 void SortXCoordinate(vector<Rect> &BBoxes);
-
-
-
 
 
 
