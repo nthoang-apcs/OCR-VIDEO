@@ -25,15 +25,16 @@ int RunProcessOne(Mat &mOriginImage, Mat &mOutputImage, char *CurrentFolder)
     double timerunning = 0.00;
     vector<Rect> BBoxes;
     clock_t start = clock();
+	RectDLL OtherBoxes;
+	vector<RectDLL> Lines;
     /*      Pre-processing    */
     PreProcessing(mOriginImage, BBoxes, timerunning);
 
     /*      Post processing step 1    */
     PostProcessing(BBoxes, timerunning);
 
-
-    /*      Merge line text, bind ID    */
-
+    /*      bind ID to each BBox, merge line text    */
+	PostProcessingStepTwo(BBoxes, timerunning, OtherBoxes, Lines);
 
     return 1;
 }
@@ -75,12 +76,12 @@ void PostProcessing(vector<Rect> &BBoxes, double &TimeRunning)
 
 void PostProcessingStepTwo(vector<Rect> &BBoxes, double &TimeRunning, RectDLL &OtherBoxes, vector<RectDLL> &Lines)
 {
+	clock_t start = clock();
     // binding ID
-    int nSize = BBoxes.size();
-    for(int i = 0; i < nSize; i++)
-    {
+	BindingID(BBoxes, OtherBoxes, 0);
+	// merge line text
 
-    }
 
+	TimeRunning += (double)(clock() - start) / (double)CLOCKS_PER_SEC;
 	return;
 }

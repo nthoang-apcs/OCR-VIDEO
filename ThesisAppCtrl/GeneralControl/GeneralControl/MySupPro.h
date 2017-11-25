@@ -35,6 +35,9 @@ void RemoveUnbalancedRatio(vector<Rect> &BBoxes);
 // remove too big size
 void MergeInsideBoxes(vector<Rect> &BBoxes);
 
+void BindingID(vector<Rect> &BBoxes, RectDLL &OtherBoxes, int start);
+
+void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> Lines);
 
 
 ///////////////////////////////////////

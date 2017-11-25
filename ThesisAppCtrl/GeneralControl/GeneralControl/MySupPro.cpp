@@ -187,6 +187,16 @@ void MergeInsideBoxes(vector<Rect> &BBoxes)
 	tmpBoxes.clear();
 }
 
+void BindingID(vector<Rect> &BBoxes, RectDLL &OtherBoxes, int start)
+{
+	OtherBoxes.BindingArrayWithID(BBoxes, start);
+}
+
+void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> Lines)
+{
+
+}
+
 
 ///////////////////////////////////////
 /*

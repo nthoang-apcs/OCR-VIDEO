@@ -68,8 +68,9 @@ void PostProcessing(Mat &input, Mat &output, vector<Rect> &BBoxes, double &TimeR
 
 	/**/
 	/*		Vu part		*/
-	vector<Rect> TextRgions;
-	FindTextRegions(BBoxes, TextRgions);
+	SortXCoordinate(BBoxes);
+	// bind all boxes to an ID
+
 	/**/
 
 	/**/
@@ -560,15 +561,11 @@ void MergeInsideBoxes(vector<Rect> &BBoxes)
 	tmpBoxes.clear();
 }
 
-void FindTextRegions(vector<Rect> &BBoxes, vector<Rect> &TextRegions)
-{
-	
-}
 
-void SupportFindTextRegions1(vector<Rect> &BBoxes)
-{
-	
-}
+
+
+
+
 
 // not finish
 void CheckStrokeWidthVariation(vector<Rect> &BBoxes)

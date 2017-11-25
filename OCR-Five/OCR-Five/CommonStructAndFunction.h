@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+#include "MyRectDLL.h"
 using namespace std;
 using namespace cv;
 
@@ -60,11 +61,7 @@ struct TreeNode
 	vector<int> ListOverlap;
 };
 
-struct BBoxNode
-{
-	Rect a;
-	int id;
-};
+
 
 
 /*		Main functions		*/
@@ -129,10 +126,7 @@ void RemoveUnbalancedRatio(vector<Rect> &BBoxes);
 void MergeInsideBoxes(vector<Rect> &BBoxes);
 
 
-void FindTextRegions(vector<Rect> &BBoxes, vector<Rect> &TextRegions);
 
-
-void SupportFindTextRegions1(vector<Rect> &BBoxes);
 
 // not finish
 void CheckStrokeWidthVariation(vector<Rect> &BBoxes);

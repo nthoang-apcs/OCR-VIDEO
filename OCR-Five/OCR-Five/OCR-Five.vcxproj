@@ -92,6 +92,7 @@
   <ItemGroup>
     <ClInclude Include="CommonStructAndFunction.h" />
     <ClInclude Include="MSERIO.h" />
+    <ClInclude Include="MyRectDLL.h" />
     <ClInclude Include="PartOneProcess.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
