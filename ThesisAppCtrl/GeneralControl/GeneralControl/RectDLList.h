@@ -283,7 +283,30 @@ public:
 		return nCount;
 	}
 
-
+	// return Rect 0 0 0 0 if index < 0 or Head = NULL
+	Rect GetRectAtIndex(int index)
+	{
+		if (index > -1 || Head == NULL)
+		{
+			return Rect(0, 0, 0, 0);
+		}
+		RectNode* tmp = Head;
+		int count = 0;
+		while (tmp != NULL)
+		{
+			if (count == index)
+			{
+				break;
+			}
+			tmp = tmp->next;
+			count++;
+		}
+		if (tmp == NULL)
+		{
+			return Rect(0, 0, 0, 0);
+		}
+		return tmp->m_a;
+	}
 
     void Destroy()
     {

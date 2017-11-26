@@ -39,7 +39,8 @@ void BindingID(vector<Rect> &BBoxes, RectDLL &OtherBoxes, int start);
 
 void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> Lines);
 
-void ComputeHorizontalAngle(RectDLL &OtherBoxes, int firstIndex, int secondIndex);
+// from first index, draw a horizontal, computer the angle of second index to first index with that horizontal
+int ComputeHorizontalAngle(RectDLL &OtherBoxes, int firstIndex, int secondIndex);
 
 
 

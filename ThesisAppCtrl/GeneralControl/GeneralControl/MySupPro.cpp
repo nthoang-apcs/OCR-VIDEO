@@ -198,10 +198,36 @@ void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> Lines)
 	int	HandleSize = nSize - 2;
 	for (int i = 0; i < HandleSize; i++)
 	{
-
+		
 	}
 }
 
+int ComputeHorizontalAngle(RectDLL &OtherBoxes, int firstIndex, int secondIndex)
+{
+	float a = 0.0;
+	float h = 0.0;
+	Rect first = OtherBoxes.GetRectAtIndex(firstIndex);
+	Rect second = OtherBoxes.GetRectAtIndex(secondIndex);
+	int fx = first.x + (first.width / 2);
+	int fy = first.y + (first.height / 2);
+	int sx = second.x + (second.width / 2);
+	int sy = second.y + (second.height / 2);
+	a = sy - fy;
+	if (a < 0)
+	{
+		// the degree is < 0
+		
+	}
+	else if (a > 0)
+	{
+		// the degree is > 0
+	}
+	else
+	{
+		// 2 rect centers are on the same line
+		return 0;
+	}
+}
 
 ///////////////////////////////////////
 /*
