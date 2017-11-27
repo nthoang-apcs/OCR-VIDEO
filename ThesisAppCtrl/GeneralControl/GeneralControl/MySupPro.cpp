@@ -317,6 +317,28 @@ void SortXCoordinate(vector<Rect> &BBoxes)
 
 ///////////////////////////////////////
 /*
+				Handle files
+*/
+//////////////////////////////////////
+
+// convert rect get from mser
+// -> output the rect to recognize
+Rect ConvertTheoryToRealRect(Rect Input)
+{
+
+}
+
+// convert rect from recognition
+// -> output rect from mser
+Rect ConvertRealRectToTheory(Rect Input)
+{
+
+}
+
+
+
+///////////////////////////////////////
+/*
 					MSER
 */
 //////////////////////////////////////
