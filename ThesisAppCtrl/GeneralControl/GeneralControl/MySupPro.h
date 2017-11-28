@@ -99,6 +99,9 @@ Rect ConvertRealRectToTheoryRect(Rect Input);
 
 void SaveLines(Mat &mOriginImage, char *CurrentFolder, vector<RectDLL> &Lines);
 
+void SaveOtherBoxes(Mat &mOriginImage, char *CurrentFolder, RectDLL &OtherBoxes);
+
+
 
 ///////////////////////////////////////
 /*

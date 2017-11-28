@@ -39,6 +39,23 @@ struct RectNode
 	{
 		return to_string(m_a.x) + "," + to_string(m_a.y) + "," + to_string(m_a.width) + "," + to_string(m_a.height);
 	}
+
+	int ConvertVectorCharToInt(vector<char> &input)
+	{
+		int x = 0;
+		int nSize = input.size();
+		for (int i = 0; i < nSize; i++)
+		{
+			// check if input[i] is a digit
+			if (input[i] < '0' && input[i] > '9')
+			{
+				return x;
+			}
+			x = x * 10 + ((int)(input[i]) - (input)('0'));
+		}
+		return x;
+	}
+
 	bool setRectFromString(string x)
 	{
 		int x, y, width, height;
@@ -56,7 +73,78 @@ struct RectNode
 		{
 			return false;
 		}
-
+		// x
+		while (pos < leng && x[pos] != ' ')
+		{
+			tmp1.push_back(x[pos]);
+			pos++;
+		}
+		if (pos == leng)
+		{
+			return false;
+		}
+		x = ConvertVectorCharToInt(tmp1);
+		tmp1.clear();
+		// ignore space
+		while (pos < leng && x[pos] == ' ')
+		{
+			pos++;
+		}
+		if (pos == leng)
+		{
+			return false;
+		}
+		// y
+		while (pos < leng && x[pos] != ' ')
+		{
+			tmp1.push_back(x[pos]);
+			pos++;
+		}
+		if (pos == leng)
+		{
+			return false;
+		}
+		y = ConvertVectorCharToInt(tmp1);
+		tmp1.clear();
+		// ignore space
+		while (pos < leng && x[pos] == ' ')
+		{
+			pos++;
+		}
+		if (pos == leng)
+		{
+			return false;
+		}
+		// width
+		while (pos < leng && x[pos] != ' ')
+		{
+			tmp1.push_back(x[pos]);
+			pos++;
+		}
+		if (pos == leng)
+		{
+			return false;
+		}
+		width = ConvertVectorCharToInt(tmp1);
+		tmp1.clear();
+		// ignore space
+		while (pos < leng && x[pos] == ' ')
+		{
+			pos++;
+		}
+		if (pos == leng)
+		{
+			return false;
+		}
+		// height
+		while (pos < leng && x[pos] != ' ')
+		{
+			tmp1.push_back(x[pos]);
+			pos++;
+		}
+		height = ConvertVectorCharToInt(tmp1);
+		tmp1.clear();
+		return true;
 	}
 };
 

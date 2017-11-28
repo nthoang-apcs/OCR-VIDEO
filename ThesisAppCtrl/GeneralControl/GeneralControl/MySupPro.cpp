@@ -416,9 +416,22 @@ void SaveLines(Mat &mOriginImage, char *CurrentFolder, vector<RectDLL> &Lines)
 	}
 
 	// write list filename into tmp folder with name: "files.txt"
+	ofstream ofs2;
+	ofs2.open(folder + "files.txt", ofstream::out);
+	if (ofs2.is_open())
+	{
+		nSize = ListFiles.size();
+		for (int i = 0; i < nSize; i++)
+		{
+			ofs2 << ListFiles[i] << "\n";
+		}
+		ofs2.close();
+	}
+	return;
+}
 
-
-	
+void SaveOtherBoxes(Mat &mOriginImage, char *CurrentFolder, RectDLL &OtherBoxes)
+{
 
 }
 

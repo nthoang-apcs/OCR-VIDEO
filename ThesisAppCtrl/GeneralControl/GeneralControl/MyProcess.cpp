@@ -40,9 +40,10 @@ int RunProcessOne(Mat &mOriginImage, Mat &mOutputImage, char *CurrentFolder)
     // -> change Rect
 	PostProcessingStepThree(timerunning, OtherBoxes, Lines);
 
-    // cut image -> save format: tmp/imgTmp-[x].jpg
+    // cut image -> save format: tmp\imgTmp-[x].jpg
 	// it is the folder where the recogition.exe is stored
-    
+	// All stored file names are in tmp\files.txt
+	SaveLines(mOriginImage, CurrentFolder, Lines);
     // save info of each tmp file
 
 
