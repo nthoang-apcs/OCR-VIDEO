@@ -34,6 +34,30 @@ struct RectNode
         next = NULL;
         prev = NULL;
     }
+
+	string getStringRect()
+	{
+		return to_string(m_a.x) + "," + to_string(m_a.y) + "," + to_string(m_a.width) + "," + to_string(m_a.height);
+	}
+	bool setRectFromString(string x)
+	{
+		int x, y, width, height;
+		if (x == "")
+			return false;
+		int leng = x.length();
+		int pos = 0;
+		vector<char> tmp1;
+		// ignore space
+		while (pos < leng && x[pos] == ' ')
+		{
+			pos++;
+		}
+		if (pos == leng)
+		{
+			return false;
+		}
+
+	}
 };
 
 class RectDLL
@@ -366,6 +390,42 @@ public:
 		return nCount;
 	}
 
+	string getStringID()
+	{
+		if (Head == NULL)
+			return string();
+		RectNode* tmp = Head;
+		string res = "";
+		while (tmp != NULL)
+		{
+			res = res + to_string(tmp->m_ID);
+			res = res + " ";
+			tmp = tmp->next;
+		}
+		return res;
+	}
+
+	string getStringRect()
+	{
+		if (Head == NULL)
+			return string();
+		RectNode* tmp = Head;
+		string res = "";
+		while (tmp != NULL)
+		{
+			res = res + tmp->getStringRect();
+			res = res + " ";
+			tmp = tmp->next;
+		}
+		return res;
+	}
+
+	string getStringRectMerge()
+	{
+		Rect tmp = MergeAllRectInside();
+		return to_string(tmp.x) + "," + to_string(tmp.y) + "," + to_string(tmp.width) + "," + to_string(tmp.height);
+	}
+
 	// return Rect 0 0 0 0 if index < 0 or Head = NULL
 	Rect GetRectAtIndex(int index)
 	{
@@ -389,6 +449,25 @@ public:
 			return Rect(0, 0, 0, 0);
 		}
 		return tmp->m_a;
+	}
+
+	Rect MergeAllRectInside()
+	{
+		Rect result = Rect(0, 0, 0, 0);
+		if (Head == NULL)
+		{
+
+		}
+		else
+		{
+			RectNode* tmp = Head;
+			while (tmp != NULL)
+			{
+				result = result & tmp->m_a;
+				tmp = tmp->next;
+			}
+		}
+		return result;
 	}
 
     void Destroy()

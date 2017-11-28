@@ -40,9 +40,12 @@ int RunProcessOne(Mat &mOriginImage, Mat &mOutputImage, char *CurrentFolder)
     // -> change Rect
 	PostProcessingStepThree(timerunning, OtherBoxes, Lines);
 
-    // cut image -> save format: imgTmp-[x].jpg
-    int nSize = OtherBoxes.size();
+    // cut image -> save format: tmp/imgTmp-[x].jpg
+	// it is the folder where the recogition.exe is stored
+    
     // save info of each tmp file
+
+
 
 
     return 1;
@@ -101,7 +104,7 @@ void PostProcessingStepThree(double &TimeRunning, RectDLL &OtherBoxes, vector<Re
 {
 	clock_t start = clock();
     // convert Rects
-    OtherBoxes->ConvertTheoryListToRealList();
+    OtherBoxes.ConvertTheoryListToRealList();
     int nSize = Lines.size();
     for(int i = 0; i < nSize; i++)
     {

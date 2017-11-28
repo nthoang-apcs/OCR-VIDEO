@@ -389,6 +389,39 @@ Rect ConvertRealRectToTheoryRect(Rect Input)
 	return result;
 }
 
+void SaveLines(Mat &mOriginImage, char *CurrentFolder, vector<RectDLL> &Lines)
+{
+	string folder = string(CurrentFolder) + "\\tmp\\";
+	// break into small mat
+	int nSize = Lines.size();
+	vector<string> ListFiles;
+	for (int i = 0; i < nSize; i++)
+	{
+		Rect tmp1 = Lines[i].MergeAllRectInside();
+		Mat tmp2 = mOriginImage(tmp1);
+		// write tmp2
+		string filename = folder + "line-" + to_string(i) + ".jpg";
+		imwrite(filename, tmp2);
+		ListFiles.push_back(filename);
+		// write info of each file
+		ofstream ofs;
+		ofs.open(filename + ".txt", ofstream::out);
+		if (ofs.is_open())
+		{
+			ofs << "ID: " << Lines[i].getStringID() << "\n";
+			ofs << "Rect member: " << Lines[i].getStringRect() << "\n";
+			ofs << "Rect merge: " << Lines[i].getStringRectMerge() << "\n";
+			ofs.close();
+		}
+	}
+
+	// write list filename into tmp folder with name: "files.txt"
+
+
+	
+
+}
+
 
 
 ///////////////////////////////////////

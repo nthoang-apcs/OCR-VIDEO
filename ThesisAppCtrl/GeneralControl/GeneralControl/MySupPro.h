@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <ctime>
+#include <fstream>
 #include <opencv2\highgui.hpp>
 #include <opencv2\imgproc.hpp>
 #include <opencv2\features2d.hpp>
@@ -95,6 +96,8 @@ void SortXCoordinate(vector<Rect> &BBoxes);
 Rect ConvertTheoryRectToRealRect(Rect Input);
 
 Rect ConvertRealRectToTheoryRect(Rect Input);
+
+void SaveLines(Mat &mOriginImage, char *CurrentFolder, vector<RectDLL> &Lines);
 
 
 ///////////////////////////////////////
