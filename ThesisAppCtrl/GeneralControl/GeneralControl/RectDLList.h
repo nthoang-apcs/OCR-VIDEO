@@ -43,12 +43,95 @@ private:
 
 protected:
 
-	
+    // convert rect get from mser
+    // -> output the rect to recognize
+    Rect ConvertTheoryRectToRealRect(Rect Input)
+    {
+    	Rect result;
+    	if(Input.height < 10 && Input.width < 10)
+    	{
+    		// 3 pixels
+    		result = Rect(Input.x, Input.y, Input.width + 3, Input.height + 3);
+    	}
+    	else if(Input.height < 20 && Input.width < 20)
+    	{
+    		// 5 pixels
+    		result = Rect(Input.x, Input.y, Input.width + 5, Input.height + 5);
+    	}
+    	else if(Input.height < 100 && Input.width < 100)
+    	{
+    		// 10 pixels
+    		result = Rect(Input.x, Input.y, Input.width + 10, Input.height + 10);
+    	}
+    	else
+    	{
+    		// 10%
+    		result = Rect(Input.x, Input.y, Input.width * 1.1, Input.height * 1.1);
+    	}
+    	return result;
+    }
+
+    // convert rect from recognition
+    // -> output rect from mser
+    Rect ConvertRealRectToTheoryRect(Rect Input)
+    {
+    	Rect result;
+    	if(Input.height < 10 && Input.width < 10)
+    	{
+    		// 3 pixels
+    		result = Rect(Input.x, Input.y, Input.width - 3, Input.height - 3);
+    	}
+    	else if(Input.height < 20 && Input.width < 20)
+    	{
+    		// 5 pixels
+    		result = Rect(Input.x, Input.y, Input.width - 5, Input.height - 5);
+    	}
+    	else if(Input.height < 100 && Input.width < 100)
+    	{
+    		// 10 pixels
+    		result = Rect(Input.x, Input.y, Input.width - 10, Input.height - 10);
+    	}
+    	else
+    	{
+    		// 10%
+    		result = Rect(Input.x, Input.y, Input.width / 1.1, Input.height / 1.1);
+    	}
+    	return result;
+    }
 
 public:
     RectDLL()
     {
         Head = NULL;
+    }
+
+    // convert all rect in list
+    // - 3 pixel if the height & width < 10
+	// - 5 pixels if the height & width < 20
+	// - 10 pixels if the height & width < 100
+	// - 10% of height + width else
+    void ConvertTheoryListToRealList()
+    {
+        if(Head == NULL)
+            return;
+        RectNode* tmp = Head;
+        while(tmp != NULL)
+        {
+            tmp->m_a = ConvertTheoryRectToRealRect(tmp->m_a);
+            tmp = tmp->next;
+        }
+    }
+    // vice versa to the above condition
+    void ConvertRealListToTheoryList()
+    {
+        if(Head == NULL)
+            return;
+        RectNode* tmp = Head;
+        while(tmp != NULL)
+        {
+            tmp->m_a = ConvertRealRectToTheoryRect(tmp->m_a);
+            tmp = tmp->next;
+        }
     }
 
     void push_back(int ID, Rect input)

@@ -92,13 +92,9 @@ void SortXCoordinate(vector<Rect> &BBoxes);
 */
 //////////////////////////////////////
 
-// convert rect get from mser
-// -> output the rect to recognize
-Rect ConvertTheoryToRealRect(Rect Input);
+Rect ConvertTheoryRectToRealRect(Rect Input);
 
-// convert rect from recognition
-// -> output rect from mser
-Rect ConvertRealRectToTheory(Rect Input);
+Rect ConvertRealRectToTheoryRect(Rect Input);
 
 
 ///////////////////////////////////////

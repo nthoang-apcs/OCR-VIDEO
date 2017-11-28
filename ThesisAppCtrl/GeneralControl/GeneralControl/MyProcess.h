@@ -32,3 +32,6 @@ void PostProcessing(vector<Rect> &BBoxes, double &TimeRunning);
 
 // Post processing step 2: combine text line BBoxes, bind BBoxes to IDs
 void PostProcessingStepTwo(vector<Rect> &BBoxes, double &TimeRunning, RectDLL &OtherBoxes, vector<RectDLL> &Lines);
+
+// Change mser Rects to recognized Rects
+void PostProcessingStepThree(double &TimeRunning, RectDLL &OtherBoxes, vector<RectDLL> &Lines);

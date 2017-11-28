@@ -198,7 +198,7 @@ void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> Lines)
 	int	HandleSize = nSize - 2;
 	for (int i = 0; i < HandleSize; i++)
 	{
-		
+
 	}
 }
 
@@ -206,6 +206,8 @@ int ComputeHorizontalAngle(RectDLL &OtherBoxes, int firstIndex, int secondIndex)
 {
 	float a = 0.0;
 	float h = 0.0;
+	float resultRad = 0.0;
+	int resultDeg = 0;
 	Rect first = OtherBoxes.GetRectAtIndex(firstIndex);
 	Rect second = OtherBoxes.GetRectAtIndex(secondIndex);
 	int fx = first.x + (first.width / 2);
@@ -216,17 +218,27 @@ int ComputeHorizontalAngle(RectDLL &OtherBoxes, int firstIndex, int secondIndex)
 	if (a < 0)
 	{
 		// the degree is < 0
-		
+		a = -a;
+		h =  (fx - sx)*(fx - sx) + (fy - sy)*(fy - sy);
+		h = sqrt(h);
+		resultRad = - 1 * asin((double)(a/h));
 	}
 	else if (a > 0)
 	{
 		// the degree is > 0
+		h =  (fx - sx)*(fx - sx) + (fy - sy)*(fy - sy);
+		h = sqrt(h);
+		resultRad = asin((double)(a/h));
 	}
 	else
 	{
 		// 2 rect centers are on the same line
 		return 0;
 	}
+	const double PI = 3.141592653589793;
+	// convert resultRad to resultDeg
+	resultDeg = (int)(resultRad * 180 / PI);
+	return resultDeg;
 }
 
 ///////////////////////////////////////
@@ -323,16 +335,58 @@ void SortXCoordinate(vector<Rect> &BBoxes)
 
 // convert rect get from mser
 // -> output the rect to recognize
-Rect ConvertTheoryToRealRect(Rect Input)
+Rect ConvertTheoryRectToRealRect(Rect Input)
 {
-
+	Rect result;
+	if(Input.height < 10 && Input.width < 10)
+	{
+		// 3 pixels
+		result = Rect(Input.x, Input.y, Input.width + 3, Input.height + 3);
+	}
+	else if(Input.height < 20 && Input.width < 20)
+	{
+		// 5 pixels
+		result = Rect(Input.x, Input.y, Input.width + 5, Input.height + 5);
+	}
+	else if(Input.height < 100 && Input.width < 100)
+	{
+		// 10 pixels
+		result = Rect(Input.x, Input.y, Input.width + 10, Input.height + 10);
+	}
+	else
+	{
+		// 10%
+		result = Rect(Input.x, Input.y, Input.width * 1.1, Input.height * 1.1);
+	}
+	return result;
 }
 
 // convert rect from recognition
 // -> output rect from mser
-Rect ConvertRealRectToTheory(Rect Input)
+Rect ConvertRealRectToTheoryRect(Rect Input)
 {
-
+	Rect result;
+	if(Input.height < 10 && Input.width < 10)
+	{
+		// 3 pixels
+		result = Rect(Input.x, Input.y, Input.width - 3, Input.height - 3);
+	}
+	else if(Input.height < 20 && Input.width < 20)
+	{
+		// 5 pixels
+		result = Rect(Input.x, Input.y, Input.width - 5, Input.height - 5);
+	}
+	else if(Input.height < 100 && Input.width < 100)
+	{
+		// 10 pixels
+		result = Rect(Input.x, Input.y, Input.width - 10, Input.height - 10);
+	}
+	else
+	{
+		// 10%
+		result = Rect(Input.x, Input.y, Input.width / 1.1, Input.height / 1.1);
+	}
+	return result;
 }
 
 
@@ -396,4 +450,3 @@ void RemoveDuplicatedBoxes(vector<Rect> &BBoxes)
 	BBoxes = tmpBoxes;
 	tmpBoxes.clear();
 }
-

@@ -36,11 +36,14 @@ int RunProcessOne(Mat &mOriginImage, Mat &mOutputImage, char *CurrentFolder)
     /*      bind ID to each BBox, merge line text    */
 	PostProcessingStepTwo(BBoxes, timerunning, OtherBoxes, Lines);
 
-	/*		cut images to special folder which contains *.exe file to run tesseract -> recognize		*/
 	// the image cut out is bigger size (width and height increase) than the size in saved file:
-	// - 3 pixel if the height < 10
-	// - 5 pixels if the height < 50
-	// - 10% of height & width if the height < 200
+    // -> change Rect
+	PostProcessingStepThree(timerunning, OtherBoxes, Lines);
+
+    // cut image -> save format: imgTmp-[x].jpg
+    int nSize = OtherBoxes.size();
+    // save info of each tmp file
+
 
     return 1;
 }
@@ -87,7 +90,26 @@ void PostProcessingStepTwo(vector<Rect> &BBoxes, double &TimeRunning, RectDLL &O
 	BindingID(BBoxes, OtherBoxes, 0);
 	// merge line text
 	MergeLineText(OtherBoxes, Lines);
+	// reduce false positive
 
+	// get time running calculation
+	TimeRunning += (double)(clock() - start) / (double)CLOCKS_PER_SEC;
+	return;
+}
+
+void PostProcessingStepThree(double &TimeRunning, RectDLL &OtherBoxes, vector<RectDLL> &Lines)
+{
+	clock_t start = clock();
+    // convert Rects
+    OtherBoxes->ConvertTheoryListToRealList();
+    int nSize = Lines.size();
+    for(int i = 0; i < nSize; i++)
+    {
+        Lines[i].ConvertTheoryListToRealList();
+    }
+
+
+    // get time running calculation
 	TimeRunning += (double)(clock() - start) / (double)CLOCKS_PER_SEC;
 	return;
 }
