@@ -493,6 +493,32 @@ public:
 		return res;
 	}
 
+    string getStringIDatIndex(int index)
+    {
+        string res = "";
+        int count = 0;
+        if(Head == NULL)
+        {
+            return res;
+        }
+        RectNode* tmp = Head;
+        while(tmp != NULL)
+        {
+            if(count == index)
+            {
+                break;
+            }
+            count++;
+            tmp = tmp->next;
+        }
+        if(tmp == NULL)
+        {
+            return res;
+        }
+        res = to_string(tmp->m_a);
+        return res;
+    }
+
 	string getStringRect()
 	{
 		if (Head == NULL)
@@ -507,6 +533,32 @@ public:
 		}
 		return res;
 	}
+
+    string getStringRectatIndex(int index)
+    {
+        string res = "";
+        int count = 0;
+        if(Head == NULL)
+        {
+            return res;
+        }
+        RectNode* tmp = Head;
+        while(tmp != NULL)
+        {
+            if(count == index)
+            {
+                break;
+            }
+            count++;
+            tmp = tmp->next;
+        }
+        if(tmp == NULL)
+        {
+            return res;
+        }
+        res = tmp->getStringRect();
+        return res;
+    }
 
 	string getStringRectMerge()
 	{

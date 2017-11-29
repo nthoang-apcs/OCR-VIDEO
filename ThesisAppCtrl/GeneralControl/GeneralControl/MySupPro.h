@@ -38,10 +38,15 @@ void MergeInsideBoxes(vector<Rect> &BBoxes);
 
 void BindingID(vector<Rect> &BBoxes, RectDLL &OtherBoxes, int start);
 
-void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> Lines);
+void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> &Lines);
 
 // from first index, draw a horizontal, computer the angle of second index to first index with that horizontal
 int ComputeHorizontalAngle(RectDLL &OtherBoxes, int firstIndex, int secondIndex);
+
+// return true if exist at least 1 line.
+// return false else
+// find rects overlapped on 1 line -> split into words and put into Lines
+bool HandleOverlappedLineText(RectDLL &OtherBoxes, int index, vector<RectDLL> &Lines);
 
 
 

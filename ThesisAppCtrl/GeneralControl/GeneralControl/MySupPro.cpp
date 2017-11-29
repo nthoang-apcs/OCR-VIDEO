@@ -192,12 +192,27 @@ void BindingID(vector<Rect> &BBoxes, RectDLL &OtherBoxes, int start)
 	OtherBoxes.BindingArrayWithID(BBoxes, start);
 }
 
-void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> Lines)
+void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> &Lines)
 {
 	int nSize = OtherBoxes.size();
 	int	HandleSize = nSize - 2;
 	for (int i = 0; i < HandleSize; i++)
 	{
+		int count = Lines.size();
+		// check overlapped
+		if(HandleOverlappedLineText(OtherBoxes, i, Lines) == false)
+		{
+			// check horizontal
+		}
+		else
+		{
+			// check number of words
+			count = Lines.size() - count;
+			// remove existed RectNode in new lines and OtherBoxes
+
+
+			
+		}
 
 	}
 }
@@ -240,6 +255,15 @@ int ComputeHorizontalAngle(RectDLL &OtherBoxes, int firstIndex, int secondIndex)
 	resultDeg = (int)(resultRad * 180 / PI);
 	return resultDeg;
 }
+
+bool HandleOverlappedLineText(RectDLL &OtherBoxes, int index, vector<RectDLL> &Lines)
+{
+
+}
+
+
+
+
 
 ///////////////////////////////////////
 /*
@@ -432,7 +456,42 @@ void SaveLines(Mat &mOriginImage, char *CurrentFolder, vector<RectDLL> &Lines)
 
 void SaveOtherBoxes(Mat &mOriginImage, char *CurrentFolder, RectDLL &OtherBoxes)
 {
+	string folder = string(CurrentFolder) + "\\tmp\\";
+	// break into small mat
+	int nSize = OtherBoxes.size();
+	vector<string> ListFiles;
+	for (int i = 0; i < nSize; i++)
+	{
+		Rect tmp1 = OtherBoxes.getRectAtIndex(i);
+		Mat tmp2 = mOriginImage(tmp1);
+		// write tmp2
+		string filename = folder + "OtherBoxes-" + to_string(i) + ".jpg";
+		imwrite(filename, tmp2);
+		ListFiles.push_back(filename);
+		// write info of each file
+		ofstream ofs;
+		ofs.open(filename + ".txt", ofstream::out);
+		if (ofs.is_open())
+		{
+			ofs << "ID: " << OtherBoxes.getStringIDatIndex(i) << "\n";
+			ofs << "Rect: " << OtherBoxes.getStringRectatIndex(i) << "\n";
+			ofs.close();
+		}
+	}
 
+	// write list filename into tmp folder with name: "files.txt"
+	ofstream ofs2;
+	ofs2.open(folder + "files.txt", ofstream::app);
+	if (ofs2.is_open())
+	{
+		nSize = ListFiles.size();
+		for (int i = 0; i < nSize; i++)
+		{
+			ofs2 << ListFiles[i] << "\n";
+		}
+		ofs2.close();
+	}
+	return;
 }
 
 

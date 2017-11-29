@@ -45,7 +45,7 @@ int RunProcessOne(Mat &mOriginImage, Mat &mOutputImage, char *CurrentFolder)
 	// All stored file names are in tmp\files.txt
 	SaveLines(mOriginImage, CurrentFolder, Lines);
     // save info of each tmp file
-
+    SaveOtherBoxes(mOriginImage, CurrentFolder, OtherBoxes);
 
 
 
@@ -90,6 +90,8 @@ void PostProcessing(vector<Rect> &BBoxes, double &TimeRunning)
 void PostProcessingStepTwo(vector<Rect> &BBoxes, double &TimeRunning, RectDLL &OtherBoxes, vector<RectDLL> &Lines)
 {
 	clock_t start = clock();
+    // Sort X
+    SortXCoordinate(BBoxes);
     // binding ID
 	BindingID(BBoxes, OtherBoxes, 0);
 	// merge line text
