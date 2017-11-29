@@ -610,6 +610,127 @@ public:
 		return result;
 	}
 
+	// twoindex > oneindex
+	// true: overlap and the ratio between 2 area is < 3
+	// false: else
+	bool IsOneOverlapTwo(int oneindex, int twoindex)
+	{
+		if (Head == NULL)
+		{
+			return false;
+		}
+		RectNode* tmp = Head;
+		int count = 0;
+		Rect r1, r2;
+
+		while (tmp != NULL)
+		{
+			if (count == oneindex)
+			{
+				break;
+			}
+			count++;
+			tmp = tmp->next;
+		}
+		if (tmp == NULL)
+			return false;
+		else
+		{
+			r1 = tmp->m_a;
+		}
+		while (tmp != NULL)
+		{
+			if (count == twoindex)
+			{
+				break;
+			}
+			count++;
+			tmp = tmp->next;
+		}
+		if (tmp == NULL)
+			return false;
+		else
+		{
+			r2 = tmp->m_a;
+		}
+		Rect r3 = r1 & r2;
+		if (r3.area() > 0 && (r2.area() / r1.area()) < 3 && (r1.area() / r2.area()) < 3)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool IsSatisfyLineTextCondition(int firstindex, int secondindex)
+	{
+		Rect r1, r2;
+		if (Head == NULL)
+			return false;
+		RectNode* tmp = Head;
+		int count = 0;
+		while (tmp != NULL)
+		{
+			if (count == firstindex)
+			{
+				r1 = tmp->m_a;
+				break;
+			}
+			count++;
+			tmp = tmp->next;
+		}
+		if (tmp == NULL)
+			return false;
+		while (tmp != NULL)
+		{
+			if (count == firstindex)
+			{
+				r2 = tmp->m_a;
+				break;
+			}
+			count++;
+			tmp = tmp->next;
+		}
+		if (tmp == NULL)
+			return false;
+		// check condition
+		// area different: < 3
+		// center of mass of r2 must be in the Rect on right side of r1
+		// Rect:	x = r1.x
+		//			y = r1.y
+		//			width = r1.width * 3.5
+		//			height = r1.height
+		int cx = r2.x + (r2.width / 2);
+		int cy = r2.y + (r2.height / 2);
+		if (cx > r1.x && cx < (r1.x + r1.width * 3.5))
+		{
+			if (cy > r1.y && cy < (r1.y + r1.height))
+			{
+				if ((r2.area() / r1.area()) < 3 && (r1.area() / r2.area()) < 3)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	// return -1 if no rect
+	int RecheckConditionLineText(int firstindex, vector<int> &input)
+	{
+		// get all rect out
+		vector<Rect> tmp;
+		if (Head == NULL)
+		{
+			return -1;
+		}
+		RectNode* tmp = Head;
+
+	}
+
+
     void Destroy()
     {
         if(Head == NULL)

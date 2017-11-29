@@ -199,19 +199,11 @@ void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> &Lines)
 	for (int i = 0; i < HandleSize; i++)
 	{
 		int count = Lines.size();
-		// check overlapped
-		if(HandleOverlappedLineText(OtherBoxes, i, Lines) == false)
+		vector<int> currentLine;
+		// find line text
+		if (FindLineText(OtherBoxes, i, currentLine) == true)
 		{
-			// check horizontal
-		}
-		else
-		{
-			// check number of words
-			count = Lines.size() - count;
-			// remove existed RectNode in new lines and OtherBoxes
-
-
-			
+			// refix i and handle size
 		}
 
 	}
@@ -256,12 +248,36 @@ int ComputeHorizontalAngle(RectDLL &OtherBoxes, int firstIndex, int secondIndex)
 	return resultDeg;
 }
 
-bool HandleOverlappedLineText(RectDLL &OtherBoxes, int index, vector<RectDLL> &Lines)
+
+bool FindLineText(RectDLL &OtherBoxes, int index, vector<int> &currentLine)
+{
+	int nSize = OtherBoxes.size();
+	// recursive with currentline to the end
+	currentLine.push_back(index);
+	// satisfy condition
+	vector<int> tmp1;
+	for (int i = index + 1; i < nSize; i++)
+	{
+		if (OtherBoxes.IsSatisfyLineTextCondition(index, i))
+		{
+			tmp1.push_back(i);
+		}
+	}
+	// recheck and get the most suitable one with index: same w h ratio, closest area ratio
+	if (tmp1.size() == 0)
+	{
+		return false;
+	}
+	int x = OtherBoxes.RecheckConditionLineText(index, tmp1);
+	currentLine.push_back(x);
+	CompleteLineText(OtherBoxes, currentLine);
+	return true;
+}
+
+void CompleteLineText(RectDLL &OtherBoxes, vector<int> &currentLine)
 {
 
 }
-
-
 
 
 

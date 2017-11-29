@@ -43,12 +43,10 @@ void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> &Lines);
 // from first index, draw a horizontal, computer the angle of second index to first index with that horizontal
 int ComputeHorizontalAngle(RectDLL &OtherBoxes, int firstIndex, int secondIndex);
 
-// return true if exist at least 1 line.
-// return false else
-// find rects overlapped on 1 line -> split into words and put into Lines
-bool HandleOverlappedLineText(RectDLL &OtherBoxes, int index, vector<RectDLL> &Lines);
+// return true if fine a line text (at least 3 boxes close to each other)
+bool FindLineText(RectDLL &OtherBoxes, int index, vector<int> &currentLine);
 
-
+void CompleteLineText(RectDLL &OtherBoxes, vector<int> &currentLine);
 
 ///////////////////////////////////////
 /*
@@ -75,7 +73,6 @@ bool CompareArea(Rect B1, Rect B2);
 
 // return true if B1.x < B2.x
 bool CompareXCoordinate(Rect B1, Rect B2);
-
 
 
 
