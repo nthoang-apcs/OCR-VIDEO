@@ -51,21 +51,21 @@ struct RectNode
 			{
 				return x;
 			}
-			x = x * 10 + ((int)(input[i]) - (input)('0'));
+			x = x * 10 + ((int)(input[i]) - (int)('0'));
 		}
 		return x;
 	}
 
-	bool setRectFromString(string x)
+	bool setRectFromString(string x1)
 	{
 		int x, y, width, height;
-		if (x == "")
+		if (x1 == "")
 			return false;
-		int leng = x.length();
+		int leng = x1.length();
 		int pos = 0;
 		vector<char> tmp1;
 		// ignore space
-		while (pos < leng && x[pos] == ' ')
+		while (pos < leng && x1[pos] == ' ')
 		{
 			pos++;
 		}
@@ -74,9 +74,9 @@ struct RectNode
 			return false;
 		}
 		// x
-		while (pos < leng && x[pos] != ' ')
+		while (pos < leng && x1[pos] != ' ')
 		{
-			tmp1.push_back(x[pos]);
+			tmp1.push_back(x1[pos]);
 			pos++;
 		}
 		if (pos == leng)
@@ -86,7 +86,7 @@ struct RectNode
 		x = ConvertVectorCharToInt(tmp1);
 		tmp1.clear();
 		// ignore space
-		while (pos < leng && x[pos] == ' ')
+		while (pos < leng && x1[pos] == ' ')
 		{
 			pos++;
 		}
@@ -95,9 +95,9 @@ struct RectNode
 			return false;
 		}
 		// y
-		while (pos < leng && x[pos] != ' ')
+		while (pos < leng && x1[pos] != ' ')
 		{
-			tmp1.push_back(x[pos]);
+			tmp1.push_back(x1[pos]);
 			pos++;
 		}
 		if (pos == leng)
@@ -107,7 +107,7 @@ struct RectNode
 		y = ConvertVectorCharToInt(tmp1);
 		tmp1.clear();
 		// ignore space
-		while (pos < leng && x[pos] == ' ')
+		while (pos < leng && x1[pos] == ' ')
 		{
 			pos++;
 		}
@@ -116,9 +116,9 @@ struct RectNode
 			return false;
 		}
 		// width
-		while (pos < leng && x[pos] != ' ')
+		while (pos < leng && x1[pos] != ' ')
 		{
-			tmp1.push_back(x[pos]);
+			tmp1.push_back(x1[pos]);
 			pos++;
 		}
 		if (pos == leng)
@@ -128,7 +128,7 @@ struct RectNode
 		width = ConvertVectorCharToInt(tmp1);
 		tmp1.clear();
 		// ignore space
-		while (pos < leng && x[pos] == ' ')
+		while (pos < leng && x1[pos] == ' ')
 		{
 			pos++;
 		}
@@ -137,13 +137,14 @@ struct RectNode
 			return false;
 		}
 		// height
-		while (pos < leng && x[pos] != ' ')
+		while (pos < leng && x1[pos] != ' ')
 		{
-			tmp1.push_back(x[pos]);
+			tmp1.push_back(x1[pos]);
 			pos++;
 		}
 		height = ConvertVectorCharToInt(tmp1);
 		tmp1.clear();
+		m_a = Rect(x, y, width, height);
 		return true;
 	}
 };
@@ -515,7 +516,7 @@ public:
         {
             return res;
         }
-        res = to_string(tmp->m_a);
+        res = to_string(tmp->m_ID);
         return res;
     }
 
@@ -704,30 +705,148 @@ public:
 		//			height = r1.height
 		int cx = r2.x + (r2.width / 2);
 		int cy = r2.y + (r2.height / 2);
+		// location of x: 3.5 times
 		if (cx > r1.x && cx < (r1.x + r1.width * 3.5))
 		{
-			if (cy > r1.y && cy < (r1.y + r1.height))
+			// location of y 30% ratio
+			if (cy > (r1.y - r1.height * 0.3) && cy < (r1.y + r1.height * 0.3))
 			{
+				// area different < 3
 				if ((r2.area() / r1.area()) < 3 && (r1.area() / r2.area()) < 3)
 				{
-					return true;
+					Rect r3 = r1 & r2;
+					// prevent inside box
+					if (r3.area() == r2.area() || r3.area() == r1.area())
+						return false;
+					else
+					{
+						return true;
+					}
 				}
 			}
 		}
 		return false;
 	}
 	
-	// return -1 if no rect
+	// the same as IsSatisfyLineTextCondition with 1 more condition:
+	// the angle between currentline and second index center of mass must < 30 degree
+	bool IsSatisfyCompleteLineTextCondition(vector<int> &currentLine, int secondindex)
+	{
+
+	}
+
+	// return -1 if no rect exist
 	int RecheckConditionLineText(int firstindex, vector<int> &input)
 	{
 		// get all rect out
-		vector<Rect> tmp;
+		vector<Rect> tmp1;
+		Rect first;
 		if (Head == NULL)
 		{
 			return -1;
 		}
 		RectNode* tmp = Head;
-
+		int count = 0;
+		int nSize = input.size();
+		int i = 0;
+		if (nSize == 0)
+			return -1;
+		if (nSize == 1)
+			return 0;
+		// get coordinate rect
+		while (tmp != NULL)
+		{
+			if (count == firstindex)
+			{
+				break;
+			}
+			count++;
+			tmp = tmp->next;
+		}
+		if (tmp == NULL)
+			return -1;
+		first = tmp->m_a;
+		// get samples rect
+		while (tmp != NULL)
+		{
+			if (i < nSize && count == input[i])
+			{
+				tmp1.push_back(tmp->m_a);
+				i++;
+			}
+			count++;
+			tmp = tmp->next;
+		}
+		if (tmp == NULL)
+			return -1;
+		// now check condition
+		nSize = tmp1.size();
+		int bestpoint = -1;
+		int ibp = -1;
+		int fArea = first.area();
+		for (i = 0; i < nSize; i++)
+		{
+			int point = 0;
+			// estimate point
+			// location of x
+			if (tmp1[i].x < (first.x + first.width * 2))
+			{
+				point += 3;
+			}
+			else if (tmp1[i].x  < (first.x + first.width * 2.5))
+			{
+				point += 2;
+			}
+			else
+			{
+				point += 1;
+			}
+			// location of y
+			if (tmp1[i].y == first.y && (tmp1[i].y + tmp1[i].height) < (first.y + first.height * 0.1))
+			{
+				point += 4;
+			}
+			else if (tmp1[i].y > (first.y - first.height * 0.1) && (tmp1[i].y + tmp1[i].height) < (first.y + first.height * 0.1))
+			{
+				point += 3;
+			}
+			else if (tmp1[i].y > (first.y - first.height * 0.2) && (tmp1[i].y + tmp1[i].height) < (first.y + first.height * 0.2))
+			{
+				point += 2;
+			}
+			else
+			{
+				point += 1;
+			}
+			// check area
+			int tmp1Area = tmp1[i].area();
+			if (tmp1Area > fArea)
+			{
+				if ((tmp1Area / fArea) < 1.5)
+					point += 3;
+				else if ((tmp1Area / fArea) < 2)
+					point += 2;
+				else
+					point += 1;
+			}
+			else
+			{
+				if ((fArea / tmp1Area) < 1.5)
+					point += 3;
+				else if ((fArea / tmp1Area) < 2)
+					point += 2;
+				else
+					point += 1;
+			}
+			// compare with best point
+			if (point > bestpoint)
+			{
+				bestpoint = point;
+				ibp = i;
+			}
+		}
+		tmp1.clear();
+		return i;
 	}
 
 

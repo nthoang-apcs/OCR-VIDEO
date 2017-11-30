@@ -276,7 +276,15 @@ bool FindLineText(RectDLL &OtherBoxes, int index, vector<int> &currentLine)
 
 void CompleteLineText(RectDLL &OtherBoxes, vector<int> &currentLine)
 {
-
+	int index = currentLine[currentLine.size() - 1];
+	vector<int> tmp1;
+	for (int i = index + 1; i < nSize; i++)
+	{
+		if (OtherBoxes.IsSatisfyCompleteLineTextCondition(currentLine, i))
+		{
+			tmp1.push_back(i);
+		}
+	}
 }
 
 
@@ -478,7 +486,7 @@ void SaveOtherBoxes(Mat &mOriginImage, char *CurrentFolder, RectDLL &OtherBoxes)
 	vector<string> ListFiles;
 	for (int i = 0; i < nSize; i++)
 	{
-		Rect tmp1 = OtherBoxes.getRectAtIndex(i);
+		Rect tmp1 = OtherBoxes.GetRectAtIndex(i);
 		Mat tmp2 = mOriginImage(tmp1);
 		// write tmp2
 		string filename = folder + "OtherBoxes-" + to_string(i) + ".jpg";
