@@ -203,7 +203,7 @@ void MergeLineText(RectDLL &OtherBoxes, vector<RectDLL> &Lines)
 		// find line text
 		if (FindLineText(OtherBoxes, i, currentLine) == true)
 		{
-			// refix i and handle size
+			// change i and handle size
 		}
 
 	}
@@ -254,7 +254,7 @@ bool FindLineText(RectDLL &OtherBoxes, int index, vector<int> &currentLine)
 	int nSize = OtherBoxes.size();
 	// recursive with currentline to the end
 	currentLine.push_back(index);
-	// satisfy condition
+	// satisfy condition -> get indexes which is on the same line text
 	vector<int> tmp1;
 	for (int i = index + 1; i < nSize; i++)
 	{
@@ -263,28 +263,47 @@ bool FindLineText(RectDLL &OtherBoxes, int index, vector<int> &currentLine)
 			tmp1.push_back(i);
 		}
 	}
-	// recheck and get the most suitable one with index: same w h ratio, closest area ratio
+	// if no line found -> return false
 	if (tmp1.size() == 0)
 	{
 		return false;
 	}
+	// recheck and get the most suitable one with index: same w h ratio, closest area ratio
 	int x = OtherBoxes.RecheckConditionLineText(index, tmp1);
 	currentLine.push_back(x);
-	CompleteLineText(OtherBoxes, currentLine);
-	return true;
+	// now get 2 points on 1 line -> finish the line if can
+	// true if find 1 more point at least
+	// false if cant find anything
+	return CompleteLineText(OtherBoxes, currentLine);
 }
 
-void CompleteLineText(RectDLL &OtherBoxes, vector<int> &currentLine)
+bool CompleteLineText(RectDLL &OtherBoxes, vector<int> &currentLine)
 {
 	int index = currentLine[currentLine.size() - 1];
 	vector<int> tmp1;
+	// get list of satisfy condition to complete line text
 	for (int i = index + 1; i < nSize; i++)
 	{
-		if (OtherBoxes.IsSatisfyCompleteLineTextCondition(currentLine, i))
+		if (tmp1.size() == 0 && OtherBoxes.IsSatisfyCompleteLineTextCondition(currentLine, i))
 		{
 			tmp1.push_back(i);
 		}
+		else
+		{
+			// check tmp1 and also currentline
+			// -> final result is merge tmp1 to current line
+
+		}
 	}
+	// check number of points
+	if (tmp1.size() == 0)
+		return false;
+	else
+	{
+		// merge tmp1 to current line
+
+	}
+	return true;
 }
 
 

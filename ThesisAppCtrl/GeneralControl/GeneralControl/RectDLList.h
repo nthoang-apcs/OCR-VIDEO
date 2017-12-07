@@ -665,6 +665,11 @@ public:
 		}
 	}
 
+	// check if secondindex is on same line as firstindex with few conditions:
+	// 2ndindex is on right side of 1stindex
+	// limit width
+	// limit height
+	// limit area
 	bool IsSatisfyLineTextCondition(int firstindex, int secondindex)
 	{
 		Rect r1, r2;
@@ -728,11 +733,46 @@ public:
 		return false;
 	}
 	
-	// the same as IsSatisfyLineTextCondition with 1 more condition:
+	// the same as IsSatisfyLineTextCondition with 2 more conditions:
 	// the angle between currentline and second index center of mass must < 30 degree
+	// the distance between secondindex and currentline must be in a limit range
+	// range limit = 2* range average between rect in current line
 	bool IsSatisfyCompleteLineTextCondition(vector<int> &currentLine, int secondindex)
 	{
-
+		if (currentLine.size() == 0 || Head == NULL)
+			return false;
+		RectNode* tmp = Head;
+		int count = 0;
+		int nSize = currentLine.size();
+		vector<Rect> tmpline;
+		Rect tmp2ndindex;
+		int pos = 0;
+		// get Rect
+		while (tmp != NULL)
+		{
+			if (count == currentLine[pos])
+			{
+				tmpline.push_back(tmp->m_a);
+				pos++;
+			}
+			count++;
+			tmp = tmp->next;
+		}
+		if (tmp == NULL)
+			return false;
+		while (tmp != NULL)
+		{
+			if (count == secondindex)
+			{
+				tmp2ndindex = tmp->m_a;
+				break;
+			}
+			count++;
+			tmp = tmp->next;
+		}
+		if (tmp == NULL)
+			return false;
+		// compare
 	}
 
 	// return -1 if no rect exist

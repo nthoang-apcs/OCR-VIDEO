@@ -46,7 +46,7 @@ int ComputeHorizontalAngle(RectDLL &OtherBoxes, int firstIndex, int secondIndex)
 // return true if fine a line text (at least 3 boxes close to each other)
 bool FindLineText(RectDLL &OtherBoxes, int index, vector<int> &currentLine);
 
-void CompleteLineText(RectDLL &OtherBoxes, vector<int> &currentLine);
+bool CompleteLineText(RectDLL &OtherBoxes, vector<int> &currentLine);
 
 ///////////////////////////////////////
 /*
