@@ -212,6 +212,32 @@ protected:
     	return result;
     }
 
+	void GetAverageLineEquation(vector<Rect> &CurrentLines, float &a, float &b, float &c)
+	{
+		// all direction is from left to right
+		// 0: stand
+		// 1: north east
+		// 2: east
+		// 3: south east
+		int direction = 0;
+		
+		vector<Point2i> aCenterOfMass;
+		int nSize = CurrentLines.size();
+
+		// get all center
+		for (int i = 0; i < nSize; i++)
+		{
+			int x = CurrentLines[i].x + (CurrentLines[i].width / 2);
+			int y = CurrentLines[i].y + (CurrentLines[i].height / 2);
+			aCenterOfMass.push_back(Point2i(x, y));
+		}
+
+		// check if centers are on the same direction 
+		
+
+
+	}
+
 public:
     RectDLL()
     {
@@ -772,7 +798,13 @@ public:
 		}
 		if (tmp == NULL)
 			return false;
-		// compare
+		// get average line of currentLine
+		float a, b, c;
+		GetAverageLineEquation(tmpline, a, b, c);
+		// compare angle
+
+
+
 	}
 
 	// return -1 if no rect exist
