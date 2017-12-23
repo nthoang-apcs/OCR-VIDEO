@@ -6,18 +6,74 @@
 //	History：	<0> 2017.12.22 : Dang Tuan Vu : Create structure definition
 //
 //////////////////////////////////////////////////////////////////////
-
-#ifndef	_BBOXSTRUCTURE_H_
-#define _BBOXSTRUCTURE_H_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif 	// _MSC_VER > 1000
 
-#include <opencv2\highgui.hpp>
 #include <iostream>
 using namespace std;
-using namespace cv:
+
+//////////////////////////////////////////////////////////////////////
+//	Struct name:	tsRect
+//	Description:	Contain the information of a rectangle
+//	Notes:
+//////////////////////////////////////////////////////////////////////
+typedef struct sRect
+{
+	int nX;
+	int nY;
+	int nWidth;
+	int nHeight;
+	sRect()
+	{
+		nX = 0;
+		nY = 0;
+		nWidth = 0;
+		nHeight = 0;
+	}
+	sRect(int x, int y, int width, int height)
+	{
+		nX = x;
+		nY = y;
+		nWidth = width;
+		nHeight = height;
+	}
+	sRect(const sRect &obj)
+	{
+		nX = obj.nX;
+		nY = obj.nY;
+		nWidth = obj.nWidth;
+		nHeight = obj.nHeight;
+	}
+	void operator=(const sRect& obj)
+	{
+		nX = obj.nX;
+		nY = obj.nY;
+		nWidth = obj.nWidth;
+		nHeight = obj.nHeight;
+	}
+	int GetArea()
+	{
+		return (nWidth*nHeight);
+	}
+
+}tsRect;
+
+//////////////////////////////////////////////////////////////////////
+//	Enum name:	tsRect
+//	Description:	Contain the information of a rectangle
+//	Notes:
+//////////////////////////////////////////////////////////////////////
+typedef enum eBBoxElementDataType
+{
+	BBETypeNone,
+	BBETypeID,
+	BBETypeROI,
+	BBETypeACVROI,
+	BBETypeNameImage,
+	BBETypeNumberVersion,
+	BBETypeTimeRunning,
+	BBETypeSubID,
+	BBETypeSubROI
+}teBBoxElementDataType;
 
 //////////////////////////////////////////////////////////////////////
 //	Struct name:	tsBBoxInfo
@@ -27,43 +83,51 @@ using namespace cv:
 typedef struct sBBoxInfo
 {
 	int 			nID;
-	Rect 		rROI;
-	Rect			rACVROI;				// after check vowel ROI if have
-	string		strNameImage;		// name of origin image, not include extension
+	tsRect 			rROI;
+	tsRect			rACVROI;				// after check vowel ROI if have
+	string			strNameImage;		// name of origin image, not include extension
 	int				nNumberVersion;	// 1 or 2 or 3, the last number is the last number display in OCRAutoRun image sub-title
-	float			TimeRunning;		// total time running of process for this bbox
+	float			fTimeRunning;		// total time running of process for this bbox
 	
 	// constructor
 	sBBoxInfo()
 	{
 		nID = 0;
-		rROI = Rect(0, 0, 0, 0);
-		rACVROI = Rect(0, 0, 0, 0);
+		rROI = tsRect(0, 0, 0, 0);
+		rACVROI = tsRect(0, 0, 0, 0);
 		strNameImage = "";
 		nNumberVersion = 0;
-		TimeRunning = 0.00;
+		fTimeRunning = 0.00;
 	}
 	// copy constructor
 	sBBoxInfo (const sBBoxInfo &obj) 
 	{
 		nID = obj.nID;
-		rROI = Rect(obj.rROI.x, obj.rROI.y, obj.rROI.width, obj.rROI.height);
-		rACVROI = Rect(obj.rACVROI.x, obj.rACVROI.y, obj.rACVROI.width, obj.rACVROI.height);
+		rROI = tsRect(obj.rROI.nX, obj.rROI.nY, obj.rROI.nWidth, obj.rROI.nHeight);
+		rACVROI = tsRect(obj.rROI.nX, obj.rROI.nY, obj.rROI.nWidth, obj.rROI.nHeight);
 		strNameImage = obj.strNameImage;
 		nNumberVersion = obj.nNumberVersion;
-		TimeRunning = obj.TimeRunning;
+		fTimeRunning = obj.fTimeRunning;
 	}
 	// assign operator
 	void operator=(const sBBoxInfo& obj)
 	{
 		nID = obj.nID;
-		rROI = Rect(obj.rROI.x, obj.rROI.y, obj.rROI.width, obj.rROI.height);
-		rACVROI = Rect(obj.rACVROI.x, obj.rACVROI.y, obj.rACVROI.width, obj.rACVROI.height);
+		rROI = tsRect(obj.rROI.nX, obj.rROI.nY, obj.rROI.nWidth, obj.rROI.nHeight);
+		rACVROI = tsRect(obj.rROI.nX, obj.rROI.nY, obj.rROI.nWidth, obj.rROI.nHeight);
 		strNameImage = obj.strNameImage;
 		nNumberVersion = obj.nNumberVersion;
-		TimeRunning = obj.TimeRunning;
+		fTimeRunning = obj.fTimeRunning;
 	}
-	
+	void Destroy()
+	{
+		nID = 0;
+		rROI = tsRect(0, 0, 0, 0);
+		rACVROI = tsRect(0, 0, 0, 0);
+		strNameImage = "";
+		nNumberVersion = 0;
+		fTimeRunning = 0.00;
+	}
 }tsBBoxInfo, tsOtherBox;
 
 //////////////////////////////////////////////////////////////////////
@@ -74,31 +138,39 @@ typedef struct sBBoxInfo
 typedef struct sLineBox
 {
 	tsBBoxInfo	tsCore;
-	vector<pair<ID, Rect>> aComponentBoxes;
+	vector<int> anSubID;
+	vector<tsRect> atsSubROI;
 	
 	// constructor
 	sLineBox()
 	{
-		Core = tsBBoxInfo();
-		ComponentBoxes.clear();
+		tsCore = tsBBoxInfo();
+		anSubID.clear();
+		atsSubROI.clear();
 	}
 	// copy constructor
 	sLineBox (const sLineBox &obj) 
 	{
-		Core = obj.Core;
-		ComponentBoxes.clear();
-		ComponentBoxes = obj.ComponentBoxes;
+		tsCore = obj.tsCore;
+		anSubID.clear();
+		atsSubROI.clear();
+		anSubID = obj.anSubID;
+		atsSubROI = obj.atsSubROI;
 	}
 	// assign operator
 	void operator=(const sLineBox& obj)
 	{
-		Core = obj.Core;
-		ComponentBoxes.clear();
-		ComponentBoxes = obj.ComponentBoxes;
+		tsCore = obj.tsCore;
+		anSubID.clear();
+		atsSubROI.clear();
+		anSubID = obj.anSubID;
+		atsSubROI = obj.atsSubROI;
 	}
-	
+	void Destroy()
+	{
+		anSubID.clear();
+		atsSubROI.clear();
+		tsCore.Destroy();
+	}
 }tsLineBox;
 
-
-
-#endif	// define bboxstructure.h

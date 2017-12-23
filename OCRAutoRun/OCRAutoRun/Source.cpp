@@ -1,9 +1,19 @@
+﻿//////////////////////////////////////////////////////////////////////
+//
+//	File name：	Source.cpp
+//	Description：	Main process of OCRAutorun project
+//	Notes:			None
+//	History：	<0> 2017.12.22 : Dang Tuan Vu : Create structure definition
+//
+//////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <vector>
 #include <fstream>
 #include <string>
 #include <Magick++.h> 
 #include <Magick++\Image.h>
+#include "BBoxIOStream.h"
+#include "BBoxStructure.h"
 using namespace std;
 using namespace Magick;
 
@@ -12,7 +22,7 @@ string ExtractNameOfFileFromPathIn(string pathIn);
 // read list file
 void ReadFiles(string filename, vector<string> &ListFiles);
 
-void ResampleFiles(vector<string> &ListFiles);
+bool ResampleFiles(vector<string> &ListFiles);
 
 void OCRRun(vector<string> &ListFiles);
 
@@ -39,7 +49,7 @@ void ReadFiles(string filename, vector<string> &ListFiles)
 		string line;
 		while(getline(ifs, line))
 		{
-			ListPaths.push_back(line);
+			ListFiles.push_back(line);
 		}
 		ifs.close();
 	}
@@ -78,12 +88,14 @@ string ExtractNameOfFileFromPathIn(string pathIn)
 	return string(tmp2);
 }
 
-void ResampleFiles(vector<string> &ListFiles)
+bool ResampleFiles(vector<string> &ListFiles)
 {
 	int nSize = ListFiles.size();
 	for(int i = 0; i < nSize; i++)
 	{
 		Image image;
+		string pathIn = ListFiles[i];
+		string pathOut = "";
 		try {
 			// Read a file into image object
 			image.read(pathIn);
@@ -99,6 +111,7 @@ void ResampleFiles(vector<string> &ListFiles)
 			return false;
 		}
 	}
+	return false;
 }
 void OCRRun(vector<string> &ListFiles)
 {
