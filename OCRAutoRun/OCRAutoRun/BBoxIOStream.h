@@ -82,12 +82,110 @@ protected:
 
 	int ConvertStringToInt(string &strTagContent)
 	{
-
+		int nPos = 0;
+		int nResult = 0;
+		bool bPositive = true;
+		if (strTagContent.length() == 0)
+			return 0;
+		// check case conditions
+		if (strTagContent[0] == '-')
+		{
+			bPositive = false;
+			nPos++;
+		}
+		else if (strTagContent[0] < '0' || strTagContent[0] > '9')
+		{
+			return 0;
+		}
+		int nSize = strTagContent.length();
+		// get digits
+		while (nPos < nSize)
+		{
+			if (strTagContent[nPos] >= '0' && strTagContent[nPos] <= '9')
+			{
+				nResult = nResult * 10 + (int)(strTagContent[nPos] - '0');
+				nPos++;
+			}
+			else
+			{
+				if (bPositive == false)
+				{
+					return (nResult * (-1));
+				}
+				return nResult;
+			}
+		}
+		if (bPositive == false)
+		{
+			return (nResult * (-1));
+		}
+		return nResult;
 	}
 
 	float ConvertStringToFloat(string &strTagContent)
 	{
-
+		int nPos = 0;
+		float nResult = 0.00;
+		int nCount = 10;
+		bool bPositive = true;
+		if (strTagContent.length() == 0)
+			return 0;
+		// check conditions
+		if (strTagContent[nPos] == '-')
+		{
+			bPositive = false;
+			nPos++;
+		}
+		else if (strTagContent[nPos] < '0' || strTagContent[nPos] > '9')
+		{
+			return 0;
+		}
+		int nSize = strTagContent.length();
+		// get digits before '.'
+		while (nPos < nSize && strTagContent[nPos] != '.')
+		{
+			if (strTagContent[nPos] >= '0' && strTagContent[nPos] <= '9')
+			{
+				nResult = nResult * 10 + (int)(strTagContent[nPos] - '0');
+				nPos++;
+			}
+			else if (strTagContent[nPos] != '.')
+			{
+				if (bPositive == false)
+				{
+					return (nResult * (-1));
+				}
+				return nResult;
+			}
+			else
+			{
+				nPos++;
+				break;
+			}
+		}
+		// get digits after '.'
+		while (nPos < nSize)
+		{
+			if (strTagContent[nPos] >= '0' && strTagContent[nPos] <= '9')
+			{
+				nResult = nResult + ((int)(strTagContent[nPos] - '0')) / nCount;
+				nPos++;
+				nCount = nCount * 10;
+			}
+			else
+			{
+				if (bPositive == false)
+				{
+					return (nResult * (-1));
+				}
+				return nResult;
+			}
+		}
+		if (bPositive == false)
+		{
+			return (nResult * (-1));
+		}
+		return nResult;
 	}
 
 	vector<int> ConvertStringToIntArray(string &strTagContent)
