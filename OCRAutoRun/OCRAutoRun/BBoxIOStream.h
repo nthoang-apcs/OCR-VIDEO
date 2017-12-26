@@ -300,6 +300,19 @@ public:
 		}
 	}
 	
+	string ConvertIntArrayToString(vector<int> aInt)
+	{
+		int nSize = aInt.size();
+		if(nSize == 0)
+			return string();
+		string strResult = "";
+		for(int nI = 0; nI < nSize; nI++)
+		{
+			strResult = strResult + to_string(aInt[nI]) + " ";
+		}
+		return strResult;
+	}
+	
 	// format 1 ROI: [space or tab][x][space or tab][y][space or tab][width][space or tab][height][space or tab]
 	tsRect ConvertStringTotsRect(string &strTagContent)
 	{
@@ -378,6 +391,12 @@ public:
 		return tsResult;
 	}
 
+	string ConverttsRectToString(tsRect Input)
+	{
+		string strResult = to_string(Input.nX) + " " + to_string(Input.nY) + " " + to_string(Input.nWidth) + " " + to_string(Input.nHeight);
+		return strResult;
+	}
+	
 	// format array of ROIs: ROI1;ROI2;ROI3;...ROIN
 	vector<tsRect> ConvertStringTotsRectArray(string &strTagContent)
 	{
@@ -418,6 +437,19 @@ public:
 		return atsResult;
 	}
 
+	string ConverttsRectArrayToString(vector<tsRect> Input)
+	{
+		int nSize = Input.size();
+		if (nSize == 0)
+			return string();
+		string strResult = "";
+		for (int nI = 0; nI < nSize; nI++)
+		{
+			strResult = strResult + to_string(Input[nI].nX) + " " + to_string(Input[nI].nY) + " " + to_string(Input[nI].nWidth) + " " + to_string(Input[nI].nHeight) + ";";
+		}
+		return strResult;
+	}
+	
 	// true: this is the format type: "[space or tab]<Rect>[space or tab]"
 	bool IsLineTypeOpenningRect(string &strLine)
 	{
@@ -603,6 +635,109 @@ public:
 		}
 	}
 
+	bool LoadLineInfo(string &strLine, tsOtherBox &tslElement)
+	{
+		int nSize = strLine.length();
+		vector<char> aTmp;
+		if (nSize < 9)	// minimum number of shortest line
+		{
+			return false;
+		}
+		// remove space or tab
+		int nPos = 0;
+		while (nPos < nSize && strLine[nPos] == ' ' || strLine[nPos] == '\t' || strLine[nPos] == '\n')
+		{
+			nPos++;
+		}
+		if ((nSize - nPos) < 9)
+		{
+			return false;
+		}
+		// init tag name type
+		teBBoxElementDataType teType;
+		// get tagname
+		if (strLine[nPos] == '<')
+		{
+			nPos++;
+			while (nPos < nSize && strLine[nPos] != '>')
+			{
+				aTmp.push_back(strLine[nPos]);
+				nPos++;
+			}
+			if (nPos == nSize)
+				return false;
+			// get tag type
+			string strTag = ConvertCharArrayToString(aTmp);
+			teType = GetTypeOfTag(strTag);
+			aTmp.clear();
+		}
+		else
+		{
+			return false;
+		}
+		// remove space or tab
+		int nPos = 0;
+		while (nPos < nSize && strLine[nPos] == ' ' || strLine[nPos] == '\t' || strLine[nPos] == '\n')
+		{
+			nPos++;
+		}
+		if ((nSize - nPos) < 9)
+		{
+			return false;
+		}
+		// get tag content
+		while (nPos < nSize && strLine[nPos] != '<')
+		{
+			aTmp.push_back(strLine[nPos]);
+			nPos++;
+		}
+		if (nPos == nSize)
+			return false;
+		// get tag content
+		string strTagContent = ConvertCharArrayToString(aTmp);
+		aTmp.clear();
+		
+		// check tagname type
+		if (teType == BBETypeNone)
+		{
+			return false;
+		}
+		else if (teType == BBETypeID)
+		{
+			// load int
+			tslElement.nID = ConvertStringToInt(strTagContent);
+		}
+		else if (teType == BBETypeROI)
+		{
+			// Load tsRect
+			tslElement.rROI = ConvertStringTotsRect(strTagContent);
+		}
+		else if (teType == BBETypeACVROI)
+		{
+			// load tsRect
+			tslElement.rACVROI = ConvertStringTotsRect(strTagContent);
+		}
+		else if (teType == BBETypeNameImage)
+		{
+			// load string
+			tslElement.strNameImage = strTagContent;
+		}
+		else if (teType == BBETypeNumberVersion)
+		{
+			// load int
+			tslElement.nNumberVersion = ConvertStringToInt(strTagContent);
+		}
+		else if (teType == BBETypeTimeRunning)
+		{
+			// load float
+			tslElement.fTimeRunning = ConvertStringToFloat(strTagContent);
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 public:	
 	
 	// true: retrieve sucessfully
@@ -659,19 +794,124 @@ public:
 	}
 
 	// true: retrieve sucessfully
-	void ReadOtherBoxes(vector<tsOtherBox> &atsOtherBoxes, string strPath)
+	bool ReadOtherBoxes(vector<tsOtherBox> &atsOtherBoxes, string strPath)
 	{
-
+		ifstream ifsRead;
+		ifsRead.open(strPath, std::ifstream::in);
+		if (ifsRead.is_open())
+		{
+			// init variable
+			string strLine;
+			bool bIsInRect = false;
+			tsOtherBox tslElement;
+			while (getline(ifsRead, strLine))
+			{
+				// start new tsRect
+				if (bIsInRect == false)
+				{
+					// empty line between element, or end of file
+					if (strLine == " " || strLine == "")
+					{
+						continue;
+					}
+					// check if this is the new element openning
+					if (IsLineTypeOpenningRect(strLine) == true)
+					{
+						bIsInRect = true;
+						tslElement.Destroy();
+					}
+					else
+					{
+						// failure
+						return false;
+					}
+				}
+				else
+				{
+					// check if closing element info
+					if (IsLineTypeClosingRect(strLine) == true)
+					{
+						bIsInRect = false;
+						continue;
+					}
+					// load information, do not care order
+					bool bChecked = LoadLineInfo(strLine, tslElement);
+					if (bChecked == false)
+						return false;
+				}
+			}
+			ifsRead.close();
+			return true;
+		}
+		return false;
 	}
 
-	void WriteLines(vector<tsLineBox> &atsLines, string strPath)
+	bool WriteLines(vector<tsLineBox> &atsLines, string strPath)
 	{
-
+		ofstream ofsWrite;
+		ofsWrite.open(strPath, std::ofstream::out);
+		if (ofsWrite.is_open())
+		{
+			int nSize = atsLines.size();
+			for(int nI = 0; nI < nSize; nI++)
+			{
+				// begin Rect
+				ofsWrite << "<Rect>\n" ;
+				// ID
+				ofsWrite << "<ID>" << atsLines[nI].tsCore.nID << "</ID>\n";
+				// ROI
+				ofsWrite << "<ROI>" << ConverttsRectToString(atsLines[nI].tsCore.rROI) << "</ROI>\n";
+				// new ROI
+				ofsWrite << "<NewROI>" << ConverttsRectToString(atsLines[nI].tsCore.rACVROI) << "</NewROI>\n";
+				// sub ID
+				ofsWrite << "<SubID>" << ConvertIntArrayToString(atsLines[nI].anSubID) << "</SubID>\n";
+				// sub ROI
+				ofsWrite << "<SubROI>" << ConverttsRectArrayToString(atsLines[nI].atsSubROI) << "</SubROI>\n";
+				// Name
+				ofsWrite << "<Name>" << atsLines[nI].tsCore.strNameImage << "</Name>\n";
+				// NumberVersion
+				ofsWrite << "<NumberVersion>" << atsLines[nI].tsCore.nNumberVersion << "</NumberVersion>\n";
+				// TimeRunning
+				ofsWrite << "<TimeRunning>" << atsLines[nI].tsCore.fTimeRunning << "</TimeRunning>\n";
+				// close Rect
+				ofsWrite << "</Rect>\n";
+			}
+			ofsWrite.close();
+			return true;
+		}
+		return false;
 	}
 
-	void WriteOtherBoxes(vector<tsOtherBox> &atsOtherBoxes, string strPath)
+	bool WriteOtherBoxes(vector<tsOtherBox> &atsOtherBoxes, string strPath)
 	{
-
+		ofstream ofsWrite;
+		ofsWrite.open(strPath, std::ofstream::out);
+		if (ofsWrite.is_open())
+		{
+			int nSize = atsLines.size();
+			for(int nI = 0; nI < nSize; nI++)
+			{
+				// begin Rect
+				ofsWrite << "<Rect>\n" ;
+				// ID
+				ofsWrite << "<ID>" << atsLines[nI].nID << "</ID>\n";
+				// ROI
+				ofsWrite << "<ROI>" << ConverttsRectToString(atsLines[nI].rROI) << "</ROI>\n";
+				// new ROI
+				ofsWrite << "<NewROI>" << ConverttsRectToString(atsLines[nI].rACVROI) << "</NewROI>\n";
+				// Name
+				ofsWrite << "<Name>" << atsLines[nI].strNameImage << "</Name>\n";
+				// NumberVersion
+				ofsWrite << "<NumberVersion>" << atsLines[nI].nNumberVersion << "</NumberVersion>\n";
+				// TimeRunning
+				ofsWrite << "<TimeRunning>" << atsLines[nI].fTimeRunning << "</TimeRunning>\n";
+				// close Rect
+				ofsWrite << "</Rect>\n";
+			}
+			ofsWrite.close();
+			return true;
+		}
+		return false;
 	}
 	
 };
