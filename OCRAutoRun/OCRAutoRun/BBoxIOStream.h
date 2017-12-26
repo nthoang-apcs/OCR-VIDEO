@@ -22,7 +22,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////
 class BBoxIOStream
 {
-protected:
+public:
 
 	// return type of this string if it is in list of teBBoxElementDataType
 	teBBoxElementDataType GetTypeOfTag(string &strTag)
@@ -85,25 +85,79 @@ protected:
 		int nPos = 0;
 		int nResult = 0;
 		bool bPositive = true;
-		if (strTagContent.length() == 0)
+		int nSize = strTagContent.length();
+		if (nSize == 0)
 			return 0;
+		// remove space or tab
+		while (nPos < nSize && (strTagContent[nPos] == ' ' || strTagContent[nPos] == '\t'))
+		{
+			nPos++;
+		}
 		// check case conditions
-		if (strTagContent[0] == '-')
+		if (strTagContent[nPos] == '-')
 		{
 			bPositive = false;
 			nPos++;
 		}
-		else if (strTagContent[0] < '0' || strTagContent[0] > '9')
+		else if (strTagContent[nPos] < '0' || strTagContent[nPos] > '9')
 		{
 			return 0;
 		}
-		int nSize = strTagContent.length();
+		
 		// get digits
 		while (nPos < nSize)
 		{
 			if (strTagContent[nPos] >= '0' && strTagContent[nPos] <= '9')
 			{
 				nResult = nResult * 10 + (int)(strTagContent[nPos] - '0');
+				nPos++;
+			}
+			else
+			{
+				if (bPositive == false)
+				{
+					return (nResult * (-1));
+				}
+				return nResult;
+			}
+		}
+		if (bPositive == false)
+		{
+			return (nResult * (-1));
+		}
+		return nResult;
+	}
+
+	int ConvertArrayCharToInt(vector<char> &aTmp)
+	{
+		int nPos = 0;
+		int nResult = 0;
+		bool bPositive = true;
+		int nSize = aTmp.size();
+		if (nSize == 0)
+			return 0;
+		// remove space or tab
+		while (nPos < nSize && (aTmp[nPos] == ' ' || aTmp[nPos] == '\t'))
+		{
+			nPos++;
+		}
+		// check case conditions
+		if (aTmp[nPos] == '-')
+		{
+			bPositive = false;
+			nPos++;
+		}
+		else if (aTmp[nPos] < '0' || aTmp[nPos] > '9')
+		{
+			return 0;
+		}
+		
+		// get digits
+		while (nPos < nSize)
+		{
+			if (aTmp[nPos] >= '0' && aTmp[nPos] <= '9')
+			{
+				nResult = nResult * 10 + (int)(aTmp[nPos] - '0');
 				nPos++;
 			}
 			else
@@ -190,7 +244,178 @@ protected:
 
 	vector<int> ConvertStringToIntArray(string &strTagContent)
 	{
+		int nPos = 0;
+		int nSize = strTagContent.length();
+		if (nSize == 0)
+			return vector<int>();
+		vector<int> aResult;
+		vector<char> aTmp;
+		// loop all integer
+		while (nPos < nSize)
+		{
+			// clear every first loop
+			aTmp.clear();
+			// ignore space if have
+			while (nPos < nSize && (strTagContent[nPos] == ' ' || strTagContent[nPos] == '\t'))
+			{
+				nPos++;
+			}
+			// check length, if exceed limit, result result
+			if (nPos == nSize)
+			{
+				return aResult;
+			}
 
+			// take inside int
+			// check negative sign
+			if (strTagContent[nPos] == '-')
+			{
+				aTmp.push_back(strTagContent[nPos]);
+				nPos++;
+			}
+			// check special case - not a number or negative size -> return result
+			if (strTagContent[nPos] < '0' || strTagContent[nPos] >'9')
+			{
+				aTmp.clear();
+				return aResult;
+			}
+			// input number
+			while (nPos < nSize && strTagContent[nPos] >= '0' && strTagContent[nPos] <= '9')
+			{
+				aTmp.push_back(strTagContent[nPos]);
+				nPos++;
+			}
+			aResult.push_back(ConvertArrayCharToInt(aTmp));
+			// check strange character
+			if ((strTagContent[nPos] < '0' || strTagContent[nPos] >'9') && strTagContent[nPos] != '-')
+			{
+				aTmp.clear();
+				return aResult;
+			}
+		}
+		if (nPos == nSize)
+		{
+			aTmp.clear();
+			return aResult;
+		}
+	}
+	
+	// format 1 ROI: [space or tab][x][space or tab][y][space or tab][width][space or tab][height][space or tab]
+	tsRect ConvertStringTotsRect(string &strTagContent)
+	{
+		int nPos = 0;
+		int nSize = strTagContent.length();
+		tsRect tsResult;
+		vector<char> aTmp;
+		if (nSize == 0)
+			return tsResult;
+		// ignore space or tab
+		while (nPos < nSize && (strTagContent[nPos] == ' ' || strTagContent[nPos] == '\t'))
+		{
+			nPos++;
+		}
+		if (nPos == nSize)
+			return tsResult;
+		// get x
+		while (nPos < nSize && strTagContent[nPos] != ' ' && strTagContent[nPos] != '\t')
+		{
+			aTmp.push_back(strTagContent[nPos]);
+			nPos++;
+		}
+		tsResult.nX = ConvertArrayCharToInt(aTmp);
+		aTmp.clear();
+		if (nPos == nSize)
+			return tsResult;
+		// ignore space or tab
+		while (nPos < nSize && (strTagContent[nPos] == ' ' || strTagContent[nPos] == '\t'))
+		{
+			nPos++;
+		}
+		if (nPos == nSize)
+			return tsResult;
+		// get y
+		while (nPos < nSize && strTagContent[nPos] != ' ' && strTagContent[nPos] != '\t')
+		{
+			aTmp.push_back(strTagContent[nPos]);
+			nPos++;
+		}
+		tsResult.nY = ConvertArrayCharToInt(aTmp);
+		aTmp.clear();
+		if (nPos == nSize)
+			return tsResult;
+		// ignore space or tab
+		while (nPos < nSize && (strTagContent[nPos] == ' ' || strTagContent[nPos] == '\t'))
+		{
+			nPos++;
+		}
+		if (nPos == nSize)
+			return tsResult;
+		// get width
+		while (nPos < nSize && strTagContent[nPos] != ' ' && strTagContent[nPos] != '\t')
+		{
+			aTmp.push_back(strTagContent[nPos]);
+			nPos++;
+		}
+		tsResult.nWidth = ConvertArrayCharToInt(aTmp);
+		aTmp.clear();
+		if (nPos == nSize)
+			return tsResult;
+		// ignore space or tab
+		while (nPos < nSize && (strTagContent[nPos] == ' ' || strTagContent[nPos] == '\t'))
+		{
+			nPos++;
+		}
+		if (nPos == nSize)
+			return tsResult;
+		// get height
+		while (nPos < nSize && strTagContent[nPos] != ' ' && strTagContent[nPos] != '\t')
+		{
+			aTmp.push_back(strTagContent[nPos]);
+			nPos++;
+		}
+		tsResult.nHeight = ConvertArrayCharToInt(aTmp);
+		aTmp.clear();
+		return tsResult;
+	}
+
+	// format array of ROIs: ROI1;ROI2;ROI3;...ROIN
+	vector<tsRect> ConvertStringTotsRectArray(string &strTagContent)
+	{
+		int nPos = 0;
+		int nSize = strTagContent.length();
+		vector<tsRect> atsResult;
+		tsRect tsTmp;
+		vector<char> aTmp;
+		if (nSize == 0)
+			return atsResult;
+		while (nPos < nSize)
+		{
+			// remove space and tab
+			while (nPos < nSize && (strTagContent[nPos] == ' ' || strTagContent[nPos] == '\t'))
+			{
+				nPos++;
+			}
+			if (nPos == nSize)
+				return atsResult;
+			// get content of 1 ROI
+			while (nPos < nSize && strTagContent[nPos] != ';')
+			{
+				aTmp.push_back(strTagContent[nPos]);
+				nPos++;
+			}
+			tsTmp = ConvertStringTotsRect(ConvertCharArrayToString(aTmp));
+			// check condition
+			if (tsTmp.nX == 0 && tsTmp.nY == 0 && tsTmp.nWidth == 0 && tsTmp.nHeight == 0)
+			{
+				// do nothing
+			}
+			else
+			{
+				atsResult.push_back(tsTmp);
+				aTmp.clear();
+			}
+		}
+		return atsResult;
 	}
 
 	// true: this is the format type: "[space or tab]<Rect>[space or tab]"
@@ -263,7 +488,8 @@ protected:
 		return false;
 	}
 
-	// true: retrieve sucessfully, format: [space or tab]<[tagname]>[space or tab][info][space or tab]</[tabname]>[space or tab]
+	// true: retrieve sucessfully, format: [space or tab]<[tagname]>[space or tab][info]</[tabname]>[space or tab]
+	// information 1 line store in tsElement
 	bool LoadLineInfo(string &strLine, tsLineBox &tslElement)
 	{
 		int nSize = strLine.length();
@@ -297,7 +523,7 @@ protected:
 				return false;
 			// get tag type
 			string strTag = ConvertCharArrayToString(aTmp);
-			teBBoxElementDataType teType = GetTypeOfTag(strTag);
+			teType = GetTypeOfTag(strTag);
 			aTmp.clear();
 		}
 		else
@@ -322,18 +548,10 @@ protected:
 		}
 		if (nPos == nSize)
 			return false;
-		// remove space or tab
-		int nPos = 0;
-		while (nPos < nSize && strLine[nPos] == ' ' || strLine[nPos] == '\t' || strLine[nPos] == '\n')
-		{
-			nPos++;
-		}
-		if ((nSize - nPos) < 9)
-		{
-			return false;
-		}
+		// get tag content
 		string strTagContent = ConvertCharArrayToString(aTmp);
 		aTmp.clear();
+		
 		// check tagname type
 		if (teType == BBETypeNone)
 		{
@@ -342,42 +560,42 @@ protected:
 		else if (teType == BBETypeID)
 		{
 			// load int
-
+			tslElement.tsCore.nID = ConvertStringToInt(strTagContent);
 		}
 		else if (teType == BBETypeROI)
 		{
 			// Load tsRect
-
+			tslElement.tsCore.rROI = ConvertStringTotsRect(strTagContent);
 		}
 		else if (teType == BBETypeACVROI)
 		{
 			// load tsRect
-
+			tslElement.tsCore.rACVROI = ConvertStringTotsRect(strTagContent);
 		}
 		else if (teType == BBETypeNameImage)
 		{
 			// load string
-
+			tslElement.tsCore.strNameImage = strTagContent;
 		}
 		else if (teType == BBETypeNumberVersion)
 		{
 			// load int
-
+			tslElement.tsCore.nNumberVersion = ConvertStringToInt(strTagContent);
 		}
 		else if (teType == BBETypeTimeRunning)
 		{
 			// load float
-
+			tslElement.tsCore.fTimeRunning = ConvertStringToFloat(strTagContent);
 		}
 		else if (teType == BBETypeSubID)
 		{
 			// load array of int
-
+			tslElement.anSubID = ConvertStringToIntArray(strTagContent);
 		}
 		else if (teType == BBETypeSubROI)
 		{
-			// load array of int
-
+			// load array of tsRect
+			tslElement.atsSubROI = ConvertStringTotsRectArray(strTagContent);
 		}
 		else
 		{
