@@ -17,43 +17,71 @@
 using namespace std;
 using namespace Magick;
 
+//++++++++++++++++++++++++++++++++++++++++++
+/*		Support functions		*/
+
 string ExtractNameOfFileFromPathIn(string pathIn);
 
-// read list file
-void ReadFiles(string filename, vector<string> &ListFiles);
+string GetTmpRectFolderPath(string strInput);
 
-bool ResampleFiles(vector<string> &ListFiles);
+//----------------------------------------------------------------------
 
+//++++++++++++++++++++++++++++++++++++++++++
+/*		Operation		*/
+
+// Resample for each file in list
+bool ResampleFiles(vector<string> &ListFilesInput, vector<string> &ListFilesOutput);
+
+// Run command line for each file in list
 void OCRRun(vector<string> &ListFiles);
 
+//----------------------------------------------------------------------
 
-int main()
+//++++++++++++++++++++++++++++++++++++++++++
+/*		Input/Output Stream		*/
+
+// read file OtherBoxes.txt to get list file
+void ReadFileOtherBoxes(string filename, vector<string> &ListFilesOutput);
+
+// read file Lines.txt to get list file
+void ReadFileLines(string filename, vector<string> &ListFilesOutput);
+
+//----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+int main(int ac, char** av)
 {
-	// input
-	vector<string> ListFiles;
-	string filename = "files.txt";
-	ReadFiles(filename, ListFiles);
-	// resample
-	ResampleFiles(ListFiles);
-	// ocr
+	// list path of file
+	vector<string> ListFilesPNG;
+	vector<string> ListFileTIFF;
+	// get path to folder TmpRect
+	string strTmpRectFolder = GetTmpRectFolderPath(string(av[0]));
+	
+	// path to OtherBoxes.txt & Lines.txt
+	string strPathOtherBoxes = strTmpRectFolder + "OtherBoxes.txt";
+	string strPathLines = strTmpRectFolder + "Lines.txt";
+	
+	// Read OtherBoxes.txt
+	
+	// Check if any file is already done
+	
+	
+	
+	// Read Lines.txt
+	
+	// check if any file is already done
 	
 }
 
 
-
-void ReadFiles(string filename, vector<string> &ListFiles)
-{
-	ifstream ifs(filename);
-	if(ifs.is_open())
-	{
-		string line;
-		while(getline(ifs, line))
-		{
-			ListFiles.push_back(line);
-		}
-		ifs.close();
-	}
-}
+//++++++++++++++++++++++++++++++++++++++++++
+/*		Support functions		*/
 
 string ExtractNameOfFileFromPathIn(string pathIn)
 {
@@ -88,7 +116,17 @@ string ExtractNameOfFileFromPathIn(string pathIn)
 	return string(tmp2);
 }
 
-bool ResampleFiles(vector<string> &ListFiles)
+string GetTmpRectFolderPath(string strInput)
+{
+	
+}
+
+//----------------------------------------------------------------------
+
+//++++++++++++++++++++++++++++++++++++++++++
+/*		Operation		*/
+
+bool ResampleFiles(vector<string> &ListFilesInput, vector<string> &ListFilesOutput)
 {
 	int nSize = ListFiles.size();
 	for(int i = 0; i < nSize; i++)
@@ -113,6 +151,7 @@ bool ResampleFiles(vector<string> &ListFiles)
 	}
 	return false;
 }
+
 void OCRRun(vector<string> &ListFiles)
 {
 	int nSize = ListFiles.size();
@@ -121,3 +160,40 @@ void OCRRun(vector<string> &ListFiles)
 		// ocr command
 	}
 }
+
+//----------------------------------------------------------------------
+
+//++++++++++++++++++++++++++++++++++++++++++
+/*		Input/Output Stream		*/
+
+// Read OtherBoxes
+void ReadFileOtherBoxes(string filename, vector<string> &ListFilesOutput)
+{
+	ifstream ifs(filename);
+	if(ifs.is_open())
+	{
+		string line;
+		while(getline(ifs, line))
+		{
+			
+		}
+		ifs.close();
+	}
+}
+
+// Read Lines
+void ReadFileLines(string filename, vector<string> &ListFilesOutput)
+{
+	ifstream ifs(filename);
+	if(ifs.is_open())
+	{
+		string line;
+		while(getline(ifs, line))
+		{
+			
+		}
+		ifs.close();
+	}
+}
+
+//----------------------------------------------------------------------
