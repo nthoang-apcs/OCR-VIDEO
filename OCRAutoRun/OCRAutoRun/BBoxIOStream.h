@@ -563,8 +563,8 @@ public:
 			return false;
 		}
 		// remove space or tab
-		int nPos = 0;
-		while (nPos < nSize && strLine[nPos] == ' ' || strLine[nPos] == '\t' || strLine[nPos] == '\n')
+		nPos = 0;
+		while (nPos < nSize && (strLine[nPos] == ' ' || strLine[nPos] == '\t' || strLine[nPos] == '\n'))
 		{
 			nPos++;
 		}
@@ -676,7 +676,7 @@ public:
 			return false;
 		}
 		// remove space or tab
-		int nPos = 0;
+		nPos = 0;
 		while (nPos < nSize && strLine[nPos] == ' ' || strLine[nPos] == '\t' || strLine[nPos] == '\n')
 		{
 			nPos++;
@@ -888,23 +888,23 @@ public:
 		ofsWrite.open(strPath, std::ofstream::out);
 		if (ofsWrite.is_open())
 		{
-			int nSize = atsLines.size();
+			int nSize = atsOtherBoxes.size();
 			for(int nI = 0; nI < nSize; nI++)
 			{
 				// begin Rect
 				ofsWrite << "<Rect>\n" ;
 				// ID
-				ofsWrite << "<ID>" << atsLines[nI].nID << "</ID>\n";
+				ofsWrite << "<ID>" << atsOtherBoxes[nI].nID << "</ID>\n";
 				// ROI
-				ofsWrite << "<ROI>" << ConverttsRectToString(atsLines[nI].rROI) << "</ROI>\n";
+				ofsWrite << "<ROI>" << ConverttsRectToString(atsOtherBoxes[nI].rROI) << "</ROI>\n";
 				// new ROI
-				ofsWrite << "<NewROI>" << ConverttsRectToString(atsLines[nI].rACVROI) << "</NewROI>\n";
+				ofsWrite << "<NewROI>" << ConverttsRectToString(atsOtherBoxes[nI].rACVROI) << "</NewROI>\n";
 				// Name
-				ofsWrite << "<Name>" << atsLines[nI].strNameImage << "</Name>\n";
+				ofsWrite << "<Name>" << atsOtherBoxes[nI].strNameImage << "</Name>\n";
 				// NumberVersion
-				ofsWrite << "<NumberVersion>" << atsLines[nI].nNumberVersion << "</NumberVersion>\n";
+				ofsWrite << "<NumberVersion>" << atsOtherBoxes[nI].nNumberVersion << "</NumberVersion>\n";
 				// TimeRunning
-				ofsWrite << "<TimeRunning>" << atsLines[nI].fTimeRunning << "</TimeRunning>\n";
+				ofsWrite << "<TimeRunning>" << atsOtherBoxes[nI].fTimeRunning << "</TimeRunning>\n";
 				// close Rect
 				ofsWrite << "</Rect>\n";
 			}

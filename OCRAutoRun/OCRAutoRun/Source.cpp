@@ -20,9 +20,17 @@ using namespace Magick;
 //++++++++++++++++++++++++++++++++++++++++++
 /*		Support functions		*/
 
+// pathIn is an absolute path of a file.
+// return the file of that file - without extension
 string ExtractNameOfFileFromPathIn(string pathIn);
 
+// strInput is the absolute path of the *.exe file
+// return value: the absolute path of TmpRect folder
 string GetTmpRectFolderPath(string strInput);
+
+// strInput is the absolute path of image file (.png or .jpg)
+// return value: replace the extension by .tiff
+string GetPathOfTiffFromPathOfImage(string strInput);
 
 //----------------------------------------------------------------------
 
@@ -118,22 +126,96 @@ string ExtractNameOfFileFromPathIn(string pathIn)
 
 string GetTmpRectFolderPath(string strInput)
 {
-	
+	string strResult = "";
+	// check empty string
+	if (strInput.length() == 0)
+	{
+		return strResult;
+	}
+	int nSize = strInput.length();
+	int nPos = nSize - 1;
+	// go from n-1 to 0 until meet \ or / character - this is the folder which contains .exe file
+	while (nPos > 0 && strInput[nPos] != '\\' && strInput[nPos] != '/')
+	{
+		nPos--;
+	}
+	if (nPos == 0)
+	{
+		return strResult;
+	}
+	// go from n-1 to 0 until meet \ or / character - this is the root folder
+	while (nPos > 0 && strInput[nPos] != '\\' && strInput[nPos] != '/')
+	{
+		nPos--;
+	}
+	if (nPos == 0)
+	{
+		return strResult;
+	}
+	char* aTmp = new char[nPos + 10];
+	for (int nI = 0; nI <= nPos; nI++)
+	{
+		aTmp[nI] = strInput[nI];
+	}
+	// add TmpRect
+	aTmp[nPos + 1] = 'T';
+	aTmp[nPos + 2] = 'm';
+	aTmp[nPos + 3] = 'p';
+	aTmp[nPos + 4] = 'R';
+	aTmp[nPos + 5] = 'e';
+	aTmp[nPos + 6] = 'c';
+	aTmp[nPos + 7] = 't';
+	aTmp[nPos + 8] = '\\';
+	aTmp[nPos + 9] = 0;
+	strResult = string(aTmp);
+	delete[] aTmp;
+	return strResult;
+}
+
+string GetPathOfTiffFromPathOfImage(string strInput)
+{
+	if (strInput.length() == 0)
+		return string();
+	string strResult;
+	int nPos = strInput.length() - 1;
+	// ignore extension
+	while (nPos > 0 && strInput[nPos] != '.')
+	{
+		nPos--;
+	}
+	if (nPos == 0)
+		return strResult;
+	// create new char array
+	char* aTmp = new char[nPos + 6];
+	for (int nI = 0; nI < nPos; nI++)
+	{
+		aTmp[nI] = strInput[nI];
+	}
+	aTmp[nPos] = strInput[nPos];
+	aTmp[nPos + 1] = 't';
+	aTmp[nPos + 2] = 'i';
+	aTmp[nPos + 3] = 'f';
+	aTmp[nPos + 4] = 'f';
+	aTmp[nPos + 5] = 0;
+	// get result and deallocate array
+	strResult = string(aTmp);
+	delete[] aTmp;
+	return strResult;
 }
 
 //----------------------------------------------------------------------
 
 //++++++++++++++++++++++++++++++++++++++++++
 /*		Operation		*/
-
+// not finish
 bool ResampleFiles(vector<string> &ListFilesInput, vector<string> &ListFilesOutput)
 {
-	int nSize = ListFiles.size();
+	int nSize = ListFilesInput.size();
 	for(int i = 0; i < nSize; i++)
 	{
 		Image image;
-		string pathIn = ListFiles[i];
-		string pathOut = "";
+		string pathIn = ListFilesInput[i];
+		string pathOut = GetPathOfTiffFromPathOfImage(pathIn);
 		try {
 			// Read a file into image object
 			image.read(pathIn);
@@ -148,10 +230,12 @@ bool ResampleFiles(vector<string> &ListFilesInput, vector<string> &ListFilesOutp
 			cout << "Caught exception: " << error_.what() << endl;
 			return false;
 		}
+		ListFilesOutput.push_back(pathOut);
 	}
 	return false;
 }
 
+// not finish
 void OCRRun(vector<string> &ListFiles)
 {
 	int nSize = ListFiles.size();
@@ -166,6 +250,7 @@ void OCRRun(vector<string> &ListFiles)
 //++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
 
+// not finish
 // Read OtherBoxes
 void ReadFileOtherBoxes(string filename, vector<string> &ListFilesOutput)
 {
@@ -181,6 +266,7 @@ void ReadFileOtherBoxes(string filename, vector<string> &ListFilesOutput)
 	}
 }
 
+// not finish
 // Read Lines
 void ReadFileLines(string filename, vector<string> &ListFilesOutput)
 {
