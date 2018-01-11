@@ -44,6 +44,8 @@ bool ResampleFiles(string strTmpRectFolder, vector<string> &ListFilesInput, vect
 void OCRRun(vector<string> &ListFiles);
 
 // ListFileInput = list files' name without extension
+// check if the text file of that version is already done
+// text file format: name of file + '.txt', like format of tiff file: name of file + '.tiff'
 void RemoveDoneImageFile(string strTmpRectFolder, vector<string> ListFileInput);
 
 //----------------------------------------------------------------------
@@ -161,6 +163,7 @@ string GetTmpRectFolderPath(string strInput)
 	int nSize = strInput.length();
 	int nPos = nSize - 1;
 	// go from n-1 to 0 until meet \ or / character - this is the folder which contains .exe file
+	// it should be the TmpRect folder. However, for sure, just get the root folder in later loop
 	while (nPos > 0 && strInput[nPos] != '\\' && strInput[nPos] != '/')
 	{
 		nPos--;
@@ -282,7 +285,7 @@ void RemoveDoneImageFile(string strTmpRectFolder, vector<string> ListFileInput)
 /*		Input/Output Stream		*/
 
 // Read OtherBoxes
-bool ReadFileOtherBoxes(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput);
+bool ReadFileOtherBoxes(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput)
 {
 	BBoxIOStream bboxTmp;
 	vector<tsOtherBox> atsOtherBoxes;
@@ -301,7 +304,7 @@ bool ReadFileOtherBoxes(string strFilePath, string strFolderImagePath, vector<st
 }
 
 // Read Lines
-bool ReadFileLines(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput);
+bool ReadFileLines(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput)
 {
 	BBoxIOStream bboxTmp;
 	vector<tsLineBox> atsLines;

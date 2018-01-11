@@ -286,18 +286,15 @@ public:
 				nPos++;
 			}
 			aResult.push_back(ConvertArrayCharToInt(aTmp));
-			// check strange character
-			if ((strTagContent[nPos] < '0' || strTagContent[nPos] >'9') && strTagContent[nPos] != '-')
+			// check strange character, which is not '-', ' ', '\t'
+			if ((strTagContent[nPos] < '0' || strTagContent[nPos] >'9') && strTagContent[nPos] != '-' && strTagContent[nPos] != ' ' && strTagContent[nPos] != '\t')
 			{
 				aTmp.clear();
 				return aResult;
 			}
 		}
-		if (nPos == nSize)
-		{
-			aTmp.clear();
-			return aResult;
-		}
+		aTmp.clear();
+		return aResult;
 	}
 	
 	string ConvertIntArrayToString(vector<int> aInt)
@@ -633,6 +630,7 @@ public:
 		{
 			return false;
 		}
+		return true;
 	}
 
 	bool LoadLineInfo(string &strLine, tsOtherBox &tslElement)
@@ -736,6 +734,7 @@ public:
 		{
 			return false;
 		}
+		return true;
 	}
 	
 public:	
