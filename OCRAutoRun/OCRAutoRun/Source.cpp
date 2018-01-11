@@ -30,28 +30,31 @@ string GetTmpRectFolderPath(string strInput);
 
 // strInput is the absolute path of image file (.png or .jpg)
 // return value: replace the extension by .tiff
-string GetPathOfTiffFromPathOfImage(string strInput);
+string GetNameOfTiffFromNameOfImage(string strInput);
 
 //----------------------------------------------------------------------
 
 //++++++++++++++++++++++++++++++++++++++++++
 /*		Operation		*/
 
-// Resample for each file in list
-bool ResampleFiles(vector<string> &ListFilesInput, vector<string> &ListFilesOutput);
+// Resample for each file in list, ListFilesOutput = ListFileTIFF
+bool ResampleFiles(string strTmpRectFolder, vector<string> &ListFilesInput, vector<string> &ListFilesOutput);
 
 // Run command line for each file in list
 void OCRRun(vector<string> &ListFiles);
+
+// ListFileInput = list files' name without extension
+void RemoveDoneImageFile(string strTmpRectFolder, vector<string> ListFileInput);
 
 //----------------------------------------------------------------------
 
 //++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
 
-// read file OtherBoxes.txt to get list file
+// read file OtherBoxes.txt to get list files' name
 bool ReadFileOtherBoxes(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput);
 
-// read file Lines.txt to get list file
+// read file Lines.txt to get list files' name
 bool ReadFileLines(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput);
 
 //----------------------------------------------------------------------
@@ -65,8 +68,9 @@ bool ReadFileLines(string strFilePath, string strFolderImagePath, vector<string>
 
 int main(int ac, char** av)
 {
-	// list path of file
-	vector<string> ListFilesPNG;
+	// list name of files without extension
+	vector<string> ListFileNames;
+	// list name of files with extension .tiff
 	vector<string> ListFileTIFF;
 	// get path to folder TmpRect
 	string strTmpRectFolder = GetTmpRectFolderPath(string(av[0]));
@@ -77,7 +81,7 @@ int main(int ac, char** av)
 	string strPathLines = strTmpRectFolder + "Lines.txt";
 	
 	// Read OtherBoxes.txt
-	bChecked = ReadFileOtherBoxes(strPathOtherBoxes, strTmpRectFolder, ListFilesPNG);
+	bChecked = ReadFileOtherBoxes(strPathOtherBoxes, strTmpRectFolder, ListFileNames);
 	if(bChecked == false)
 	{
 		cout << "Failed to read OtherBoxes file." << endl;
@@ -89,11 +93,11 @@ int main(int ac, char** av)
 		
 	}
 	// clear
-	ListFilesPNG.clear();
+	ListFileNames.clear();
 	ListFileTIFF.clear();
 	
 	// Read Lines.txt
-	bChecked = ReadFileLines(strPathOtherBoxes, strTmpRectFolder, ListFilesPNG);
+	bChecked = ReadFileLines(strPathOtherBoxes, strTmpRectFolder, ListFileNames);
 	if(bChecked == false)
 	{
 		cout << "Failed to read OtherBoxes file." << endl;
@@ -104,6 +108,9 @@ int main(int ac, char** av)
 		
 		
 	}
+	// clear
+	ListFileNames.clear();
+	ListFileTIFF.clear();
 }
 
 
@@ -191,7 +198,7 @@ string GetTmpRectFolderPath(string strInput)
 	return strResult;
 }
 
-string GetPathOfTiffFromPathOfImage(string strInput)
+string GetNameOfTiffFromNameOfImage(string strInput)
 {
 	if (strInput.length() == 0)
 		return string();
@@ -227,14 +234,14 @@ string GetPathOfTiffFromPathOfImage(string strInput)
 //++++++++++++++++++++++++++++++++++++++++++
 /*		Operation		*/
 
-bool ResampleFiles(vector<string> &ListFilesInput, vector<string> &ListFilesOutput)
+bool ResampleFiles(string strTmpRectFolder, vector<string> &ListFilesInput, vector<string> &ListFilesOutput)
 {
 	int nSize = ListFilesInput.size();
 	for(int i = 0; i < nSize; i++)
 	{
 		Image image;
-		string pathIn = ListFilesInput[i];
-		string pathOut = GetPathOfTiffFromPathOfImage(pathIn);
+		string pathIn = strTmpRectFolder + ListFilesInput[i];
+		string pathOut = GetNameOfTiffFromNameOfImage(pathIn);
 		try {
 			// Read a file into image object
 			image.read(pathIn);
@@ -262,6 +269,11 @@ void OCRRun(vector<string> &ListFiles)
 	{
 		// ocr command
 	}
+}
+
+void RemoveDoneImageFile(string strTmpRectFolder, vector<string> ListFileInput)
+{
+	
 }
 
 //----------------------------------------------------------------------
