@@ -128,6 +128,14 @@ typedef struct sBBoxInfo
 		nNumberVersion = 0;
 		fTimeRunning = 0.00;
 	}
+	string GetLastImageName()
+	{
+		if(nNumberVersion == 0 && nID == 0 && fTimeRunning == 0)
+			return string();
+		string strResult = strNameImage + "-" + to_string(nNumberVersion);
+		return strResult;
+	}
+	
 }tsBBoxInfo, tsOtherBox;
 
 //////////////////////////////////////////////////////////////////////
@@ -171,6 +179,10 @@ typedef struct sLineBox
 		anSubID.clear();
 		atsSubROI.clear();
 		tsCore.Destroy();
+	}
+	string GetLastImageName()
+	{
+		return tsCore.GetLastImageName();
 	}
 }tsLineBox;
 

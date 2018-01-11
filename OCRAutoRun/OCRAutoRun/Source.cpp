@@ -49,10 +49,10 @@ void OCRRun(vector<string> &ListFiles);
 /*		Input/Output Stream		*/
 
 // read file OtherBoxes.txt to get list file
-void ReadFileOtherBoxes(string filename, vector<string> &ListFilesOutput);
+bool ReadFileOtherBoxes(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput);
 
 // read file Lines.txt to get list file
-void ReadFileLines(string filename, vector<string> &ListFilesOutput);
+bool ReadFileLines(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput);
 
 //----------------------------------------------------------------------
 
@@ -70,21 +70,40 @@ int main(int ac, char** av)
 	vector<string> ListFileTIFF;
 	// get path to folder TmpRect
 	string strTmpRectFolder = GetTmpRectFolderPath(string(av[0]));
-	
+	// var to check the bbox io stream
+	bool bChecked = false;
 	// path to OtherBoxes.txt & Lines.txt
 	string strPathOtherBoxes = strTmpRectFolder + "OtherBoxes.txt";
 	string strPathLines = strTmpRectFolder + "Lines.txt";
 	
 	// Read OtherBoxes.txt
-	
-	// Check if any file is already done
-	
-	
+	bChecked = ReadFileOtherBoxes(strPathOtherBoxes, strTmpRectFolder, ListFilesPNG);
+	if(bChecked == false)
+	{
+		cout << "Failed to read OtherBoxes file." << endl;
+	}
+	else
+	{
+		// Check if any file is already done
+		
+		
+	}
+	// clear
+	ListFilesPNG.clear();
+	ListFileTIFF.clear();
 	
 	// Read Lines.txt
-	
-	// check if any file is already done
-	
+	bChecked = ReadFileLines(strPathOtherBoxes, strTmpRectFolder, ListFilesPNG);
+	if(bChecked == false)
+	{
+		cout << "Failed to read OtherBoxes file." << endl;
+	}
+	else
+	{
+		// Check if any file is already done
+		
+		
+	}
 }
 
 
@@ -207,7 +226,7 @@ string GetPathOfTiffFromPathOfImage(string strInput)
 
 //++++++++++++++++++++++++++++++++++++++++++
 /*		Operation		*/
-// not finish
+
 bool ResampleFiles(vector<string> &ListFilesInput, vector<string> &ListFilesOutput)
 {
 	int nSize = ListFilesInput.size();
@@ -250,36 +269,42 @@ void OCRRun(vector<string> &ListFiles)
 //++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
 
-// not finish
 // Read OtherBoxes
-void ReadFileOtherBoxes(string filename, vector<string> &ListFilesOutput)
+bool ReadFileOtherBoxes(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput);
 {
-	ifstream ifs(filename);
-	if(ifs.is_open())
+	BBoxIOStream bboxTmp;
+	vector<tsOtherBox> atsOtherBoxes;
+	bool bChecked = false;
+	// get list info
+	bChecked = bboxTmp.ReadOtherBoxes(atsOtherBoxes, strFilePath);
+	if(bChecked == false)
+		return false;
+	// get path
+	int nSize = atsOtherBoxes.size();
+	for(int nI = 0; nI < nSize; nI++)
 	{
-		string line;
-		while(getline(ifs, line))
-		{
-			
-		}
-		ifs.close();
+		ListFilesOutput.push_back(atsOtherBoxes[nI].GetLastImageName());
 	}
+	return true;
 }
 
-// not finish
 // Read Lines
-void ReadFileLines(string filename, vector<string> &ListFilesOutput)
+bool ReadFileLines(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput);
 {
-	ifstream ifs(filename);
-	if(ifs.is_open())
+	BBoxIOStream bboxTmp;
+	vector<tsLineBox> atsLines;
+	bool bChecked = false;
+	// get list info
+	bChecked = bboxTmp.ReadLines(atsLines, strFilePath);
+	if(bChecked == false)
+		return false;
+	// get path
+	int nSize = atsLines.size();
+	for(int nI = 0; nI < nSize; nI++)
 	{
-		string line;
-		while(getline(ifs, line))
-		{
-			
-		}
-		ifs.close();
+		ListFilesOutput.push_back(atsLines[nI].GetLastImageName());
 	}
+	return true;
 }
 
 //----------------------------------------------------------------------
