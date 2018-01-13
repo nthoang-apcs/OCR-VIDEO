@@ -36,6 +36,7 @@
 *.iobj
 
 .vs
+Root
 OCR-VIDEO.sln
 OCR-VIDEO.vcxproj
 OCR-VIDEO.vcxproj.user
