@@ -4,6 +4,7 @@
 //	Description：	Main process of OCRAutorun project
 //	Notes:			None
 //	History：	<0> 2017.12.22 : Dang Tuan Vu : Create structure definition
+//					<1>	2018.01.13 : Dang Tuan Vu : Complete project
 //
 //////////////////////////////////////////////////////////////////////
 #include <iostream>
@@ -32,7 +33,11 @@ string GetTmpRectFolderPath(string strInput);
 // return value: the absolute path of TmpImage folder
 string GetTmpImageFolderPath(string strInput);
 
-//----------------------------------------------------------------------
+// strInput is the absolute path of the *.exe file
+// return value: the absolute path of TmpImage folder
+string GetTmpCheckVowelFolderPath(string strInput);
+
+//---------------------------------------------------------------------------------------------------------------------------------
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Operation		*/
@@ -52,7 +57,10 @@ void OCRRun(vector<string> &ListFiles);
 // new list is also in ListFileInput
 void RemoveDoneImageFile(string strTmpImageFolder, vector<string> &ListFileInput);
 
-//----------------------------------------------------------------------
+// input path is the TmpCheckVowel folder path
+void OutputToInputCheckVowel(string strPath, vector<string> &ListFiles);
+
+//---------------------------------------------------------------------------------------------------------------------------------
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
@@ -65,7 +73,7 @@ bool ReadFileOtherBoxes(string strFilePath, string strFolderImagePath, vector<st
 // ListFilesOutput = list files' name without extension
 bool ReadFileLines(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput);
 
-//----------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------
 
 /*		Run and Debug functions		*/
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -81,12 +89,13 @@ void TestOCRRun();
 
 void TestResample();
 
-//----------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------
 
 
 int main(int argc, char** argv)
 {
-	//Run(argc, argv);
+	InitializeMagick(NULL);
+	Run(argc, argv);
 
 	// please modify hardcode path inside the function before running
 	//TestBBoxStreamWriting();
@@ -98,7 +107,7 @@ int main(int argc, char** argv)
 	//TestOCRRun();
 	
 	// please modify hardcode path inside the function before running
-	TestResample();
+	//TestResample();
 
 	return 0;
 }
@@ -243,7 +252,63 @@ string GetTmpImageFolderPath(string strInput)
 	return strResult;
 }
 
-//----------------------------------------------------------------------
+string GetTmpCheckVowelFolderPath(string strInput)
+{
+	string strResult = "";
+	// check empty string
+	if (strInput.length() == 0)
+	{
+		return strResult;
+	}
+	int nSize = strInput.length();
+	int nPos = nSize - 1;
+	// go from n-1 to 0 until meet \ or / character - this is the folder which contains .exe file
+	// it should be the TmpRect folder. However, for sure, just get the root folder in later loop
+	while (nPos > 0 && strInput[nPos] != '\\' && strInput[nPos] != '/')
+	{
+		nPos--;
+	}
+	// ignore '\\' or '/'
+	nPos--;
+	if (nPos == 0)
+	{
+		return strResult;
+	}
+	// go from n-1 to 0 until meet \ or / character - this is the root folder
+	while (nPos > 0 && strInput[nPos] != '\\' && strInput[nPos] != '/')
+	{
+		nPos--;
+	}
+	if (nPos == 0)
+	{
+		return strResult;
+	}
+	char* aTmp = new char[nPos + 15];
+	for (int nI = 0; nI <= nPos; nI++)
+	{
+		aTmp[nI] = strInput[nI];
+	}
+	// add TmpRect
+	aTmp[nPos + 1] = 'T';
+	aTmp[nPos + 2] = 'm';
+	aTmp[nPos + 3] = 'C';
+	aTmp[nPos + 4] = 'h';
+	aTmp[nPos + 5] = 'e';
+	aTmp[nPos + 6] = 'c';
+	aTmp[nPos + 7] = 'k';
+	aTmp[nPos + 8] = 'V';
+	aTmp[nPos + 9] = 'o';
+	aTmp[nPos + 10] = 'w';
+	aTmp[nPos + 11] = 'e';
+	aTmp[nPos + 12] = 'l';
+	aTmp[nPos + 13] = '\\';
+	aTmp[nPos + 14] = 0;
+	strResult = string(aTmp);
+	delete[] aTmp;
+	return strResult;
+}
+
+//---------------------------------------------------------------------------------------------------------------------------------
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Operation		*/
@@ -333,7 +398,26 @@ void RemoveDoneImageFile(string strTmpImageFolder, vector<string> &ListFileInput
 	return;
 }
 
-//----------------------------------------------------------------------
+void OutputToInputCheckVowel(string strPath, vector<string> &ListFiles)
+{
+	ofstream ofsWrite;
+	ofsWrite.open(strPath + "InputCVowel.txt", std::ofstream::out);
+	if (ofsWrite.is_open())
+	{
+		int nSize = ListFiles.size();
+		for(int nI = 0; nI < nSize; nI++)
+		{
+			ofsWrite << ListFiles[nI] << ".txt\n";
+		}
+		ofsWrite.close();
+	}
+	else
+	{
+		cout << "Unable to create and write to file InputCVowel.txt" << endl;
+	}
+}
+
+//---------------------------------------------------------------------------------------------------------------------------------
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
@@ -376,7 +460,7 @@ bool ReadFileLines(string strFilePath, string strFolderImagePath, vector<string>
 	return true;
 }
 
-//----------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------
 
 /*		Run and Debug functions		*/
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -414,6 +498,8 @@ void Run(int ac, char** av)
 		ResampleFiles(strTmpImageFolder, ListFileNames);
 		// Process
 		OCRRun(ListFileNames);
+		// output to file InputCVowel.txt in TmpCheckVowel folder
+		OutputToInputCheckVowel(GetTmpCheckVowelFolderPath(string(av[0])), ListFileNames);
 	}
 	// clear
 	ListFileNames.clear();
@@ -433,6 +519,8 @@ void Run(int ac, char** av)
 		ResampleFiles(strTmpImageFolder, ListFileNames);
 		// Process
 		OCRRun(ListFileNames);
+		// output to file InputCVowel.txt in TmpCheckVowel folder
+		OutputToInputCheckVowel(GetTmpCheckVowelFolderPath(string(av[0])), ListFileNames);
 	}
 	// clear
 	ListFileNames.clear();
@@ -510,4 +598,4 @@ void TestResample()
 	
 }
 
-//----------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------

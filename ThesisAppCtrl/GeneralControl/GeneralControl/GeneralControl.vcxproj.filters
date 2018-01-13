@@ -18,21 +18,12 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyProcess.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MySupPro.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyProcess.h">
+    <ClInclude Include="BBoxIOStream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MySupPro.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RectDLList.h">
+    <ClInclude Include="BBoxStructure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

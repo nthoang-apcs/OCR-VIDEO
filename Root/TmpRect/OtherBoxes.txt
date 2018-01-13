@@ -2,15 +2,15 @@
 <ID>0</ID>
 <ROI>10 11 12 13</ROI>
 <NewROI>10 11 12 13</NewROI>
-<Name>img39</Name>
-<NumberVersion>2</NumberVersion>
+<Name>img25</Name>
+<NumberVersion>1</NumberVersion>
 <TimeRunning>1000</TimeRunning>
 </Rect>
 <Rect>
 <ID>1</ID>
 <ROI>11 12 13 14</ROI>
 <NewROI>11 12 13 14</NewROI>
-<Name>img39</Name>
-<NumberVersion>1</NumberVersion>
+<Name>img25</Name>
+<NumberVersion>2</NumberVersion>
 <TimeRunning>1001</TimeRunning>
 </Rect>

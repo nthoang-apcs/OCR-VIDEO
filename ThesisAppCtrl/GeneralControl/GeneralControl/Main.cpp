@@ -1,3 +1,11 @@
+﻿//////////////////////////////////////////////////////////////////////
+//
+//	File name：	Source.cpp
+//	Description：	Main process of OCRAutorun project
+//	Notes:			None
+//	History：	<0> 2017.01.13 : Dang Tuan Vu : Create project
+//
+//////////////////////////////////////////////////////////////////////
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -6,239 +14,177 @@
 #include <opencv2\imgproc.hpp>
 #include <opencv2\features2d.hpp>
 #include <opencv2\imgcodecs.hpp>
-#include "MyProcess.h"
-#include "MySupPro.h"
-#include "RectDLList.h"
+#include "BBoxIOStream.h"
+#include "BBoxStructure.h"
 
 using namespace std;
 using namespace cv;
 
-/////////////////////////////////
-/*
-- Support main function
-*/
-/////////////////////////////////
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*		Support functions		*/
 
-void LoadSetting(bool &bRemoveUnusual, bool &bRemoveUnbalancedRatio, bool &bRemoveSingleBox, bool &bMergeInside, bool &bMergeTextLine, bool &bRecheckVowel);
+// pathIn is an absolute path of a file.
+// return the file of that file - without extension
+string GetRootFolder(string strInput);
 
+
+//----------------------------------------------------------------------
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*		Operation functions		*/
+// run whole process, input is the main function input
+void Run(int argc, char **argv);
+
+// preprocessing -	Sharpen, grayscale
+// processing -		MSER
+// postprocessing - Remove Unusual Area Boxes; remove unbalanced ratio width, height
+//					Sort y coordinate ascending; remove single box text line
+//					Merge inside box
+void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes);
+
+//----------------------------------------------------------------------
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*		Input/Output Stream		*/
+
+
+
+//----------------------------------------------------------------------
 
 /////////////////////////////////
 /*
 - Main Function
-- Input argument is the file path of filecapture.txt
+- Input argument is the path of Files.txt
 - The return value of this main function is 1 if success, 0 if failed.
 */
 /////////////////////////////////
 
-int main(int argc, const char * argv[])
+int main(int argc, char **argv)
 {
-	if (argc != 2)
-	{
-		return 0;
-	}
-
-	/*		Setting variables		*/
-	bool bRemoveUnusual = true;
-	bool bRemoveUnbalancedRatio = true;
-	bool bRemoveSingleBox = true;
-	bool bMergeInside = true;
-	bool bMergeTextLine = true;
-	bool bRecheckVowel = true;
-
-
-	/*		Get paths of files		*/
-	char *fCapturePath = new char[200];
-	char *CurrentFolder = new char[200];
-	int itmp1 = 0;
-	// get CurrentFolder
-	while(argv[0][itmp1] != 0)
-	{
-		itmp1++;
-	}
-	while(argv[0][itmp1] != '\\' && argv[0][itmp1] != '/')
-	{
-		itmp1--;
-	}
-	itmp1++;
-	for(int i = 0; i < itmp1; i++)
-	{
-		CurrentFolder[i] == argv[0][itmp1];
-	}
-	CurrentFolder[itmp1] = 0;
-	// get fCapturePath
-	itmp1 = 0;
-	while(argv[1][itmp1] != 0)
-	{
-		fCapturePath[itmp1] = argv[1][itmp1];
-		itmp1++;
-	}
-	fCapturePath[itmp1] = 0;
-	itmp1 = 0;
-
-	// get list of path files
-	vector<string> fPaths;
-	string tmp1;
-	ifstream ifs(fCapturePath);
-
-	if (ifs.is_open())
-	{
-		while (getline(ifs, tmp1))
-		{
-			fPaths.push_back(tmp1);
-		}
-		ifs.close();
-	}
-	else
-	{
-		return 0;
-	}
-	delete[] fCapturePath;
-
-
-	/*		Read setting file or input new setting		*/
-	LoadSetting(bRemoveUnusual, bRemoveUnbalancedRatio, bRemoveSingleBox, bMergeInside, bMergeTextLine, bRecheckVowel);
-
-
-	/*		Load image		*/
-	vector<Mat> mOriginImages;
-
-	int tmp2 = fPaths.size();
-	for (int i = 0; i < tmp2; i++)
-	{
-		mOriginImages.push_back(imread(fPaths[i]));
-	}
-
-	/*		Check mode		*/
-	if (tmp2 == 1)
-	{
-		Mat mOutputImage;
-		// 1 image
-		RunProcessOne(mOriginImages[0], mOutputImage, CurrentFolder);
-	}
-	else
-	{
-		vector<Mat> mOutputImages;
-		// multiple image
-		RunProcessAll(mOriginImages, mOutputImages, CurrentFolder);
-	}
-
-	delete[] CurrentFolder;
+	Run(argc, argv);
 
 	return 1;
 }
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*		Support functions		*/
 
-/*		Additional functions		*/
-
-void LoadSetting(bool &bRemoveUnusual, bool &bRemoveUnbalancedRatio, bool &bRemoveSingleBox, bool &bMergeInside, bool &bMergeTextLine, bool &bRecheckVowel)
+string GetRootFolder(string strInput)
 {
-	ifstream ifs1("ctrsetting.ini");
-	if (ifs1.is_open())
+	string strResult = "";
+	// check empty string
+	if (strInput.length() == 0)
 	{
-		// load
-		// ignore first 2 line
-		// 0 - false
-		// 1 - true
-		string line;
-		int k;
-		getline(ifs1, line);
-		getline(ifs1, line);
-		// bool bRemoveUnusual
-		getline(ifs1, line);
-		k = line.length();
-		if (line[k - 1] == '0')
-		{
-			bRemoveUnusual = false;
-		}
-		else
-		{
-			bRemoveUnusual = true;
-		}
-		// bool bRemoveUnbalancedRatio
-		getline(ifs1, line);
-		k = line.length();
-		if (line[k - 1] == '0')
-		{
-			bRemoveUnbalancedRatio = false;
-		}
-		else
-		{
-			bRemoveUnbalancedRatio = true;
-		}
-		// bool bRemoveSingleBox
-		getline(ifs1, line);
-		k = line.length();
-		if (line[k - 1] == '0')
-		{
-			bRemoveSingleBox = false;
-		}
-		else
-		{
-			bRemoveSingleBox = true;
-		}
-		// bool bMergeInside
-		getline(ifs1, line);
-		k = line.length();
-		if (line[k - 1] == '0')
-		{
-			bMergeInside = false;
-		}
-		else
-		{
-			bMergeInside = true;
-		}
-		// bool bMergeTextLine
-		getline(ifs1, line);
-		k = line.length();
-		if (line[k - 1] == '0')
-		{
-			bMergeTextLine = false;
-		}
-		else
-		{
-			bMergeTextLine = true;
-		}
-		// bool bRecheckVowel
-		getline(ifs1, line);
-		k = line.length();
-		if (line[k - 1] == '0')
-		{
-			bRecheckVowel = false;
-		}
-		else
-		{
-			bRecheckVowel = true;
-		}
-		// others
+		return strResult;
+	}
+	int nSize = strInput.length();
+	int nPos = nSize - 1;
+	// go from n-1 to 0 until meet \ or / character - this is the folder which contains .exe file
+	// it should be the TmpRect folder. However, for sure, just get the root folder in later loop
+	while (nPos > 0 && strInput[nPos] != '\\' && strInput[nPos] != '/')
+	{
+		nPos--;
+	}
+	/*current text is: [drive]:\...\Root\*/ 
+	char* aTmp = new char[nPos + 2];
+	for (int nI = 0; nI <= nPos; nI++)
+	{
+		aTmp[nI] = strInput[nI];
+	}
+	aTmp[nPos + 1] = 0;
+	strResult = string(aTmp);
+	delete[] aTmp;
+	return strResult;
+}
 
 
-		ifs1.close();
+//----------------------------------------------------------------------
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*		Operation functions		*/
+
+void Run(int argc, char **argv)
+{
+	// get Root folder
+	string strRootFolder = GetRootFolder(argv[0]);
+	// get File's path
+	string strFilePath;
+	if (argc == 2)
+	{
+		// get file path
+		strFilePath = string(argv[1]);
+		// check if file is existed
+		ifstream ifsRead;
+		ifsRead.open(strFilePath, std::ifstream::in);
+		if (ifsRead.is_open())
+		{
+			// file exists
+			ifsRead.close();
+		}
+		else
+		{
+			// file does not exist
+			// use default value
+			strFilePath = strRootFolder + "Files.txt";
+		}
 	}
 	else
 	{
-		ifs1.close();
-		ofstream ofs("ctrsetting.ini");
-		if (ofs.is_open())
+		// use default
+		strFilePath = strRootFolder + "Files.txt";
+	}
+
+	vector<string> astrListPaths;
+	// read all files' Paths
+	ifstream ifsRead;
+	ifsRead.open(strFilePath, std::ifstream::in);
+	if (ifsRead.is_open())
+	{
+		string line;
+		while (getline(ifsRead, line))
 		{
-			// create new
-			ofs << "Dang Tuan Vu - Application Control Setting\n";
-			ofs << "0 is false, 1 is true\n";
-
-			// bool bRemoveUnusual
-			ofs << "Remove unusual area: 1\n";
-			// bool bRemoveUnbalancedRatio
-			ofs << "Remove unbalanced ratio: 1\n";
-			// bool bRemoveSingleBox
-			ofs << "Remove single box line: 1\n";
-			// bool bMergeInside
-			ofs << "Merge inside boxes: 1\n";
-			// bool bMergeTextLine
-			ofs << "Merge boxes on a line: 1\n";
-			// bool bRecheckVowel
-			ofs << "Recheck Vowel: 1\n";
-			// others
-
-			ofs.close();
+			if (line.compare("") == 0 || line.compare(" ") == 0)
+			{
+				continue;
+			}
+			else
+			{
+				astrListPaths.push_back(line);
+			}
 		}
+
+		ifsRead.close();
+	}
+	else
+	{
+		cout << "Both user define files' path and default file's path do not exist!!! The program exits." << endl;
+	}
+
+	// start processing
+	vector<tsLineBox> atsLines;
+	vector<tsOtherBox> atsOtherBoxes;
+	float fTimeRun = 0.00;
+	int nSize = astrListPaths.size();
+
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		// process image 1 by 1
+		ProcessOneImage(astrListPaths[nI], fTimeRun, atsLines, atsOtherBoxes);
 	}
 }
+
+void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes)
+{
+
+}
+
+
+//----------------------------------------------------------------------
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*		Input/Output Stream		*/
+
+
+
+//----------------------------------------------------------------------
+
