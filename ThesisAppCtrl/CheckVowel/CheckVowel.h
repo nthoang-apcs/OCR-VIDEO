@@ -7,24 +7,11 @@
 
 using namespace std;
 
-namespace std {
-
-	/*
-		Courtesy to https://stackoverflow.com/questions/19603975/binarysearch-returning-index-of-where-it-belongs
-	*/
-	template<class RandomIt, class T>
-	RandomIt binary_locate(RandomIt first, RandomIt last, const T& val) {
-		if (val == *first) return first;
-		auto d = std::distance(first, last);
-		if (d == 1) return first;
-		auto center = (first + (d / 2));
-		if (val < *center) return binary_locate(first, center, val);
-		return binary_locate(center, last, val);
-	}
-
-}
-
 namespace CheckVowel {
+
+	const string TmpCheckVowelPath = "./Root/TmpCheckVowel";
+	const string TmpRectPath = "./Root/TmpRect";
+	const string TmpImagePath = "./Root/TmpImage";
 
 	//Adapted from BBoxStructure.h
 	struct tsRect
@@ -67,10 +54,6 @@ namespace CheckVowel {
 			rectID(rectID), ocrText(ocrText) { }
 	};
 
-	const string TmpCheckVowelPath = "./Root/TmpCheckVowel";
-	const string TmpRectPath = "./Root/TmpRect";
-	const string TmpImagePath = "./Root/TmpImage";
-	
 	//line format in TmpCheckVowel: {RectID}.txt
 
 	//Read from TmpChckVowel/InputCVowel a list of RectID (output from OCR) in TmpImage folder 

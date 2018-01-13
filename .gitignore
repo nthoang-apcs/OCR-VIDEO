@@ -34,3 +34,8 @@
 *.opendb
 *.ipdb
 *.iobj
+
+.vs
+OCR-VIDEO.sln
+OCR-VIDEO.vcxproj
+OCR-VIDEO.vcxproj.filters
