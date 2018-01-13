@@ -99,6 +99,36 @@ typedef struct sBBoxInfo
 		nNumberVersion = 0;
 		fTimeRunning = 0.00;
 	}
+	sBBoxInfo(int ID, int ROIx, int ROIy, int ROIwidth, int ROIheight,
+		int ACVROIx, int ACVROIy, int ACVROIwidth, int ACVROIheight,
+		string ImageName, int VersionNumber, float RunningTime)
+	{
+		nID = ID;
+		rROI =  tsRect(ROIx, ROIy, ROIwidth, ROIheight);
+		rACVROI = tsRect(ACVROIx, ACVROIy, ACVROIwidth, ACVROIheight);
+		strNameImage = ImageName;
+		nNumberVersion = VersionNumber;
+		fTimeRunning = RunningTime;
+	}
+	sBBoxInfo(int ID, int ROIx, int ROIy, int ROIwidth, int ROIheight,
+		string ImageName, int VersionNumber, float RunningTime)
+	{
+		nID = ID;
+		rROI = tsRect(ROIx, ROIy, ROIwidth, ROIheight);
+		rACVROI = tsRect(0, 0, 0, 0);
+		strNameImage = ImageName;
+		nNumberVersion = VersionNumber;
+		fTimeRunning = RunningTime;
+	}
+	sBBoxInfo(int ID, string ImageName, int VersionNumber, float RunningTime)
+	{
+		nID = ID;
+		rROI = tsRect(0, 0, 0, 0);
+		rACVROI = tsRect(0, 0, 0, 0);
+		strNameImage = ImageName;
+		nNumberVersion = VersionNumber;
+		fTimeRunning = RunningTime;
+	}
 	// copy constructor
 	sBBoxInfo (const sBBoxInfo &obj) 
 	{

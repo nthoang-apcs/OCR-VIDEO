@@ -17,7 +17,7 @@
 using namespace std;
 using namespace Magick;
 
-//++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Support functions		*/
 
 // pathIn is an absolute path of a file.
@@ -34,89 +34,61 @@ string GetNameOfTiffFromNameOfImage(string strInput);
 
 //----------------------------------------------------------------------
 
-//++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Operation		*/
 
 // Resample for each file in list, ListFilesOutput = ListFileTIFF
-bool ResampleFiles(string strTmpRectFolder, vector<string> &ListFilesInput, vector<string> &ListFilesOutput);
+// ListFileInput = list files' name without extension
+bool ResampleFiles(string strTmpRectFolder, vector<string> &ListFilesInput);
 
 // Run command line for each file in list
-void OCRRun(vector<string> &ListFiles);
+// ListFiles = list files' name without extension
+void OCRRun(string strTmpRectFolder, vector<string> &ListFiles);
 
 // ListFileInput = list files' name without extension
 // check if the text file of that version is already done
 // text file format: name of file + '.txt', like format of tiff file: name of file + '.tiff'
-void RemoveDoneImageFile(string strTmpRectFolder, vector<string> ListFileInput);
+// new list is also in ListFileInput
+void RemoveDoneImageFile(string strTmpRectFolder, vector<string> &ListFileInput);
 
 //----------------------------------------------------------------------
 
-//++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
 
 // read file OtherBoxes.txt to get list files' name
+// ListFilesOutput = list files' name without extension
 bool ReadFileOtherBoxes(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput);
 
 // read file Lines.txt to get list files' name
+// ListFilesOutput = list files' name without extension
 bool ReadFileLines(string strFilePath, string strFolderImagePath, vector<string> &ListFilesOutput);
 
 //----------------------------------------------------------------------
 
+/*		Run and Debug functions		*/
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// Run whole programe, get argument from main function
+void Run(int ac, char** av);
+
+void TestBBoxStreamWriting();
+
+void TestBBoxStreamReading();
+
+//----------------------------------------------------------------------
 
 
-
-
-
-
-
-int main(int ac, char** av)
+int main(int argc, char** argv)
 {
-	// list name of files without extension
-	vector<string> ListFileNames;
-	// list name of files with extension .tiff
-	vector<string> ListFileTIFF;
-	// get path to folder TmpRect
-	string strTmpRectFolder = GetTmpRectFolderPath(string(av[0]));
-	// var to check the bbox io stream
-	bool bChecked = false;
-	// path to OtherBoxes.txt & Lines.txt
-	string strPathOtherBoxes = strTmpRectFolder + "OtherBoxes.txt";
-	string strPathLines = strTmpRectFolder + "Lines.txt";
-	
-	// Read OtherBoxes.txt
-	bChecked = ReadFileOtherBoxes(strPathOtherBoxes, strTmpRectFolder, ListFileNames);
-	if(bChecked == false)
-	{
-		cout << "Failed to read OtherBoxes file." << endl;
-	}
-	else
-	{
-		// Check if any file is already done
-		
-		
-	}
-	// clear
-	ListFileNames.clear();
-	ListFileTIFF.clear();
-	
-	// Read Lines.txt
-	bChecked = ReadFileLines(strPathOtherBoxes, strTmpRectFolder, ListFileNames);
-	if(bChecked == false)
-	{
-		cout << "Failed to read OtherBoxes file." << endl;
-	}
-	else
-	{
-		// Check if any file is already done
-		
-		
-	}
-	// clear
-	ListFileNames.clear();
-	ListFileTIFF.clear();
+	//Run(argc, argv);
+	TestBBoxStreamWriting();
+
+	return 0;
 }
 
 
-//++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Support functions		*/
 
 string ExtractNameOfFileFromPathIn(string pathIn)
@@ -234,16 +206,16 @@ string GetNameOfTiffFromNameOfImage(string strInput)
 
 //----------------------------------------------------------------------
 
-//++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Operation		*/
 
-bool ResampleFiles(string strTmpRectFolder, vector<string> &ListFilesInput, vector<string> &ListFilesOutput)
+bool ResampleFiles(string strTmpRectFolder, vector<string> &ListFilesInput)
 {
 	int nSize = ListFilesInput.size();
 	for(int i = 0; i < nSize; i++)
 	{
 		Image image;
-		string pathIn = strTmpRectFolder + ListFilesInput[i];
+		string pathIn = strTmpRectFolder + ListFilesInput[i] + ".png";
 		string pathOut = GetNameOfTiffFromNameOfImage(pathIn);
 		try {
 			// Read a file into image object
@@ -259,29 +231,71 @@ bool ResampleFiles(string strTmpRectFolder, vector<string> &ListFilesInput, vect
 			cout << "Caught exception: " << error_.what() << endl;
 			return false;
 		}
-		ListFilesOutput.push_back(pathOut);
 	}
 	return false;
 }
 
 // not finish
-void OCRRun(vector<string> &ListFiles)
+void OCRRun(string strTmpRectFolder, vector<string> &ListFiles)
 {
 	int nSize = ListFiles.size();
-	for(int i = 0; i < nSize; i++)
+	for(int nI = 0; nI < nSize; nI++)
 	{
-		// ocr command
+		// prepare string command
+		string strCmd = "tesseract " + ListFiles[nI] + ".tiff " + ListFiles[nI] + "-l vie -psm 7";
+		// copy to char array
+		int nLen = strCmd.length();
+		char* aTmp = new char[nLen + 1];
+		for (int nJ = 0; nJ < nLen; nJ++)
+		{
+			aTmp[nJ] = strCmd[nJ];
+		}
+		aTmp[nLen] = 0;
+		system(aTmp);
+		
+		delete[] aTmp;
 	}
 }
 
-void RemoveDoneImageFile(string strTmpRectFolder, vector<string> ListFileInput)
+void RemoveDoneImageFile(string strTmpRectFolder, vector<string> &ListFileInput)
 {
-	
+	// get file name from list file input -> check if filename + ".txt" existed ?
+	// Yes: true
+	// No: false
+	vector<bool> abListCheck;
+	int nSize = ListFileInput.size();
+	if (nSize == 0)
+		return;
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		ifstream ifsRead;
+		ifsRead.open((strTmpRectFolder + ListFileInput[nI] + ".txt"), std::ifstream::in);
+		if (ifsRead.is_open())
+		{
+			abListCheck.push_back(true);
+			ifsRead.close();
+		}
+		abListCheck.push_back(false);
+	}
+	// create new list
+	vector<string> aTmp;
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		if (abListCheck[nI] == false)
+		{
+			aTmp.push_back(ListFileInput[nI]);
+		}
+	}
+	ListFileInput.clear();
+	ListFileInput = aTmp;
+	aTmp.clear();
+	abListCheck.clear();
+	return;
 }
 
 //----------------------------------------------------------------------
 
-//++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
 
 // Read OtherBoxes
@@ -320,6 +334,88 @@ bool ReadFileLines(string strFilePath, string strFolderImagePath, vector<string>
 		ListFilesOutput.push_back(atsLines[nI].GetLastImageName());
 	}
 	return true;
+}
+
+//----------------------------------------------------------------------
+
+/*		Run and Debug functions		*/
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+void Run(int ac, char** av)
+{
+	// list name of files without extension
+	vector<string> ListFileNames;
+	// list name of files with extension .tiff
+	vector<string> ListFileTIFF;
+	// get path to folder TmpRect
+	string strTmpRectFolder = GetTmpRectFolderPath(string(av[0]));
+	// var to check the bbox io stream
+	bool bChecked = false;
+	// path to OtherBoxes.txt & Lines.txt
+	string strPathOtherBoxes = strTmpRectFolder + "OtherBoxes.txt";
+	string strPathLines = strTmpRectFolder + "Lines.txt";
+
+	// Read OtherBoxes.txt
+	bChecked = ReadFileOtherBoxes(strPathOtherBoxes, strTmpRectFolder, ListFileNames);
+	if (bChecked == false)
+	{
+		cout << "Failed to read OtherBoxes.txt file." << endl;
+	}
+	else
+	{
+		// Check if any file is already done
+		RemoveDoneImageFile(strTmpRectFolder, ListFileNames);
+		// resample
+		ResampleFiles(strTmpRectFolder, ListFileNames);
+		// Process
+		OCRRun(strTmpRectFolder, ListFileNames);
+	}
+	// clear
+	ListFileNames.clear();
+	ListFileTIFF.clear();
+
+	// Read Lines.txt
+	bChecked = ReadFileLines(strPathOtherBoxes, strTmpRectFolder, ListFileNames);
+	if (bChecked == false)
+	{
+		cout << "Failed to read Lines.txt file." << endl;
+	}
+	else
+	{
+		// Check if any file is already done
+		RemoveDoneImageFile(strTmpRectFolder, ListFileNames);
+		// resample
+		ResampleFiles(strTmpRectFolder, ListFileNames);
+		// Process
+		OCRRun(strTmpRectFolder, ListFileNames);
+	}
+	// clear
+	ListFileNames.clear();
+	ListFileTIFF.clear();
+}
+
+void TestBBoxStreamWriting()
+{
+	// create sample data OtherBoxes
+	vector<tsOtherBox> atsOtherBoxes;
+	int nSize = 5;
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		tsOtherBox tsTmp (nI, nI + 10, nI + 10 + 1, nI + 10 + 2, nI + 10 + 3, "testWritingOtherBox" + to_string(nI), 1, 1000 + nI);
+		atsOtherBoxes.push_back(tsTmp);
+	}
+	// emulate the writing OtherBoxes
+	BBoxIOStream bboxTmp;
+	bboxTmp.WriteOtherBoxes(atsOtherBoxes, "E:\\Code\\OCR-Five-Git\\OCRAutoRun\\x64\\Debug\\OtherBoxes.txt");
+	// create sample data Lines
+
+	// emulate the writing Lines
+
+}
+
+void TestBBoxStreamReading()
+{
+
 }
 
 //----------------------------------------------------------------------
