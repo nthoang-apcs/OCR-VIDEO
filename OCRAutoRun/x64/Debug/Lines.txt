@@ -1,0 +1,50 @@
+<Rect>
+<ID>0</ID>
+<ROI>10 11 12 13</ROI>
+<NewROI>10 11 12 13</NewROI>
+<SubID>10000 10001 </SubID>
+<SubROI>20 21 22 23;24 25 26 27;</SubROI>
+<Name>testWritingOtherBox0</Name>
+<NumberVersion>1</NumberVersion>
+<TimeRunning>1000</TimeRunning>
+</Rect>
+<Rect>
+<ID>1</ID>
+<ROI>11 12 13 14</ROI>
+<NewROI>11 12 13 14</NewROI>
+<SubID>10001 10002 </SubID>
+<SubROI>21 22 23 24;25 26 27 28;</SubROI>
+<Name>testWritingOtherBox1</Name>
+<NumberVersion>1</NumberVersion>
+<TimeRunning>1001</TimeRunning>
+</Rect>
+<Rect>
+<ID>2</ID>
+<ROI>12 13 14 15</ROI>
+<NewROI>12 13 14 15</NewROI>
+<SubID>10002 10003 </SubID>
+<SubROI>22 23 24 25;26 27 28 29;</SubROI>
+<Name>testWritingOtherBox2</Name>
+<NumberVersion>1</NumberVersion>
+<TimeRunning>1002</TimeRunning>
+</Rect>
+<Rect>
+<ID>3</ID>
+<ROI>13 14 15 16</ROI>
+<NewROI>13 14 15 16</NewROI>
+<SubID>10003 10004 </SubID>
+<SubROI>23 24 25 26;27 28 29 30;</SubROI>
+<Name>testWritingOtherBox3</Name>
+<NumberVersion>1</NumberVersion>
+<TimeRunning>1003</TimeRunning>
+</Rect>
+<Rect>
+<ID>4</ID>
+<ROI>14 15 16 17</ROI>
+<NewROI>14 15 16 17</NewROI>
+<SubID>10004 10005 </SubID>
+<SubROI>24 25 26 27;28 29 30 31;</SubROI>
+<Name>testWritingOtherBox4</Name>
+<NumberVersion>1</NumberVersion>
+<TimeRunning>1004</TimeRunning>
+</Rect>

@@ -59,6 +59,10 @@ public:
 		{
 			return BBETypeSubROI;
 		}
+		else if (strTag.compare("TimeRunning") == 0)
+		{
+			return BBETypeTimeRunning;
+		}
 		else
 		{
 			return BBETypeNone;
@@ -406,6 +410,11 @@ public:
 			return atsResult;
 		while (nPos < nSize)
 		{
+			// init value to tsTmp
+			tsTmp.nX = -1;
+			tsTmp.nY = -1;
+			tsTmp.nWidth = -1;
+			tsTmp.nHeight = -1;
 			// remove space and tab
 			while (nPos < nSize && (strTagContent[nPos] == ' ' || strTagContent[nPos] == '\t'))
 			{
@@ -419,9 +428,12 @@ public:
 				aTmp.push_back(strTagContent[nPos]);
 				nPos++;
 			}
+			// ignore ';'
+			nPos++;
+			// convert to rect
 			tsTmp = ConvertStringTotsRect(ConvertCharArrayToString(aTmp));
 			// check condition
-			if (tsTmp.nX == 0 && tsTmp.nY == 0 && tsTmp.nWidth == 0 && tsTmp.nHeight == 0)
+			if (tsTmp.nX == -1 && tsTmp.nY == -1 && tsTmp.nWidth == -1 && tsTmp.nHeight == -1)
 			{
 				// do nothing
 			}
@@ -527,13 +539,13 @@ public:
 		{
 			return false;
 		}
-		// remove space or tab
 		int nPos = 0;
+		// remove space or tab
 		while (nPos < nSize && strLine[nPos] == ' ' || strLine[nPos] == '\t' || strLine[nPos] == '\n')
 		{
 			nPos++;
 		}
-		if ((nSize - nPos) < 9)
+		if ((nSize - nPos) < 0)
 		{
 			return false;
 		}
@@ -550,6 +562,8 @@ public:
 			}
 			if (nPos == nSize)
 				return false;
+			// ignore '>'
+			nPos++;
 			// get tag type
 			string strTag = ConvertCharArrayToString(aTmp);
 			teType = GetTypeOfTag(strTag);
@@ -560,12 +574,11 @@ public:
 			return false;
 		}
 		// remove space or tab
-		nPos = 0;
 		while (nPos < nSize && (strLine[nPos] == ' ' || strLine[nPos] == '\t' || strLine[nPos] == '\n'))
 		{
 			nPos++;
 		}
-		if ((nSize - nPos) < 9)
+		if ((nSize - nPos) < 0)
 		{
 			return false;
 		}
@@ -641,13 +654,13 @@ public:
 		{
 			return false;
 		}
-		// remove space or tab
 		int nPos = 0;
+		// remove space or tab
 		while (nPos < nSize && strLine[nPos] == ' ' || strLine[nPos] == '\t' || strLine[nPos] == '\n')
 		{
 			nPos++;
 		}
-		if ((nSize - nPos) < 9)
+		if ((nSize - nPos) < 0)
 		{
 			return false;
 		}
@@ -664,6 +677,8 @@ public:
 			}
 			if (nPos == nSize)
 				return false;
+			// ignore '>'
+			nPos++;
 			// get tag type
 			string strTag = ConvertCharArrayToString(aTmp);
 			teType = GetTypeOfTag(strTag);
@@ -674,12 +689,11 @@ public:
 			return false;
 		}
 		// remove space or tab
-		nPos = 0;
 		while (nPos < nSize && strLine[nPos] == ' ' || strLine[nPos] == '\t' || strLine[nPos] == '\n')
 		{
 			nPos++;
 		}
-		if ((nSize - nPos) < 9)
+		if ((nSize - nPos) < 0)
 		{
 			return false;
 		}
@@ -777,6 +791,8 @@ public:
 					// check if closing element info
 					if (IsLineTypeClosingRect(strLine) == true)
 					{
+						atsLines.push_back(tslElement);
+						tslElement.Destroy();
 						bIsInRect = false;
 						continue;
 					}
@@ -830,6 +846,8 @@ public:
 					// check if closing element info
 					if (IsLineTypeClosingRect(strLine) == true)
 					{
+						atsOtherBoxes.push_back(tslElement);
+						tslElement.Destroy();
 						bIsInRect = false;
 						continue;
 					}

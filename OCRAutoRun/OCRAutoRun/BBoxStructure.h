@@ -186,6 +186,30 @@ typedef struct sLineBox
 		anSubID.clear();
 		atsSubROI.clear();
 	}
+	sLineBox(int ID, int ROIx, int ROIy, int ROIwidth, int ROIheight,
+		int ACVROIx, int ACVROIy, int ACVROIwidth, int ACVROIheight,
+		string ImageName, int VersionNumber, float RunningTime)
+	{
+		tsCore = tsBBoxInfo(ID, ROIx, ROIy, ROIwidth, ROIheight, 
+			ACVROIx, ACVROIy, ACVROIwidth, ACVROIheight,
+			ImageName, VersionNumber, RunningTime);
+		anSubID.clear();
+		atsSubROI.clear();
+	}
+	sLineBox(int ID, int ROIx, int ROIy, int ROIwidth, int ROIheight,
+		string ImageName, int VersionNumber, float RunningTime)
+	{
+		tsCore = tsBBoxInfo(ID, ROIx, ROIy, ROIwidth, ROIheight,
+			ImageName, VersionNumber, RunningTime);
+		anSubID.clear();
+		atsSubROI.clear();
+	}
+	sLineBox(int ID, string ImageName, int VersionNumber, float RunningTime)
+	{
+		tsCore = tsBBoxInfo(ID, ImageName, VersionNumber, RunningTime);
+		anSubID.clear();
+		atsSubROI.clear();
+	}
 	// copy constructor
 	sLineBox (const sLineBox &obj) 
 	{

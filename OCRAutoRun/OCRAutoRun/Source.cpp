@@ -28,9 +28,9 @@ string ExtractNameOfFileFromPathIn(string pathIn);
 // return value: the absolute path of TmpRect folder
 string GetTmpRectFolderPath(string strInput);
 
-// strInput is the absolute path of image file (.png or .jpg)
-// return value: replace the extension by .tiff
-string GetNameOfTiffFromNameOfImage(string strInput);
+// strInput is the absolute path of the *.exe file
+// return value: the absolute path of TmpImage folder
+string GetTmpImageFolderPath(string strInput);
 
 //----------------------------------------------------------------------
 
@@ -39,17 +39,18 @@ string GetNameOfTiffFromNameOfImage(string strInput);
 
 // Resample for each file in list, ListFilesOutput = ListFileTIFF
 // ListFileInput = list files' name without extension
+// the default file extension input is .jpg, please change it if you use other format
 bool ResampleFiles(string strTmpRectFolder, vector<string> &ListFilesInput);
 
 // Run command line for each file in list
 // ListFiles = list files' name without extension
-void OCRRun(string strTmpRectFolder, vector<string> &ListFiles);
+void OCRRun(vector<string> &ListFiles);
 
 // ListFileInput = list files' name without extension
 // check if the text file of that version is already done
 // text file format: name of file + '.txt', like format of tiff file: name of file + '.tiff'
 // new list is also in ListFileInput
-void RemoveDoneImageFile(string strTmpRectFolder, vector<string> &ListFileInput);
+void RemoveDoneImageFile(string strTmpImageFolder, vector<string> &ListFileInput);
 
 //----------------------------------------------------------------------
 
@@ -76,13 +77,28 @@ void TestBBoxStreamWriting();
 
 void TestBBoxStreamReading();
 
+void TestOCRRun();
+
+void TestResample();
+
 //----------------------------------------------------------------------
 
 
 int main(int argc, char** argv)
 {
 	//Run(argc, argv);
-	TestBBoxStreamWriting();
+
+	// please modify hardcode path inside the function before running
+	//TestBBoxStreamWriting();
+
+	// please modify hardcode path inside the function before running
+	//TestBBoxStreamReading();
+
+	// please modify hardcode files' names inside the function before running
+	//TestOCRRun();
+	
+	// please modify hardcode path inside the function before running
+	TestResample();
 
 	return 0;
 }
@@ -140,6 +156,8 @@ string GetTmpRectFolderPath(string strInput)
 	{
 		nPos--;
 	}
+	// ignore '\\' or '/'
+	nPos--;
 	if (nPos == 0)
 	{
 		return strResult;
@@ -173,32 +191,53 @@ string GetTmpRectFolderPath(string strInput)
 	return strResult;
 }
 
-string GetNameOfTiffFromNameOfImage(string strInput)
+string GetTmpImageFolderPath(string strInput)
 {
+	string strResult = "";
+	// check empty string
 	if (strInput.length() == 0)
-		return string();
-	string strResult;
-	int nPos = strInput.length() - 1;
-	// ignore extension
-	while (nPos > 0 && strInput[nPos] != '.')
+	{
+		return strResult;
+	}
+	int nSize = strInput.length();
+	int nPos = nSize - 1;
+	// go from n-1 to 0 until meet \ or / character - this is the folder which contains .exe file
+	// it should be the TmpRect folder. However, for sure, just get the root folder in later loop
+	while (nPos > 0 && strInput[nPos] != '\\' && strInput[nPos] != '/')
+	{
+		nPos--;
+	}
+	// ignore '\\' or '/'
+	nPos--;
+	if (nPos == 0)
+	{
+		return strResult;
+	}
+	// go from n-1 to 0 until meet \ or / character - this is the root folder
+	while (nPos > 0 && strInput[nPos] != '\\' && strInput[nPos] != '/')
 	{
 		nPos--;
 	}
 	if (nPos == 0)
+	{
 		return strResult;
-	// create new char array
-	char* aTmp = new char[nPos + 6];
-	for (int nI = 0; nI < nPos; nI++)
+	}
+	char* aTmp = new char[nPos + 11];
+	for (int nI = 0; nI <= nPos; nI++)
 	{
 		aTmp[nI] = strInput[nI];
 	}
-	aTmp[nPos] = strInput[nPos];
-	aTmp[nPos + 1] = 't';
-	aTmp[nPos + 2] = 'i';
-	aTmp[nPos + 3] = 'f';
-	aTmp[nPos + 4] = 'f';
-	aTmp[nPos + 5] = 0;
-	// get result and deallocate array
+	// add TmpRect
+	aTmp[nPos + 1] = 'T';
+	aTmp[nPos + 2] = 'm';
+	aTmp[nPos + 3] = 'p';
+	aTmp[nPos + 4] = 'I';
+	aTmp[nPos + 5] = 'm';
+	aTmp[nPos + 6] = 'a';
+	aTmp[nPos + 7] = 'g';
+	aTmp[nPos + 8] = 'e';
+	aTmp[nPos + 9] = '\\';
+	aTmp[nPos + 10] = 0;
 	strResult = string(aTmp);
 	delete[] aTmp;
 	return strResult;
@@ -209,15 +248,17 @@ string GetNameOfTiffFromNameOfImage(string strInput)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Operation		*/
 
-bool ResampleFiles(string strTmpRectFolder, vector<string> &ListFilesInput)
+bool ResampleFiles(string strTmpImageFolder, vector<string> &ListFilesInput)
 {
 	int nSize = ListFilesInput.size();
 	for(int i = 0; i < nSize; i++)
 	{
 		Image image;
-		string pathIn = strTmpRectFolder + ListFilesInput[i] + ".png";
-		string pathOut = GetNameOfTiffFromNameOfImage(pathIn);
 		try {
+			string pathIn = strTmpImageFolder + ListFilesInput[i] + ".jpg";
+			string pathOut = strTmpImageFolder + ListFilesInput[i] + ".tiff";
+			cout << pathIn << endl;
+			cout << pathOut << endl;
 			// Read a file into image object
 			image.read(pathIn);
 			Magick::Geometry gm = image.size();
@@ -228,21 +269,20 @@ bool ResampleFiles(string strTmpRectFolder, vector<string> &ListFilesInput)
 		}
 		catch (Exception &error_)
 		{
-			cout << "Caught exception: " << error_.what() << endl;
+			cout << "Caught resample exception: " << error_.what() << endl;
 			return false;
 		}
 	}
 	return false;
 }
 
-// not finish
-void OCRRun(string strTmpRectFolder, vector<string> &ListFiles)
+void OCRRun(vector<string> &ListFiles)
 {
 	int nSize = ListFiles.size();
 	for(int nI = 0; nI < nSize; nI++)
 	{
-		// prepare string command
-		string strCmd = "tesseract " + ListFiles[nI] + ".tiff " + ListFiles[nI] + "-l vie -psm 7";
+		// prepare string command, vie for vietnamese
+		string strCmd = "tesseract " + ListFiles[nI] + ".tiff " + ListFiles[nI] + " -l vie -psm 7";
 		// copy to char array
 		int nLen = strCmd.length();
 		char* aTmp = new char[nLen + 1];
@@ -257,7 +297,7 @@ void OCRRun(string strTmpRectFolder, vector<string> &ListFiles)
 	}
 }
 
-void RemoveDoneImageFile(string strTmpRectFolder, vector<string> &ListFileInput)
+void RemoveDoneImageFile(string strTmpImageFolder, vector<string> &ListFileInput)
 {
 	// get file name from list file input -> check if filename + ".txt" existed ?
 	// Yes: true
@@ -269,7 +309,7 @@ void RemoveDoneImageFile(string strTmpRectFolder, vector<string> &ListFileInput)
 	for (int nI = 0; nI < nSize; nI++)
 	{
 		ifstream ifsRead;
-		ifsRead.open((strTmpRectFolder + ListFileInput[nI] + ".txt"), std::ifstream::in);
+		ifsRead.open((strTmpImageFolder + ListFileInput[nI] + ".txt"), std::ifstream::in);
 		if (ifsRead.is_open())
 		{
 			abListCheck.push_back(true);
@@ -349,12 +389,17 @@ void Run(int ac, char** av)
 	vector<string> ListFileTIFF;
 	// get path to folder TmpRect
 	string strTmpRectFolder = GetTmpRectFolderPath(string(av[0]));
+	string strTmpImageFolder = GetTmpImageFolderPath(string(av[0]));
 	// var to check the bbox io stream
 	bool bChecked = false;
 	// path to OtherBoxes.txt & Lines.txt
 	string strPathOtherBoxes = strTmpRectFolder + "OtherBoxes.txt";
 	string strPathLines = strTmpRectFolder + "Lines.txt";
-
+	// debug
+	cout << "Debug mode." << endl;
+	cout << strPathOtherBoxes << endl;
+	cout << strPathLines << endl;
+	char a;
 	// Read OtherBoxes.txt
 	bChecked = ReadFileOtherBoxes(strPathOtherBoxes, strTmpRectFolder, ListFileNames);
 	if (bChecked == false)
@@ -364,11 +409,11 @@ void Run(int ac, char** av)
 	else
 	{
 		// Check if any file is already done
-		RemoveDoneImageFile(strTmpRectFolder, ListFileNames);
+		RemoveDoneImageFile(strTmpImageFolder, ListFileNames);
 		// resample
-		ResampleFiles(strTmpRectFolder, ListFileNames);
+		ResampleFiles(strTmpImageFolder, ListFileNames);
 		// Process
-		OCRRun(strTmpRectFolder, ListFileNames);
+		OCRRun(ListFileNames);
 	}
 	// clear
 	ListFileNames.clear();
@@ -383,15 +428,16 @@ void Run(int ac, char** av)
 	else
 	{
 		// Check if any file is already done
-		RemoveDoneImageFile(strTmpRectFolder, ListFileNames);
+		RemoveDoneImageFile(strTmpImageFolder, ListFileNames);
 		// resample
-		ResampleFiles(strTmpRectFolder, ListFileNames);
+		ResampleFiles(strTmpImageFolder, ListFileNames);
 		// Process
-		OCRRun(strTmpRectFolder, ListFileNames);
+		OCRRun(ListFileNames);
 	}
 	// clear
 	ListFileNames.clear();
 	ListFileTIFF.clear();
+	cin >> a;
 }
 
 void TestBBoxStreamWriting()
@@ -407,15 +453,61 @@ void TestBBoxStreamWriting()
 	// emulate the writing OtherBoxes
 	BBoxIOStream bboxTmp;
 	bboxTmp.WriteOtherBoxes(atsOtherBoxes, "E:\\Code\\OCR-Five-Git\\OCRAutoRun\\x64\\Debug\\OtherBoxes.txt");
+	atsOtherBoxes.clear();
 	// create sample data Lines
-
+	vector<tsLineBox> atsLineBoxes;
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		tsLineBox tsLineTmp(nI, nI + 10, nI + 10 + 1, nI + 10 + 2, nI + 10 + 3, "testWritingOtherBox" + to_string(nI), 1, 1000 + nI);
+		tsLineTmp.anSubID.push_back(nI + 10000);
+		tsLineTmp.anSubID.push_back(nI + 10001);
+		tsLineTmp.atsSubROI.push_back(tsRect(nI + 20, nI + 21, nI + 22, nI + 23));
+		tsLineTmp.atsSubROI.push_back(tsRect(nI + 24, nI + 25, nI + 26, nI + 27));
+		atsLineBoxes.push_back(tsLineTmp);
+	}
 	// emulate the writing Lines
-
+	bboxTmp.WriteLines(atsLineBoxes, "E:\\Code\\OCR-Five-Git\\OCRAutoRun\\x64\\Debug\\Lines.txt");
+	atsLineBoxes.clear();
 }
 
 void TestBBoxStreamReading()
 {
+	vector<tsOtherBox> atsOtherBoxes;
+	vector<tsLineBox> atsLineBoxes;
+	BBoxIOStream bboxTmp;
+	bool bChecked = false;
+	bChecked = bboxTmp.ReadLines(atsLineBoxes, "E:\\Code\\OCR-Five-Git\\OCRAutoRun\\x64\\Debug\\Lines.txt");
+	if (bChecked == true)
+	{
+		cout << "Read Lines successful." << endl;
+	}
+	cout << endl;
+	bChecked = bboxTmp.ReadOtherBoxes(atsOtherBoxes, "E:\\Code\\OCR-Five-Git\\OCRAutoRun\\x64\\Debug\\OtherBoxes.txt");
+	if (bChecked == true)
+	{
+		cout << "Read Lines successful." << endl;
+	}
+	cout << endl;
+	atsOtherBoxes.clear();
+	atsLineBoxes.clear();
+}
 
+void TestOCRRun()
+{
+	vector<string> aListFiles;
+	aListFiles.push_back("img39-0");
+	aListFiles.push_back("img39-1");
+	OCRRun(aListFiles);
+}
+
+void TestResample()
+{
+	vector<string> ListFiles;
+	ListFiles.push_back("img40");
+	ResampleFiles("D:\\", ListFiles);
+	char a;
+	cin >> a;
+	
 }
 
 //----------------------------------------------------------------------
