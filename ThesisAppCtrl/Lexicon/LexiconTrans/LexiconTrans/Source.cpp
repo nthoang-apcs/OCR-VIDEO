@@ -50,6 +50,8 @@ void RunLexiconOneWord(string strInput, string strInputExe);
 // strInput is the absolute path of the .exe file
 void RunLexiconAll(string strInputExe);
 
+
+
 //---------------------------------------------------------------------------------------------------------------------------------
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -277,22 +279,23 @@ void Run(int argc, char** argv)
 void RunLexiconOneWord(string strInput, string strInputExe)
 {
 	string strRootFolder = GetCurrentFolderOfPath(strInputExe);
-	string strWords;
-	ifstream ifsRead;
+	wstring strWords;
+	wifstream wifsRead;
 	// load file
-	ifsRead.open(strRootFolder + strInput + ".txt", std::ifstream::in);
-	if(ifsRead.is_open())
+	wifsRead.open(strRootFolder + strInput + ".txt", std::ifstream::in);
+	if(wifsRead.is_open())
 	{
 		// get words
-		while(getline(ifsRead, strWords))
+		while(getline(wifsRead, wstrWords))
 		{
-			if(strWords.compare("") != 0 && strWords.compare(" ") != 0)
+			if(wstrWords.compare("") != 0 && wstrWords.compare(" ") != 0)
 				break;
 		}
 		ifsRead.close();
 	}
 	else
 	{
+		return;
 		cout << "Error: Unable to read file: " << strRootFolder << strInput << endl;
 	}
 
@@ -304,14 +307,10 @@ void RunLexiconOneWord(string strInput, string strInputExe)
 void RunLexiconAll(string strInputExe)
 {
 	string strRootFolder = GetCurrentFolderOfPath(strInputExe);
-	vector<string> astrWords;
-	ifstream ifsRead;
-	// load file
-
-
-
 	// Load data and structure
-
+	
+	
+	
 }
 
 

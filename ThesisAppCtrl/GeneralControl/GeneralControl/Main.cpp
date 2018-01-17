@@ -10,6 +10,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <ctime>
 #include <opencv2\highgui.hpp>
 #include <opencv2\imgproc.hpp>
 #include <opencv2\features2d.hpp>
@@ -49,6 +50,14 @@ void Run(int argc, char **argv);
 //					Sort y coordinate ascending; remove single box text line
 //					Merge inside box
 void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes);
+
+// read an absolute path of an image into a Mat with grayscale format
+void ReadImageGrayScale(string strPath, Mat &mInput);
+
+// sharpen an Mat
+// using gaussian formula
+void SharpenImage(Mat &mInput, Mat &mOutput, double sigma = 1, double threshold = 5, double amount = 1);
+
 
 //----------------------------------------------------------------------
 
@@ -286,8 +295,45 @@ void Run(int argc, char **argv)
 
 void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes)
 {
-
+	// init variables
+	fTimeRunning = 0.00;
+    vector<Rect> BBoxes;		// bounding boxes
+    clock_t start = clock();
+	Mat mOriGS;					// original gray scale image
+	Mat mOriSharpGS;			// original sharpening grayscale image
+	
+	// read image in gray scale
+	ReadImageGrayScale(strInput, mOriGS);
+	// sharpen image
+	SharpenImage(mOriGS, mOriSharpGS);
+	
+	// MSER
+	
+	
+	
+	
+	fTimeRunning += (float)(clock() - start) / (float)CLOCKS_PER_SEC;
 }
+
+void ReadImageGrayScale(string strPath, Mat &mInput)
+{
+	Mat src = imread(strPath);
+	cvtColor(src, mInput, CV_BGR2GRAY);
+}
+
+void SharpenImage(Mat &mInput, Mat &mOutput, double sigma, double threshold, double amount)
+{
+	Mat blurred;
+	GaussianBlur(mInput, blurred, Size(), sigma, sigma);
+
+	Mat lowContrastMask = abs(mInput - blurred) < threshold;
+
+	mOutput = input*(1 + amount) + blurred*(-amount);
+
+	mInput.copyTo(mOutput, lowContrastMask);
+}
+
+
 
 
 //----------------------------------------------------------------------
