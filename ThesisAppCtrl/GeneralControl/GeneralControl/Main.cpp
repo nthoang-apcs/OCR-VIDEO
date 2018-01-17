@@ -36,6 +36,50 @@ string GetTmpImageFolderPath(string strInput);
 // return value: the absolute path of TmpRect folder
 string GetTmpRectFolderPath(string strInput);
 
+// Remove duplicated Rects after MSER
+void RemoveDuplicatedBoxes(vector<Rect> &arBBoxes);
+
+void RemoveUnusualAreaBoxes(vector<Rect> &arBBoxes);
+
+// from center of Rect, text 2 lines, 1 upper 25%, 1 lower 25%
+// to check if that space created by 2 lines cuts any other spaces
+// if cut -> on same line
+void RemoveSingleBoxTextLine(vector<Rect> &arBBoxes);
+
+// h / w or w / h > 6 -> remove
+void RemoveUnbalancedRatio(vector<Rect> &arBBoxes);
+
+// merge inside boxes
+// remove too big size
+void MergeInsideBoxes(vector<Rect> &arBBoxes);
+
+void SortYCoordinate(vector<Rect> &arBBoxes);
+
+void SortArea(vector<Rect> &arBBoxes);
+
+void SortXCoordinate(vector<Rect> &arBBoxes);
+
+// check if any boxes in the same line - +- 50% height
+bool IsB1onsamelineB2(Rect B1, Rect B2);
+
+// check if ratio between height and width >= 6 times
+// check if height < 9
+bool IsB1Balanced(Rect B1);
+
+// check if the intersection area between B1 and B2 is equal B1.area()
+// and the B2.area() / B1.area() <= 3
+bool IsB1insideB2(Rect B1, Rect B2);
+
+// return true if B1.y < B2.y
+bool CompareYCoordinate(Rect B1, Rect B2);
+
+// return true if B1.area() < B2.area()
+bool CompareArea(Rect B1, Rect B2);
+
+// return true if B1.x < B2.x
+bool CompareXCoordinate(Rect B1, Rect B2);
+
+
 //----------------------------------------------------------------------
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -57,6 +101,9 @@ void ReadImageGrayScale(string strPath, Mat &mInput);
 // sharpen an Mat
 // using gaussian formula
 void SharpenImage(Mat &mInput, Mat &mOutput, double sigma = 1, double threshold = 5, double amount = 1);
+
+// MSER method to get bounding boxes
+void MSEROneImage(Mat &input, vector<Rect> &arBBoxes);
 
 
 //----------------------------------------------------------------------
@@ -217,6 +264,264 @@ string GetTmpImageFolderPath(string strInput)
 	return strResult;
 }
 
+void RemoveDuplicatedBoxes(vector<Rect> &arBBoxes)
+{
+	vector<Rect> tmpBoxes;
+	int k1 = arBBoxes.size();
+	int k2 = tmpBoxes.size();
+	for (int i = 0; i < k1; i++)
+	{
+		k2 = tmpBoxes.size();
+		bool existed = false;
+		for (int j = 0; j < k2; j++)
+		{
+			if (tmpBoxes[j].x == arBBoxes[i].x && tmpBoxes[j].y == arBBoxes[i].y && tmpBoxes[j].width == arBBoxes[i].width && tmpBoxes[j].height == arBBoxes[i].height)
+			{
+				existed = true;
+				break;
+			}
+		}
+		if (existed == false)
+		{
+			tmpBoxes.push_back(arBBoxes[i]);
+		}
+	}
+	arBBoxes.clear();
+	arBBoxes = tmpBoxes;
+	tmpBoxes.clear();
+}
+
+void RemoveUnusualAreaBoxes(vector<Rect> &arBBoxes)
+{
+	int k1 = arBBoxes.size();
+	if (k1 == 0 || k1 == 1)
+		return;
+	vector<Rect> tmpBoxes;
+	// start to check the condition:
+	// if a single box areas[i] stands alone and have areas / areas[i - 1] > 5 && have areas / areas[i + 1] > 5
+	// => not add to tmpboxes
+	int i = 0;
+	while (i < k1)
+	{
+		if (i == 0)
+		{
+			// limit
+			if ((arBBoxes[i].area() / arBBoxes[i + 1].area()) >= 5 || (arBBoxes[i + 1].area() / arBBoxes[i].area()) >= 5 || arBBoxes[i].area() < 30)
+			{
+
+			}
+			// get result
+			else
+			{
+				tmpBoxes.push_back(arBBoxes[i]);
+			}
+			i++;
+			continue;
+		}
+		else if (i == (k1 - 1))
+		{
+			if ((arBBoxes[i].area() / arBBoxes[i - 1].area()) >= 5 || (arBBoxes[i - 1].area() / arBBoxes[i].area()) >= 5 || arBBoxes[i].area() < 30)
+			{
+
+			}
+			else
+			{
+				tmpBoxes.push_back(arBBoxes[i]);
+			}
+			i++;
+			continue;
+		}
+		else
+		{
+			if ((arBBoxes[i].area() / arBBoxes[i + 1].area()) >= 5 || (arBBoxes[i + 1].area() / arBBoxes[i].area()) >= 5 || arBBoxes[i].area() < 30)
+			{
+				if ((arBBoxes[i].area() / arBBoxes[i - 1].area()) >= 5 || (arBBoxes[i - 1].area() / arBBoxes[i].area()) >= 5 || arBBoxes[i].area() < 30)
+				{
+
+				}
+				else
+				{
+					tmpBoxes.push_back(arBBoxes[i]);
+				}
+			}
+			else
+			{
+				tmpBoxes.push_back(arBBoxes[i]);
+			}
+			i++;
+			continue;
+		}
+	}
+	arBBoxes.clear();
+	arBBoxes = tmpBoxes;
+	tmpBoxes.clear();
+}
+
+void RemoveSingleBoxTextLine(vector<Rect> &arBBoxes)
+{
+	int k = arBBoxes.size();
+	vector<Rect> tmpBoxes;
+	for (int i = 0; i < k; i++)
+	{
+		bool checked = false;
+		for (int j = 0; j < k; j++)
+		{
+			if (i == j)
+				continue;
+			if (IsB1onsamelineB2(arBBoxes[i], arBBoxes[j]))
+			{
+				checked = true;
+				break;
+			}
+		}
+		if (checked == true)
+			tmpBoxes.push_back(arBBoxes[i]);
+	}
+	arBBoxes.clear();
+	arBBoxes = tmpBoxes;
+	tmpBoxes.clear();
+}
+
+void RemoveUnbalancedRatio(vector<Rect> &arBBoxes)
+{
+	vector<Rect> tmpBoxes;
+	int k = arBBoxes.size();
+	for (int i = 0; i < k; i++)
+	{
+		if (IsB1Balanced(arBBoxes[i]) == true)
+		{
+			tmpBoxes.push_back(arBBoxes[i]);
+		}
+	}
+	arBBoxes.clear();
+	arBBoxes = tmpBoxes;
+	tmpBoxes.clear();
+}
+
+void MergeInsideBoxes(vector<Rect> &arBBoxes)
+{
+	vector<Rect> tmpBoxes;
+	int k = arBBoxes.size();
+	// check boxes inside
+	for (int i = 0; i < k; i++)
+	{
+		bool checked = false;
+		for (int j = 0; j < k; j++)
+		{
+			if (i == j)
+				continue;
+			if (IsB1insideB2(arBBoxes[i], arBBoxes[j]))
+			{
+				checked = true;
+				break;
+			}
+		}
+		if (checked == false)
+		{
+			tmpBoxes.push_back(arBBoxes[i]);
+		}
+	}
+	// cleaning
+	arBBoxes.clear();
+	arBBoxes = tmpBoxes;
+	tmpBoxes.clear();
+	// check too big box
+	k = arBBoxes.size();
+	for (int i = 0; i < k; i++)
+	{
+		int count = 0;
+		for (int j = 0; j < k; j++)
+		{
+			if (i == j)
+				continue;
+			Rect A = arBBoxes[i] & arBBoxes[j];
+			if (A.area() == arBBoxes[j].area())
+				count++;
+		}
+		if (count < 7)
+		{
+			tmpBoxes.push_back(arBBoxes[i]);
+		}
+	}
+	// cleaning
+	arBBoxes.clear();
+	arBBoxes = tmpBoxes;
+	tmpBoxes.clear();
+}
+
+void SortYCoordinate(vector<Rect> &arBBoxes)
+{
+	sort(arBBoxes.begin(), arBBoxes.end(), CompareYCoordinate);
+}
+
+void SortArea(vector<Rect> &arBBoxes)
+{
+	sort(arBBoxes.begin(), arBBoxes.end(), CompareArea);
+}
+
+void SortXCoordinate(vector<Rect> &arBBoxes)
+{
+	sort(arBBoxes.begin(), arBBoxes.end(), CompareXCoordinate);
+}
+
+bool IsB1onsamelineB2(Rect B1, Rect B2)
+{
+	// range from center to upper or lower
+	int range1 = B1.height / 4;
+	int c1y = B1.y + (B1.height / 2);
+	int range2 = B2.height / 4;
+	int c2y = B2.y + (B2.height / 2);
+	// check
+	int dif = abs(c2y - c1y);
+	if (dif < (range1 + range2))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool IsB1Balanced(Rect B1)
+{
+	if ((B1.width / B1.height) >= 6)
+	{
+		return false;
+	}
+	if ((B1.height / B1.width) >= 6)
+	{
+		return false;
+	}
+	if (B1.height < 9)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool IsB1insideB2(Rect B1, Rect B2)
+{
+	Rect a = B1 & B2;
+	if (a.area() == B1.area() && (B2.area() / B1.area()) <= 3)
+		return true;
+	return false;
+
+}
+
+bool CompareYCoordinate(Rect B1, Rect B2)
+{
+	return (B1.y < B2.y);
+}
+
+bool CompareArea(Rect B1, Rect B2)
+{
+	return (B1.area() < B2.area());
+}
+
+bool CompareXCoordinate(Rect B1, Rect B2)
+{
+	return (B1.x < B2.x);
+}
+
+
 
 //----------------------------------------------------------------------
 
@@ -297,10 +602,11 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 {
 	// init variables
 	fTimeRunning = 0.00;
-    vector<Rect> BBoxes;		// bounding boxes
+    vector<Rect> arBBoxes;		// bounding boxes
     clock_t start = clock();
 	Mat mOriGS;					// original gray scale image
 	Mat mOriSharpGS;			// original sharpening grayscale image
+	bool bDebug = false;		// bDebug = true -> output add rects after post-processing to original images to have an overview
 	
 	// read image in gray scale
 	ReadImageGrayScale(strInput, mOriGS);
@@ -308,8 +614,20 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	SharpenImage(mOriGS, mOriSharpGS);
 	
 	// MSER
+	MSEROneImage(mOriSharpGS, arBBoxes);
 	
-	
+	// sort area ascending
+	SortArea(arBBoxes);
+	// remove areas of stand alone single box
+	RemoveUnusualAreaBoxes(arBBoxes);
+	// remove unbalanced ratio width, height
+	RemoveUnbalancedRatio(arBBoxes);
+	// sort y coordinate ascending
+	SortYCoordinate(arBBoxes);
+	// remove single box text line
+	RemoveSingleBoxTextLine(arBBoxes);
+	// merge inside box
+	MergeInsideBoxes(arBBoxes);
 	
 	
 	fTimeRunning += (float)(clock() - start) / (float)CLOCKS_PER_SEC;
@@ -328,12 +646,28 @@ void SharpenImage(Mat &mInput, Mat &mOutput, double sigma, double threshold, dou
 
 	Mat lowContrastMask = abs(mInput - blurred) < threshold;
 
-	mOutput = input*(1 + amount) + blurred*(-amount);
+	mOutput = mInput*(1 + amount) + blurred*(-amount);
 
 	mInput.copyTo(mOutput, lowContrastMask);
 }
 
+void MSEROneImage(Mat &input, vector<Rect> &arBBoxes)
+{
+	// run mser
+	vector<vector<Point>> contours;
+	Ptr<MSER> mser = MSER::create(
+		21,
+		(int)(0.00002*input.cols*input.rows),
+		(int)(0.05*input.cols*input.rows),
+		1, 0.7
+	);
+	mser->detectRegions(input, contours, arBBoxes);
 
+	// mser regions have a deffect: many duplicated Rects
+	RemoveDuplicatedBoxes(arBBoxes);
+	// cleaning
+	contours.clear();
+}
 
 
 //----------------------------------------------------------------------
