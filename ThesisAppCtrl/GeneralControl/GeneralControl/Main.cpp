@@ -24,6 +24,9 @@ using namespace cv;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Support functions		*/
 
+// strInput is an absolute path of a file
+string GetFileNameFromPath(string strInput);
+
 // strInput is the absolute path of the *.exe file
 // return value: the absolute path of Root folder
 string GetRootFolder(string strInput);
@@ -54,7 +57,11 @@ void RemoveUnbalancedRatio(vector<Rect> &arBBoxes);
 void MergeInsideBoxes(vector<Rect> &arBBoxes);
 
 // bindg computing running time to each box
+// this computing time is the average running time
 void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
+// add all current rect to the original image and write the image to folder Root/Debug
+void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 void SortYCoordinate(vector<Rect> &arBBoxes);
 
@@ -90,7 +97,7 @@ bool CompareXCoordinate(Rect B1, Rect B2);
 // run whole process, input is the main function input
 void Run(int argc, char **argv);
 
-// input a string of a image, get out result: otherboxes, lines and time running
+// input an absolute path of a image, get out result: otherboxes, lines and time running
 // preprocessing -	Sharpen, grayscale
 // processing -		MSER
 // postprocessing - Remove Unusual Area Boxes; remove unbalanced ratio width, height
@@ -119,7 +126,12 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
 
+// write data to OtherBoxes.txt and Lines.txt in folder TmpRect
+void WriteDataToTxtFile(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
+// crop rects in the original image to folder TmpImage
+// strInput is the absolute path of the original image
+void CropROIByDataToFolderImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 //----------------------------------------------------------------------
 
@@ -140,6 +152,53 @@ int main(int argc, char **argv)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Support functions		*/
+
+string GetFileNameFromPath(string strInput)
+{
+	int nSize = strInput.size();
+	if (nSize == 0)
+		return "";
+	int nPos = nSize - 1;
+	int nStart = 0;
+	int nEnd = 0;
+	// get end of file name
+	while (nPos > 0 && strInput[nPos] != '.' && strInput[nPos] != '/' && strInput[nPos] != '\\')
+	{
+		nPos--;
+	}
+	if (nPos == 0)
+		return "";
+	if (strInput[nPos] == '/' || strInput[nPos] == '\\')
+	{
+		// no extension in this file
+		// => get both nEnd and nStart
+		nEnd = nSize;
+		nStart = nPos + 1;
+	}
+	else
+	{
+		nEnd = nPos;
+		// get start of file name
+		while (nPos > 0 && strInput[nPos] != '\\' && strInput[nPos] != '/')
+		{
+			nPos--;
+		}
+		if (nPos == 0)
+			return "";
+		nStart = nPos + 1;
+	}
+	// create new char array
+	nSize = nEnd - nStart;
+	char *aTmp = new char[nEnd - nStart + 1];
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		aTmp[nI] = strInput[nStart + nI];
+	}
+	aTmp[nSize] = 0;
+	string strResult = string(aTmp);
+	delete[] aTmp;
+	return strResult;
+}
 
 string GetRootFolder(string strInput)
 {
@@ -457,10 +516,26 @@ void MergeInsideBoxes(vector<Rect> &arBBoxes)
 	tmpBoxes.clear();
 }
 
-// not finish
 void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
-	
+	float average = fTime / ((int)(atsOtherBoxes.size() + atsLines.size()));
+	int nSize = atsOtherBoxes.size();
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		atsOtherBoxes[nI].fTimeRunning = average;
+	}
+	nSize = atsLines.size();
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		atsLines[nI].tsCore.fTimeRunning = average;
+	}
+	return;
+}
+
+// not finish
+void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+
 }
 
 void SortYCoordinate(vector<Rect> &arBBoxes)
@@ -609,6 +684,10 @@ void Run(int argc, char **argv)
 	{
 		// process image 1 by 1
 		ProcessOneImage(astrListPaths[nI], fTimeRun, atsLines, atsOtherBoxes);
+		// write to file
+		WriteDataToTxtFile(atsOtherBoxes, atsLines);
+		// make images
+		CropROIByDataToFolderImage(astrListPaths[nI], atsOtherBoxes, atsLines);
 	}
 }
 
@@ -621,9 +700,7 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	Mat mOriGS;					// original gray scale image
 	Mat mOriSharpGS;			// original sharpening grayscale image
 	bool bDebug = false;		// bDebug = true -> output add rects after post-processing to original images to have an overview
-	vector<tsOtherBox> atsOtherBoxes;
-	vector<tsLineBox> atsLines;
-	
+		
 	// read image in gray scale
 	ReadImageGrayScale(strInput, mOriGS);
 	// sharpen image
@@ -646,17 +723,20 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	MergeInsideBoxes(arBBoxes);
 	
 	// convert to tsOtherBox and tsLine
-	ConvertFromBBoxesToOtherBoxes(strInput, arBBoxes, atsOtherBoxes);
+	ConvertFromBBoxesToOtherBoxes(GetFileNameFromPath(strInput), arBBoxes, atsOtherBoxes);
 	arBBoxes.clear();
 	// merge line box
-	
+	MergeLineBox(atsOtherBoxes, atsLines);
 	// calculate running time
 	fTimeRunning += (float)(clock() - start) / (float)CLOCKS_PER_SEC;
 	// binding running time
-	
-	// write to files
-	
-	// write image
+	BindingRunningTimeToBox(fTimeRunning, atsOtherBoxes, atsLines);
+	// debug mode
+	if (bDebug == true)
+	{
+		// add current rect to the origin image, then write image to folder Root/Debug
+		AddRectToOriginalImage(strInput, atsOtherBoxes, atsLines);
+	}
 }
 
 void ReadImageGrayScale(string strPath, Mat &mInput)
@@ -703,7 +783,7 @@ void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, 
 	for(int nI = 0; nI < nSize; nI++)
 	{
 		// convert bboxes
-		tsOtherBox tsTmp = tsOtherBox(nI, arBBoxes[nI].x, arBBoxes[nI].y, arBBoxes[nI].width, arBBoxes[nI].height
+		tsOtherBox tsTmp = tsOtherBox(nI, arBBoxes[nI].x, arBBoxes[nI].y, arBBoxes[nI].width, arBBoxes[nI].height,
 					      0,0,0,0, strImagename, 1, 0);
 		atsOtherboxes.push_back(tsTmp);
 		tsTmp.Destroy();
@@ -711,6 +791,7 @@ void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, 
 	return;
 }
 
+// not finish
 void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
 	
@@ -722,7 +803,15 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
 
+void WriteDataToTxtFile(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
 
+}
+
+void CropROIByDataToFolderImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+
+}
 
 //----------------------------------------------------------------------
 
