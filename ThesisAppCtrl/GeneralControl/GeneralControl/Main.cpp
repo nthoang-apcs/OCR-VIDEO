@@ -106,7 +106,7 @@ void SharpenImage(Mat &mInput, Mat &mOutput, double sigma = 1, double threshold 
 void MSEROneImage(Mat &input, vector<Rect> &arBBoxes);
 
 // convert from BBoxes to tsOtherBox
-void ConvertFromBBoxesToOtherBoxes(vector<Rect> &arBBoxes, vector<tsOtherBox> atsOtherboxes);
+void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, vector<tsOtherBox> &atsOtherboxes);
 
 //----------------------------------------------------------------------
 
@@ -609,6 +609,7 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	Mat mOriGS;					// original gray scale image
 	Mat mOriSharpGS;			// original sharpening grayscale image
 	bool bDebug = false;		// bDebug = true -> output add rects after post-processing to original images to have an overview
+	vector<tsOtherBox> atsOtherBoxes;
 	
 	// read image in gray scale
 	ReadImageGrayScale(strInput, mOriGS);
@@ -632,12 +633,16 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	MergeInsideBoxes(arBBoxes);
 	
 	// convert to tsOtherBox and tsLine
-	
+	ConvertFromBBoxesToOtherBoxes(strInput, arBBoxes, atsOtherBoxes);
 	// merge line box
-	
 	
 	// calculate running time
 	fTimeRunning += (float)(clock() - start) / (float)CLOCKS_PER_SEC;
+	// binding running time
+	
+	// write to files
+	
+	// write image
 }
 
 void ReadImageGrayScale(string strPath, Mat &mInput)
@@ -676,9 +681,20 @@ void MSEROneImage(Mat &input, vector<Rect> &arBBoxes)
 	contours.clear();
 }
 
-void ConvertFromBBoxesToOtherBoxes(vector<Rect> &arBBoxes, vector<tsOtherBox> atsOtherboxes)
+void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, vector<tsOtherBox> &atsOtherboxes)
 {
-	
+	int nSize = arBBoxes.size();
+	if (nSize == 0)
+		return;
+	for(int nI = 0; nI < nSize; nI++)
+	{
+		// convert bboxes
+		tsOtherBox tsTmp = tsOtherBox(nI, arBBoxes[nI].x, arBBoxes[nI].y, arBBoxes[nI].width, arBBoxes[nI].height
+					      0,0,0,0, strImagename, 1, 0);
+		atsOtherboxes.push_back(tsTmp);
+		tsTmp.Destroy();
+	}
+	return;
 }
 
 //----------------------------------------------------------------------
