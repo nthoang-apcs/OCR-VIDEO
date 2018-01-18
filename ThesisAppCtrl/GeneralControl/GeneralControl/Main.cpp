@@ -53,6 +53,9 @@ void RemoveUnbalancedRatio(vector<Rect> &arBBoxes);
 // remove too big size
 void MergeInsideBoxes(vector<Rect> &arBBoxes);
 
+// bindg computing running time to each box
+void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
 void SortYCoordinate(vector<Rect> &arBBoxes);
 
 void SortArea(vector<Rect> &arBBoxes);
@@ -107,6 +110,9 @@ void MSEROneImage(Mat &input, vector<Rect> &arBBoxes);
 
 // convert from BBoxes to tsOtherBox
 void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, vector<tsOtherBox> &atsOtherboxes);
+
+// from OtherBoxes, merge possible boxes that can be assemble into a line
+void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 //----------------------------------------------------------------------
 
@@ -451,6 +457,12 @@ void MergeInsideBoxes(vector<Rect> &arBBoxes)
 	tmpBoxes.clear();
 }
 
+// not finish
+void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+	
+}
+
 void SortYCoordinate(vector<Rect> &arBBoxes)
 {
 	sort(arBBoxes.begin(), arBBoxes.end(), CompareYCoordinate);
@@ -610,6 +622,7 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	Mat mOriSharpGS;			// original sharpening grayscale image
 	bool bDebug = false;		// bDebug = true -> output add rects after post-processing to original images to have an overview
 	vector<tsOtherBox> atsOtherBoxes;
+	vector<tsLineBox> atsLines;
 	
 	// read image in gray scale
 	ReadImageGrayScale(strInput, mOriGS);
@@ -634,6 +647,7 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	
 	// convert to tsOtherBox and tsLine
 	ConvertFromBBoxesToOtherBoxes(strInput, arBBoxes, atsOtherBoxes);
+	arBBoxes.clear();
 	// merge line box
 	
 	// calculate running time
@@ -696,6 +710,12 @@ void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, 
 	}
 	return;
 }
+
+void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+	
+}
+
 
 //----------------------------------------------------------------------
 
