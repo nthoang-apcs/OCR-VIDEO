@@ -105,6 +105,8 @@ void SharpenImage(Mat &mInput, Mat &mOutput, double sigma = 1, double threshold 
 // MSER method to get bounding boxes
 void MSEROneImage(Mat &input, vector<Rect> &arBBoxes);
 
+// convert from BBoxes to tsOtherBox
+void ConvertFromBBoxesToOtherBoxes(vector<Rect> &arBBoxes, vector<tsOtherBox> atsOtherboxes);
 
 //----------------------------------------------------------------------
 
@@ -602,8 +604,8 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 {
 	// init variables
 	fTimeRunning = 0.00;
-    vector<Rect> arBBoxes;		// bounding boxes
-    clock_t start = clock();
+    	vector<Rect> arBBoxes;		// bounding boxes
+    	clock_t start = clock();
 	Mat mOriGS;					// original gray scale image
 	Mat mOriSharpGS;			// original sharpening grayscale image
 	bool bDebug = false;		// bDebug = true -> output add rects after post-processing to original images to have an overview
@@ -629,7 +631,12 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	// merge inside box
 	MergeInsideBoxes(arBBoxes);
 	
+	// convert to tsOtherBox and tsLine
 	
+	// merge line box
+	
+	
+	// calculate running time
 	fTimeRunning += (float)(clock() - start) / (float)CLOCKS_PER_SEC;
 }
 
@@ -669,6 +676,10 @@ void MSEROneImage(Mat &input, vector<Rect> &arBBoxes)
 	contours.clear();
 }
 
+void ConvertFromBBoxesToOtherBoxes(vector<Rect> &arBBoxes, vector<tsOtherBox> atsOtherboxes)
+{
+	
+}
 
 //----------------------------------------------------------------------
 
