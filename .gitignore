@@ -34,3 +34,8 @@
 *.opendb
 *.ipdb
 *.iobj
+
+# Data files
+*.jpg
+*.txt
+*.tiff
