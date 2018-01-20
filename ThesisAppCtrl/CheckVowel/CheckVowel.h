@@ -12,11 +12,12 @@ namespace CheckVowel {
 	const string TmpCheckVowelPath = "./Root/TmpCheckVowel";
 	const string TmpRectPath = "./Root/TmpRect";
 	const string TmpImagePath = "./Root/TmpImage";
-
+	
 	//Adapted from BBoxStructure.h
 	struct tsRect
 	{
 		string rectID;
+		string originalName;
 		int nX;
 		int nY;
 		int nWidth;
@@ -28,8 +29,10 @@ namespace CheckVowel {
 			nWidth = 0;
 			nHeight = 0;
 			rectID = "";
+			originalName = "";
 		}
-		tsRect(int x, int y, int width, int height, string rectID) : rectID(rectID)
+		tsRect(int x, int y, int width, int height, string rectID, string originalName) : 
+			rectID(rectID), originalName(originalName)
 		{
 			nX = x;
 			nY = y;
@@ -93,56 +96,55 @@ namespace CheckVowel {
 		bool operator() (const tsRect& r1, const tsRect& r2) { return (r1.rectID < r2.rectID); }
 	} tsRectComp;
 
+	void ProcessEachLine(ifstream& ifs, 
+						 const vector<string>& rectids,
+						 unordered_map<string, tsRect>& output) 
+	{
+		string line;
+		string curid = "", curOrignalName = "";
+		int curX, curY, curW, curH;
+		while (ifs >> line) {
+			if (line.substr(0, 4) == "<ID>") {
+				//Get the inner text of the tag <ID>
+				string tmp_curid = line.substr(4, line.length() - 9);
+				if (std::find(rectids.begin(), rectids.end(), tmp_curid) != rectids.end()) {
+					curid = tmp_curid;
+				}
+				else {
+					cout << "ERROR: Rect ID: " << tmp_curid << " not found in list of IDs in InputCVowel.txt";
+				}
+			}
+			else if (line.substr(0, 5) == "<ROI>" && curid != "") {
+				//Get the inner text of the tag <ROI>
+				string inner = line.substr(5, line.length() - 11);
+				stringstream ss = stringstream(inner);
+				ss >> curX >> curY >> curW >> curH;
+			}
+			else if (line.substr(0, 6) == "<Name>") {
+				curOrignalName = line.substr(6, line.length() - 13);
+			}
+			else if (line == "</Rect>") {
+				output.insert(std::pair<string, tsRect>(
+					curid, 
+					tsRect(curX, curY, curW, curH, curid, curOrignalName)));
+				curid = "";
+				curOrignalName = "";
+			}
+		}
+	}
+
 	void FindAllRectContainingVowel(vector<string>& rectids, 
 		unordered_map<string, tsRect>& outputLines, unordered_map<string, tsRect>& outputOtherBoxes
 	) {
 		ifstream ifs = ifstream(CheckVowel::TmpRectPath + "/OtherBoxes.txt");
 		if (ifs.is_open()) {
-			string line;
-			string curid = "";
-			while (ifs >> line) {
-				if (line.substr(0, 4) == "<ID>") {
-					//Get the inner text of the tag <ID>
-					string tmp_curid = line.substr(4, line.length() - 5);
-					if (std::find(rectids.begin(), rectids.end(), tmp_curid) != rectids.end()) {
-						curid = tmp_curid;
-					}
-				}
-				else if (line.substr(0, 5) == "<ROI>" && curid != "") {
-					//Get the inner text of the tag <ROI>
-					string inner = line.substr(5, line.length() - 6);
-					stringstream ss = stringstream(inner);
-					int x, y, w, h;
-					ss >> x >> y >> w >> h;
-					outputLines.insert(std::pair<string, tsRect>(curid, tsRect(x, y ,w, h, curid)));
-					curid = "";
-				}
-			}
+			ProcessEachLine(ifs, rectids, outputOtherBoxes);
 			ifs.close();
 		}
 
 		ifs = ifstream(CheckVowel::TmpRectPath + "/Lines.txt");
 		if (ifs.is_open()) {
-			string line;
-			string curid = "";
-			while (ifs >> line) {
-				if (line.substr(0, 4) == "<ID>") {
-					//Get the inner text of the tag <ID>
-					string tmp_curid = line.substr(4, line.length() - 5);
-					if (std::find(rectids.begin(), rectids.end(), tmp_curid) != rectids.end()) {
-						curid = tmp_curid;
-					}
-				}
-				else if (line.substr(0, 5) == "<ROI>" && curid != "") {
-					//Get the inner text of the tag <ROI>
-					string inner = line.substr(5, line.length() - 6);
-					stringstream ss = stringstream(inner);
-					int x, y, w, h;
-					ss >> x >> y >> w >> h;
-					outputOtherBoxes.insert(std::pair<string, tsRect>(curid, tsRect(x, y, w, h, curid)));
-					curid = "";
-				}
-			}
+			ProcessEachLine(ifs, rectids, outputLines);
 			ifs.close();
 		}
 
@@ -157,8 +159,14 @@ namespace CheckVowel {
 	}
 
 	void IncreaseRect(tsRect& rect) {
-		rect.nHeight += 6;
-		rect.nY += 6;
+		if (rect.nHeight < 10 && rect.nHeight < 10) {
+			rect.nHeight += 2;
+			rect.nY += 2;
+		}
+		else {
+			rect.nHeight += rect.nHeight * 0.15;
+			rect.nY += rect.nY * 0.15;
+		}
 	}
 
 	void Process() {
@@ -166,6 +174,8 @@ namespace CheckVowel {
 		unordered_map<string, tsRect> lineSet, otherboxSet;
 		FindAllRectContainingVowel(rectIDList, lineSet, otherboxSet);
 		auto ocrResults = GetOCRTextFromRectIDs(rectIDList);
+		
+		//Increase Rect whom OCR text contains vowel
 		for (auto ocrResultIt = ocrResults.begin(); ocrResultIt != ocrResults.end(); ocrResultIt++) {
 			if (HasVowel(ocrResultIt->ocrText)) {
 				auto tsRectIt = lineSet.find(ocrResultIt->rectID);
@@ -191,9 +201,5 @@ namespace CheckVowel {
 				}
 			}
 		}
-
-		
-
 	}
-
 }
