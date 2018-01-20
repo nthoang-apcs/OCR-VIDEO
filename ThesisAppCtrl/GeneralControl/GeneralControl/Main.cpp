@@ -525,7 +525,74 @@ void MergeInsideBoxes(vector<Rect> &arBBoxes)
 
 void IncreaseRectToBoxes(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
-
+	int nSize = atsOtherBoxes.size();
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		// check case 1
+		if (atsOtherBoxes[nI].rROI.nWidth < 10 && atsOtherBoxes[nI].rROI.nHeight < 10)
+		{
+			// + 1 pixel
+			if (atsOtherBoxes[nI].rROI.nX > 0)
+			{
+				atsOtherBoxes[nI].rROI.nX = atsOtherBoxes[nI].rROI.nX - 1;
+			}
+			if (atsOtherBoxes[nI].rROI.nY > 0)
+			{
+				atsOtherBoxes[nI].rROI.nY = atsOtherBoxes[nI].rROI.nY - 1;
+			}
+			atsOtherBoxes[nI].rROI.nWidth = atsOtherBoxes[nI].rROI.nWidth + 2;
+			atsOtherBoxes[nI].rROI.nHeight = atsOtherBoxes[nI].rROI.nHeight + 2;
+		}
+		else
+		{
+			// + 2 pixel
+			// + 1 pixel
+			if (atsOtherBoxes[nI].rROI.nX > 1)
+			{
+				atsOtherBoxes[nI].rROI.nX = atsOtherBoxes[nI].rROI.nX - 2;
+			}
+			if (atsOtherBoxes[nI].rROI.nY > 1)
+			{
+				atsOtherBoxes[nI].rROI.nY = atsOtherBoxes[nI].rROI.nY - 2;
+			}
+			atsOtherBoxes[nI].rROI.nWidth = atsOtherBoxes[nI].rROI.nWidth + 4;
+			atsOtherBoxes[nI].rROI.nHeight = atsOtherBoxes[nI].rROI.nHeight + 4;
+		}
+	}
+	nSize = atsLines.size();
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		// check case 1
+		if (atsLines[nI].tsCore.rROI.nWidth < 10 && atsLines[nI].tsCore.rROI.nHeight < 10)
+		{
+			// + 1 pixel
+			if (atsLines[nI].tsCore.rROI.nX > 0)
+			{
+				atsLines[nI].tsCore.rROI.nX = atsLines[nI].tsCore.rROI.nX - 1;
+			}
+			if (atsLines[nI].tsCore.rROI.nY > 0)
+			{
+				atsLines[nI].tsCore.rROI.nY = atsLines[nI].tsCore.rROI.nY - 1;
+			}
+			atsLines[nI].tsCore.rROI.nWidth = atsLines[nI].tsCore.rROI.nWidth + 2;
+			atsLines[nI].tsCore.rROI.nHeight = atsLines[nI].tsCore.rROI.nHeight + 2;
+		}
+		else
+		{
+			// + 2 pixel
+			// + 1 pixel
+			if (atsLines[nI].tsCore.rROI.nX > 1)
+			{
+				atsLines[nI].tsCore.rROI.nX = atsLines[nI].tsCore.rROI.nX - 2;
+			}
+			if (atsLines[nI].tsCore.rROI.nY > 1)
+			{
+				atsLines[nI].tsCore.rROI.nY = atsLines[nI].tsCore.rROI.nY - 2;
+			}
+			atsLines[nI].tsCore.rROI.nWidth = atsLines[nI].tsCore.rROI.nWidth + 4;
+			atsLines[nI].tsCore.rROI.nHeight = atsLines[nI].tsCore.rROI.nHeight + 4;
+		}
+	}
 }
 
 void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
@@ -724,10 +791,13 @@ void Run(int argc, char **argv)
 		ProcessOneImage(astrListPaths[nI], fTimeRun, atsLines, atsOtherBoxes);
 		// get paths
 		string strOBPath = strRootFolder + "\\TmpRect\\OtherBoxes.txt";
+		string strOBImagePath = strRootFolder + "\\TmpRect\\" + GetFileNameFromPath(astrListPaths[nI]) + "-" + "OtherBoxes.txt";
 		string strLinesPath = strRootFolder + "\\TmpRect\\Lines.txt";
+		string strLinesImagePath = strRootFolder + "\\TmpRect\\" + GetFileNameFromPath(astrListPaths[nI]) + "-" + "Lines.txt";
 		string strTmpImage = strRootFolder + "\\TmpImage\\";
 		// write to file
 		WriteDataToTxtFile(strOBPath, strLinesPath, atsOtherBoxes, atsLines);
+		WriteDataToTxtFile(strOBImagePath, strLinesImagePath, atsOtherBoxes, atsLines);
 		// make images
 		CropROIByDataToFolderImage(strTmpImage, astrListPaths[nI], atsOtherBoxes, atsLines);
 	}
@@ -781,7 +851,7 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	// debug mode
 	if (bDebug == true)
 	{
-		// add current rect to the origin image, then write image to folder Root/Debug
+		// add current rect to the origin image, then write image to folder which has the original image
 		AddRectToOriginalImage(strInput, atsOtherBoxes, atsLines);
 	}
 }
@@ -841,7 +911,11 @@ void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, 
 // not finish
 void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
-	
+	// OtherBoxes have been sorted by X coordinate before this function
+	// search from left to right
+	int nSize = atsOtherBoxes.size();
+	int nPos = 0;
+
 }
 
 
