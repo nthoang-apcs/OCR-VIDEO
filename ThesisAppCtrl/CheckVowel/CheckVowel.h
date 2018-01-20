@@ -81,12 +81,11 @@ public:
 		TmpImagePath = RootPath + "\\TmpImage";
 	}
 
-
 	//line format in TmpCheckVowel: {RectID}.txt
 
 	//Read from TmpChckVowel/InputCVowel a list of RectID (output from OCR) in TmpImage folder 
 	vector<string> GetRectIDList() {
-		ifstream ifs = ifstream(CheckVowel::TmpCheckVowelPath + "/InputCVowel.txt");
+		ifstream ifs = ifstream(TmpCheckVowelPath + "\\InputCVowel.txt");
 		vector<string> result;
 		if (ifs.is_open()) {
 			string line;
@@ -96,13 +95,16 @@ public:
 			}
 			ifs.close();
 		}
+		else {
+			cout << "ERROR: Cannot open file " << TmpCheckVowelPath + "\\InputCVowel.txt\n";
+		}
 		return result;
 	}
 
 	vector<OCRResult> GetOCRTextFromRectIDs(const vector<string>& rectIds) {
 		vector<OCRResult> result;
 		for (auto rectID : rectIds) {
-			ifstream ifs = ifstream(CheckVowel::TmpImagePath + "/" + rectID + ".txt");
+			ifstream ifs = ifstream(TmpImagePath + "\\" + rectID + ".txt");
 			if (ifs.is_open()) {
 				string line;
 				while (ifs >> line) {
@@ -182,38 +184,46 @@ public:
 	void FindAllRectContainingVowel(vector<string>& rectids, 
 		unordered_map<string, tsRect>& outputLines, unordered_map<string, tsRect>& outputOtherBoxes
 	) {
-		ifstream ifs = ifstream(CheckVowel::TmpRectPath + "/OtherBoxes.txt");
+		ifstream ifs = ifstream(TmpRectPath + "\\Lines.txt");
 		if (ifs.is_open()) {
-			ProcessEachLine(ifs, rectids, outputOtherBoxes);
-			ifs.close();
-		}
-
-		ifs = ifstream(CheckVowel::TmpRectPath + "/Lines.txt");
-		if (ifs.is_open()) {
+			cout << "INFO: Read Rect Data from Lines.txt\n";
 			ProcessEachLine(ifs, rectids, outputLines);
 			ifs.close();
 		}
+		else {
+			cout << "ERROR: Cannot open file " << TmpRectPath + "\\Lines.txt\n";
+		}
+		ifs = ifstream(TmpRectPath + "\\OtherBoxes.txt");
+		if (ifs.is_open()) {
+			cout << "INFO: Read Rect Data from OtherBoxes.txt\n";
+			ProcessEachLine(ifs, rectids, outputOtherBoxes);
+			ifs.close();
+		}
+		else {
+			cout << "ERROR: Cannot open file " << TmpRectPath + "\\OtherBoxes.txt\n";
+		}
+
 	}
 
 	void WriteAllRectsData(
 		const unordered_map<string, tsRect>& lines, const unordered_map<string, tsRect>& otherboxes) 
 	{
-		ofstream ofs = ofstream(CheckVowel::TmpRectPath + "/OtherBoxes.txt");
-		if (ofs.is_open()) {
-			WriteRectsToFile(ofs, otherboxes);
-			ofs.close();
-		}
-		else {
-			std::cout << "ERROR: Cannot open file" << CheckVowel::TmpRectPath + "/OtherBoxes.txt" << endl;
-		}
-
-		ofs = ofstream(CheckVowel::TmpRectPath + "/Lines.txt");
+		ofstream ofs = ofstream(TmpRectPath + "\\Lines.txt");
 		if (ofs.is_open()) {
 			WriteRectsToFile(ofs, lines);
 			ofs.close();
 		}
 		else {
-			std::cout << "ERROR: Cannot open file" << CheckVowel::TmpRectPath + "/Lines.txt" << endl;
+			cout << "ERROR: Cannot open file" << TmpRectPath + "/Lines.txt\n";
+		}
+
+		ofs = ofstream(TmpRectPath + "\\OtherBoxes.txt");
+		if (ofs.is_open()) {
+			WriteRectsToFile(ofs, otherboxes);
+			ofs.close();
+		}
+		else {
+			cout << "ERROR: Cannot open file " << TmpRectPath + "/OtherBoxes.txt\n";
 		}
 	}
 
@@ -245,6 +255,7 @@ public:
 			string rectNewFileName = TmpImagePath + "\\" + rect.originalName + "-" + rect.rectID + "-2.jpg";
 			cv::Mat originImg = cv::imread(originImgPath);
 			cv::Mat newROI = originImg(cv::Rect(rect.nX, rect.nY, rect.nWidth, rect.nHeight));
+			cout << "INFO: Write Rect Image " << rectNewFileName << " ROI(" << rect.NewRectStr() << ")\n";
 			cv::imwrite(rectNewFileName, newROI);
 		}
 		for (auto it = otherboxes.begin(); it != otherboxes.end(); it++) {
@@ -253,6 +264,7 @@ public:
 			string rectNewFileName = TmpImagePath + "\\" + rect.originalName + "-" + rect.rectID + "-2.jpg";
 			cv::Mat originImg = cv::imread(originImgPath);
 			cv::Mat newROI = originImg(cv::Rect(rect.nX, rect.nY, rect.nWidth, rect.nHeight));
+			cout << "INFO: Write Rect Image " << rectNewFileName << " ROI(" << rect.NewRectStr() << ")\n";
 			cv::imwrite(rectNewFileName, newROI);
 		}
 	}
