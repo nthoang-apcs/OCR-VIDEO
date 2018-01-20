@@ -100,7 +100,8 @@ bool CompareXCoordinate(Rect B1, Rect B2);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Operation functions		*/
 // run whole process, input is the main function input
-void Run(int argc, char **argv);
+// bDebug = true: add rects back as in ProcessOneImage function, not doing crop ROI from the original image
+void Run(int argc, char **argv, bool bDebug);
 
 // input an absolute path of a image, get out result: otherboxes, lines and time running
 // preprocessing -	Sharpen, grayscale
@@ -108,8 +109,8 @@ void Run(int argc, char **argv);
 // postprocessing - Remove Unusual Area Boxes; remove unbalanced ratio width, height
 //					Sort y coordinate ascending; remove single box text line
 //					Merge inside box
-// have a bool value named bDebug inside to add rects back to the original image for a fast result examination.
-void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes);
+// bDebug = true: add rects back to the original image for a fast result examination.
+void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes, bool bDebug);
 
 // read an absolute path of an image into a Mat with grayscale format
 void ReadImageGrayScale(string strPath, Mat &mInput);
@@ -152,7 +153,7 @@ void CropROIByDataToFolderImage(string strTmpImage, string strInput, vector<tsOt
 
 int main(int argc, char **argv)
 {
-	Run(argc, argv);
+	Run(argc, argv, true);
 
 	return 1;
 }
@@ -722,7 +723,7 @@ bool CompareXCoordinate(Rect B1, Rect B2)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Operation functions		*/
 
-void Run(int argc, char **argv)
+void Run(int argc, char **argv, bool bDebug)
 {
 	// get Root folder
 	string strRootFolder = GetRootFolder(argv[0]);
@@ -788,7 +789,7 @@ void Run(int argc, char **argv)
 	for (int nI = 0; nI < nSize; nI++)
 	{
 		// process image 1 by 1
-		ProcessOneImage(astrListPaths[nI], fTimeRun, atsLines, atsOtherBoxes);
+		ProcessOneImage(astrListPaths[nI], fTimeRun, atsLines, atsOtherBoxes, bDebug);
 		// get paths
 		string strOBPath = strRootFolder + "\\TmpRect\\OtherBoxes.txt";
 		string strOBImagePath = strRootFolder + "\\TmpRect\\" + GetFileNameFromPath(astrListPaths[nI]) + "-" + "OtherBoxes.txt";
@@ -799,11 +800,19 @@ void Run(int argc, char **argv)
 		WriteDataToTxtFile(strOBPath, strLinesPath, atsOtherBoxes, atsLines);
 		WriteDataToTxtFile(strOBImagePath, strLinesImagePath, atsOtherBoxes, atsLines);
 		// make images
-		CropROIByDataToFolderImage(strTmpImage, astrListPaths[nI], atsOtherBoxes, atsLines);
+		if (bDebug == false)
+		{
+			CropROIByDataToFolderImage(strTmpImage, astrListPaths[nI], atsOtherBoxes, atsLines);
+		}
+		cout << "Finish an image at Path: " << astrListPaths[nI] << endl;
+		// clean
+		atsLines.clear();
+		atsOtherBoxes.clear();
 	}
+	astrListPaths.clear();
 }
 
-void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes)
+void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes, bool bDebug)
 {
 	// init variables
 	fTimeRunning = 0.00;
@@ -811,7 +820,6 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
     	clock_t start = clock();
 	Mat mOriGS;					// original gray scale image
 	Mat mOriSharpGS;			// original sharpening grayscale image
-	bool bDebug = true;		// bDebug = true -> output add rects after post-processing to original images to have an overview
 		
 	// read image in gray scale
 	ReadImageGrayScale(strInput, mOriGS);
@@ -913,6 +921,7 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 {
 	// OtherBoxes have been sorted by X coordinate before this function
 	// search from left to right
+	// all boxes which are belong to a word often intersect with others, they usually have the same height.
 	int nSize = atsOtherBoxes.size();
 	int nPos = 0;
 
