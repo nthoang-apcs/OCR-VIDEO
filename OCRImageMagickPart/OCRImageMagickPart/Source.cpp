@@ -30,18 +30,18 @@ bool CheckTextDetectionInFileName(string filename);
 
 void MergeVieAndEngTxt(string fileresamplelist, string summaryfilePath, string cropboxesresamplefolder);
 
-int main()
+int main(int argc, char** argv)
 {
 	cout << "Hello world." << endl;
-	string cropboxesfolder = "D:\\Document\\Thesis-2017\\Data\\Result-cropboxes-experiment\\";
-	string cropboxesresamplefolder = "D:\\Document\\Thesis-2017\\Data\\Result-cropboxes-resample-experiment\\";
-	string resampleComputingTimeFolder = "D:\\Document\\Thesis-2017\\Data\\Result-resample-calculating-run-time\\";
-	string cropboxesrecognizefolder = "D:\\Document\\Thesis-2017\\Data\\Result-cropboxes-resample-recognize-experiment\\";
-	string filelist = "E:\\Code\\OCR-Five-Git\\OCRImageMagickPart\\OCRImageMagickPart\\file.txt";
-	string fileresamplelist = "E:\\Code\\OCR-Five-Git\\OCRImageMagickPart\\OCRImageMagickPart\\file-resample.txt";
-	string filesummary = "D:\\Document\\Thesis-2017\\Data\\Result-cropboxes-resample-recognize-experiment\\Summary-Resample-Recognize-Purely.txt";
-	// resample the crop boxes folder
-	ResampleFolder(resampleComputingTimeFolder, filelist, fileresamplelist);
+	//string cropboxesfolder = "D:\\Document\\Thesis-2017\\Data\\Result-cropboxes-experiment\\";
+	//string cropboxesresamplefolder = "D:\\Document\\Thesis-2017\\Data\\Result-cropboxes-resample-experiment\\";
+	//string resampleComputingTimeFolder = "D:\\Document\\Thesis-2017\\Data\\Result-resample-calculating-run-time\\";
+	//string cropboxesrecognizefolder = "D:\\Document\\Thesis-2017\\Data\\Result-cropboxes-resample-recognize-experiment\\";
+	//string filelist = "E:\\Code\\OCR-Five-Git\\OCRImageMagickPart\\OCRImageMagickPart\\file.txt";
+	//string fileresamplelist = "E:\\Code\\OCR-Five-Git\\OCRImageMagickPart\\OCRImageMagickPart\\file-resample.txt";
+	//string filesummary = "D:\\Document\\Thesis-2017\\Data\\Result-cropboxes-resample-recognize-experiment\\Summary-Resample-Recognize-Purely.txt";
+	//// resample the crop boxes folder
+	//ResampleFolder(resampleComputingTimeFolder, filelist, fileresamplelist);
 	
 	// recognize text in the resample folder
 	// need to bring the .exe file to the folder resampling
@@ -50,7 +50,8 @@ int main()
 
 	// merge -vie and -eng into 1 file
 	//MergeVieAndEngTxt(fileresamplelist, cropboxesrecognizefolder, cropboxesresamplefolder);
-
+	InitializeMagick(NULL);
+	ResampleOneFile("E:\\Code\\OCR-Five-Git\\OCRImageMagickPart\\OCRImageMagickPart\\img40.jpg", "E:\\Code\\OCR-Five-Git\\OCRImageMagickPart\\OCRImageMagickPart\\img40-3.tiff");
 
 	return 0;
 }

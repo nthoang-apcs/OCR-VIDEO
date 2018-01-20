@@ -281,6 +281,7 @@ bool CompleteLineText(RectDLL &OtherBoxes, vector<int> &currentLine)
 {
 	int index = currentLine[currentLine.size() - 1];
 	vector<int> tmp1;
+	int nSize = currentLine.size();
 	// get list of satisfy condition to complete line text
 	for (int i = index + 1; i < nSize; i++)
 	{

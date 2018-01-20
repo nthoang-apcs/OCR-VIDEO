@@ -41,3 +41,8 @@ Root
 *.vcxproj
 *.vcxproj.user
 *.vcxproj.filters
+
+# Data files
+*.jpg
+*.txt
+*.tiff
