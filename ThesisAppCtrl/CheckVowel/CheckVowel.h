@@ -5,57 +5,82 @@
 #include <unordered_map>
 #include <vector>
 
+#include <opencv2\highgui.hpp>
+#include <opencv2\imgproc.hpp>
+#include <opencv2\features2d.hpp>
+#include <opencv2\imgcodecs.hpp>
+
 using namespace std;
 
-namespace CheckVowel {
-
-	const string TmpCheckVowelPath = "./Root/TmpCheckVowel";
-	const string TmpRectPath = "./Root/TmpRect";
-	const string TmpImagePath = "./Root/TmpImage";
-	
-	//Adapted from BBoxStructure.h
-	struct tsRect
+//Adapted from BBoxStructure.h
+struct tsRect
+{
+	string rectID;
+	string originalName;
+	int nX, oX;
+	int nY, oY;
+	int nWidth, oWidth;
+	int nHeight, oHeight;
+	tsRect()
 	{
-		string rectID;
-		string originalName;
-		int nX;
-		int nY;
-		int nWidth;
-		int nHeight;
-		tsRect()
-		{
-			nX = 0;
-			nY = 0;
-			nWidth = 0;
-			nHeight = 0;
-			rectID = "";
-			originalName = "";
-		}
-		tsRect(int x, int y, int width, int height, string rectID, string originalName) : 
-			rectID(rectID), originalName(originalName)
-		{
-			nX = x;
-			nY = y;
-			nWidth = width;
-			nHeight = height;
-		}
-		string ToString() {
-			auto ss = stringstream();
-			ss << nX << " " << nY << " " << nWidth << " " << nHeight;
-			return ss.str();
-		}
-		int GetArea()
-		{
-			return (nWidth*nHeight);
-		}
-	};
+		nX = oX = 0;
+		nY = oY = 0;
+		nWidth = oWidth = 0;
+		nHeight = oHeight = 0;
+		rectID = "";
+		originalName = "";
+	}
+	tsRect(int x, int y, int width, int height, string rectID, string originalName) :
+		rectID(rectID), originalName(originalName)
+	{
+		oX = x;
+		oY = y;
+		oWidth = width;
+		oHeight = height;
+		nX = nY = nWidth = nHeight = 0;
+	}
 
-	struct OCRResult {
-		string rectID;
-		string ocrText;
-		OCRResult(string rectID, string ocrText):
-			rectID(rectID), ocrText(ocrText) { }
-	};
+	string NewRectStr() {
+		auto ss = stringstream();
+		ss << nX << " " << nY << " " << nWidth << " " << nHeight;
+		return ss.str();
+	}
+
+	string OldRectStr() {
+		auto ss = stringstream();
+		ss << oX << " " << oY << " " << oWidth << " " << oHeight;
+		return ss.str();
+	}
+
+
+	int GetArea()
+	{
+		return (nWidth*nHeight);
+	}
+};
+
+struct OCRResult {
+	string rectID;
+	string ocrText;
+	OCRResult(string rectID, string ocrText) :
+		rectID(rectID), ocrText(ocrText) { }
+};
+
+class CheckVowel {
+private:
+	string RootPath;
+	string TmpCheckVowelPath;
+	string TmpRectPath;
+	string TmpImagePath;
+
+public:
+	
+	CheckVowel(string rootPath): RootPath(rootPath) {
+		TmpCheckVowelPath = RootPath + "\\TmpCheckVowel";
+		TmpRectPath = RootPath + "\\TmpRect";
+		TmpImagePath = RootPath + "\\TmpImage";
+	}
+
 
 	//line format in TmpCheckVowel: {RectID}.txt
 
@@ -145,7 +170,7 @@ namespace CheckVowel {
 			auto rect = it->second;
 			ofs << "<Rect>";
 			ofs << "<ID>" << rect.rectID << "</ID>\n";
-			ofs << "<ROI>" << rect.nX << " " << rect.nY << " " << rect.nWidth << " " << rect.nHeight << "</ROI>\n";
+			ofs << "<ROI>" << rect.oX << " " << rect.oY << " " << rect.oWidth << " " << rect.oHeight << "</ROI>\n";
 			ofs << "<NewROI>" << rect.nX << " " << rect.nY << " " << rect.nWidth << " " << rect.nHeight << "</NewROI>\n";
 			ofs << "<Name>" << rect.originalName << "</Name>\n";
 			ofs << "<NumberVersion>2</NumberVersion>\n";
@@ -170,7 +195,9 @@ namespace CheckVowel {
 		}
 	}
 
-	void WriteAllRects(const unordered_map<string, tsRect>& lines, const unordered_map<string, tsRect>& otherboxes) {
+	void WriteAllRectsData(
+		const unordered_map<string, tsRect>& lines, const unordered_map<string, tsRect>& otherboxes) 
+	{
 		ofstream ofs = ofstream(CheckVowel::TmpRectPath + "/OtherBoxes.txt");
 		if (ofs.is_open()) {
 			WriteRectsToFile(ofs, otherboxes);
@@ -199,17 +226,38 @@ namespace CheckVowel {
 	}
 
 	void IncreaseRect(tsRect& rect) {
-		if (rect.nHeight < 10 && rect.nHeight < 10) {
-			rect.nHeight += 2;
-			rect.nY += 2;
+		if (rect.oHeight < 10 && rect.oHeight < 10) {
+			rect.nHeight = rect.oHeight + 4;
+			rect.nY = rect.oY - 2;
 		}
 		else {
-			rect.nHeight += rect.nHeight * 0.15;
-			rect.nY += rect.nY * 0.15;
+			rect.nHeight = rect.oHeight + rect.oHeight * 0.15 * 2;
+			rect.nY = rect.oY - rect.oY * 0.15;
 		}
 	}
 
-	void Process() {
+	void WriteAllRectImgs(
+		const unordered_map<string, tsRect>& lines, const unordered_map<string, tsRect>& otherboxes)
+	{
+		for (auto it = lines.begin(); it != lines.end(); it++) {
+			auto rect = it->second;
+			string originImgPath = TmpImagePath + "\\" + rect.originalName + ".jpg";
+			string rectNewFileName = TmpImagePath + "\\" + rect.originalName + "-" + rect.rectID + "-2.jpg";
+			cv::Mat originImg = cv::imread(originImgPath);
+			cv::Mat newROI = originImg(cv::Rect(rect.nX, rect.nY, rect.nWidth, rect.nHeight));
+			cv::imwrite(rectNewFileName, newROI);
+		}
+		for (auto it = otherboxes.begin(); it != otherboxes.end(); it++) {
+			auto rect = it->second;
+			string originImgPath = TmpImagePath + "\\" + rect.originalName + ".jpg";
+			string rectNewFileName = TmpImagePath + "\\" + rect.originalName + "-" + rect.rectID + "-2.jpg";
+			cv::Mat originImg = cv::imread(originImgPath);
+			cv::Mat newROI = originImg(cv::Rect(rect.nX, rect.nY, rect.nWidth, rect.nHeight));
+			cv::imwrite(rectNewFileName, newROI);
+		}
+	}
+
+	void Run() {
 		auto rectIDList = GetRectIDList();
 		unordered_map<string, tsRect> lineSet, otherboxSet;
 		FindAllRectContainingVowel(rectIDList, lineSet, otherboxSet);
@@ -222,27 +270,29 @@ namespace CheckVowel {
 				if (tsRectIt != lineSet.end()) {
 					auto rectContent = tsRectIt->second;
 					auto rectId = tsRectIt->first;
-					cout << "INFO: Rect " << rectId << " increased from " << rectContent.ToString();
 					IncreaseRect(rectContent);
-					cout << " to " << rectContent.ToString() << "\n";
+					cout << "INFO: Rect Line " << rectId << " increased from " << rectContent.OldRectStr()
+						 << " to " << rectContent.NewRectStr() << "\n";
 				}
 				else {
 					tsRectIt = otherboxSet.find(ocrResultIt->rectID);
+					auto rectId = tsRectIt->first;
 					if (tsRectIt != otherboxSet.end()) {
 						auto rectContent = tsRectIt->second;
-						auto rectId = tsRectIt->first;
-						cout << "INFO: Rect " << rectId << " increased from " << rectContent.ToString();
 						IncreaseRect(rectContent);
-						cout << " to " << rectContent.ToString() << "\n";
+						cout << "INFO: Rect OtherBox " << rectId << " increased from " << rectContent.OldRectStr()
+							<< " to " << rectContent.NewRectStr() << "\n";
 					}
 					else {
-						cout << "ERROR: " << tsRectIt->first << " not found in both lineSet and otherboxSet.\n";
+						cout << "ERROR: " << rectId << " not found in both lineSet and otherboxSet.\n";
 					}
 				}
 			}
 		}
 	
 		//Write all rects to 2 files Lines.txt and OtherBoxes.txt
-		WriteAllRects(lineSet, otherboxSet);
+		WriteAllRectsData(lineSet, otherboxSet);
+		//Crop and write all rect images to TmpImage
+		WriteAllRectImgs(lineSet, otherboxSet);
 	}
-}
+};
