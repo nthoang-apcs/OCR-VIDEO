@@ -37,6 +37,8 @@
 
 .vs
 Root
+x64
+
 *.sln
 *.vcxproj
 *.vcxproj.user
