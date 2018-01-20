@@ -28,7 +28,7 @@ using namespace cv;
 string GetFileNameFromPath(string strInput);
 
 // strInput is the absolute path of the *.exe file
-// return value: the absolute path of Root folder
+// return value: the absolute path of Root folder, -which is the folder contains this file.
 string GetRootFolder(string strInput);
 
 // strInput is the absolute path of the *.exe file
@@ -56,11 +56,16 @@ void RemoveUnbalancedRatio(vector<Rect> &arBBoxes);
 // remove too big size
 void MergeInsideBoxes(vector<Rect> &arBBoxes);
 
+// increase each rect: left, right, bottom, top values. if all values < 10, + 1 pixel, else + 2 pixels
+// this function just make OCR run better
+void IncreaseRectToBoxes(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
 // bindg computing running time to each box
 // this computing time is the average running time
 void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 // add all current rect to the original image and write the image to folder Root/Debug
+// strInput is the absolute path of the image file.
 void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 void SortYCoordinate(vector<Rect> &arBBoxes);
@@ -103,6 +108,7 @@ void Run(int argc, char **argv);
 // postprocessing - Remove Unusual Area Boxes; remove unbalanced ratio width, height
 //					Sort y coordinate ascending; remove single box text line
 //					Merge inside box
+// have a bool value named bDebug inside to add rects back to the original image for a fast result examination.
 void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes);
 
 // read an absolute path of an image into a Mat with grayscale format
@@ -127,11 +133,12 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 /*		Input/Output Stream		*/
 
 // write data to OtherBoxes.txt and Lines.txt in folder TmpRect
-void WriteDataToTxtFile(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 // crop rects in the original image to folder TmpImage
 // strInput is the absolute path of the original image
-void CropROIByDataToFolderImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+// strTmpImage is the absolute path of TmpImage folder
+void CropROIByDataToFolderImage(string strTmpImage, string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 //----------------------------------------------------------------------
 
@@ -516,6 +523,11 @@ void MergeInsideBoxes(vector<Rect> &arBBoxes)
 	tmpBoxes.clear();
 }
 
+void IncreaseRectToBoxes(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+
+}
+
 void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
 	float average = fTime / ((int)(atsOtherBoxes.size() + atsLines.size()));
@@ -532,10 +544,36 @@ void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vec
 	return;
 }
 
-// not finish
 void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
-
+	// get root folder
+	string strRootFolder = GetRootFolder(strInput);
+	string strFilePath = strRootFolder + GetFileNameFromPath(strInput) + "-debug.jpg";
+	Mat mInput = imread(strInput);
+	int nSize = atsOtherBoxes.size();
+	Rect rTmp = Rect(0, 0, 0, 0);
+	// copy rects from OtherBoxes to the image
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		rTmp.x = atsOtherBoxes[nI].rROI.nX;
+		rTmp.y = atsOtherBoxes[nI].rROI.nY;
+		rTmp.width = atsOtherBoxes[nI].rROI.nWidth;
+		rTmp.height = atsOtherBoxes[nI].rROI.nHeight;
+		rectangle(mInput, rTmp, CV_RGB(0, 255, 0), 2);
+	}
+	nSize = atsLines.size();
+	// copy rects from Lines to the image
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		rTmp.x = atsLines[nI].tsCore.rROI.nX;
+		rTmp.y = atsLines[nI].tsCore.rROI.nY;
+		rTmp.width = atsLines[nI].tsCore.rROI.nWidth;
+		rTmp.height = atsLines[nI].tsCore.rROI.nHeight;
+		rectangle(mInput, rTmp, CV_RGB(0, 255, 0), 2);
+	}
+	// write image to file
+	imwrite(strFilePath, mInput);
+	return;
 }
 
 void SortYCoordinate(vector<Rect> &arBBoxes)
@@ -684,10 +722,14 @@ void Run(int argc, char **argv)
 	{
 		// process image 1 by 1
 		ProcessOneImage(astrListPaths[nI], fTimeRun, atsLines, atsOtherBoxes);
+		// get paths
+		string strOBPath = strRootFolder + "\\TmpRect\\OtherBoxes.txt";
+		string strLinesPath = strRootFolder + "\\TmpRect\\Lines.txt";
+		string strTmpImage = strRootFolder + "\\TmpImage\\";
 		// write to file
-		WriteDataToTxtFile(atsOtherBoxes, atsLines);
+		WriteDataToTxtFile(strOBPath, strLinesPath, atsOtherBoxes, atsLines);
 		// make images
-		CropROIByDataToFolderImage(astrListPaths[nI], atsOtherBoxes, atsLines);
+		CropROIByDataToFolderImage(strTmpImage, astrListPaths[nI], atsOtherBoxes, atsLines);
 	}
 }
 
@@ -699,7 +741,7 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
     	clock_t start = clock();
 	Mat mOriGS;					// original gray scale image
 	Mat mOriSharpGS;			// original sharpening grayscale image
-	bool bDebug = false;		// bDebug = true -> output add rects after post-processing to original images to have an overview
+	bool bDebug = true;		// bDebug = true -> output add rects after post-processing to original images to have an overview
 		
 	// read image in gray scale
 	ReadImageGrayScale(strInput, mOriGS);
@@ -721,12 +763,17 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	RemoveSingleBoxTextLine(arBBoxes);
 	// merge inside box
 	MergeInsideBoxes(arBBoxes);
+	// sort x coordinate ascending
+	SortXCoordinate(arBBoxes);
 	
 	// convert to tsOtherBox and tsLine
 	ConvertFromBBoxesToOtherBoxes(GetFileNameFromPath(strInput), arBBoxes, atsOtherBoxes);
 	arBBoxes.clear();
 	// merge line box
 	MergeLineBox(atsOtherBoxes, atsLines);
+	// increase each rect: left, right, top, bottom value + 1 pixel if all of them < 10, else + 2 pixels
+	// it make the OCR recognize text easier
+	IncreaseRectToBoxes(atsOtherBoxes, atsLines);
 	// calculate running time
 	fTimeRunning += (float)(clock() - start) / (float)CLOCKS_PER_SEC;
 	// binding running time
@@ -803,14 +850,50 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
 
-void WriteDataToTxtFile(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
-
+	BBoxIOStream bboxTmp;
+	bool bChecked = false;
+	bChecked = bboxTmp.WriteOtherBoxes(atsOtherBoxes, strOtherBoxPath);
+	if (bChecked == false)
+	{
+		cout << "Failed to write OtherBoxes at path: " << strOtherBoxPath << endl;
+	}
+	bChecked = false;
+	bChecked = bboxTmp.WriteLines(atsLines, strLinesPath);
+	if (bChecked == false)
+	{
+		cout << "Failed to write Lines at path: " << strLinesPath << endl;
+	}
 }
 
-void CropROIByDataToFolderImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+void CropROIByDataToFolderImage(string strTmpImage, string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
-
+	Mat mInput = imread(strInput);
+	int nSize = atsOtherBoxes.size();
+	// crop ROIs for OtherBoxes
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		cv::Rect myROI(atsOtherBoxes[nI].rROI.nX, atsOtherBoxes[nI].rROI.nY, atsOtherBoxes[nI].rROI.nWidth, atsOtherBoxes[nI].rROI.nHeight);
+		if (myROI.x >= 0 && myROI.y >= 0 && (myROI.width + myROI.x) < mInput.cols && (myROI.height + myROI.y) < mInput.rows)
+		{
+			// your code
+			cv::Mat croppedImage = mInput(myROI);
+			imwrite(strTmpImage + atsOtherBoxes[nI].strNameImage + "-" + to_string(atsOtherBoxes[nI].nID) + "-" + to_string(atsOtherBoxes[nI].nNumberVersion) + ".jpg", croppedImage);
+		}
+	}
+	nSize = atsLines.size();
+	// crop ROIs for Lines
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		cv::Rect myROI(atsLines[nI].tsCore.rROI.nX, atsLines[nI].tsCore.rROI.nY, atsLines[nI].tsCore.rROI.nWidth, atsLines[nI].tsCore.rROI.nHeight);
+		if (myROI.x >= 0 && myROI.y >= 0 && (myROI.width + myROI.x) < mInput.cols && (myROI.height + myROI.y) < mInput.rows)
+		{
+			// your code
+			cv::Mat croppedImage = mInput(myROI);
+			imwrite(strTmpImage + atsLines[nI].tsCore.strNameImage + "-" + to_string(atsLines[nI].tsCore.nID) + "-" + to_string(atsLines[nI].tsCore.nNumberVersion) + ".jpg", croppedImage);
+		}
+	}
 }
 
 //----------------------------------------------------------------------

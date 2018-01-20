@@ -479,11 +479,6 @@ void Run(int ac, char** av)
 	// path to OtherBoxes.txt & Lines.txt
 	string strPathOtherBoxes = strTmpRectFolder + "OtherBoxes.txt";
 	string strPathLines = strTmpRectFolder + "Lines.txt";
-	// debug
-	cout << "Debug mode." << endl;
-	cout << strPathOtherBoxes << endl;
-	cout << strPathLines << endl;
-	char a;
 	// Read OtherBoxes.txt
 	bChecked = ReadFileOtherBoxes(strPathOtherBoxes, strTmpRectFolder, ListFileNames);
 	if (bChecked == false)
@@ -525,7 +520,6 @@ void Run(int ac, char** av)
 	// clear
 	ListFileNames.clear();
 	ListFileTIFF.clear();
-	cin >> a;
 }
 
 void TestBBoxStreamWriting()

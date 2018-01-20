@@ -158,11 +158,12 @@ typedef struct sBBoxInfo
 		nNumberVersion = 0;
 		fTimeRunning = 0.00;
 	}
+	// Last Image name = [strNameImage]-[nID]-[nNumberVersion]
 	string GetLastImageName()
 	{
 		if(nNumberVersion == 0 && nID == 0 && fTimeRunning == 0)
 			return string();
-		string strResult = strNameImage + "-" + to_string(nNumberVersion);
+		string strResult = strNameImage + "-" + to_string(nID) + "-" + to_string(nNumberVersion);
 		return strResult;
 	}
 	
