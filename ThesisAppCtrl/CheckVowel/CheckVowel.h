@@ -107,14 +107,14 @@ namespace CheckVowel {
 			if (line.substr(0, 4) == "<ID>") {
 				//Get the inner text of the tag <ID>
 				string tmp_curid = line.substr(4, line.length() - 9);
-				if (std::find(rectids.begin(), rectids.end(), tmp_curid) != rectids.end()) {
-					curid = tmp_curid;
-				}
-				else {
-					cout << "ERROR: Rect ID: " << tmp_curid << " not found in list of IDs in InputCVowel.txt";
-				}
+				//if (std::find(rectids.begin(), rectids.end(), tmp_curid) != rectids.end()) {
+				curid = tmp_curid;
+				//}
+				//else {
+				//	cout << "ERROR: Rect ID: " << tmp_curid << " not found in list of IDs in InputCVowel.txt";
+				//}
 			}
-			else if (line.substr(0, 5) == "<ROI>" && curid != "") {
+			else if (line.substr(0, 5) == "<ROI>") {
 				//Get the inner text of the tag <ROI>
 				string inner = line.substr(5, line.length() - 11);
 				stringstream ss = stringstream(inner);
@@ -127,9 +127,30 @@ namespace CheckVowel {
 				output.insert(std::pair<string, tsRect>(
 					curid, 
 					tsRect(curX, curY, curW, curH, curid, curOrignalName)));
+			}
+			else if (line == "<Rect>") {
 				curid = "";
 				curOrignalName = "";
+				curX = curY = curW = curH = 0;
 			}
+			else
+			{
+				cout << "ERROR, malformed line format, skipping: " << line << endl;
+			}
+		}
+	}
+
+	void WriteRectsToFile(ofstream& ofs, const unordered_map<string, tsRect>& input) {
+		for (auto it = input.begin(); it != input.end(); it++) {
+			auto rect = it->second;
+			ofs << "<Rect>";
+			ofs << "<ID>" << rect.rectID << "</ID>\n";
+			ofs << "<ROI>" << rect.nX << " " << rect.nY << " " << rect.nWidth << " " << rect.nHeight << "</ROI>\n";
+			ofs << "<NewROI>" << rect.nX << " " << rect.nY << " " << rect.nWidth << " " << rect.nHeight << "</NewROI>\n";
+			ofs << "<Name>" << rect.originalName << "</Name>\n";
+			ofs << "<NumberVersion>2</NumberVersion>\n";
+			ofs << "<TimeRunning></TimeRunning>\n";
+			ofs << "</Rect>\n";
 		}
 	}
 
@@ -147,7 +168,26 @@ namespace CheckVowel {
 			ProcessEachLine(ifs, rectids, outputLines);
 			ifs.close();
 		}
+	}
 
+	void WriteAllRects(const unordered_map<string, tsRect>& lines, const unordered_map<string, tsRect>& otherboxes) {
+		ofstream ofs = ofstream(CheckVowel::TmpRectPath + "/OtherBoxes.txt");
+		if (ofs.is_open()) {
+			WriteRectsToFile(ofs, otherboxes);
+			ofs.close();
+		}
+		else {
+			std::cout << "ERROR: Cannot open file" << CheckVowel::TmpRectPath + "/OtherBoxes.txt" << endl;
+		}
+
+		ofs = ofstream(CheckVowel::TmpRectPath + "/Lines.txt");
+		if (ofs.is_open()) {
+			WriteRectsToFile(ofs, lines);
+			ofs.close();
+		}
+		else {
+			std::cout << "ERROR: Cannot open file" << CheckVowel::TmpRectPath + "/Lines.txt" << endl;
+		}
 	}
 
 	bool HasVowel(string ocrText) {
@@ -201,5 +241,8 @@ namespace CheckVowel {
 				}
 			}
 		}
+	
+		//Write all rects to 2 files Lines.txt and OtherBoxes.txt
+		WriteAllRects(lineSet, otherboxSet);
 	}
 }
