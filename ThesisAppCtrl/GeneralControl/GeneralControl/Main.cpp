@@ -3,7 +3,7 @@
 //	File name：	Source.cpp
 //	Description：	Main process of OCRAutorun project
 //	Notes:			None
-//	History：	<0> 2017.01.13 : Dang Tuan Vu : Create project
+//	History：	<0> 2017.12.13 : Dang Tuan Vu : Create file
 //
 //////////////////////////////////////////////////////////////////////
 #include <fstream>
@@ -919,12 +919,26 @@ void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, 
 // not finish
 void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
-	// OtherBoxes have been sorted by X coordinate before this function
-	// search from left to right
-	// all boxes which are belong to a word often intersect with others, they usually have the same height.
-	int nSize = atsOtherBoxes.size();
+	// Condition: OtherBoxes have been sorted by X coordinate before this function
+	// Method: search from left to right
+	// How it run:
+	//		- set nPos = 0, this pos is the pos in the list below
+	// 		- Have a list of free OtherBoxes - boxes that have not been included in any line.
+	//		- Search from left to right, find boxes which satisfy condition
+	//		- If > 2 boxes in a line, create a Line, add to array atsLines
+	//		- continue to do this until the nPos meet the end of list
 	int nPos = 0;
-
+	int nSize = atsOtherBoxes.size();
+	vector<int> aFreeList;
+	for(int nI = 0; nI < nSize; nI++)
+	{
+		aFreeList
+	}
+	while(nPos < nSize)
+	{
+		// handle function
+		
+	}
 }
 
 
