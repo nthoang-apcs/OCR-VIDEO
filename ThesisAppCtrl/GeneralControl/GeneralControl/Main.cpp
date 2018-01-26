@@ -695,12 +695,54 @@ void GetALineBox(int &nPos, int &nSize, vector<int> &aFreeList, vector<tsOtherBo
 				{
 					// check condition of width - not too far from the average width
 					int nAverWidth = 0;
-
+					for (int nJ = 0; nJ < aCurLine.size(); nJ++)
+					{
+						nAverWidth += atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nWidth;
+					}
+					nAverWidth = nAverWidth / aCurLine.size();
+					// 30% width extend from average width
+					if (nCX < (rSearchRect.x + (nAverWidth *1.3)))
+					{
+						// add to line
+						aCurLine.push_back(nI);
+						// create new search rect
+						rSearchRect = Rect(atsOtherBoxes[aFreeList[nI]].rROI.nX, atsOtherBoxes[aFreeList[nI]].rROI.nY,
+							(atsOtherBoxes[aFreeList[nI]].rROI.nWidth * 3), atsOtherBoxes[aFreeList[nI]].rROI.nHeight);
+					}
 				}
 			}
 		}
 	}
+	// find less than 2 points to form a line with the start point
+	if (aCurLine.size() < 3)
+	{
+		aCurLine.clear();
+		// increase position
+		nPos++;
+		return;
+	}
+	// find more than 1 point to form a line with the start point
+	// => create new line, remove index from aFreeList
+	else
+	{
+		tsLineBox tsLineTmp;
+		// create new ID = last highest ID + 1
+		int nNewID = 0;
+		if (atsLines.size() == 0)
+		{
+			nNewID = atsOtherBoxes[atsOtherBoxes.size() - 1].nID + 1;
+		}
+		else
+		{
+			nNewID = atsLines[atsLines.size() - 1].tsCore.nID + 1;
+		}
 
+		// copy IDs and Rects from tsOtherBoxes to new tsLineBox
+		for (int nJ = 0; nJ < aCurLine.size(); nJ++)
+		{
+
+		}
+	}
 }
 
 void SortYCoordinate(vector<Rect> &arBBoxes)
