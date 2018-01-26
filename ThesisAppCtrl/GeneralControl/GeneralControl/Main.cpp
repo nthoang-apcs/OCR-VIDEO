@@ -68,6 +68,12 @@ void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vec
 // strInput is the absolute path of the image file.
 void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
+// nPos is the start search position
+// nSize is the size of aFreeList
+// search and merge tsOtherBox into a tsLineBox and add to atsLines
+// this function support function MergeLineBox
+void GetALineBox(int &nPos, int &nSize, vector<int> &aFreeList, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
 void SortYCoordinate(vector<Rect> &arBBoxes);
 
 void SortArea(vector<Rect> &arBBoxes);
@@ -84,6 +90,9 @@ bool IsB1Balanced(Rect B1);
 // check if the intersection area between B1 and B2 is equal B1.area()
 // and the B2.area() / B1.area() <= 3
 bool IsB1insideB2(Rect B1, Rect B2);
+
+// check if a point is inside a Rect
+bool IsPointAInsideRectB(int nXA, int nYA, Rect rB);
 
 // return true if B1.y < B2.y
 bool CompareYCoordinate(Rect B1, Rect B2);
@@ -644,6 +653,56 @@ void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
 	return;
 }
 
+void GetALineBox(int &nPos, int &nSize, vector<int> &aFreeList, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+	// check condition
+	if ((nPos + 1) == nSize || (nPos + 2) == nSize)
+	{
+		nPos = nSize;
+		return;
+	}
+	vector<int> aCurLine;
+	// create search area rectangle - same x y height, width*3
+	Rect rSearchRect = Rect(atsOtherBoxes[aFreeList[nPos]].rROI.nX, atsOtherBoxes[aFreeList[nPos]].rROI.nY, 
+		(atsOtherBoxes[aFreeList[nPos]].rROI.nWidth * 3), atsOtherBoxes[aFreeList[nPos]].rROI.nHeight);
+	aCurLine.push_back(nPos);
+	for (int nI = nPos + 1; nI < nSize; nI++)
+	{
+		// Check if the center of mass of the searching rect is in the rSearchRect,
+		// and the height is not > +30% of rSearchRect, width is not > +100% of rSearchRect
+		// Get Center of mass
+		int nCX = atsOtherBoxes[aFreeList[nI]].rROI.nX + atsOtherBoxes[aFreeList[nI]].rROI.nWidth / 2;
+		int nCY = atsOtherBoxes[aFreeList[nI]].rROI.nY + atsOtherBoxes[aFreeList[nI]].rROI.nHeight / 2;
+		// check location
+		if (IsPointAInsideRectB(nCX, nCY, rSearchRect) == true)
+		{
+			// check height and width
+			if ((atsOtherBoxes[aFreeList[nPos]].rROI.nWidth * 2) > atsOtherBoxes[aFreeList[nI]].rROI.nWidth &&
+				(atsOtherBoxes[aFreeList[nPos]].rROI.nHeight * 1.3) > atsOtherBoxes[aFreeList[nI]].rROI.nHeight)
+			{
+				// check condition base on average width of boxes in the aCurLine
+				// special case, aCurLine only has the start point or 2 points
+				if (aCurLine.size() == 1 || aCurLine.size() == 2)		
+				{
+					// add to line
+					aCurLine.push_back(nI);
+					// create new search rect
+					rSearchRect = Rect(atsOtherBoxes[aFreeList[nI]].rROI.nX, atsOtherBoxes[aFreeList[nI]].rROI.nY,
+						(atsOtherBoxes[aFreeList[nI]].rROI.nWidth * 3), atsOtherBoxes[aFreeList[nI]].rROI.nHeight);
+				}
+				// normal case, more than 3 points in the aCurLine
+				else
+				{
+					// check condition of width - not too far from the average width
+					int nAverWidth = 0;
+
+				}
+			}
+		}
+	}
+
+}
+
 void SortYCoordinate(vector<Rect> &arBBoxes)
 {
 	sort(arBBoxes.begin(), arBBoxes.end(), CompareYCoordinate);
@@ -699,6 +758,15 @@ bool IsB1insideB2(Rect B1, Rect B2)
 		return true;
 	return false;
 
+}
+
+bool IsPointAInsideRectB(int nXA, int nYA, Rect rB)
+{
+	if (nXA >= rB.x && nYA >= rB.y && nXA <= (rB.x + rB.width) && nYA <= (rB.y + rB.height))
+	{
+		return true;
+	}
+	return false;
 }
 
 bool CompareYCoordinate(Rect B1, Rect B2)
@@ -916,7 +984,6 @@ void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, 
 	return;
 }
 
-// not finish
 void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
 	// Condition: OtherBoxes have been sorted by X coordinate before this function
@@ -929,15 +996,15 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 	//		- continue to do this until the nPos meet the end of list
 	int nPos = 0;
 	int nSize = atsOtherBoxes.size();
-	vector<int> aFreeList;
+	vector<int> aFreeList;			// free list is the list of free indexes which can be searched
 	for(int nI = 0; nI < nSize; nI++)
 	{
-		aFreeList
+		aFreeList.push_back(nI);
 	}
 	while(nPos < nSize)
 	{
 		// handle function
-		
+		GetALineBox(nPos, nSize, aFreeList, atsOtherBoxes, atsLines);
 	}
 }
 
