@@ -761,9 +761,7 @@ void GetALineBox(int &nPos, int &nSize, vector<int> &aFreeList, vector<tsOtherBo
 		// add to atsLine
 		atsLines.push_back(tsLineTmp);
 		// remove indexes in aFreeList
-		cout << "Before: CurLine size = " << aCurLine.size() << " ; FreeList size = " << aFreeList.size() << endl;
 		RemoveSameIndexesFromAInB(aCurLine, aFreeList);
-		cout << "After: CurLine size = " << aCurLine.size() << " ; FreeList size = " << aFreeList.size() << endl;
 		// nPos keep the same, because the current pos is replaced
 		// update nSize
 		nSize = aFreeList.size();

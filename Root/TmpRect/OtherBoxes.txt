@@ -1,2263 +1,2040 @@
 <Rect>
 <ID>0</ID>
-<ROI>1 511 40 16</ROI>
-<NewROI>1 513 36 12</NewROI>
-<Name>img421</Name>
+<ROI>1 514 21 22</ROI>
+<NewROI>1 516 17 18</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>1</ID>
-<ROI>4 394 40 47</ROI>
-<NewROI>6 396 36 43</NewROI>
-<Name>img421</Name>
+<ROI>1 1 92 72</ROI>
+<NewROI>1 1 88 68</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>2</ID>
-<ROI>20 227 100 74</ROI>
-<NewROI>22 229 96 70</NewROI>
-<Name>img421</Name>
+<ROI>1 361 30 16</ROI>
+<NewROI>1 363 26 12</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>3</ID>
-<ROI>20 443 32 74</ROI>
-<NewROI>22 445 28 70</NewROI>
-<Name>img421</Name>
+<ROI>1 383 25 113</ROI>
+<NewROI>1 385 21 109</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>4</ID>
-<ROI>22 456 18 15</ROI>
-<NewROI>24 458 14 11</NewROI>
-<Name>img421</Name>
+<ROI>1 341 34 16</ROI>
+<NewROI>1 343 30 12</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>5</ID>
-<ROI>28 238 35 46</ROI>
-<NewROI>30 240 31 42</NewROI>
-<Name>img421</Name>
+<ROI>1 530 39 17</ROI>
+<NewROI>1 532 35 13</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>6</ID>
-<ROI>39 54 54 13</ROI>
-<NewROI>41 56 50 9</NewROI>
-<Name>img421</Name>
+<ROI>1 702 63 19</ROI>
+<NewROI>1 704 59 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>7</ID>
-<ROI>42 412 77 17</ROI>
-<NewROI>44 414 73 13</NewROI>
-<Name>img421</Name>
+<ROI>1 77 79 267</ROI>
+<NewROI>1 79 75 263</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>8</ID>
-<ROI>43 30 37 26</ROI>
-<NewROI>45 32 33 22</NewROI>
-<Name>img421</Name>
+<ROI>1 567 13 19</ROI>
+<NewROI>1 569 9 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>9</ID>
-<ROI>43 403 15 13</ROI>
-<NewROI>45 405 11 9</NewROI>
-<Name>img421</Name>
+<ROI>8 567 8 20</ROI>
+<NewROI>10 569 4 16</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>10</ID>
-<ROI>46 587 54 57</ROI>
-<NewROI>48 589 50 53</NewROI>
-<Name>img421</Name>
+<ROI>12 645 14 14</ROI>
+<NewROI>14 647 10 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>11</ID>
-<ROI>54 469 47 31</ROI>
-<NewROI>56 471 43 27</NewROI>
-<Name>img421</Name>
+<ROI>13 374 39 129</ROI>
+<NewROI>15 376 35 125</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>12</ID>
-<ROI>55 350 37 56</ROI>
-<NewROI>57 352 33 52</NewROI>
-<Name>img421</Name>
+<ROI>17 679 10 14</ROI>
+<NewROI>19 681 6 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>13</ID>
-<ROI>56 356 22 21</ROI>
-<NewROI>58 358 18 17</NewROI>
-<Name>img421</Name>
+<ROI>18 516 24 21</ROI>
+<NewROI>20 518 20 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>14</ID>
-<ROI>57 432 16 17</ROI>
-<NewROI>59 434 12 13</NewROI>
-<Name>img421</Name>
+<ROI>18 543 11 19</ROI>
+<NewROI>20 545 7 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>15</ID>
-<ROI>57 428 50 24</ROI>
-<NewROI>59 430 46 20</NewROI>
-<Name>img421</Name>
+<ROI>26 544 7 18</ROI>
+<NewROI>28 546 3 14</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>16</ID>
-<ROI>62 240 35 46</ROI>
-<NewROI>64 242 31 42</NewROI>
-<Name>img421</Name>
+<ROI>27 568 15 19</ROI>
+<NewROI>29 570 11 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>17</ID>
-<ROI>64 435 22 18</ROI>
-<NewROI>66 437 18 14</NewROI>
-<Name>img421</Name>
+<ROI>32 544 16 19</ROI>
+<NewROI>34 546 12 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>18</ID>
-<ROI>64 588 29 19</ROI>
-<NewROI>66 590 25 15</NewROI>
-<Name>img421</Name>
+<ROI>36 341 21 17</ROI>
+<NewROI>38 343 17 13</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>19</ID>
-<ROI>73 247 13 32</ROI>
-<NewROI>75 249 9 28</NewROI>
-<Name>img421</Name>
+<ROI>38 78 63 266</ROI>
+<NewROI>40 80 59 262</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>20</ID>
-<ROI>82 389 25 16</ROI>
-<NewROI>84 391 21 12</NewROI>
-<Name>img421</Name>
+<ROI>39 569 8 18</ROI>
+<NewROI>41 571 4 14</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>21</ID>
-<ROI>85 450 19 14</ROI>
-<NewROI>87 452 15 10</NewROI>
-<Name>img421</Name>
+<ROI>39 382 38 121</ROI>
+<NewROI>41 384 34 117</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>22</ID>
-<ROI>94 469 36 57</ROI>
-<NewROI>96 471 32 53</NewROI>
-<Name>img421</Name>
+<ROI>40 544 7 18</ROI>
+<NewROI>42 546 3 14</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>23</ID>
-<ROI>97 241 16 46</ROI>
-<NewROI>99 243 12 42</NewROI>
-<Name>img421</Name>
+<ROI>43 515 22 23</ROI>
+<NewROI>45 517 18 19</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>24</ID>
-<ROI>105 549 39 25</ROI>
-<NewROI>107 551 35 21</NewROI>
-<Name>img421</Name>
+<ROI>44 544 9 20</ROI>
+<NewROI>46 546 5 16</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>25</ID>
-<ROI>106 455 33 21</ROI>
-<NewROI>108 457 29 17</NewROI>
-<Name>img421</Name>
+<ROI>45 685 10 11</ROI>
+<NewROI>46 686 8 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>26</ID>
-<ROI>119 459 29 16</ROI>
-<NewROI>121 461 25 12</NewROI>
-<Name>img421</Name>
+<ROI>53 365 27 13</ROI>
+<NewROI>55 367 23 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>27</ID>
-<ROI>122 399 30 21</ROI>
-<NewROI>124 401 26 17</NewROI>
-<Name>img421</Name>
+<ROI>60 342 24 17</ROI>
+<NewROI>62 344 20 13</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>28</ID>
-<ROI>127 243 31 45</ROI>
-<NewROI>129 245 27 41</NewROI>
-<Name>img421</Name>
+<ROI>62 569 17 19</ROI>
+<NewROI>64 571 13 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>29</ID>
-<ROI>135 434 64 18</ROI>
-<NewROI>137 436 60 14</NewROI>
-<Name>img421</Name>
+<ROI>63 515 23 22</ROI>
+<NewROI>65 517 19 18</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>30</ID>
-<ROI>139 370 35 54</ROI>
-<NewROI>141 372 31 50</NewROI>
-<Name>img421</Name>
+<ROI>71 141 42 164</ROI>
+<NewROI>73 143 38 160</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>31</ID>
-<ROI>155 595 133 49</ROI>
-<NewROI>157 597 129 45</NewROI>
-<Name>img421</Name>
+<ROI>82 515 28 24</ROI>
+<NewROI>84 517 24 20</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>32</ID>
-<ROI>156 245 33 45</ROI>
-<NewROI>158 247 29 41</NewROI>
-<Name>img421</Name>
+<ROI>85 1 28 72</ROI>
+<NewROI>87 1 24 68</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>33</ID>
-<ROI>157 414 19 14</ROI>
-<NewROI>159 416 15 10</NewROI>
-<Name>img421</Name>
+<ROI>88 343 21 16</ROI>
+<NewROI>90 345 17 12</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>34</ID>
-<ROI>170 490 15 35</ROI>
-<NewROI>172 492 11 31</NewROI>
-<Name>img421</Name>
+<ROI>90 1 71 346</ROI>
+<NewROI>92 1 67 342</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>35</ID>
-<ROI>189 246 16 45</ROI>
-<NewROI>191 248 12 41</NewROI>
-<Name>img421</Name>
+<ROI>90 560 53 19</ROI>
+<NewROI>92 562 49 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>36</ID>
-<ROI>199 432 41 16</ROI>
-<NewROI>201 434 37 12</NewROI>
-<Name>img421</Name>
+<ROI>93 376 37 127</ROI>
+<NewROI>95 378 33 123</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>37</ID>
-<ROI>205 62 57 46</ROI>
-<NewROI>207 64 53 42</NewROI>
-<Name>img421</Name>
+<ROI>98 671 19 48</ROI>
+<NewROI>100 673 15 44</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>38</ID>
-<ROI>215 302 45 104</ROI>
-<NewROI>217 304 41 100</NewROI>
-<Name>img421</Name>
+<ROI>99 542 31 13</ROI>
+<NewROI>101 544 27 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>39</ID>
-<ROI>218 248 28 44</ROI>
-<NewROI>220 250 24 40</NewROI>
-<Name>img421</Name>
+<ROI>114 343 21 17</ROI>
+<NewROI>116 345 17 13</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>40</ID>
-<ROI>226 365 12 15</ROI>
-<NewROI>228 367 8 11</NewROI>
-<Name>img421</Name>
+<ROI>119 382 36 122</ROI>
+<NewROI>121 384 32 118</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>41</ID>
-<ROI>227 520 15 25</ROI>
-<NewROI>229 522 11 21</NewROI>
-<Name>img421</Name>
+<ROI>120 686 14 32</ROI>
+<NewROI>122 688 10 28</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>42</ID>
-<ROI>228 482 13 41</ROI>
-<NewROI>230 484 9 37</NewROI>
-<Name>img421</Name>
+<ROI>132 69 16 13</ROI>
+<NewROI>134 71 12 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>43</ID>
-<ROI>235 303 15 13</ROI>
-<NewROI>237 305 11 9</NewROI>
-<Name>img421</Name>
+<ROI>133 1 26 73</ROI>
+<NewROI>135 1 22 69</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>44</ID>
-<ROI>241 73 9 22</ROI>
-<NewROI>243 75 5 18</NewROI>
-<Name>img421</Name>
+<ROI>140 343 20 18</ROI>
+<NewROI>142 345 16 14</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>45</ID>
-<ROI>245 249 32 44</ROI>
-<NewROI>247 251 28 40</NewROI>
-<Name>img421</Name>
+<ROI>141 79 56 267</ROI>
+<NewROI>143 81 52 263</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>46</ID>
-<ROI>248 61 12 14</ROI>
-<NewROI>250 63 8 10</NewROI>
-<Name>img421</Name>
+<ROI>146 382 35 122</ROI>
+<NewROI>148 384 31 118</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>47</ID>
-<ROI>249 198 26 15</ROI>
-<NewROI>251 200 22 11</NewROI>
-<Name>img421</Name>
+<ROI>155 1 30 83</ROI>
+<NewROI>157 1 26 79</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>48</ID>
-<ROI>250 360 30 52</ROI>
-<NewROI>252 362 26 48</NewROI>
-<Name>img421</Name>
+<ROI>165 344 21 17</ROI>
+<NewROI>167 346 17 13</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>49</ID>
-<ROI>254 513 11 35</ROI>
-<NewROI>256 515 7 31</NewROI>
-<Name>img421</Name>
+<ROI>170 79 25 66</ROI>
+<NewROI>172 81 21 62</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>50</ID>
-<ROI>264 70 74 39</ROI>
-<NewROI>266 72 70 35</NewROI>
-<Name>img421</Name>
+<ROI>172 382 35 122</ROI>
+<NewROI>174 384 31 118</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>51</ID>
-<ROI>266 52 16 17</ROI>
-<NewROI>268 54 12 13</NewROI>
-<Name>img421</Name>
+<ROI>176 684 24 17</ROI>
+<NewROI>178 686 20 13</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>52</ID>
-<ROI>271 442 30 19</ROI>
-<NewROI>273 444 26 15</NewROI>
-<Name>img421</Name>
+<ROI>181 1 26 74</ROI>
+<NewROI>183 1 22 70</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>53</ID>
-<ROI>277 251 16 43</ROI>
-<NewROI>279 253 12 39</NewROI>
-<Name>img421</Name>
+<ROI>191 344 21 17</ROI>
+<NewROI>193 346 17 13</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>54</ID>
-<ROI>282 481 21 41</ROI>
-<NewROI>284 483 17 37</NewROI>
-<Name>img421</Name>
+<ROI>198 143 39 163</ROI>
+<NewROI>200 145 35 159</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>55</ID>
-<ROI>292 252 28 43</ROI>
-<NewROI>294 254 24 39</NewROI>
-<Name>img421</Name>
+<ROI>200 382 31 122</ROI>
+<NewROI>202 384 27 118</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>56</ID>
-<ROI>296 80 8 15</ROI>
-<NewROI>298 82 4 11</NewROI>
-<Name>img421</Name>
+<ROI>204 1 28 84</ROI>
+<NewROI>206 1 24 80</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>57</ID>
-<ROI>304 379 31 50</ROI>
-<NewROI>306 381 27 46</NewROI>
-<Name>img421</Name>
+<ROI>217 345 21 17</ROI>
+<NewROI>219 347 17 13</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>58</ID>
-<ROI>308 434 54 30</ROI>
-<NewROI>310 436 50 26</NewROI>
-<Name>img421</Name>
+<ROI>220 80 25 66</ROI>
+<NewROI>222 82 21 62</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>59</ID>
-<ROI>309 471 47 50</ROI>
-<NewROI>311 473 43 46</NewROI>
-<Name>img421</Name>
+<ROI>224 144 36 162</ROI>
+<NewROI>226 146 32 158</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>60</ID>
-<ROI>310 77 25 30</ROI>
-<NewROI>312 79 21 26</NewROI>
-<Name>img421</Name>
+<ROI>229 1 25 75</ROI>
+<NewROI>231 1 21 71</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>61</ID>
-<ROI>311 140 33 14</ROI>
-<NewROI>313 142 29 10</NewROI>
-<Name>img421</Name>
+<ROI>244 81 24 66</ROI>
+<NewROI>246 83 20 62</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>62</ID>
-<ROI>314 598 26 16</ROI>
-<NewROI>316 600 22 12</NewROI>
-<Name>img421</Name>
+<ROI>252 145 82 87</ROI>
+<NewROI>254 147 78 83</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>63</ID>
-<ROI>318 81 9 21</ROI>
-<NewROI>320 83 5 17</NewROI>
-<Name>img421</Name>
+<ROI>252 1 25 84</ROI>
+<NewROI>254 1 21 80</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>64</ID>
-<ROI>318 253 28 43</ROI>
-<NewROI>320 255 24 39</NewROI>
-<Name>img421</Name>
+<ROI>255 251 69 55</ROI>
+<NewROI>257 253 65 51</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>65</ID>
-<ROI>322 480 14 16</ROI>
-<NewROI>324 482 10 12</NewROI>
-<Name>img421</Name>
+<ROI>257 391 49 111</ROI>
+<NewROI>259 393 45 107</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>66</ID>
-<ROI>324 493 7 11</ROI>
-<NewROI>325 494 5 9</NewROI>
-<Name>img421</Name>
+<ROI>260 101 19 28</ROI>
+<NewROI>262 103 15 24</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>67</ID>
-<ROI>324 147 108 70</ROI>
-<NewROI>326 149 104 66</NewROI>
-<Name>img421</Name>
+<ROI>272 73 69 32</ROI>
+<NewROI>274 75 65 28</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>68</ID>
-<ROI>331 118 29 14</ROI>
-<NewROI>333 120 25 10</NewROI>
-<Name>img421</Name>
+<ROI>300 507 30 26</ROI>
+<NewROI>302 509 26 22</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>69</ID>
-<ROI>339 75 101 44</ROI>
-<NewROI>341 77 97 40</NewROI>
-<Name>img421</Name>
+<ROI>303 544 30 135</ROI>
+<NewROI>305 546 26 131</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>70</ID>
-<ROI>341 79 28 31</ROI>
-<NewROI>343 81 24 27</NewROI>
-<Name>img421</Name>
+<ROI>307 125 29 23</ROI>
+<NewROI>309 127 25 19</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>71</ID>
-<ROI>351 85 9 20</ROI>
-<NewROI>353 87 5 16</NewROI>
-<Name>img421</Name>
+<ROI>318 668 11 17</ROI>
+<NewROI>320 670 7 13</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>72</ID>
-<ROI>357 255 29 43</ROI>
-<NewROI>359 257 25 39</NewROI>
-<Name>img421</Name>
+<ROI>320 2 28 74</ROI>
+<NewROI>322 4 24 70</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>73</ID>
-<ROI>359 480 11 11</ROI>
-<NewROI>360 481 9 9</NewROI>
-<Name>img421</Name>
+<ROI>330 156 38 14</ROI>
+<NewROI>332 158 34 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>74</ID>
-<ROI>366 476 22 21</ROI>
-<NewROI>368 478 18 17</NewROI>
-<Name>img421</Name>
+<ROI>330 168 25 13</ROI>
+<NewROI>332 170 21 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>75</ID>
-<ROI>366 277 11 15</ROI>
-<NewROI>368 279 7 11</NewROI>
-<Name>img421</Name>
+<ROI>341 528 31 29</ROI>
+<NewROI>343 530 27 25</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>76</ID>
-<ROI>366 77 25 35</ROI>
-<NewROI>368 79 21 31</NewROI>
-<Name>img421</Name>
+<ROI>343 171 14 24</ROI>
+<NewROI>345 173 10 20</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>77</ID>
-<ROI>366 261 11 14</ROI>
-<NewROI>368 263 7 10</NewROI>
-<Name>img421</Name>
+<ROI>353 159 17 36</ROI>
+<NewROI>355 161 13 32</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>78</ID>
-<ROI>371 445 35 32</ROI>
-<NewROI>373 447 31 28</NewROI>
-<Name>img421</Name>
+<ROI>357 603 17 43</ROI>
+<NewROI>359 605 13 39</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>79</ID>
-<ROI>374 86 9 22</ROI>
-<NewROI>376 88 5 18</NewROI>
-<Name>img421</Name>
+<ROI>366 147 17 48</ROI>
+<NewROI>368 149 13 44</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>80</ID>
-<ROI>381 323 28 14</ROI>
-<NewROI>383 325 24 10</NewROI>
-<Name>img421</Name>
+<ROI>372 565 22 32</ROI>
+<NewROI>374 567 18 28</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>81</ID>
-<ROI>385 476 22 44</ROI>
-<NewROI>387 478 18 40</NewROI>
-<Name>img421</Name>
+<ROI>376 444 27 52</ROI>
+<NewROI>378 446 23 48</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>82</ID>
-<ROI>387 256 13 43</ROI>
-<NewROI>389 258 9 39</NewROI>
-<Name>img421</Name>
+<ROI>380 71 19 14</ROI>
+<NewROI>382 73 15 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>83</ID>
-<ROI>388 84 27 31</ROI>
-<NewROI>390 86 23 27</NewROI>
-<Name>img421</Name>
+<ROI>383 529 12 29</ROI>
+<NewROI>385 531 8 25</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>84</ID>
-<ROI>389 156 27 16</ROI>
-<NewROI>391 158 23 12</NewROI>
-<Name>img421</Name>
+<ROI>387 415 10 15</ROI>
+<NewROI>389 417 6 11</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>85</ID>
-<ROI>401 431 69 66</ROI>
-<NewROI>403 433 65 62</NewROI>
-<Name>img421</Name>
+<ROI>389 573 16 39</ROI>
+<NewROI>391 575 12 35</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>86</ID>
-<ROI>402 257 10 15</ROI>
-<NewROI>404 259 6 11</NewROI>
-<Name>img421</Name>
+<ROI>392 128 16 67</ROI>
+<NewROI>394 130 12 63</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>87</ID>
-<ROI>403 353 23 19</ROI>
-<NewROI>405 355 19 15</NewROI>
-<Name>img421</Name>
+<ROI>393 527 41 41</ROI>
+<NewROI>395 529 37 37</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>88</ID>
-<ROI>408 115 40 15</ROI>
-<NewROI>410 117 36 11</NewROI>
-<Name>img421</Name>
+<ROI>394 515 77 38</ROI>
+<NewROI>396 517 73 34</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>89</ID>
-<ROI>411 244 22 14</ROI>
-<NewROI>413 246 18 10</NewROI>
-<Name>img421</Name>
+<ROI>395 610 10 36</ROI>
+<NewROI>397 612 6 32</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>90</ID>
-<ROI>412 258 30 42</ROI>
-<NewROI>414 260 26 38</NewROI>
-<Name>img421</Name>
+<ROI>395 551 39 28</ROI>
+<NewROI>397 553 35 24</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>91</ID>
-<ROI>413 87 24 30</ROI>
-<NewROI>415 89 20 26</NewROI>
-<Name>img421</Name>
+<ROI>404 552 67 89</ROI>
+<NewROI>406 554 63 85</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>92</ID>
-<ROI>413 375 29 40</ROI>
-<NewROI>415 377 25 36</NewROI>
-<Name>img421</Name>
+<ROI>404 555 7 16</ROI>
+<NewROI>406 557 3 12</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>93</ID>
-<ROI>415 432 43 13</ROI>
-<NewROI>417 434 39 9</NewROI>
-<Name>img421</Name>
+<ROI>414 101 20 94</ROI>
+<NewROI>416 103 16 90</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>94</ID>
-<ROI>416 236 25 19</ROI>
-<NewROI>418 238 21 15</NewROI>
-<Name>img421</Name>
+<ROI>433 525 42 56</ROI>
+<NewROI>435 527 38 52</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>95</ID>
-<ROI>421 228 27 20</ROI>
-<NewROI>423 230 23 16</NewROI>
-<Name>img421</Name>
+<ROI>443 348 56 14</ROI>
+<NewROI>445 350 52 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>96</ID>
-<ROI>422 264 11 30</ROI>
-<NewROI>424 266 7 26</NewROI>
-<Name>img421</Name>
+<ROI>450 168 26 13</ROI>
+<NewROI>452 170 22 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>97</ID>
-<ROI>424 412 14 22</ROI>
-<NewROI>426 414 10 18</NewROI>
-<Name>img421</Name>
+<ROI>451 156 38 14</ROI>
+<NewROI>453 158 34 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>98</ID>
-<ROI>432 328 24 42</ROI>
-<NewROI>434 330 20 38</NewROI>
-<Name>img421</Name>
+<ROI>463 171 15 24</ROI>
+<NewROI>465 173 11 20</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>99</ID>
-<ROI>433 1 17 14</ROI>
-<NewROI>435 3 13 10</NewROI>
-<Name>img421</Name>
+<ROI>466 675 19 25</ROI>
+<NewROI>468 677 15 21</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>100</ID>
-<ROI>437 253 11 11</ROI>
-<NewROI>438 254 9 9</NewROI>
-<Name>img421</Name>
+<ROI>468 573 11 39</ROI>
+<NewROI>470 575 7 35</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>101</ID>
-<ROI>440 259 31 43</ROI>
-<NewROI>442 261 27 39</NewROI>
-<Name>img421</Name>
+<ROI>468 71 25 23</ROI>
+<NewROI>470 73 21 19</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>102</ID>
-<ROI>441 99 22 14</ROI>
-<NewROI>443 101 18 10</NewROI>
-<Name>img421</Name>
+<ROI>470 515 84 130</ROI>
+<NewROI>472 517 80 126</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>103</ID>
-<ROI>441 220 23 20</ROI>
-<NewROI>443 222 19 16</NewROI>
-<Name>img421</Name>
+<ROI>473 556 10 35</ROI>
+<NewROI>475 558 6 31</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>104</ID>
-<ROI>445 155 104 75</ROI>
-<NewROI>447 157 100 71</NewROI>
-<Name>img421</Name>
+<ROI>474 659 12 17</ROI>
+<NewROI>476 661 8 13</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>105</ID>
-<ROI>449 476 17 16</ROI>
-<NewROI>451 478 13 12</NewROI>
-<Name>img421</Name>
+<ROI>475 159 16 36</ROI>
+<NewROI>477 161 12 32</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>106</ID>
-<ROI>450 267 10 22</ROI>
-<NewROI>452 269 6 18</NewROI>
-<Name>img421</Name>
+<ROI>482 624 26 34</ROI>
+<NewROI>484 626 22 30</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>107</ID>
-<ROI>453 329 31 41</ROI>
-<NewROI>455 331 27 37</NewROI>
-<Name>img421</Name>
+<ROI>486 643 28 25</ROI>
+<NewROI>488 645 24 21</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>108</ID>
-<ROI>454 217 18 17</ROI>
-<NewROI>456 219 14 13</NewROI>
-<Name>img421</Name>
+<ROI>486 2 350 73</ROI>
+<NewROI>488 4 346 69</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>109</ID>
-<ROI>463 89 131 43</ROI>
-<NewROI>465 91 127 39</NewROI>
-<Name>img421</Name>
+<ROI>487 618 84 103</ROI>
+<NewROI>489 620 80 99</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>110</ID>
-<ROI>463 337 10 21</ROI>
-<NewROI>465 339 6 17</NewROI>
-<Name>img421</Name>
+<ROI>487 487 69 33</ROI>
+<NewROI>489 489 65 29</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>111</ID>
-<ROI>463 461 7 18</ROI>
-<NewROI>465 463 3 14</NewROI>
-<Name>img421</Name>
+<ROI>489 150 14 45</ROI>
+<NewROI>491 152 10 41</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>112</ID>
-<ROI>466 92 21 29</ROI>
-<NewROI>468 94 17 25</NewROI>
-<Name>img421</Name>
+<ROI>493 68 20 26</ROI>
+<NewROI>495 70 16 22</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>113</ID>
-<ROI>466 195 16 15</ROI>
-<NewROI>468 197 12 11</NewROI>
-<Name>img421</Name>
+<ROI>501 115 41 80</ROI>
+<NewROI>503 117 37 76</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>114</ID>
-<ROI>466 461 8 17</ROI>
-<NewROI>468 463 4 13</NewROI>
-<Name>img421</Name>
+<ROI>506 366 13 19</ROI>
+<NewROI>508 368 9 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>115</ID>
-<ROI>470 261 27 42</ROI>
-<NewROI>472 263 23 38</NewROI>
-<Name>img421</Name>
+<ROI>509 614 41 54</ROI>
+<NewROI>511 616 37 50</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>116</ID>
-<ROI>474 378 28 45</ROI>
-<NewROI>476 380 24 41</NewROI>
-<Name>img421</Name>
+<ROI>514 86 47 13</ROI>
+<NewROI>516 88 43 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>117</ID>
-<ROI>478 267 11 30</ROI>
-<NewROI>480 269 7 26</NewROI>
-<Name>img421</Name>
+<ROI>526 687 18 15</ROI>
+<NewROI>528 689 14 11</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>118</ID>
-<ROI>481 495 9 23</ROI>
-<NewROI>483 497 5 19</NewROI>
-<Name>img421</Name>
+<ROI>538 152 11 43</ROI>
+<NewROI>540 154 7 39</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>119</ID>
-<ROI>482 330 31 41</ROI>
-<NewROI>484 332 27 37</NewROI>
-<Name>img421</Name>
+<ROI>549 573 8 16</ROI>
+<NewROI>551 575 4 12</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>120</ID>
-<ROI>484 93 23 30</ROI>
-<NewROI>486 95 19 26</NewROI>
-<Name>img421</Name>
+<ROI>550 560 28 115</ROI>
+<NewROI>552 562 24 111</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>121</ID>
-<ROI>488 184 14 25</ROI>
-<NewROI>490 186 10 21</NewROI>
-<Name>img421</Name>
+<ROI>552 556 7 18</ROI>
+<NewROI>554 558 3 14</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>122</ID>
-<ROI>493 405 34 22</ROI>
-<NewROI>495 407 30 18</NewROI>
-<Name>img421</Name>
+<ROI>552 525 79 27</ROI>
+<NewROI>554 527 75 23</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>123</ID>
-<ROI>503 488 20 30</ROI>
-<NewROI>505 490 16 26</NewROI>
-<Name>img421</Name>
+<ROI>553 658 19 18</ROI>
+<NewROI>555 660 15 14</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>124</ID>
-<ROI>505 163 26 15</ROI>
-<NewROI>507 165 22 11</NewROI>
-<Name>img421</Name>
+<ROI>553 681 13 28</ROI>
+<NewROI>555 683 9 24</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>125</ID>
-<ROI>508 263 25 41</ROI>
-<NewROI>510 265 21 37</NewROI>
-<Name>img421</Name>
+<ROI>553 505 10 16</ROI>
+<NewROI>555 507 6 12</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>126</ID>
-<ROI>514 438 11 11</ROI>
-<NewROI>515 439 9 9</NewROI>
-<Name>img421</Name>
+<ROI>553 536 7 18</ROI>
+<NewROI>555 538 3 14</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>127</ID>
-<ROI>518 321 121 57</ROI>
-<NewROI>520 323 117 53</NewROI>
-<Name>img421</Name>
+<ROI>554 496 9 15</ROI>
+<NewROI>556 498 5 11</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>128</ID>
-<ROI>522 375 29 48</ROI>
-<NewROI>524 377 25 44</NewROI>
-<Name>img421</Name>
+<ROI>554 664 20 19</ROI>
+<NewROI>556 666 16 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>129</ID>
-<ROI>523 331 25 41</ROI>
-<NewROI>525 333 21 37</NewROI>
-<Name>img421</Name>
+<ROI>554 486 9 15</ROI>
+<NewROI>556 488 5 11</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>130</ID>
-<ROI>527 156 19 14</ROI>
-<NewROI>529 158 15 10</NewROI>
-<Name>img421</Name>
+<ROI>554 459 11 42</ROI>
+<NewROI>556 461 7 38</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>131</ID>
-<ROI>529 264 30 41</ROI>
-<NewROI>531 266 26 37</NewROI>
-<Name>img421</Name>
+<ROI>556 556 44 34</ROI>
+<NewROI>558 558 40 30</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>132</ID>
-<ROI>533 102 9 20</ROI>
-<NewROI>535 104 5 16</NewROI>
-<Name>img421</Name>
+<ROI>557 555 37 26</ROI>
+<NewROI>559 557 33 22</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>133</ID>
-<ROI>539 271 9 22</ROI>
-<NewROI>541 273 5 18</NewROI>
-<Name>img421</Name>
+<ROI>557 550 36 29</ROI>
+<NewROI>559 552 32 25</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>134</ID>
-<ROI>546 403 38 29</ROI>
-<NewROI>548 405 34 25</NewROI>
-<Name>img421</Name>
+<ROI>557 448 8 16</ROI>
+<NewROI>559 450 4 12</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>135</ID>
-<ROI>546 332 27 41</ROI>
-<NewROI>548 334 23 37</NewROI>
-<Name>img421</Name>
+<ROI>559 561 74 84</ROI>
+<NewROI>561 563 70 80</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>136</ID>
-<ROI>548 214 11 11</ROI>
-<NewROI>549 215 9 9</NewROI>
-<Name>img421</Name>
+<ROI>559 680 49 21</ROI>
+<NewROI>561 682 45 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>137</ID>
-<ROI>550 209 8 15</ROI>
-<NewROI>552 211 4 11</NewROI>
-<Name>img421</Name>
+<ROI>561 475 74 47</ROI>
+<NewROI>563 477 70 43</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>138</ID>
-<ROI>553 470 20 47</ROI>
-<NewROI>555 472 16 43</NewROI>
-<Name>img421</Name>
+<ROI>567 628 14 28</ROI>
+<NewROI>569 630 10 24</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>139</ID>
-<ROI>557 265 27 41</ROI>
-<NewROI>559 267 23 37</NewROI>
-<Name>img421</Name>
+<ROI>570 77 117 76</ROI>
+<NewROI>572 79 113 72</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>140</ID>
-<ROI>559 471 11 26</ROI>
-<NewROI>561 473 7 22</NewROI>
-<Name>img421</Name>
+<ROI>570 180 14 13</ROI>
+<NewROI>572 182 10 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>141</ID>
-<ROI>565 271 10 29</ROI>
-<NewROI>567 273 6 25</NewROI>
-<Name>img421</Name>
+<ROI>571 168 26 14</ROI>
+<NewROI>573 170 22 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>142</ID>
-<ROI>568 101 23 29</ROI>
-<NewROI>570 103 19 25</NewROI>
-<Name>img421</Name>
+<ROI>571 156 38 14</ROI>
+<NewROI>573 158 34 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>143</ID>
-<ROI>570 417 13 27</ROI>
-<NewROI>572 419 9 23</NewROI>
-<Name>img421</Name>
+<ROI>573 132 60 14</ROI>
+<NewROI>575 134 56 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>144</ID>
-<ROI>572 329 31 44</ROI>
-<NewROI>574 331 27 40</NewROI>
-<Name>img421</Name>
+<ROI>577 591 7 21</ROI>
+<NewROI>579 593 3 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>145</ID>
-<ROI>574 1 27 17</ROI>
-<NewROI>576 1 23 13</NewROI>
-<Name>img421</Name>
+<ROI>577 647 48 32</ROI>
+<NewROI>579 649 44 28</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>146</ID>
-<ROI>585 494 9 23</ROI>
-<NewROI>587 496 5 19</NewROI>
-<Name>img421</Name>
+<ROI>585 171 14 24</ROI>
+<NewROI>587 173 10 20</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>147</ID>
-<ROI>593 267 24 40</ROI>
-<NewROI>595 269 20 36</NewROI>
-<Name>img421</Name>
+<ROI>589 626 29 23</ROI>
+<NewROI>591 628 25 19</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>148</ID>
-<ROI>595 102 78 37</ROI>
-<NewROI>597 104 74 33</NewROI>
-<Name>img421</Name>
+<ROI>592 528 42 58</ROI>
+<NewROI>594 530 38 54</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>149</ID>
-<ROI>597 104 23 28</ROI>
-<NewROI>599 106 19 24</NewROI>
-<Name>img421</Name>
+<ROI>593 630 38 45</ROI>
+<NewROI>595 632 34 41</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>150</ID>
-<ROI>598 452 19 18</ROI>
-<NewROI>600 454 15 14</NewROI>
-<Name>img421</Name>
+<ROI>593 674 20 19</ROI>
+<NewROI>595 676 16 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>151</ID>
-<ROI>601 230 20 18</ROI>
-<NewROI>603 232 16 14</NewROI>
-<Name>img421</Name>
+<ROI>596 159 15 37</ROI>
+<NewROI>598 161 11 33</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>152</ID>
-<ROI>608 487 10 30</ROI>
-<NewROI>610 489 6 26</NewROI>
-<Name>img421</Name>
+<ROI>602 566 26 20</ROI>
+<NewROI>604 568 22 16</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>153</ID>
-<ROI>608 334 26 40</ROI>
-<NewROI>610 336 22 36</NewROI>
-<Name>img421</Name>
+<ROI>604 528 30 23</ROI>
+<NewROI>606 530 26 19</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>154</ID>
-<ROI>612 236 27 23</ROI>
-<NewROI>614 238 23 19</NewROI>
-<Name>img421</Name>
+<ROI>610 150 13 45</ROI>
+<NewROI>612 152 9 41</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>155</ID>
-<ROI>615 265 31 44</ROI>
-<NewROI>617 267 27 40</NewROI>
-<Name>img421</Name>
+<ROI>628 581 31 82</ROI>
+<NewROI>630 583 27 78</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>156</ID>
-<ROI>617 106 12 28</ROI>
-<NewROI>619 108 8 24</NewROI>
-<Name>img421</Name>
+<ROI>631 573 34 80</ROI>
+<NewROI>633 575 30 76</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>157</ID>
-<ROI>618 183 15 33</ROI>
-<NewROI>620 185 11 29</NewROI>
-<Name>img421</Name>
+<ROI>633 503 20 18</ROI>
+<NewROI>635 505 16 14</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>158</ID>
-<ROI>622 416 11 17</ROI>
-<NewROI>624 418 7 13</NewROI>
-<Name>img421</Name>
+<ROI>654 564 10 39</ROI>
+<NewROI>656 566 6 35</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>159</ID>
-<ROI>625 473 17 34</ROI>
-<NewROI>627 475 13 30</NewROI>
-<Name>img421</Name>
+<ROI>661 545 14 26</ROI>
+<NewROI>663 547 10 22</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>160</ID>
-<ROI>625 475 8 16</ROI>
-<NewROI>627 477 4 12</NewROI>
-<Name>img421</Name>
+<ROI>667 174 17 20</ROI>
+<NewROI>669 176 13 16</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>161</ID>
-<ROI>626 1 25 21</ROI>
-<NewROI>628 1 21 17</NewROI>
-<Name>img421</Name>
+<ROI>680 149 13 19</ROI>
+<NewROI>682 151 9 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>162</ID>
-<ROI>627 106 24 29</ROI>
-<NewROI>629 108 20 25</NewROI>
-<Name>img421</Name>
+<ROI>703 356 106 27</ROI>
+<NewROI>705 358 102 23</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>163</ID>
-<ROI>628 453 7 16</ROI>
-<NewROI>630 455 3 12</NewROI>
-<Name>img421</Name>
+<ROI>731 151 13 43</ROI>
+<NewROI>733 153 9 39</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>164</ID>
-<ROI>629 252 22 15</ROI>
-<NewROI>631 254 18 11</NewROI>
-<Name>img421</Name>
+<ROI>742 148 43 46</ROI>
+<NewROI>744 150 39 42</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>165</ID>
-<ROI>630 186 35 13</ROI>
-<NewROI>632 188 31 9</NewROI>
-<Name>img421</Name>
+<ROI>757 149 14 25</ROI>
+<NewROI>759 151 10 21</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>166</ID>
-<ROI>633 514 11 24</ROI>
-<NewROI>635 516 7 20</NewROI>
-<Name>img421</Name>
+<ROI>777 43 18 22</ROI>
+<NewROI>779 45 14 18</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>167</ID>
-<ROI>639 441 44 75</ROI>
-<NewROI>641 443 40 71</NewROI>
-<Name>img421</Name>
+<ROI>783 628 11 24</ROI>
+<NewROI>785 630 7 20</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>168</ID>
-<ROI>640 457 12 20</ROI>
-<NewROI>642 459 8 16</NewROI>
-<Name>img421</Name>
+<ROI>788 57 27 15</ROI>
+<NewROI>790 59 23 11</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>169</ID>
-<ROI>640 472 11 18</ROI>
-<NewROI>642 474 7 14</NewROI>
-<Name>img421</Name>
+<ROI>789 69 26 13</ROI>
+<NewROI>791 71 22 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>170</ID>
-<ROI>642 274 10 20</ROI>
-<NewROI>644 276 6 16</NewROI>
-<Name>img421</Name>
+<ROI>790 83 16 16</ROI>
+<NewROI>792 85 12 12</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>171</ID>
-<ROI>642 389 8 18</ROI>
-<NewROI>644 391 4 14</NewROI>
-<Name>img421</Name>
+<ROI>793 184 26 14</ROI>
+<NewROI>795 186 22 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>172</ID>
-<ROI>642 480 12 17</ROI>
-<NewROI>644 482 8 13</NewROI>
-<Name>img421</Name>
+<ROI>793 110 44 43</ROI>
+<NewROI>795 112 40 39</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>173</ID>
-<ROI>642 194 11 14</ROI>
-<NewROI>644 196 7 10</NewROI>
-<Name>img421</Name>
+<ROI>798 139 18 13</ROI>
+<NewROI>800 141 14 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>174</ID>
-<ROI>643 213 9 15</ROI>
-<NewROI>645 215 5 11</NewROI>
-<Name>img421</Name>
+<ROI>799 97 8 16</ROI>
+<NewROI>801 99 4 12</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>175</ID>
-<ROI>644 261 14 13</ROI>
-<NewROI>646 263 10 9</NewROI>
-<Name>img421</Name>
+<ROI>806 112 12 17</ROI>
+<NewROI>808 114 8 13</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>176</ID>
-<ROI>648 108 22 29</ROI>
-<NewROI>650 110 18 25</NewROI>
-<Name>img421</Name>
+<ROI>812 61 10 21</ROI>
+<NewROI>814 63 6 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>177</ID>
-<ROI>652 270 21 39</ROI>
-<NewROI>654 272 17 35</NewROI>
-<Name>img421</Name>
+<ROI>813 92 26 13</ROI>
+<NewROI>815 94 22 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>178</ID>
-<ROI>653 332 23 14</ROI>
-<NewROI>655 334 19 10</NewROI>
-<Name>img421</Name>
+<ROI>816 148 254 49</ROI>
+<NewROI>818 150 250 45</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>179</ID>
-<ROI>654 321 27 13</ROI>
-<NewROI>656 323 23 9</NewROI>
-<Name>img421</Name>
+<ROI>817 17 18 49</ROI>
+<NewROI>819 19 14 45</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>180</ID>
-<ROI>654 310 23 13</ROI>
-<NewROI>656 312 19 9</NewROI>
-<Name>img421</Name>
+<ROI>818 59 20 18</ROI>
+<NewROI>820 61 16 14</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>181</ID>
-<ROI>656 501 26 14</ROI>
-<NewROI>658 503 22 10</NewROI>
-<Name>img421</Name>
+<ROI>821 512 7 14</ROI>
+<NewROI>823 514 3 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>182</ID>
-<ROI>669 187 56 47</ROI>
-<NewROI>671 189 52 43</NewROI>
-<Name>img421</Name>
+<ROI>824 170 8 23</ROI>
+<NewROI>826 172 4 19</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>183</ID>
-<ROI>670 271 28 40</ROI>
-<NewROI>672 273 24 36</NewROI>
-<Name>img421</Name>
+<ROI>824 143 56 50</ROI>
+<NewROI>826 145 52 46</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>184</ID>
-<ROI>673 106 45 37</ROI>
-<NewROI>675 108 41 33</NewROI>
-<Name>img421</Name>
+<ROI>826 24 11 38</ROI>
+<NewROI>828 26 7 34</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>185</ID>
-<ROI>675 29 16 14</ROI>
-<NewROI>677 31 12 10</NewROI>
-<Name>img421</Name>
+<ROI>836 82 102 71</ROI>
+<NewROI>838 84 98 67</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>186</ID>
-<ROI>680 279 9 19</ROI>
-<NewROI>682 281 5 15</NewROI>
-<Name>img421</Name>
+<ROI>853 154 13 31</ROI>
+<NewROI>855 156 9 27</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>187</ID>
-<ROI>685 438 9 21</ROI>
-<NewROI>687 440 5 17</NewROI>
-<Name>img421</Name>
+<ROI>863 390 49 28</ROI>
+<NewROI>865 392 45 24</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>188</ID>
-<ROI>687 372 26 46</ROI>
-<NewROI>689 374 22 42</NewROI>
-<Name>img421</Name>
+<ROI>867 135 13 16</ROI>
+<NewROI>869 137 9 12</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>189</ID>
-<ROI>689 440 51 35</ROI>
-<NewROI>691 442 47 31</NewROI>
-<Name>img421</Name>
+<ROI>877 120 15 31</ROI>
+<NewROI>879 122 11 27</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>190</ID>
-<ROI>695 491 10 24</ROI>
-<NewROI>697 493 6 20</NewROI>
-<Name>img421</Name>
+<ROI>884 620 25 22</ROI>
+<NewROI>886 622 21 18</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>191</ID>
-<ROI>696 272 35 40</ROI>
-<NewROI>698 274 31 36</NewROI>
-<Name>img421</Name>
+<ROI>887 100 41 93</ROI>
+<NewROI>889 102 37 89</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>192</ID>
-<ROI>717 110 46 36</ROI>
-<NewROI>719 112 42 32</NewROI>
-<Name>img421</Name>
+<ROI>901 153 13 32</ROI>
+<NewROI>903 155 9 28</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>193</ID>
-<ROI>719 472 26 43</ROI>
-<NewROI>721 474 22 39</NewROI>
-<Name>img421</Name>
+<ROI>905 627 8 15</ROI>
+<NewROI>907 629 4 11</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>194</ID>
-<ROI>721 6 25 23</ROI>
-<NewROI>723 8 21 19</NewROI>
-<Name>img421</Name>
+<ROI>905 621 17 21</ROI>
+<NewROI>907 623 13 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>195</ID>
-<ROI>735 255 103 66</ROI>
-<NewROI>737 257 99 62</NewROI>
-<Name>img421</Name>
+<ROI>912 85 17 66</ROI>
+<NewROI>914 87 13 62</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>196</ID>
-<ROI>736 119 8 15</ROI>
-<NewROI>738 121 4 11</NewROI>
-<Name>img421</Name>
+<ROI>921 621 25 21</ROI>
+<NewROI>923 623 21 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>197</ID>
-<ROI>737 437 22 17</ROI>
-<NewROI>739 439 18 13</NewROI>
-<Name>img421</Name>
+<ROI>923 644 14 13</ROI>
+<NewROI>925 646 10 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>198</ID>
-<ROI>740 274 22 39</ROI>
-<NewROI>742 276 18 35</NewROI>
-<Name>img421</Name>
+<ROI>933 81 123 70</ROI>
+<NewROI>935 83 119 66</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>199</ID>
-<ROI>750 477 14 22</ROI>
-<NewROI>752 479 10 18</NewROI>
-<Name>img421</Name>
+<ROI>934 645 8 11</ROI>
+<NewROI>935 646 6 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>200</ID>
-<ROI>750 374 27 24</ROI>
-<NewROI>752 376 23 20</NewROI>
-<Name>img421</Name>
+<ROI>934 149 58 43</ROI>
+<NewROI>936 151 54 39</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>201</ID>
-<ROI>759 221 23 14</ROI>
-<NewROI>761 223 19 10</NewROI>
-<Name>img421</Name>
+<ROI>937 132 55 15</ROI>
+<NewROI>939 134 51 11</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>202</ID>
-<ROI>760 493 10 22</ROI>
-<NewROI>762 495 6 18</NewROI>
-<Name>img421</Name>
+<ROI>938 622 7 17</ROI>
+<NewROI>940 624 3 13</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>203</ID>
-<ROI>760 275 25 39</ROI>
-<NewROI>762 277 21 35</NewROI>
-<Name>img421</Name>
+<ROI>938 129 63 14</ROI>
+<NewROI>940 131 59 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>204</ID>
-<ROI>761 409 13 40</ROI>
-<NewROI>763 411 9 36</NewROI>
-<Name>img421</Name>
+<ROI>943 621 13 21</ROI>
+<NewROI>945 623 9 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>205</ID>
-<ROI>764 14 25 21</ROI>
-<NewROI>766 16 21 17</NewROI>
-<Name>img421</Name>
+<ROI>950 644 7 14</ROI>
+<NewROI>952 646 3 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>206</ID>
-<ROI>764 114 52 41</ROI>
-<NewROI>766 116 48 37</NewROI>
-<Name>img421</Name>
+<ROI>952 623 8 19</ROI>
+<NewROI>954 625 4 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>207</ID>
-<ROI>766 119 21 28</ROI>
-<NewROI>768 121 17 24</NewROI>
-<Name>img421</Name>
+<ROI>955 643 7 14</ROI>
+<NewROI>957 645 3 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>208</ID>
-<ROI>768 281 10 28</ROI>
-<NewROI>770 283 6 24</NewROI>
-<Name>img421</Name>
+<ROI>957 146 10 21</ROI>
+<NewROI>959 148 6 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>209</ID>
-<ROI>774 340 9 11</ROI>
-<NewROI>775 341 7 9</NewROI>
-<Name>img421</Name>
+<ROI>962 628 7 14</ROI>
+<NewROI>964 630 3 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>210</ID>
-<ROI>776 119 13 29</ROI>
-<NewROI>778 121 9 25</NewROI>
-<Name>img421</Name>
+<ROI>962 622 16 21</ROI>
+<NewROI>964 624 12 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>211</ID>
-<ROI>778 481 25 33</ROI>
-<NewROI>780 483 21 29</NewROI>
-<Name>img421</Name>
+<ROI>977 622 16 21</ROI>
+<NewROI>979 624 12 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>212</ID>
-<ROI>780 452 15 28</ROI>
-<NewROI>782 454 11 24</NewROI>
-<Name>img421</Name>
+<ROI>981 646 11 11</ROI>
+<NewROI>982 647 9 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>213</ID>
-<ROI>783 276 27 39</ROI>
-<NewROI>785 278 23 35</NewROI>
-<Name>img421</Name>
+<ROI>989 709 6 11</ROI>
+<NewROI>990 710 4 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>214</ID>
-<ROI>791 124 8 20</ROI>
-<NewROI>793 126 4 16</NewROI>
-<Name>img421</Name>
+<ROI>988 622 16 21</ROI>
+<NewROI>990 624 12 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>215</ID>
-<ROI>792 283 9 20</ROI>
-<NewROI>794 285 5 16</NewROI>
-<Name>img421</Name>
+<ROI>990 643 13 15</ROI>
+<NewROI>992 645 9 11</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>216</ID>
-<ROI>801 625 15 19</ROI>
-<NewROI>803 627 11 15</NewROI>
-<Name>img421</Name>
+<ROI>993 683 15 20</ROI>
+<NewROI>995 685 11 16</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>217</ID>
-<ROI>802 122 12 27</ROI>
-<NewROI>804 124 8 23</NewROI>
-<Name>img421</Name>
+<ROI>999 622 15 21</ROI>
+<NewROI>1001 624 11 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>218</ID>
-<ROI>803 380 25 40</ROI>
-<NewROI>805 382 21 36</NewROI>
-<Name>img421</Name>
+<ROI>1007 461 42 33</ROI>
+<NewROI>1009 463 38 29</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>219</ID>
-<ROI>803 486 13 22</ROI>
-<NewROI>805 488 9 18</NewROI>
-<Name>img421</Name>
+<ROI>1009 646 11 11</ROI>
+<NewROI>1010 647 9 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>220</ID>
-<ROI>804 455 8 23</ROI>
-<NewROI>806 457 4 19</NewROI>
-<Name>img421</Name>
+<ROI>1019 703 11 15</ROI>
+<NewROI>1021 705 7 11</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>221</ID>
-<ROI>807 277 27 39</ROI>
-<NewROI>809 279 23 35</NewROI>
-<Name>img421</Name>
+<ROI>1024 665 16 15</ROI>
+<NewROI>1026 667 12 11</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>222</ID>
-<ROI>807 455 12 18</ROI>
-<NewROI>809 457 8 14</NewROI>
-<Name>img421</Name>
+<ROI>1028 646 6 11</ROI>
+<NewROI>1029 647 4 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>223</ID>
-<ROI>812 484 9 22</ROI>
-<NewROI>814 486 5 18</NewROI>
-<Name>img421</Name>
+<ROI>1027 622 14 22</ROI>
+<NewROI>1029 624 10 18</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>224</ID>
-<ROI>813 21 23 17</ROI>
-<NewROI>815 23 19 13</NewROI>
-<Name>img421</Name>
+<ROI>1039 631 6 11</ROI>
+<NewROI>1040 632 4 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>225</ID>
-<ROI>814 624 19 20</ROI>
-<NewROI>816 626 15 16</NewROI>
-<Name>img421</Name>
+<ROI>1042 541 7 19</ROI>
+<NewROI>1044 543 3 15</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>226</ID>
-<ROI>814 491 10 23</ROI>
-<NewROI>816 493 6 19</NewROI>
-<Name>img421</Name>
+<ROI>1045 618 12 15</ROI>
+<NewROI>1047 620 8 11</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>227</ID>
-<ROI>832 384 58 61</ROI>
-<NewROI>834 386 54 57</NewROI>
-<Name>img421</Name>
+<ROI>1079 536 11 20</ROI>
+<NewROI>1081 538 7 16</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>228</ID>
-<ROI>838 266 100 60</ROI>
-<NewROI>840 268 96 56</NewROI>
-<Name>img421</Name>
+<ROI>1084 544 10 34</ROI>
+<NewROI>1086 546 6 30</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>229</ID>
-<ROI>843 279 24 43</ROI>
-<NewROI>845 281 20 39</NewROI>
-<Name>img421</Name>
+<ROI>1084 659 79 23</ROI>
+<NewROI>1086 661 75 19</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>230</ID>
-<ROI>844 421 14 16</ROI>
-<NewROI>846 423 10 12</NewROI>
-<Name>img421</Name>
+<ROI>1086 632 7 11</ROI>
+<NewROI>1087 633 5 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>231</ID>
-<ROI>850 284 10 28</ROI>
-<NewROI>852 286 6 24</NewROI>
-<Name>img421</Name>
+<ROI>1089 423 192 135</ROI>
+<NewROI>1091 425 188 131</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>232</ID>
-<ROI>852 385 25 25</ROI>
-<NewROI>854 387 21 21</NewROI>
-<Name>img421</Name>
+<ROI>1092 623 15 21</ROI>
+<NewROI>1094 625 11 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>233</ID>
-<ROI>855 26 22 17</ROI>
-<NewROI>857 28 18 13</NewROI>
-<Name>img421</Name>
+<ROI>1093 659 12 18</ROI>
+<NewROI>1095 661 8 14</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>234</ID>
-<ROI>860 511 10 24</ROI>
-<NewROI>862 513 6 20</NewROI>
-<Name>img421</Name>
+<ROI>1103 623 15 21</ROI>
+<NewROI>1105 625 11 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>235</ID>
-<ROI>861 494 7 20</ROI>
-<NewROI>863 496 3 16</NewROI>
-<Name>img421</Name>
+<ROI>1109 543 39 23</ROI>
+<NewROI>1111 545 35 19</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>236</ID>
-<ROI>866 280 23 38</ROI>
-<NewROI>868 282 19 34</NewROI>
-<Name>img421</Name>
+<ROI>1118 623 26 21</ROI>
+<NewROI>1120 625 22 17</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>237</ID>
-<ROI>878 479 23 34</ROI>
-<NewROI>880 481 19 30</NewROI>
-<Name>img421</Name>
+<ROI>1120 695 11 11</ROI>
+<NewROI>1121 696 9 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>238</ID>
-<ROI>881 489 14 13</ROI>
-<NewROI>883 491 10 9</NewROI>
-<Name>img421</Name>
+<ROI>1136 624 7 16</ROI>
+<NewROI>1138 626 3 12</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>239</ID>
-<ROI>886 479 18 15</ROI>
-<NewROI>888 481 14 11</NewROI>
-<Name>img421</Name>
+<ROI>1163 634 11 11</ROI>
+<NewROI>1164 635 9 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>240</ID>
-<ROI>887 468 17 13</ROI>
-<NewROI>889 470 13 9</NewROI>
-<Name>img421</Name>
+<ROI>1176 634 10 11</ROI>
+<NewROI>1177 635 8 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>241</ID>
-<ROI>888 281 24 38</ROI>
-<NewROI>890 283 20 34</NewROI>
-<Name>img421</Name>
+<ROI>1180 660 101 46</ROI>
+<NewROI>1182 662 97 42</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>242</ID>
-<ROI>889 47 20 16</ROI>
-<NewROI>891 49 16 12</NewROI>
-<Name>img421</Name>
+<ROI>1190 649 9 11</ROI>
+<NewROI>1191 650 7 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>243</ID>
-<ROI>895 286 9 28</ROI>
-<NewROI>897 288 5 24</NewROI>
-<Name>img421</Name>
+<ROI>1197 648 7 14</ROI>
+<NewROI>1199 650 3 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>244</ID>
-<ROI>898 488 44 24</ROI>
-<NewROI>900 490 40 20</NewROI>
-<Name>img421</Name>
+<ROI>1204 631 12 16</ROI>
+<NewROI>1206 633 8 12</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>245</ID>
-<ROI>903 527 15 43</ROI>
-<NewROI>905 529 11 39</NewROI>
-<Name>img421</Name>
+<ROI>1213 622 11 11</ROI>
+<NewROI>1214 623 9 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>246</ID>
-<ROI>904 472 24 18</ROI>
-<NewROI>906 474 20 14</NewROI>
-<Name>img421</Name>
+<ROI>1214 635 8 11</ROI>
+<NewROI>1215 636 6 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>247</ID>
-<ROI>907 451 6 11</ROI>
-<NewROI>908 452 4 9</NewROI>
-<Name>img421</Name>
+<ROI>1223 635 8 11</ROI>
+<NewROI>1224 636 6 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>248</ID>
-<ROI>910 282 23 38</ROI>
-<NewROI>912 284 19 34</NewROI>
-<Name>img421</Name>
+<ROI>1228 632 12 15</ROI>
+<NewROI>1230 634 8 11</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>249</ID>
-<ROI>910 530 10 37</ROI>
-<NewROI>912 532 6 33</NewROI>
-<Name>img421</Name>
+<ROI>1233 649 14 13</ROI>
+<NewROI>1235 651 10 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>250</ID>
-<ROI>912 460 27 26</ROI>
-<NewROI>914 462 23 22</NewROI>
-<Name>img421</Name>
+<ROI>1237 635 8 11</ROI>
+<NewROI>1238 636 6 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>251</ID>
-<ROI>912 568 70 45</ROI>
-<NewROI>914 570 66 41</NewROI>
-<Name>img421</Name>
+<ROI>1248 650 10 11</ROI>
+<NewROI>1249 651 8 9</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>252</ID>
-<ROI>915 513 14 57</ROI>
-<NewROI>917 515 10 53</NewROI>
-<Name>img421</Name>
+<ROI>1251 570 17 25</ROI>
+<NewROI>1253 572 13 21</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>253</ID>
-<ROI>922 530 26 36</ROI>
-<NewROI>924 532 22 32</NewROI>
-<Name>img421</Name>
+<ROI>1271 555 9 18</ROI>
+<NewROI>1273 557 5 14</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
 <Rect>
 <ID>254</ID>
-<ROI>925 458 16 27</ROI>
-<NewROI>927 460 12 23</NewROI>
-<Name>img421</Name>
+<ROI>1273 707 8 14</ROI>
+<NewROI>1275 709 4 10</NewROI>
+<Name>img370</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
+<TimeRunning>0.00673118</TimeRunning>
 </Rect>
-<Rect>
-<ID>255</ID>
-<ROI>925 619 30 24</ROI>
-<NewROI>927 621 26 20</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>256</ID>
-<ROI>927 497 7 16</ROI>
-<NewROI>929 499 3 12</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>257</ID>
-<ROI>931 31 22 20</ROI>
-<NewROI>933 33 18 16</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>258</ID>
-<ROI>932 490 17 23</ROI>
-<NewROI>934 492 13 19</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>259</ID>
-<ROI>937 426 13 14</ROI>
-<NewROI>939 428 9 10</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>260</ID>
-<ROI>941 433 13 21</ROI>
-<NewROI>943 435 9 17</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>261</ID>
-<ROI>946 504 19 21</ROI>
-<NewROI>948 506 15 17</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>262</ID>
-<ROI>951 475 8 14</ROI>
-<NewROI>953 477 4 10</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>263</ID>
-<ROI>952 499 13 19</ROI>
-<NewROI>954 501 9 15</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>264</ID>
-<ROI>957 584 24 20</ROI>
-<NewROI>959 586 20 16</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>265</ID>
-<ROI>959 465 48 21</ROI>
-<NewROI>961 467 44 17</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>266</ID>
-<ROI>961 496 9 17</ROI>
-<NewROI>963 498 5 13</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>267</ID>
-<ROI>971 35 26 20</ROI>
-<NewROI>973 37 22 16</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>268</ID>
-<ROI>972 426 18 24</ROI>
-<NewROI>974 428 14 20</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>269</ID>
-<ROI>973 411 22 21</ROI>
-<NewROI>975 413 18 17</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>270</ID>
-<ROI>991 422 12 28</ROI>
-<NewROI>993 424 8 24</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>271</ID>
-<ROI>999 409 24 22</ROI>
-<NewROI>1001 411 20 18</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>272</ID>
-<ROI>999 409 75 84</ROI>
-<NewROI>1001 411 71 80</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>273</ID>
-<ROI>1015 39 26 19</ROI>
-<NewROI>1017 41 22 15</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>274</ID>
-<ROI>1018 394 8 16</ROI>
-<NewROI>1020 396 4 12</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>275</ID>
-<ROI>1027 419 9 30</ROI>
-<NewROI>1029 421 5 26</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>276</ID>
-<ROI>1059 46 22 19</ROI>
-<NewROI>1061 48 18 15</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>277</ID>
-<ROI>1060 413 77 94</ROI>
-<NewROI>1062 415 73 90</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>278</ID>
-<ROI>1078 59 24 26</ROI>
-<NewROI>1080 61 20 22</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>279</ID>
-<ROI>1083 479 54 13</ROI>
-<NewROI>1085 481 50 9</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>280</ID>
-<ROI>1092 423 9 30</ROI>
-<NewROI>1094 425 5 26</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>281</ID>
-<ROI>1112 17 55 21</ROI>
-<NewROI>1114 19 51 17</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00936177</TimeRunning>
-</Rect>
-<Rect>
-<ID>282</ID>
-<ROI>1122 414 32 33</ROI>
-<NewROI>1124 416 28 29</NewROI>
-<Name>img421</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRu
