@@ -62,11 +62,13 @@ void IncreaseRectToBoxes(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &a
 
 // bindg computing running time to each box
 // this computing time is the average running time
-void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, 
+	vector<tsLineBox> &atsLines);
 
 // add all current rect to the original image and write the image to folder Root/Debug
 // strInput is the absolute path of the image file.
-void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
+	vector<tsLineBox> &atsLines);
 
 // nPos is the start search position
 // nSize is the size of aFreeList
@@ -108,6 +110,13 @@ bool IsB1insideB2(Rect B1, Rect B2);
 // check if a point is inside a Rect
 bool IsPointAInsideRectB(int nXA, int nYA, Rect rB);
 
+// intersect or less than 4 pixels seperate rect
+// h / h > 0.8 & < 1.2
+// w / w > 0.7 & < 1.3
+// y / y > 0.5 & < 1.5
+// nX of A is on the left of nX of B
+bool CheckConditionOfMergIntersectBoxes(tsOtherBox A, tsOtherBox B);
+
 // return true if B1.y < B2.y
 bool CompareYCoordinate(Rect B1, Rect B2);
 
@@ -133,7 +142,8 @@ void Run(int argc, char **argv, bool bDebug);
 //					Sort y coordinate ascending; remove single box text line
 //					Merge inside box
 // bDebug = true: add rects back to the original image for a fast result examination.
-void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes, bool bDebug);
+void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, 
+	vector<tsOtherBox> &atsOtherBoxes, bool bDebug);
 
 // read an absolute path of an image into a Mat with grayscale format
 void ReadImageGrayScale(string strPath, Mat &mInput);
@@ -147,7 +157,8 @@ void MSEROneImage(Mat &input, vector<Rect> &arBBoxes);
 
 // convert from BBoxes to tsOtherBox
 // default number version is 1, more version = increase the number version
-void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, vector<tsOtherBox> &atsOtherboxes);
+void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, 
+	vector<tsOtherBox> &atsOtherboxes);
 
 // from OtherBoxes, merge possible boxes that can be assemble into a line
 void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
@@ -158,12 +169,14 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 /*		Input/Output Stream		*/
 
 // write data to OtherBoxes.txt and Lines.txt in folder TmpRect
-void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 // crop rects in the original image to folder TmpImage
 // strInput is the absolute path of the original image
 // strTmpImage is the absolute path of TmpImage folder
-void CropROIByDataToFolderImage(string strTmpImage, string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+void CropROIByDataToFolderImage(string strTmpImage, string strInput, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 //----------------------------------------------------------------------
 
@@ -620,7 +633,8 @@ void IncreaseRectToBoxes(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &a
 	}
 }
 
-void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, 
+	vector<tsLineBox> &atsLines)
 {
 	float average = fTime / ((int)(atsOtherBoxes.size() + atsLines.size()));
 	int nSize = atsOtherBoxes.size();
@@ -636,7 +650,8 @@ void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vec
 	return;
 }
 
-void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
+	vector<tsLineBox> &atsLines)
 {
 	// get root folder
 	string strRootFolder = GetRootFolder(strInput);
@@ -671,9 +686,78 @@ void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
 void GetALineBoxFromIntersectBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
-
+	// check condition
+	if (nPos == nSize || (nPos + 1) == nSize || (nPos + 2) == nSize)
+	{
+		nPos = nSize;
+		return;
+	}
+	vector<int> aCurLine;
+	aCurLine.push_back(nPos);
+	int nPosCurLine = 0;		// the current position of aCurLine to search Rect
+	for (int nI = nPos + 1; nI < nSize; nI++)
+	{
+		// find intersect or at least only 1-3 pixels seperated for width < 50 pixels
+		// height / height > 0.8 & < 1.2
+		// width / width > 0.7 & < 1.3
+		if (CheckConditionOfMergIntersectBoxes(atsOtherBoxes[aFreeList[aCurLine[nPosCurLine]]], 
+			atsOtherBoxes[aFreeList[nI]]) == true)
+		{
+			// add to CurLine
+			aCurLine.push_back(nI);
+			nPosCurLine++;
+		}
+	}
+	// check line's points count
+	if (aCurLine.size() < 3)
+	{
+		nPos++;
+		aCurLine.clear();
+		return;
+	}
+	// create new line
+	tsLineBox tsLineTmp;
+	// create new ID = last highest ID + 1
+	int nNewID = 0;
+	if (atsLines.size() == 0)
+	{
+		nNewID = atsOtherBoxes[atsOtherBoxes.size() - 1].nID + 1;
+	}
+	else
+	{
+		nNewID = atsLines[atsLines.size() - 1].tsCore.nID + 1;
+	}
+	tsLineTmp.tsCore.nID = nNewID;
+	// get original image's name
+	tsLineTmp.tsCore.strNameImage = atsOtherBoxes[aFreeList[aCurLine[0]]].strNameImage;
+	// binding default value
+	tsLineTmp.tsCore.fTimeRunning = 0;
+	tsLineTmp.tsCore.rACVROI = tsRect(0, 0, 0, 0);
+	// default number version is 1
+	tsLineTmp.tsCore.nNumberVersion = 1;
+	// copy IDs and Rects from tsOtherBoxes to new tsLineBox
+	for (int nJ = 0; nJ < aCurLine.size(); nJ++)
+	{
+		tsLineTmp.anSubID.push_back(atsOtherBoxes[aFreeList[aCurLine[nJ]]].nID);
+		tsLineTmp.atsSubROI.push_back(tsRect(atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nX,
+			atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nY,
+			atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nWidth,
+			atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nHeight));
+	}
+	// create new Rect cover all old rects
+	tsLineTmp.tsCore.InputROIByCreateCoverRect(tsLineTmp.atsSubROI);
+	// add to atsLine
+	atsLines.push_back(tsLineTmp);
+	// remove indexes in aFreeList
+	RemoveSameIndexesFromAInB(aCurLine, aFreeList);
+	// nPos keep the same, because the current pos is replaced
+	// update nSize
+	nSize = aFreeList.size();
+	// clear aCurLine
+	aCurLine.clear();
 }
 
+// have bugs
 void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList, 
 	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
@@ -689,6 +773,7 @@ void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 	Rect rSearchRect = Rect(atsOtherBoxes[aFreeList[nPos]].rROI.nX, atsOtherBoxes[aFreeList[nPos]].rROI.nY, 
 		(atsOtherBoxes[aFreeList[nPos]].rROI.nWidth * 3), atsOtherBoxes[aFreeList[nPos]].rROI.nHeight);
 	aCurLine.push_back(nPos);
+	int nPosCurLine = 0;
 	for (int nI = nPos + 1; nI < nSize; nI++)
 	{
 		// Check if the center of mass of the searching rect is in the rSearchRect,
@@ -700,8 +785,8 @@ void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 		if (IsPointAInsideRectB(nCX, nCY, rSearchRect) == true)
 		{
 			// check height and width
-			if ((atsOtherBoxes[aFreeList[nPos]].rROI.nWidth * 2) > atsOtherBoxes[aFreeList[nI]].rROI.nWidth &&
-				(atsOtherBoxes[aFreeList[nPos]].rROI.nHeight * 1.3) > atsOtherBoxes[aFreeList[nI]].rROI.nHeight)
+			if ((atsOtherBoxes[aFreeList[nPosCurLine]].rROI.nWidth * 2) > atsOtherBoxes[aFreeList[nI]].rROI.nWidth &&
+				(atsOtherBoxes[aFreeList[nPosCurLine]].rROI.nHeight * 1.3) > atsOtherBoxes[aFreeList[nI]].rROI.nHeight)
 			{
 				// check condition base on average width of boxes in the aCurLine
 				// special case, aCurLine only has the start point or 2 points
@@ -715,6 +800,8 @@ void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 					// create new search rect
 					rSearchRect = Rect(atsOtherBoxes[aFreeList[nI]].rROI.nX, atsOtherBoxes[aFreeList[nI]].rROI.nY,
 						(atsOtherBoxes[aFreeList[nI]].rROI.nWidth * 3), atsOtherBoxes[aFreeList[nI]].rROI.nHeight);
+					// increase cur pos in CurLine
+					nPosCurLine++;
 				}
 				// normal case, more than 3 points in the aCurLine
 				else
@@ -737,6 +824,8 @@ void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 						// create new search rect
 						rSearchRect = Rect(atsOtherBoxes[aFreeList[nI]].rROI.nX, atsOtherBoxes[aFreeList[nI]].rROI.nY,
 							(atsOtherBoxes[aFreeList[nI]].rROI.nWidth * 3), atsOtherBoxes[aFreeList[nI]].rROI.nHeight);
+						// increase cur pos in CurLine
+						nPosCurLine++;
 					}
 				}
 			}
@@ -777,8 +866,10 @@ void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 		for (int nJ = 0; nJ < aCurLine.size(); nJ++)
 		{
 			tsLineTmp.anSubID.push_back(atsOtherBoxes[aFreeList[aCurLine[nJ]]].nID);
-			tsLineTmp.atsSubROI.push_back(tsRect(atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nX, atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nY,
-				atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nWidth, atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nHeight));
+			tsLineTmp.atsSubROI.push_back(tsRect(atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nX, 
+				atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nY,
+				atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nWidth, 
+				atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nHeight));
 		}
 		// create new Rect cover all old rects
 		tsLineTmp.tsCore.InputROIByCreateCoverRect(tsLineTmp.atsSubROI);
@@ -941,6 +1032,18 @@ bool IsPointAInsideRectB(int nXA, int nYA, Rect rB)
 	return false;
 }
 
+// not finish
+bool CheckConditionOfMergIntersectBoxes(tsOtherBox A, tsOtherBox B)
+{
+	// check y position, cannot be too different
+	if ((A.rROI.nY + A.rROI.nHeight / 2) > B.rROI.nY && (A.rROI.nY - A.rROI.nHeight / 2) < B.rROI.nY)
+	{
+		// check intersect or seperate in acceptable limit
+
+	}
+	return false;
+}
+
 bool CompareYCoordinate(Rect B1, Rect B2)
 {
 	return (B1.y < B2.y);
@@ -1052,7 +1155,8 @@ void Run(int argc, char **argv, bool bDebug)
 	astrListPaths.clear();
 }
 
-void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes, bool bDebug)
+void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, 
+	vector<tsOtherBox> &atsOtherBoxes, bool bDebug)
 {
 	// init variables
 	fTimeRunning = 0.00;
@@ -1140,7 +1244,8 @@ void MSEROneImage(Mat &input, vector<Rect> &arBBoxes)
 	contours.clear();
 }
 
-void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, vector<tsOtherBox> &atsOtherboxes)
+void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, 
+	vector<tsOtherBox> &atsOtherboxes)
 {
 	int nSize = arBBoxes.size();
 	if (nSize == 0)
@@ -1205,7 +1310,8 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
 
-void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
 	BBoxIOStream bboxTmp;
 	bool bChecked = false;
@@ -1222,7 +1328,8 @@ void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, vector<tsOt
 	}
 }
 
-void CropROIByDataToFolderImage(string strTmpImage, string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+void CropROIByDataToFolderImage(string strTmpImage, string strInput, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
 	Mat mInput = imread(strInput);
 	int nSize = atsOtherBoxes.size();
