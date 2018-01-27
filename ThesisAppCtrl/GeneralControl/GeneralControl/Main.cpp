@@ -74,6 +74,9 @@ void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
 // this function support function MergeLineBox
 void GetALineBox(int &nPos, int &nSize, vector<int> &aFreeList, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
+// Remove similar indexes from vector A inside vector B
+void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B);
+
 void SortYCoordinate(vector<Rect> &arBBoxes);
 
 void SortArea(vector<Rect> &arBBoxes);
@@ -132,6 +135,7 @@ void SharpenImage(Mat &mInput, Mat &mOutput, double sigma = 1, double threshold 
 void MSEROneImage(Mat &input, vector<Rect> &arBBoxes);
 
 // convert from BBoxes to tsOtherBox
+// default number version is 1, more version = increase the number version
 void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, vector<tsOtherBox> &atsOtherboxes);
 
 // from OtherBoxes, merge possible boxes that can be assemble into a line
@@ -656,11 +660,12 @@ void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
 void GetALineBox(int &nPos, int &nSize, vector<int> &aFreeList, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
 	// check condition
-	if ((nPos + 1) == nSize || (nPos + 2) == nSize)
+	if (nPos == nSize || (nPos + 1) == nSize || (nPos + 2) == nSize)
 	{
 		nPos = nSize;
 		return;
 	}
+	// aCurLine contains list of index that forms a line in aFreeList
 	vector<int> aCurLine;
 	// create search area rectangle - same x y height, width*3
 	Rect rSearchRect = Rect(atsOtherBoxes[aFreeList[nPos]].rROI.nX, atsOtherBoxes[aFreeList[nPos]].rROI.nY, 
@@ -736,13 +741,69 @@ void GetALineBox(int &nPos, int &nSize, vector<int> &aFreeList, vector<tsOtherBo
 		{
 			nNewID = atsLines[atsLines.size() - 1].tsCore.nID + 1;
 		}
-
+		tsLineTmp.tsCore.nID = nNewID;
+		// get original image's name
+		tsLineTmp.tsCore.strNameImage = atsOtherBoxes[aFreeList[aCurLine[0]]].strNameImage;
+		// binding default value
+		tsLineTmp.tsCore.fTimeRunning = 0;
+		tsLineTmp.tsCore.rACVROI = tsRect(0, 0, 0, 0);
+		// default number version is 1
+		tsLineTmp.tsCore.nNumberVersion = 1;
 		// copy IDs and Rects from tsOtherBoxes to new tsLineBox
 		for (int nJ = 0; nJ < aCurLine.size(); nJ++)
 		{
+			tsLineTmp.anSubID.push_back(atsOtherBoxes[aFreeList[aCurLine[nJ]]].nID);
+			tsLineTmp.atsSubROI.push_back(tsRect(atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nX, atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nY,
+				atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nWidth, atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nHeight));
+		}
+		// create new Rect cover all old rects
+		tsLineTmp.tsCore.InputROIByCreateCoverRect(tsLineTmp.atsSubROI);
+		// add to atsLine
+		atsLines.push_back(tsLineTmp);
+		// remove indexes in aFreeList
+		cout << "Before: CurLine size = " << aCurLine.size() << " ; FreeList size = " << aFreeList.size() << endl;
+		RemoveSameIndexesFromAInB(aCurLine, aFreeList);
+		cout << "After: CurLine size = " << aCurLine.size() << " ; FreeList size = " << aFreeList.size() << endl;
+		// nPos keep the same, because the current pos is replaced
+		// update nSize
+		nSize = aFreeList.size();
+		// clear aCurLine
+		aCurLine.clear();
+	}
+}
 
+void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B)
+{
+	vector<int> aTmp;
+	int nPos = 0;
+	int nSize = A.size();
+	for (int nI = 0; nI < B.size(); nI++)
+	{
+		if (nPos == nSize)
+		{
+			// load the rest number in B to aTmp
+			aTmp.push_back(B[nI]);
+			continue;
+		}
+		if (nI == A[nPos])
+		{
+			nPos++;
+			continue;
+		}
+		else if (nI < A[nPos])
+		{
+			aTmp.push_back(B[nI]);
+		}
+		else if (nI > A[nPos])
+		{
+			// increase nPos to when B[nI] < A[nPos]
+			nI--;
+			nPos++;
+			continue;
 		}
 	}
+	B.clear();
+	B = aTmp;
 }
 
 void SortYCoordinate(vector<Rect> &arBBoxes)
@@ -1043,7 +1104,7 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 	{
 		aFreeList.push_back(nI);
 	}
-	while(nPos < nSize)
+	while(nPos < nSize && nSize != 0)
 	{
 		// handle function
 		GetALineBox(nPos, nSize, aFreeList, atsOtherBoxes, atsLines);
