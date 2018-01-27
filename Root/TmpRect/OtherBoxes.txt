@@ -1,2040 +1,224 @@
 <Rect>
 <ID>0</ID>
-<ROI>1 514 21 22</ROI>
-<NewROI>1 516 17 18</NewROI>
-<Name>img370</Name>
+<ROI>1 137 43 20</ROI>
+<NewROI>1 139 39 16</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>1</ID>
-<ROI>1 1 92 72</ROI>
-<NewROI>1 1 88 68</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>2</ID>
-<ROI>1 361 30 16</ROI>
-<NewROI>1 363 26 12</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>3</ID>
-<ROI>1 383 25 113</ROI>
-<NewROI>1 385 21 109</NewROI>
-<Name>img370</Name>
+<ROI>1 202 9 14</ROI>
+<NewROI>1 204 5 10</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>4</ID>
-<ROI>1 341 34 16</ROI>
-<NewROI>1 343 30 12</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>5</ID>
-<ROI>1 530 39 17</ROI>
-<NewROI>1 532 35 13</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>6</ID>
-<ROI>1 702 63 19</ROI>
-<NewROI>1 704 59 15</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>7</ID>
-<ROI>1 77 79 267</ROI>
-<NewROI>1 79 75 263</NewROI>
-<Name>img370</Name>
+<ROI>54 219 15 22</ROI>
+<NewROI>56 221 11 18</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>8</ID>
-<ROI>1 567 13 19</ROI>
-<NewROI>1 569 9 15</NewROI>
-<Name>img370</Name>
+<ROI>57 479 10 11</ROI>
+<NewROI>58 480 8 9</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>9</ID>
-<ROI>8 567 8 20</ROI>
-<NewROI>10 569 4 16</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>10</ID>
-<ROI>12 645 14 14</ROI>
-<NewROI>14 647 10 10</NewROI>
-<Name>img370</Name>
+<ROI>91 295 18 38</ROI>
+<NewROI>93 297 14 34</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>11</ID>
-<ROI>13 374 39 129</ROI>
-<NewROI>15 376 35 125</NewROI>
-<Name>img370</Name>
+<ROI>97 309 6 11</ROI>
+<NewROI>98 310 4 9</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>12</ID>
-<ROI>17 679 10 14</ROI>
-<NewROI>19 681 6 10</NewROI>
-<Name>img370</Name>
+<ROI>108 301 19 26</ROI>
+<NewROI>110 303 15 22</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>13</ID>
-<ROI>18 516 24 21</ROI>
-<NewROI>20 518 20 17</NewROI>
-<Name>img370</Name>
+<ROI>125 301 18 25</ROI>
+<NewROI>127 303 14 21</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>14</ID>
-<ROI>18 543 11 19</ROI>
-<NewROI>20 545 7 15</NewROI>
-<Name>img370</Name>
+<ROI>173 47 173 83</ROI>
+<NewROI>175 49 169 79</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>15</ID>
-<ROI>26 544 7 18</ROI>
-<NewROI>28 546 3 14</NewROI>
-<Name>img370</Name>
+<ROI>201 313 9 15</ROI>
+<NewROI>203 315 5 11</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>16</ID>
-<ROI>27 568 15 19</ROI>
-<NewROI>29 570 11 15</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>17</ID>
-<ROI>32 544 16 19</ROI>
-<NewROI>34 546 12 15</NewROI>
-<Name>img370</Name>
+<ROI>238 297 15 26</ROI>
+<NewROI>240 299 11 22</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>18</ID>
-<ROI>36 341 21 17</ROI>
-<NewROI>38 343 17 13</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>19</ID>
-<ROI>38 78 63 266</ROI>
-<NewROI>40 80 59 262</NewROI>
-<Name>img370</Name>
+<ROI>249 7 53 19</ROI>
+<NewROI>251 9 49 15</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>20</ID>
-<ROI>39 569 8 18</ROI>
-<NewROI>41 571 4 14</NewROI>
-<Name>img370</Name>
+<ROI>252 297 16 25</ROI>
+<NewROI>254 299 12 21</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>21</ID>
-<ROI>39 382 38 121</ROI>
-<NewROI>41 384 34 117</NewROI>
-<Name>img370</Name>
+<ROI>264 216 21 15</ROI>
+<NewROI>266 218 17 11</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>22</ID>
-<ROI>40 544 7 18</ROI>
-<NewROI>42 546 3 14</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>23</ID>
-<ROI>43 515 22 23</ROI>
-<NewROI>45 517 18 19</NewROI>
-<Name>img370</Name>
+<ROI>281 62 59 42</ROI>
+<NewROI>283 64 55 38</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>24</ID>
-<ROI>44 544 9 20</ROI>
-<NewROI>46 546 5 16</NewROI>
-<Name>img370</Name>
+<ROI>288 295 18 30</ROI>
+<NewROI>290 297 14 26</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>25</ID>
-<ROI>45 685 10 11</ROI>
-<NewROI>46 686 8 9</NewROI>
-<Name>img370</Name>
+<ROI>293 301 9 15</ROI>
+<NewROI>295 303 5 11</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>26</ID>
-<ROI>53 365 27 13</ROI>
-<NewROI>55 367 23 9</NewROI>
-<Name>img370</Name>
+<ROI>309 118 151 109</ROI>
+<NewROI>311 120 147 105</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>27</ID>
-<ROI>60 342 24 17</ROI>
-<NewROI>62 344 20 13</NewROI>
-<Name>img370</Name>
+<ROI>314 71 14 23</ROI>
+<NewROI>316 73 10 19</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>28</ID>
-<ROI>62 569 17 19</ROI>
-<NewROI>64 571 13 15</NewROI>
-<Name>img370</Name>
+<ROI>317 295 17 25</ROI>
+<NewROI>319 297 13 21</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>29</ID>
-<ROI>63 515 23 22</ROI>
-<NewROI>65 517 19 18</NewROI>
-<Name>img370</Name>
+<ROI>331 288 19 32</ROI>
+<NewROI>333 290 15 28</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>30</ID>
-<ROI>71 141 42 164</ROI>
-<NewROI>73 143 38 160</NewROI>
-<Name>img370</Name>
+<ROI>332 302 8 15</ROI>
+<NewROI>334 304 4 11</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>31</ID>
-<ROI>82 515 28 24</ROI>
-<NewROI>84 517 24 20</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>32</ID>
-<ROI>85 1 28 72</ROI>
-<NewROI>87 1 24 68</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>33</ID>
-<ROI>88 343 21 16</ROI>
-<NewROI>90 345 17 12</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>34</ID>
-<ROI>90 1 71 346</ROI>
-<NewROI>92 1 67 342</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>35</ID>
-<ROI>90 560 53 19</ROI>
-<NewROI>92 562 49 15</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>36</ID>
-<ROI>93 376 37 127</ROI>
-<NewROI>95 378 33 123</NewROI>
-<Name>img370</Name>
+<ROI>416 200 21 15</ROI>
+<NewROI>418 202 17 11</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>37</ID>
-<ROI>98 671 19 48</ROI>
-<NewROI>100 673 15 44</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>38</ID>
-<ROI>99 542 31 13</ROI>
-<NewROI>101 544 27 9</NewROI>
-<Name>img370</Name>
+<ROI>450 213 20 46</ROI>
+<NewROI>452 215 16 42</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>39</ID>
-<ROI>114 343 21 17</ROI>
-<NewROI>116 345 17 13</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>40</ID>
-<ROI>119 382 36 122</ROI>
-<NewROI>121 384 32 118</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>41</ID>
-<ROI>120 686 14 32</ROI>
-<NewROI>122 688 10 28</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>42</ID>
-<ROI>132 69 16 13</ROI>
-<NewROI>134 71 12 9</NewROI>
-<Name>img370</Name>
+<ROI>550 465 24 24</ROI>
+<NewROI>552 467 20 20</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>43</ID>
-<ROI>133 1 26 73</ROI>
-<NewROI>135 1 22 69</NewROI>
-<Name>img370</Name>
+<ROI>555 289 16 19</ROI>
+<NewROI>557 291 12 15</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>44</ID>
-<ROI>140 343 20 18</ROI>
-<NewROI>142 345 16 14</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>45</ID>
-<ROI>141 79 56 267</ROI>
-<NewROI>143 81 52 263</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>46</ID>
-<ROI>146 382 35 122</ROI>
-<NewROI>148 384 31 118</NewROI>
-<Name>img370</Name>
+<ROI>585 475 16 14</ROI>
+<NewROI>587 477 12 10</NewROI>
+<Name>img264</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>47</ID>
-<ROI>155 1 30 83</ROI>
-<NewROI>157 1 26 79</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>
 <Rect>
 <ID>48</ID>
-<ROI>165 344 21 17</ROI>
-<NewROI>167 346 17 13</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>49</ID>
-<ROI>170 79 25 66</ROI>
-<NewROI>172 81 21 62</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>50</ID>
-<ROI>172 382 35 122</ROI>
-<NewROI>174 384 31 118</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>51</ID>
-<ROI>176 684 24 17</ROI>
-<NewROI>178 686 20 13</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>52</ID>
-<ROI>181 1 26 74</ROI>
-<NewROI>183 1 22 70</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>53</ID>
-<ROI>191 344 21 17</ROI>
-<NewROI>193 346 17 13</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>54</ID>
-<ROI>198 143 39 163</ROI>
-<NewROI>200 145 35 159</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>55</ID>
-<ROI>200 382 31 122</ROI>
-<NewROI>202 384 27 118</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>56</ID>
-<ROI>204 1 28 84</ROI>
-<NewROI>206 1 24 80</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>57</ID>
-<ROI>217 345 21 17</ROI>
-<NewROI>219 347 17 13</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>58</ID>
-<ROI>220 80 25 66</ROI>
-<NewROI>222 82 21 62</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>59</ID>
-<ROI>224 144 36 162</ROI>
-<NewROI>226 146 32 158</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>60</ID>
-<ROI>229 1 25 75</ROI>
-<NewROI>231 1 21 71</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>61</ID>
-<ROI>244 81 24 66</ROI>
-<NewROI>246 83 20 62</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>62</ID>
-<ROI>252 145 82 87</ROI>
-<NewROI>254 147 78 83</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>63</ID>
-<ROI>252 1 25 84</ROI>
-<NewROI>254 1 21 80</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>64</ID>
-<ROI>255 251 69 55</ROI>
-<NewROI>257 253 65 51</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>65</ID>
-<ROI>257 391 49 111</ROI>
-<NewROI>259 393 45 107</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>66</ID>
-<ROI>260 101 19 28</ROI>
-<NewROI>262 103 15 24</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>67</ID>
-<ROI>272 73 69 32</ROI>
-<NewROI>274 75 65 28</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>68</ID>
-<ROI>300 507 30 26</ROI>
-<NewROI>302 509 26 22</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>69</ID>
-<ROI>303 544 30 135</ROI>
-<NewROI>305 546 26 131</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>70</ID>
-<ROI>307 125 29 23</ROI>
-<NewROI>309 127 25 19</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>71</ID>
-<ROI>318 668 11 17</ROI>
-<NewROI>320 670 7 13</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>72</ID>
-<ROI>320 2 28 74</ROI>
-<NewROI>322 4 24 70</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>73</ID>
-<ROI>330 156 38 14</ROI>
-<NewROI>332 158 34 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>74</ID>
-<ROI>330 168 25 13</ROI>
-<NewROI>332 170 21 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>75</ID>
-<ROI>341 528 31 29</ROI>
-<NewROI>343 530 27 25</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>76</ID>
-<ROI>343 171 14 24</ROI>
-<NewROI>345 173 10 20</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>77</ID>
-<ROI>353 159 17 36</ROI>
-<NewROI>355 161 13 32</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>78</ID>
-<ROI>357 603 17 43</ROI>
-<NewROI>359 605 13 39</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>79</ID>
-<ROI>366 147 17 48</ROI>
-<NewROI>368 149 13 44</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>80</ID>
-<ROI>372 565 22 32</ROI>
-<NewROI>374 567 18 28</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>81</ID>
-<ROI>376 444 27 52</ROI>
-<NewROI>378 446 23 48</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>82</ID>
-<ROI>380 71 19 14</ROI>
-<NewROI>382 73 15 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>83</ID>
-<ROI>383 529 12 29</ROI>
-<NewROI>385 531 8 25</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>84</ID>
-<ROI>387 415 10 15</ROI>
-<NewROI>389 417 6 11</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>85</ID>
-<ROI>389 573 16 39</ROI>
-<NewROI>391 575 12 35</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>86</ID>
-<ROI>392 128 16 67</ROI>
-<NewROI>394 130 12 63</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>87</ID>
-<ROI>393 527 41 41</ROI>
-<NewROI>395 529 37 37</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>88</ID>
-<ROI>394 515 77 38</ROI>
-<NewROI>396 517 73 34</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>89</ID>
-<ROI>395 610 10 36</ROI>
-<NewROI>397 612 6 32</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>90</ID>
-<ROI>395 551 39 28</ROI>
-<NewROI>397 553 35 24</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>91</ID>
-<ROI>404 552 67 89</ROI>
-<NewROI>406 554 63 85</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>92</ID>
-<ROI>404 555 7 16</ROI>
-<NewROI>406 557 3 12</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>93</ID>
-<ROI>414 101 20 94</ROI>
-<NewROI>416 103 16 90</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>94</ID>
-<ROI>433 525 42 56</ROI>
-<NewROI>435 527 38 52</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>95</ID>
-<ROI>443 348 56 14</ROI>
-<NewROI>445 350 52 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>96</ID>
-<ROI>450 168 26 13</ROI>
-<NewROI>452 170 22 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>97</ID>
-<ROI>451 156 38 14</ROI>
-<NewROI>453 158 34 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>98</ID>
-<ROI>463 171 15 24</ROI>
-<NewROI>465 173 11 20</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>99</ID>
-<ROI>466 675 19 25</ROI>
-<NewROI>468 677 15 21</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>100</ID>
-<ROI>468 573 11 39</ROI>
-<NewROI>470 575 7 35</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>101</ID>
-<ROI>468 71 25 23</ROI>
-<NewROI>470 73 21 19</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>102</ID>
-<ROI>470 515 84 130</ROI>
-<NewROI>472 517 80 126</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>103</ID>
-<ROI>473 556 10 35</ROI>
-<NewROI>475 558 6 31</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>104</ID>
-<ROI>474 659 12 17</ROI>
-<NewROI>476 661 8 13</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>105</ID>
-<ROI>475 159 16 36</ROI>
-<NewROI>477 161 12 32</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>106</ID>
-<ROI>482 624 26 34</ROI>
-<NewROI>484 626 22 30</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>107</ID>
-<ROI>486 643 28 25</ROI>
-<NewROI>488 645 24 21</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>108</ID>
-<ROI>486 2 350 73</ROI>
-<NewROI>488 4 346 69</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>109</ID>
-<ROI>487 618 84 103</ROI>
-<NewROI>489 620 80 99</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>110</ID>
-<ROI>487 487 69 33</ROI>
-<NewROI>489 489 65 29</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>111</ID>
-<ROI>489 150 14 45</ROI>
-<NewROI>491 152 10 41</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>112</ID>
-<ROI>493 68 20 26</ROI>
-<NewROI>495 70 16 22</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>113</ID>
-<ROI>501 115 41 80</ROI>
-<NewROI>503 117 37 76</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>114</ID>
-<ROI>506 366 13 19</ROI>
-<NewROI>508 368 9 15</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>115</ID>
-<ROI>509 614 41 54</ROI>
-<NewROI>511 616 37 50</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>116</ID>
-<ROI>514 86 47 13</ROI>
-<NewROI>516 88 43 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>117</ID>
-<ROI>526 687 18 15</ROI>
-<NewROI>528 689 14 11</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>118</ID>
-<ROI>538 152 11 43</ROI>
-<NewROI>540 154 7 39</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>119</ID>
-<ROI>549 573 8 16</ROI>
-<NewROI>551 575 4 12</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>120</ID>
-<ROI>550 560 28 115</ROI>
-<NewROI>552 562 24 111</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>121</ID>
-<ROI>552 556 7 18</ROI>
-<NewROI>554 558 3 14</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>122</ID>
-<ROI>552 525 79 27</ROI>
-<NewROI>554 527 75 23</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>123</ID>
-<ROI>553 658 19 18</ROI>
-<NewROI>555 660 15 14</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>124</ID>
-<ROI>553 681 13 28</ROI>
-<NewROI>555 683 9 24</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>125</ID>
-<ROI>553 505 10 16</ROI>
-<NewROI>555 507 6 12</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>126</ID>
-<ROI>553 536 7 18</ROI>
-<NewROI>555 538 3 14</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>127</ID>
-<ROI>554 496 9 15</ROI>
-<NewROI>556 498 5 11</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>128</ID>
-<ROI>554 664 20 19</ROI>
-<NewROI>556 666 16 15</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>129</ID>
-<ROI>554 486 9 15</ROI>
-<NewROI>556 488 5 11</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>130</ID>
-<ROI>554 459 11 42</ROI>
-<NewROI>556 461 7 38</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>131</ID>
-<ROI>556 556 44 34</ROI>
-<NewROI>558 558 40 30</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>132</ID>
-<ROI>557 555 37 26</ROI>
-<NewROI>559 557 33 22</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>133</ID>
-<ROI>557 550 36 29</ROI>
-<NewROI>559 552 32 25</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>134</ID>
-<ROI>557 448 8 16</ROI>
-<NewROI>559 450 4 12</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>135</ID>
-<ROI>559 561 74 84</ROI>
-<NewROI>561 563 70 80</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>136</ID>
-<ROI>559 680 49 21</ROI>
-<NewROI>561 682 45 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>137</ID>
-<ROI>561 475 74 47</ROI>
-<NewROI>563 477 70 43</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>138</ID>
-<ROI>567 628 14 28</ROI>
-<NewROI>569 630 10 24</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>139</ID>
-<ROI>570 77 117 76</ROI>
-<NewROI>572 79 113 72</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>140</ID>
-<ROI>570 180 14 13</ROI>
-<NewROI>572 182 10 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>141</ID>
-<ROI>571 168 26 14</ROI>
-<NewROI>573 170 22 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>142</ID>
-<ROI>571 156 38 14</ROI>
-<NewROI>573 158 34 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>143</ID>
-<ROI>573 132 60 14</ROI>
-<NewROI>575 134 56 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>144</ID>
-<ROI>577 591 7 21</ROI>
-<NewROI>579 593 3 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>145</ID>
-<ROI>577 647 48 32</ROI>
-<NewROI>579 649 44 28</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>146</ID>
-<ROI>585 171 14 24</ROI>
-<NewROI>587 173 10 20</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>147</ID>
-<ROI>589 626 29 23</ROI>
-<NewROI>591 628 25 19</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>148</ID>
-<ROI>592 528 42 58</ROI>
-<NewROI>594 530 38 54</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>149</ID>
-<ROI>593 630 38 45</ROI>
-<NewROI>595 632 34 41</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>150</ID>
-<ROI>593 674 20 19</ROI>
-<NewROI>595 676 16 15</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>151</ID>
-<ROI>596 159 15 37</ROI>
-<NewROI>598 161 11 33</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>152</ID>
-<ROI>602 566 26 20</ROI>
-<NewROI>604 568 22 16</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>153</ID>
-<ROI>604 528 30 23</ROI>
-<NewROI>606 530 26 19</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>154</ID>
-<ROI>610 150 13 45</ROI>
-<NewROI>612 152 9 41</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>155</ID>
-<ROI>628 581 31 82</ROI>
-<NewROI>630 583 27 78</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>156</ID>
-<ROI>631 573 34 80</ROI>
-<NewROI>633 575 30 76</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>157</ID>
-<ROI>633 503 20 18</ROI>
-<NewROI>635 505 16 14</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>158</ID>
-<ROI>654 564 10 39</ROI>
-<NewROI>656 566 6 35</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>159</ID>
-<ROI>661 545 14 26</ROI>
-<NewROI>663 547 10 22</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>160</ID>
-<ROI>667 174 17 20</ROI>
-<NewROI>669 176 13 16</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>161</ID>
-<ROI>680 149 13 19</ROI>
-<NewROI>682 151 9 15</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>162</ID>
-<ROI>703 356 106 27</ROI>
-<NewROI>705 358 102 23</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>163</ID>
-<ROI>731 151 13 43</ROI>
-<NewROI>733 153 9 39</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>164</ID>
-<ROI>742 148 43 46</ROI>
-<NewROI>744 150 39 42</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>165</ID>
-<ROI>757 149 14 25</ROI>
-<NewROI>759 151 10 21</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>166</ID>
-<ROI>777 43 18 22</ROI>
-<NewROI>779 45 14 18</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>167</ID>
-<ROI>783 628 11 24</ROI>
-<NewROI>785 630 7 20</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>168</ID>
-<ROI>788 57 27 15</ROI>
-<NewROI>790 59 23 11</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>169</ID>
-<ROI>789 69 26 13</ROI>
-<NewROI>791 71 22 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>170</ID>
-<ROI>790 83 16 16</ROI>
-<NewROI>792 85 12 12</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>171</ID>
-<ROI>793 184 26 14</ROI>
-<NewROI>795 186 22 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>172</ID>
-<ROI>793 110 44 43</ROI>
-<NewROI>795 112 40 39</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>173</ID>
-<ROI>798 139 18 13</ROI>
-<NewROI>800 141 14 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>174</ID>
-<ROI>799 97 8 16</ROI>
-<NewROI>801 99 4 12</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>175</ID>
-<ROI>806 112 12 17</ROI>
-<NewROI>808 114 8 13</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>176</ID>
-<ROI>812 61 10 21</ROI>
-<NewROI>814 63 6 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>177</ID>
-<ROI>813 92 26 13</ROI>
-<NewROI>815 94 22 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>178</ID>
-<ROI>816 148 254 49</ROI>
-<NewROI>818 150 250 45</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>179</ID>
-<ROI>817 17 18 49</ROI>
-<NewROI>819 19 14 45</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>180</ID>
-<ROI>818 59 20 18</ROI>
-<NewROI>820 61 16 14</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>181</ID>
-<ROI>821 512 7 14</ROI>
-<NewROI>823 514 3 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>182</ID>
-<ROI>824 170 8 23</ROI>
-<NewROI>826 172 4 19</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>183</ID>
-<ROI>824 143 56 50</ROI>
-<NewROI>826 145 52 46</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>184</ID>
-<ROI>826 24 11 38</ROI>
-<NewROI>828 26 7 34</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>185</ID>
-<ROI>836 82 102 71</ROI>
-<NewROI>838 84 98 67</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>186</ID>
-<ROI>853 154 13 31</ROI>
-<NewROI>855 156 9 27</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>187</ID>
-<ROI>863 390 49 28</ROI>
-<NewROI>865 392 45 24</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>188</ID>
-<ROI>867 135 13 16</ROI>
-<NewROI>869 137 9 12</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>189</ID>
-<ROI>877 120 15 31</ROI>
-<NewROI>879 122 11 27</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>190</ID>
-<ROI>884 620 25 22</ROI>
-<NewROI>886 622 21 18</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>191</ID>
-<ROI>887 100 41 93</ROI>
-<NewROI>889 102 37 89</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>192</ID>
-<ROI>901 153 13 32</ROI>
-<NewROI>903 155 9 28</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>193</ID>
-<ROI>905 627 8 15</ROI>
-<NewROI>907 629 4 11</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>194</ID>
-<ROI>905 621 17 21</ROI>
-<NewROI>907 623 13 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>195</ID>
-<ROI>912 85 17 66</ROI>
-<NewROI>914 87 13 62</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>196</ID>
-<ROI>921 621 25 21</ROI>
-<NewROI>923 623 21 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>197</ID>
-<ROI>923 644 14 13</ROI>
-<NewROI>925 646 10 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>198</ID>
-<ROI>933 81 123 70</ROI>
-<NewROI>935 83 119 66</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>199</ID>
-<ROI>934 645 8 11</ROI>
-<NewROI>935 646 6 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>200</ID>
-<ROI>934 149 58 43</ROI>
-<NewROI>936 151 54 39</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>201</ID>
-<ROI>937 132 55 15</ROI>
-<NewROI>939 134 51 11</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>202</ID>
-<ROI>938 622 7 17</ROI>
-<NewROI>940 624 3 13</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>203</ID>
-<ROI>938 129 63 14</ROI>
-<NewROI>940 131 59 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>204</ID>
-<ROI>943 621 13 21</ROI>
-<NewROI>945 623 9 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>205</ID>
-<ROI>950 644 7 14</ROI>
-<NewROI>952 646 3 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>206</ID>
-<ROI>952 623 8 19</ROI>
-<NewROI>954 625 4 15</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>207</ID>
-<ROI>955 643 7 14</ROI>
-<NewROI>957 645 3 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>208</ID>
-<ROI>957 146 10 21</ROI>
-<NewROI>959 148 6 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>209</ID>
-<ROI>962 628 7 14</ROI>
-<NewROI>964 630 3 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>210</ID>
-<ROI>962 622 16 21</ROI>
-<NewROI>964 624 12 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>211</ID>
-<ROI>977 622 16 21</ROI>
-<NewROI>979 624 12 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>212</ID>
-<ROI>981 646 11 11</ROI>
-<NewROI>982 647 9 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>213</ID>
-<ROI>989 709 6 11</ROI>
-<NewROI>990 710 4 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>214</ID>
-<ROI>988 622 16 21</ROI>
-<NewROI>990 624 12 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>215</ID>
-<ROI>990 643 13 15</ROI>
-<NewROI>992 645 9 11</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>216</ID>
-<ROI>993 683 15 20</ROI>
-<NewROI>995 685 11 16</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>217</ID>
-<ROI>999 622 15 21</ROI>
-<NewROI>1001 624 11 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>218</ID>
-<ROI>1007 461 42 33</ROI>
-<NewROI>1009 463 38 29</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>219</ID>
-<ROI>1009 646 11 11</ROI>
-<NewROI>1010 647 9 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>220</ID>
-<ROI>1019 703 11 15</ROI>
-<NewROI>1021 705 7 11</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>221</ID>
-<ROI>1024 665 16 15</ROI>
-<NewROI>1026 667 12 11</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>222</ID>
-<ROI>1028 646 6 11</ROI>
-<NewROI>1029 647 4 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>223</ID>
-<ROI>1027 622 14 22</ROI>
-<NewROI>1029 624 10 18</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>224</ID>
-<ROI>1039 631 6 11</ROI>
-<NewROI>1040 632 4 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>225</ID>
-<ROI>1042 541 7 19</ROI>
-<NewROI>1044 543 3 15</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>226</ID>
-<ROI>1045 618 12 15</ROI>
-<NewROI>1047 620 8 11</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>227</ID>
-<ROI>1079 536 11 20</ROI>
-<NewROI>1081 538 7 16</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>228</ID>
-<ROI>1084 544 10 34</ROI>
-<NewROI>1086 546 6 30</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>229</ID>
-<ROI>1084 659 79 23</ROI>
-<NewROI>1086 661 75 19</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>230</ID>
-<ROI>1086 632 7 11</ROI>
-<NewROI>1087 633 5 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>231</ID>
-<ROI>1089 423 192 135</ROI>
-<NewROI>1091 425 188 131</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>232</ID>
-<ROI>1092 623 15 21</ROI>
-<NewROI>1094 625 11 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>233</ID>
-<ROI>1093 659 12 18</ROI>
-<NewROI>1095 661 8 14</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>234</ID>
-<ROI>1103 623 15 21</ROI>
-<NewROI>1105 625 11 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>235</ID>
-<ROI>1109 543 39 23</ROI>
-<NewROI>1111 545 35 19</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>236</ID>
-<ROI>1118 623 26 21</ROI>
-<NewROI>1120 625 22 17</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>237</ID>
-<ROI>1120 695 11 11</ROI>
-<NewROI>1121 696 9 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>238</ID>
-<ROI>1136 624 7 16</ROI>
-<NewROI>1138 626 3 12</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>239</ID>
-<ROI>1163 634 11 11</ROI>
-<NewROI>1164 635 9 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>240</ID>
-<ROI>1176 634 10 11</ROI>
-<NewROI>1177 635 8 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>241</ID>
-<ROI>1180 660 101 46</ROI>
-<NewROI>1182 662 97 42</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>242</ID>
-<ROI>1190 649 9 11</ROI>
-<NewROI>1191 650 7 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>243</ID>
-<ROI>1197 648 7 14</ROI>
-<NewROI>1199 650 3 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>244</ID>
-<ROI>1204 631 12 16</ROI>
-<NewROI>1206 633 8 12</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>245</ID>
-<ROI>1213 622 11 11</ROI>
-<NewROI>1214 623 9 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>246</ID>
-<ROI>1214 635 8 11</ROI>
-<NewROI>1215 636 6 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>247</ID>
-<ROI>1223 635 8 11</ROI>
-<NewROI>1224 636 6 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>248</ID>
-<ROI>1228 632 12 15</ROI>
-<NewROI>1230 634 8 11</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>249</ID>
-<ROI>1233 649 14 13</ROI>
-<NewROI>1235 651 10 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>250</ID>
-<ROI>1237 635 8 11</ROI>
-<NewROI>1238 636 6 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>251</ID>
-<ROI>1248 650 10 11</ROI>
-<NewROI>1249 651 8 9</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>252</ID>
-<ROI>1251 570 17 25</ROI>
-<NewROI>1253 572 13 21</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>253</ID>
-<ROI>1271 555 9 18</ROI>
-<NewROI>1273 557 5 14</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
-</Rect>
-<Rect>
-<ID>254</ID>
-<ROI>1273 707 8 14</ROI>
-<NewROI>1275 709 4 10</NewROI>
-<Name>img370</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00673118</TimeRunning>
+<ROI>617 385 13 14</ROI>
+<NewROI>619 387 9 10</NewROI>
+<Name>img264</Name>
+<NumberVersion>1</NumberVersion>
+<TimeRunning>0.00574286</TimeRunning>
 </Rect>

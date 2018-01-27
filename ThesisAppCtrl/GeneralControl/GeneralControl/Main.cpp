@@ -71,11 +71,22 @@ void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
 // nPos is the start search position
 // nSize is the size of aFreeList
 // search and merge tsOtherBox into a tsLineBox and add to atsLines
-// this function support function MergeLineBox
-void GetALineBox(int &nPos, int &nSize, vector<int> &aFreeList, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+// this function support function MergeLineBox, use for merge intersect or lying next boxes only
+void GetALineBoxFromIntersectBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
+// nPos is the start search position
+// nSize is the size of aFreeList
+// search and merge tsOtherBox into a tsLineBox and add to atsLines
+// this function support function MergeLineBox, use for merge seperated boxes only
+void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 // Remove similar indexes from vector A inside vector B
 void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B);
+
+// Remove OtherBoxes which have been merge into Lines
+void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 void SortYCoordinate(vector<Rect> &arBBoxes);
 
@@ -657,7 +668,14 @@ void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
 	return;
 }
 
-void GetALineBox(int &nPos, int &nSize, vector<int> &aFreeList, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+void GetALineBoxFromIntersectBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+
+}
+
+void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
 	// check condition
 	if (nPos == nSize || (nPos + 1) == nSize || (nPos + 2) == nSize)
@@ -687,7 +705,10 @@ void GetALineBox(int &nPos, int &nSize, vector<int> &aFreeList, vector<tsOtherBo
 			{
 				// check condition base on average width of boxes in the aCurLine
 				// special case, aCurLine only has the start point or 2 points
-				if (aCurLine.size() == 1 || aCurLine.size() == 2)		
+				// => check condition of height only
+				if (aCurLine.size() == 1 || aCurLine.size() == 2
+					&& (atsOtherBoxes[aFreeList[nI]].rROI.nHeight / rSearchRect.height) > 0.7
+					&& (rSearchRect.height / atsOtherBoxes[aFreeList[nI]].rROI.nHeight) < 1.3)
 				{
 					// add to line
 					aCurLine.push_back(nI);
@@ -706,7 +727,10 @@ void GetALineBox(int &nPos, int &nSize, vector<int> &aFreeList, vector<tsOtherBo
 					}
 					nAverWidth = nAverWidth / aCurLine.size();
 					// 30% width extend from average width
-					if (nCX < (rSearchRect.x + (nAverWidth *1.3)))
+					// 30% height extend
+					if (nCX < (rSearchRect.x + (nAverWidth *1.3)) 
+						&& (atsOtherBoxes[aFreeList[nI]].rROI.nHeight / rSearchRect.height) > 0.7
+						&& (rSearchRect.height / atsOtherBoxes[aFreeList[nI]].rROI.nHeight) < 1.3)
 					{
 						// add to line
 						aCurLine.push_back(nI);
@@ -802,6 +826,53 @@ void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B)
 	}
 	B.clear();
 	B = aTmp;
+}
+
+void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+	int nSize = atsLines.size();
+	vector<int> aRemoveIndexes;
+	// get remove indexes list
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		for (int nJ = 0; nJ < atsLines[nI].anSubID.size(); nJ++)
+		{
+			aRemoveIndexes.push_back(atsLines[nI].anSubID[nJ]);
+		}
+	}
+	vector<tsOtherBox> atsTmp;
+	nSize = atsOtherBoxes.size();
+	int nPos = 0;
+	int nSize2 = aRemoveIndexes.size();
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		if (nPos == nSize2)
+		{
+			// load the rest
+			atsTmp.push_back(atsOtherBoxes[nI]);
+			continue;
+		}
+		if (nI < aRemoveIndexes[nPos])
+		{
+			atsTmp.push_back(atsOtherBoxes[nI]);
+			continue;
+		}
+		if (nI == aRemoveIndexes[nPos])
+		{
+			nPos++;
+			continue;
+		}
+		if (nI > aRemoveIndexes[nPos])
+		{
+			nI--;
+			nPos++;
+			continue;
+		}
+	}
+	atsOtherBoxes.clear();
+	atsOtherBoxes = atsTmp;
+	atsTmp.clear();
+	aRemoveIndexes.clear();
 }
 
 void SortYCoordinate(vector<Rect> &arBBoxes)
@@ -1102,11 +1173,30 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 	{
 		aFreeList.push_back(nI);
 	}
+	// for intersect or next boxes
+	nSize = aFreeList.size();
+	while (nPos < nSize && nSize != 0)
+	{
+		// handle function for intersect or next boxes
+		GetALineBoxFromIntersectBoxes(nPos, nSize, aFreeList, atsOtherBoxes, atsLines);
+	}
+	// Remove OtherBoxes which have been merge into Lines
+	RemoveOtherBoxesMergeInLines(atsOtherBoxes, atsLines);
+	// init again
+	aFreeList.clear();
+	nSize = atsOtherBoxes.size();
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		aFreeList.push_back(nI);
+	}
+	// for seperated boxes
 	while(nPos < nSize && nSize != 0)
 	{
-		// handle function
-		GetALineBox(nPos, nSize, aFreeList, atsOtherBoxes, atsLines);
+		// handle function for seperated boxes
+		GetALineBoxFromSeperateBoxes(nPos, nSize, aFreeList, atsOtherBoxes, atsLines);
 	}
+	// Remove OtherBoxes which have been merge into Lines
+	RemoveOtherBoxesMergeInLines(atsOtherBoxes, atsLines);
 }
 
 
