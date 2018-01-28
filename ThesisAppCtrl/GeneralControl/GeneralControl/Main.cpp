@@ -90,6 +90,10 @@ void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B);
 // Remove OtherBoxes which have been merge into Lines
 void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
+// After merge otherboxes into lines, there are many otherboxes which do not have enough condition
+// and completely stay inside a Line box => remove these OtherBoxes
+void RemoveOtherBoxesInsideLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
 void SortYCoordinate(vector<Rect> &arBBoxes);
 
 void SortArea(vector<Rect> &arBBoxes);
@@ -171,6 +175,9 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 // read otherboxes from txt file
 void ReadOtherBoxesDataFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes);
 
+// write otherboxes to text file
+void WriteOtherBoxesToFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes);
+
 // write data to OtherBoxes.txt and Lines.txt in folder TmpRect
 void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, 
 	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
@@ -192,7 +199,12 @@ void TestGetLineIntersect();
 // reduce a number of otherboxes by a width range
 // max = 0 => NOT have upper limit
 // min = 0 => NOT have lower limit
-void CutDownOtherBoxesByXNumber(vector<tsOtherBox> &atsOtherBoxes, int start, int max);
+void CutDownOtherBoxesByX(vector<tsOtherBox> &atsOtherBoxes, int start, int max);
+
+// reduce a number of otherboxes by a height range
+// max = 0 => NOT have upper limit
+// min = 0 => NOT have lower limit
+void CutDownOtherBoxesByY(vector<tsOtherBox> &atsOtherBoxes, int start, int max);
 
 //----------------------------------------------------------------------
 
@@ -964,17 +976,17 @@ void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLi
 			atsTmp.push_back(atsOtherBoxes[nI]);
 			continue;
 		}
-		if (nI < aRemoveIndexes[nPos])
+		if (atsOtherBoxes[nI].nID < aRemoveIndexes[nPos])
 		{
 			atsTmp.push_back(atsOtherBoxes[nI]);
 			continue;
 		}
-		if (nI == aRemoveIndexes[nPos])
+		if (atsOtherBoxes[nI].nID == aRemoveIndexes[nPos])
 		{
 			nPos++;
 			continue;
 		}
-		if (nI > aRemoveIndexes[nPos])
+		if (atsOtherBoxes[nI].nID > aRemoveIndexes[nPos])
 		{
 			nI--;
 			nPos++;
@@ -985,6 +997,11 @@ void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLi
 	atsOtherBoxes = atsTmp;
 	atsTmp.clear();
 	aRemoveIndexes.clear();
+}
+
+void RemoveOtherBoxesInsideLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+
 }
 
 void SortYCoordinate(vector<Rect> &arBBoxes)
@@ -1056,16 +1073,16 @@ bool IsPointAInsideRectB(int nXA, int nYA, Rect rB)
 bool CheckConditionOfMergIntersectBoxes(tsOtherBox A, tsOtherBox B)
 {
 	// check y position, cannot be too different
-	if ((A.rROI.nY + A.rROI.nHeight / 2) > B.rROI.nY && (A.rROI.nY - A.rROI.nHeight / 2) < B.rROI.nY)
+	if (((float)A.rROI.nY + (float)A.rROI.nHeight / 2) > B.rROI.nY && ((float)A.rROI.nY - (float)A.rROI.nHeight / 2) < B.rROI.nY)
 	{
 		// check intersect or seperate in acceptable limit - 3 pixels
-		if ((B.rROI.nX - (A.rROI.nX + A.rROI.nWidth)) < 4)
+		if (((float)B.rROI.nX - ((float)A.rROI.nX + (float)A.rROI.nWidth)) < 4)
 		{
 			// check height ratio
-			if ((A.rROI.nHeight / B.rROI.nHeight) > 0.8 && (B.rROI.nHeight / A.rROI.nHeight) < 1.25)
+			if (((float)A.rROI.nHeight / (float)B.rROI.nHeight) > 0.8 && ((float)B.rROI.nHeight / (float)A.rROI.nHeight) < 1.25)
 			{
 				// check width ratio
-				if ((A.rROI.nWidth / B.rROI.nWidth) > 0.7 && (B.rROI.nWidth / A.rROI.nWidth) < 1.43)
+				if (((float)A.rROI.nWidth / (float)B.rROI.nWidth) > 0.7 && ((float)B.rROI.nWidth / (float)A.rROI.nWidth) < 1.43)
 				{
 					
 					return true;
@@ -1354,6 +1371,12 @@ void ReadOtherBoxesDataFile(string strOtherBoxPath, vector<tsOtherBox> &atsOther
 	bboxTmp.ReadOtherBoxes(atsOtherBoxes, strOtherBoxPath);
 }
 
+void WriteOtherBoxesToFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes)
+{
+	BBoxIOStream bboxTmp;
+	bboxTmp.WriteOtherBoxes(atsOtherBoxes, strOtherBoxPath);
+}
+
 void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, 
 	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
@@ -1414,25 +1437,75 @@ void TestGetLineIntersect()
 	string strOtherBoxPath = "E:\\Code\\OCR-Five-Git\\Root\\TmpRect\\img250-OtherBoxes.txt";
 	vector<tsOtherBox> atsOtherBoxes;
 	vector<tsLineBox> atsLines;
-	ReadOtherBoxesDataFile(strOtherBoxPath, atsOtherBoxes);
 	string strImagePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250.jpg";
-	CutDownOtherBoxesByXNumber(atsOtherBoxes, 200, 0);
-	MergeLineBox(atsOtherBoxes, atsLines);
-	AddRectToOriginalImage(strImagePath, atsOtherBoxes, atsLines);
+	string strTestOBPath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-OtherBoxes.txt";
 
+	ReadOtherBoxesDataFile(strOtherBoxPath, atsOtherBoxes);
+
+	CutDownOtherBoxesByX(atsOtherBoxes, 100, 0);
+	CutDownOtherBoxesByY(atsOtherBoxes, 0, 70);
+
+	MergeLineBox(atsOtherBoxes, atsLines);
+
+	RemoveOtherBoxesMergeInLines(atsOtherBoxes, atsLines);
+	RemoveOtherBoxesInsideLines(atsOtherBoxes, atsLines);
+
+	AddRectToOriginalImage(strImagePath, atsOtherBoxes, atsLines);
+	
 
 
 }
 
-void CutDownOtherBoxesByXNumber(vector<tsOtherBox> &atsOtherBoxes, int start, int max)
+void CutDownOtherBoxesByX(vector<tsOtherBox> &atsOtherBoxes, int start, int max)
 {
 	vector<tsOtherBox> atsTmp;
 	int nSize = atsOtherBoxes.size();
 	for (int nI = 0; nI < nSize; nI++)
 	{
-
+		if (atsOtherBoxes[nI].rROI.nX > start)
+		{
+			if (max == 0)
+			{
+				atsTmp.push_back(atsOtherBoxes[nI]);
+			}
+			else
+			{
+				if (atsOtherBoxes[nI].rROI.nX < max)
+				{
+					atsTmp.push_back(atsOtherBoxes[nI]);
+				}
+			}
+		}
 	}
+	atsOtherBoxes.clear();
+	atsOtherBoxes = atsTmp;
+	atsTmp.clear();
 }
 
+void CutDownOtherBoxesByY(vector<tsOtherBox> &atsOtherBoxes, int start, int max)
+{
+	vector<tsOtherBox> atsTmp;
+	int nSize = atsOtherBoxes.size();
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		if (atsOtherBoxes[nI].rROI.nY > start)
+		{
+			if (max == 0)
+			{
+				atsTmp.push_back(atsOtherBoxes[nI]);
+			}
+			else
+			{
+				if (atsOtherBoxes[nI].rROI.nY < max)
+				{
+					atsTmp.push_back(atsOtherBoxes[nI]);
+				}
+			}
+		}
+	}
+	atsOtherBoxes.clear();
+	atsOtherBoxes = atsTmp;
+	atsTmp.clear();
+}
 
 //----------------------------------------------------------------------
