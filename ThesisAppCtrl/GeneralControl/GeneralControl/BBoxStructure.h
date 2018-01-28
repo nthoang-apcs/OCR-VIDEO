@@ -58,7 +58,7 @@ typedef struct sRect
 }tsRect;
 
 //////////////////////////////////////////////////////////////////////
-//	Enum name:	tsRect
+//	Enum name:	teBBoxElementDataType
 //	Description:	Contain the information of a rectangle
 //	Notes:
 //////////////////////////////////////////////////////////////////////
@@ -166,7 +166,38 @@ typedef struct sBBoxInfo
 		string strResult = strNameImage + "-" + to_string(nID) + "-" + to_string(nNumberVersion);
 		return strResult;
 	}
-	
+	// Input rROI =  a cover rect from multiple inside rects
+	void InputROIByCreateCoverRect(vector<tsRect> atsInsideRect)
+	{
+		// find the most left x and the most right x
+		// find the most top and the most bottom
+		int nSize = atsInsideRect.size();
+		int nX = 0;
+		int nY = 0;
+		int nW = 0;
+		int nH = 0;
+		for (int nI = 0; nI < nSize; nI++)
+		{
+			if (atsInsideRect[nI].nX < nX || nI == 0)
+			{
+				nX = atsInsideRect[nI].nX;
+			}
+			if (atsInsideRect[nI].nY < nY || nI == 0)
+			{
+				nY = atsInsideRect[nI].nY;
+			}
+			if ((atsInsideRect[nI].nWidth + atsInsideRect[nI].nX) > (nX + nW) || nI == 0)
+			{
+				nW = (atsInsideRect[nI].nWidth + atsInsideRect[nI].nX) - nX;
+			}
+			if ((atsInsideRect[nI].nHeight + atsInsideRect[nI].nY) > (nY + nH) || nI == 0)
+			{
+				nH = (atsInsideRect[nI].nHeight + atsInsideRect[nI].nY) - nY;
+			}
+		}
+		rROI = tsRect(nX, nY, nW, nH);
+	}
+
 }tsBBoxInfo, tsOtherBox;
 
 //////////////////////////////////////////////////////////////////////

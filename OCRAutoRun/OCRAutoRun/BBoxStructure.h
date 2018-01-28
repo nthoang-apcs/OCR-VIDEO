@@ -58,7 +58,7 @@ typedef struct sRect
 }tsRect;
 
 //////////////////////////////////////////////////////////////////////
-//	Enum name:	tsRect
+//	Enum name:	teBBoxElementDataType
 //	Description:	Contain the information of a rectangle
 //	Notes:
 //////////////////////////////////////////////////////////////////////
@@ -166,7 +166,12 @@ typedef struct sBBoxInfo
 		string strResult = strNameImage + "-" + to_string(nID) + "-" + to_string(nNumberVersion);
 		return strResult;
 	}
-	
+	// Input rROI =  a cover rect from multiple inside rects
+	void InputROIByCreateCoverRect(vector<tsRect> atsInsideRect)
+	{
+
+	}
+
 }tsBBoxInfo, tsOtherBox;
 
 //////////////////////////////////////////////////////////////////////

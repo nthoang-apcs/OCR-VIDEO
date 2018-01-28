@@ -3,7 +3,7 @@
 //	File name：	Source.cpp
 //	Description：	Main process of OCRAutorun project
 //	Notes:			None
-//	History：	<0> 2017.01.13 : Dang Tuan Vu : Create project
+//	History：	<0> 2017.12.13 : Dang Tuan Vu : Create file
 //
 //////////////////////////////////////////////////////////////////////
 #include <fstream>
@@ -62,11 +62,33 @@ void IncreaseRectToBoxes(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &a
 
 // bindg computing running time to each box
 // this computing time is the average running time
-void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, 
+	vector<tsLineBox> &atsLines);
 
 // add all current rect to the original image and write the image to folder Root/Debug
 // strInput is the absolute path of the image file.
-void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
+	vector<tsLineBox> &atsLines);
+
+// nPos is the start search position
+// nSize is the size of aFreeList
+// search and merge tsOtherBox into a tsLineBox and add to atsLines
+// this function support function MergeLineBox, use for merge intersect or lying next boxes only
+void GetALineBoxFromIntersectBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
+// nPos is the start search position
+// nSize is the size of aFreeList
+// search and merge tsOtherBox into a tsLineBox and add to atsLines
+// this function support function MergeLineBox, use for merge seperated boxes only
+void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
+// Remove similar indexes from vector A inside vector B
+void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B);
+
+// Remove OtherBoxes which have been merge into Lines
+void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 void SortYCoordinate(vector<Rect> &arBBoxes);
 
@@ -84,6 +106,16 @@ bool IsB1Balanced(Rect B1);
 // check if the intersection area between B1 and B2 is equal B1.area()
 // and the B2.area() / B1.area() <= 3
 bool IsB1insideB2(Rect B1, Rect B2);
+
+// check if a point is inside a Rect
+bool IsPointAInsideRectB(int nXA, int nYA, Rect rB);
+
+// intersect or less than 4 pixels seperate rect
+// h / h > 0.8 & < 1.25
+// w / w > 0.7 & < 1.43
+// y + 1/2 h > y && y - 1/2 h < y
+// nX of A is on the left of nX of B
+bool CheckConditionOfMergIntersectBoxes(tsOtherBox A, tsOtherBox B);
 
 // return true if B1.y < B2.y
 bool CompareYCoordinate(Rect B1, Rect B2);
@@ -110,7 +142,8 @@ void Run(int argc, char **argv, bool bDebug);
 //					Sort y coordinate ascending; remove single box text line
 //					Merge inside box
 // bDebug = true: add rects back to the original image for a fast result examination.
-void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes, bool bDebug);
+void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, 
+	vector<tsOtherBox> &atsOtherBoxes, bool bDebug);
 
 // read an absolute path of an image into a Mat with grayscale format
 void ReadImageGrayScale(string strPath, Mat &mInput);
@@ -123,7 +156,9 @@ void SharpenImage(Mat &mInput, Mat &mOutput, double sigma = 1, double threshold 
 void MSEROneImage(Mat &input, vector<Rect> &arBBoxes);
 
 // convert from BBoxes to tsOtherBox
-void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, vector<tsOtherBox> &atsOtherboxes);
+// default number version is 1, more version = increase the number version
+void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, 
+	vector<tsOtherBox> &atsOtherboxes);
 
 // from OtherBoxes, merge possible boxes that can be assemble into a line
 void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
@@ -133,15 +168,34 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
 
+// read otherboxes from txt file
+void ReadOtherBoxesDataFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes);
+
 // write data to OtherBoxes.txt and Lines.txt in folder TmpRect
-void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 // crop rects in the original image to folder TmpImage
 // strInput is the absolute path of the original image
 // strTmpImage is the absolute path of TmpImage folder
-void CropROIByDataToFolderImage(string strTmpImage, string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+void CropROIByDataToFolderImage(string strTmpImage, string strInput, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 //----------------------------------------------------------------------
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*		Test function		*/
+
+// Test get a line from intersect box
+void TestGetLineIntersect();
+
+// reduce a number of otherboxes by a width range
+// max = 0 => NOT have upper limit
+// min = 0 => NOT have lower limit
+void CutDownOtherBoxesByXNumber(vector<tsOtherBox> &atsOtherBoxes, int start, int max);
+
+//----------------------------------------------------------------------
+
 
 /////////////////////////////////
 /*
@@ -153,7 +207,11 @@ void CropROIByDataToFolderImage(string strTmpImage, string strInput, vector<tsOt
 
 int main(int argc, char **argv)
 {
-	Run(argc, argv, true);
+	// program Run 
+	//Run(argc, argv, true);
+
+	// Test part
+	TestGetLineIntersect();
 
 	return 1;
 }
@@ -596,7 +654,8 @@ void IncreaseRectToBoxes(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &a
 	}
 }
 
-void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, 
+	vector<tsLineBox> &atsLines)
 {
 	float average = fTime / ((int)(atsOtherBoxes.size() + atsLines.size()));
 	int nSize = atsOtherBoxes.size();
@@ -612,7 +671,8 @@ void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, vec
 	return;
 }
 
-void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
+	vector<tsLineBox> &atsLines)
 {
 	// get root folder
 	string strRootFolder = GetRootFolder(strInput);
@@ -642,6 +702,289 @@ void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
 	// write image to file
 	imwrite(strFilePath, mInput);
 	return;
+}
+
+void GetALineBoxFromIntersectBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+	// check condition
+	if (nPos == nSize || (nPos + 1) == nSize || (nPos + 2) == nSize)
+	{
+		nPos = nSize;
+		return;
+	}
+	vector<int> aCurLine;
+	aCurLine.push_back(nPos);
+	int nPosCurLine = 0;		// the current position of aCurLine to search Rect
+	for (int nI = nPos + 1; nI < nSize; nI++)
+	{
+		// find intersect or at least only 1-3 pixels seperated for width < 50 pixels
+		// height / height > 0.8 & < 1.2
+		// width / width > 0.7 & < 1.3
+		if (CheckConditionOfMergIntersectBoxes(atsOtherBoxes[aFreeList[aCurLine[nPosCurLine]]], 
+			atsOtherBoxes[aFreeList[nI]]) == true)
+		{
+			// add to CurLine
+			aCurLine.push_back(nI);
+			nPosCurLine++;
+		}
+	}
+	// check line's points count
+	if (aCurLine.size() < 3)
+	{
+		nPos++;
+		aCurLine.clear();
+		return;
+	}
+	// create new line
+	tsLineBox tsLineTmp;
+	// create new ID = last highest ID + 1
+	int nNewID = 0;
+	if (atsLines.size() == 0)
+	{
+		nNewID = atsOtherBoxes[atsOtherBoxes.size() - 1].nID + 1;
+	}
+	else
+	{
+		nNewID = atsLines[atsLines.size() - 1].tsCore.nID + 1;
+	}
+	tsLineTmp.tsCore.nID = nNewID;
+	// get original image's name
+	tsLineTmp.tsCore.strNameImage = atsOtherBoxes[aFreeList[aCurLine[0]]].strNameImage;
+	// binding default value
+	tsLineTmp.tsCore.fTimeRunning = 0;
+	tsLineTmp.tsCore.rACVROI = tsRect(0, 0, 0, 0);
+	// default number version is 1
+	tsLineTmp.tsCore.nNumberVersion = 1;
+	// copy IDs and Rects from tsOtherBoxes to new tsLineBox
+	for (int nJ = 0; nJ < aCurLine.size(); nJ++)
+	{
+		tsLineTmp.anSubID.push_back(atsOtherBoxes[aFreeList[aCurLine[nJ]]].nID);
+		tsLineTmp.atsSubROI.push_back(tsRect(atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nX,
+			atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nY,
+			atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nWidth,
+			atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nHeight));
+	}
+	// create new Rect cover all old rects
+	tsLineTmp.tsCore.InputROIByCreateCoverRect(tsLineTmp.atsSubROI);
+	// add to atsLine
+	atsLines.push_back(tsLineTmp);
+	// remove indexes in aFreeList
+	RemoveSameIndexesFromAInB(aCurLine, aFreeList);
+	// nPos keep the same, because the current pos is replaced
+	// update nSize
+	nSize = aFreeList.size();
+	// clear aCurLine
+	aCurLine.clear();
+}
+
+// have bugs
+void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+	// check condition
+	if (nPos == nSize || (nPos + 1) == nSize || (nPos + 2) == nSize)
+	{
+		nPos = nSize;
+		return;
+	}
+	// aCurLine contains list of index that forms a line in aFreeList
+	vector<int> aCurLine;
+	// create search area rectangle - same x y height, width*3
+	Rect rSearchRect = Rect(atsOtherBoxes[aFreeList[nPos]].rROI.nX, atsOtherBoxes[aFreeList[nPos]].rROI.nY, 
+		(atsOtherBoxes[aFreeList[nPos]].rROI.nWidth * 3), atsOtherBoxes[aFreeList[nPos]].rROI.nHeight);
+	aCurLine.push_back(nPos);
+	int nPosCurLine = 0;
+	for (int nI = nPos + 1; nI < nSize; nI++)
+	{
+		// Check if the center of mass of the searching rect is in the rSearchRect,
+		// and the height is not > +30% of rSearchRect, width is not > +100% of rSearchRect
+		// Get Center of mass
+		int nCX = atsOtherBoxes[aFreeList[nI]].rROI.nX + atsOtherBoxes[aFreeList[nI]].rROI.nWidth / 2;
+		int nCY = atsOtherBoxes[aFreeList[nI]].rROI.nY + atsOtherBoxes[aFreeList[nI]].rROI.nHeight / 2;
+		// check location
+		if (IsPointAInsideRectB(nCX, nCY, rSearchRect) == true)
+		{
+			// check height and width
+			if ((atsOtherBoxes[aFreeList[nPosCurLine]].rROI.nWidth * 2) > atsOtherBoxes[aFreeList[nI]].rROI.nWidth &&
+				(atsOtherBoxes[aFreeList[nPosCurLine]].rROI.nHeight * 1.3) > atsOtherBoxes[aFreeList[nI]].rROI.nHeight)
+			{
+				// check condition base on average width of boxes in the aCurLine
+				// special case, aCurLine only has the start point or 2 points
+				// => check condition of height only
+				if (aCurLine.size() == 1 || aCurLine.size() == 2
+					&& (atsOtherBoxes[aFreeList[nI]].rROI.nHeight / rSearchRect.height) > 0.7
+					&& (rSearchRect.height / atsOtherBoxes[aFreeList[nI]].rROI.nHeight) < 1.3)
+				{
+					// add to line
+					aCurLine.push_back(nI);
+					// create new search rect
+					rSearchRect = Rect(atsOtherBoxes[aFreeList[nI]].rROI.nX, atsOtherBoxes[aFreeList[nI]].rROI.nY,
+						(atsOtherBoxes[aFreeList[nI]].rROI.nWidth * 3), atsOtherBoxes[aFreeList[nI]].rROI.nHeight);
+					// increase cur pos in CurLine
+					nPosCurLine++;
+				}
+				// normal case, more than 3 points in the aCurLine
+				else
+				{
+					// check condition of width - not too far from the average width
+					int nAverWidth = 0;
+					for (int nJ = 0; nJ < aCurLine.size(); nJ++)
+					{
+						nAverWidth += atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nWidth;
+					}
+					nAverWidth = nAverWidth / aCurLine.size();
+					// 30% width extend from average width
+					// 30% height extend
+					if (nCX < (rSearchRect.x + (nAverWidth *1.3)) 
+						&& (atsOtherBoxes[aFreeList[nI]].rROI.nHeight / rSearchRect.height) > 0.7
+						&& (rSearchRect.height / atsOtherBoxes[aFreeList[nI]].rROI.nHeight) < 1.3)
+					{
+						// add to line
+						aCurLine.push_back(nI);
+						// create new search rect
+						rSearchRect = Rect(atsOtherBoxes[aFreeList[nI]].rROI.nX, atsOtherBoxes[aFreeList[nI]].rROI.nY,
+							(atsOtherBoxes[aFreeList[nI]].rROI.nWidth * 3), atsOtherBoxes[aFreeList[nI]].rROI.nHeight);
+						// increase cur pos in CurLine
+						nPosCurLine++;
+					}
+				}
+			}
+		}
+	}
+	// find less than 2 points to form a line with the start point
+	if (aCurLine.size() < 3)
+	{
+		aCurLine.clear();
+		// increase position
+		nPos++;
+		return;
+	}
+	// find more than 1 point to form a line with the start point
+	// => create new line, remove index from aFreeList
+	else
+	{
+		tsLineBox tsLineTmp;
+		// create new ID = last highest ID + 1
+		int nNewID = 0;
+		if (atsLines.size() == 0)
+		{
+			nNewID = atsOtherBoxes[atsOtherBoxes.size() - 1].nID + 1;
+		}
+		else
+		{
+			nNewID = atsLines[atsLines.size() - 1].tsCore.nID + 1;
+		}
+		tsLineTmp.tsCore.nID = nNewID;
+		// get original image's name
+		tsLineTmp.tsCore.strNameImage = atsOtherBoxes[aFreeList[aCurLine[0]]].strNameImage;
+		// binding default value
+		tsLineTmp.tsCore.fTimeRunning = 0;
+		tsLineTmp.tsCore.rACVROI = tsRect(0, 0, 0, 0);
+		// default number version is 1
+		tsLineTmp.tsCore.nNumberVersion = 1;
+		// copy IDs and Rects from tsOtherBoxes to new tsLineBox
+		for (int nJ = 0; nJ < aCurLine.size(); nJ++)
+		{
+			tsLineTmp.anSubID.push_back(atsOtherBoxes[aFreeList[aCurLine[nJ]]].nID);
+			tsLineTmp.atsSubROI.push_back(tsRect(atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nX, 
+				atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nY,
+				atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nWidth, 
+				atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nHeight));
+		}
+		// create new Rect cover all old rects
+		tsLineTmp.tsCore.InputROIByCreateCoverRect(tsLineTmp.atsSubROI);
+		// add to atsLine
+		atsLines.push_back(tsLineTmp);
+		// remove indexes in aFreeList
+		RemoveSameIndexesFromAInB(aCurLine, aFreeList);
+		// nPos keep the same, because the current pos is replaced
+		// update nSize
+		nSize = aFreeList.size();
+		// clear aCurLine
+		aCurLine.clear();
+	}
+}
+
+void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B)
+{
+	vector<int> aTmp;
+	int nPos = 0;
+	int nSize = A.size();
+	for (int nI = 0; nI < B.size(); nI++)
+	{
+		if (nPos == nSize)
+		{
+			// load the rest number in B to aTmp
+			aTmp.push_back(B[nI]);
+			continue;
+		}
+		if (nI == A[nPos])
+		{
+			nPos++;
+			continue;
+		}
+		else if (nI < A[nPos])
+		{
+			aTmp.push_back(B[nI]);
+		}
+		else if (nI > A[nPos])
+		{
+			// increase nPos to when B[nI] < A[nPos]
+			nI--;
+			nPos++;
+			continue;
+		}
+	}
+	B.clear();
+	B = aTmp;
+}
+
+void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+	int nSize = atsLines.size();
+	vector<int> aRemoveIndexes;
+	// get remove indexes list
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		for (int nJ = 0; nJ < atsLines[nI].anSubID.size(); nJ++)
+		{
+			aRemoveIndexes.push_back(atsLines[nI].anSubID[nJ]);
+		}
+	}
+	vector<tsOtherBox> atsTmp;
+	nSize = atsOtherBoxes.size();
+	int nPos = 0;
+	int nSize2 = aRemoveIndexes.size();
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		if (nPos == nSize2)
+		{
+			// load the rest
+			atsTmp.push_back(atsOtherBoxes[nI]);
+			continue;
+		}
+		if (nI < aRemoveIndexes[nPos])
+		{
+			atsTmp.push_back(atsOtherBoxes[nI]);
+			continue;
+		}
+		if (nI == aRemoveIndexes[nPos])
+		{
+			nPos++;
+			continue;
+		}
+		if (nI > aRemoveIndexes[nPos])
+		{
+			nI--;
+			nPos++;
+			continue;
+		}
+	}
+	atsOtherBoxes.clear();
+	atsOtherBoxes = atsTmp;
+	atsTmp.clear();
+	aRemoveIndexes.clear();
 }
 
 void SortYCoordinate(vector<Rect> &arBBoxes)
@@ -699,6 +1042,38 @@ bool IsB1insideB2(Rect B1, Rect B2)
 		return true;
 	return false;
 
+}
+
+bool IsPointAInsideRectB(int nXA, int nYA, Rect rB)
+{
+	if (nXA >= rB.x && nYA >= rB.y && nXA <= (rB.x + rB.width) && nYA <= (rB.y + rB.height))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool CheckConditionOfMergIntersectBoxes(tsOtherBox A, tsOtherBox B)
+{
+	// check y position, cannot be too different
+	if ((A.rROI.nY + A.rROI.nHeight / 2) > B.rROI.nY && (A.rROI.nY - A.rROI.nHeight / 2) < B.rROI.nY)
+	{
+		// check intersect or seperate in acceptable limit - 3 pixels
+		if ((B.rROI.nX - (A.rROI.nX + A.rROI.nWidth)) < 4)
+		{
+			// check height ratio
+			if ((A.rROI.nHeight / B.rROI.nHeight) > 0.8 && (B.rROI.nHeight / A.rROI.nHeight) < 1.25)
+			{
+				// check width ratio
+				if ((A.rROI.nWidth / B.rROI.nWidth) > 0.7 && (B.rROI.nWidth / A.rROI.nWidth) < 1.43)
+				{
+					
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 }
 
 bool CompareYCoordinate(Rect B1, Rect B2)
@@ -812,7 +1187,8 @@ void Run(int argc, char **argv, bool bDebug)
 	astrListPaths.clear();
 }
 
-void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, vector<tsOtherBox> &atsOtherBoxes, bool bDebug)
+void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, 
+	vector<tsOtherBox> &atsOtherBoxes, bool bDebug)
 {
 	// init variables
 	fTimeRunning = 0.00;
@@ -900,7 +1276,8 @@ void MSEROneImage(Mat &input, vector<Rect> &arBBoxes)
 	contours.clear();
 }
 
-void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, vector<tsOtherBox> &atsOtherboxes)
+void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, 
+	vector<tsOtherBox> &atsOtherboxes)
 {
 	int nSize = arBBoxes.size();
 	if (nSize == 0)
@@ -916,16 +1293,53 @@ void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes, 
 	return;
 }
 
-// not finish
 void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
-	// OtherBoxes have been sorted by X coordinate before this function
-	// search from left to right
-	// all boxes which are belong to a word often intersect with others, they usually have the same height.
-	int nSize = atsOtherBoxes.size();
+	// Condition: OtherBoxes have been sorted by X coordinate before this function
+	// Method: search from left to right
+	// How it run:
+	//		- set nPos = 0, this pos is the pos in the list below
+	// 		- Have a list of free OtherBoxes - boxes that have not been included in any line.
+	//		- Search from left to right, find boxes which satisfy condition
+	//		- If > 2 boxes in a line, create a Line, add to array atsLines
+	//		- continue to do this until the nPos meet the end of list
 	int nPos = 0;
+	int nSize = atsOtherBoxes.size();
+	vector<int> aFreeList;			// free list is the list of free indexes which can be searched
+	for(int nI = 0; nI < nSize; nI++)
+	{
+		aFreeList.push_back(nI);
+	}
+	// for intersect or next boxes
+	nSize = aFreeList.size();
+	while (nPos < nSize && nSize != 0)
+	{
+		// handle function for intersect or next boxes
+		GetALineBoxFromIntersectBoxes(nPos, nSize, aFreeList, atsOtherBoxes, atsLines);
+	}
+	// Remove OtherBoxes which have been merge into Lines
+	RemoveOtherBoxesMergeInLines(atsOtherBoxes, atsLines);
 
+	// init again
+	//aFreeList.clear();
+	//nSize = atsOtherBoxes.size();
+	//for (int nI = 0; nI < nSize; nI++)
+	//{
+	//	aFreeList.push_back(nI);
+	//}
+	//// for seperated boxes
+	//while(nPos < nSize && nSize != 0)
+	//{
+	//	// handle function for seperated boxes
+	//	GetALineBoxFromSeperateBoxes(nPos, nSize, aFreeList, atsOtherBoxes, atsLines);
+	//}
+	//// Remove OtherBoxes which have been merge into Lines
+	//RemoveOtherBoxesMergeInLines(atsOtherBoxes, atsLines);
+
+	// clear
+	aFreeList.clear();
 }
+
 
 
 //----------------------------------------------------------------------
@@ -933,7 +1347,15 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Input/Output Stream		*/
 
-void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+void ReadOtherBoxesDataFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes)
+{
+	BBoxIOStream bboxTmp;
+	// get list info
+	bboxTmp.ReadOtherBoxes(atsOtherBoxes, strOtherBoxPath);
+}
+
+void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
 	BBoxIOStream bboxTmp;
 	bool bChecked = false;
@@ -950,7 +1372,8 @@ void WriteDataToTxtFile(string strOtherBoxPath, string strLinesPath, vector<tsOt
 	}
 }
 
-void CropROIByDataToFolderImage(string strTmpImage, string strInput, vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+void CropROIByDataToFolderImage(string strTmpImage, string strInput, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
 	Mat mInput = imread(strInput);
 	int nSize = atsOtherBoxes.size();
@@ -979,5 +1402,37 @@ void CropROIByDataToFolderImage(string strTmpImage, string strInput, vector<tsOt
 	}
 }
 
+
 //----------------------------------------------------------------------
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*		Test function		*/
+
+// Test get a line from intersect box
+void TestGetLineIntersect()
+{
+	string strOtherBoxPath = "E:\\Code\\OCR-Five-Git\\Root\\TmpRect\\img250-OtherBoxes.txt";
+	vector<tsOtherBox> atsOtherBoxes;
+	vector<tsLineBox> atsLines;
+	ReadOtherBoxesDataFile(strOtherBoxPath, atsOtherBoxes);
+	string strImagePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250.jpg";
+	CutDownOtherBoxesByXNumber(atsOtherBoxes, 200, 0);
+	MergeLineBox(atsOtherBoxes, atsLines);
+	AddRectToOriginalImage(strImagePath, atsOtherBoxes, atsLines);
+
+
+
+}
+
+void CutDownOtherBoxesByXNumber(vector<tsOtherBox> &atsOtherBoxes, int start, int max)
+{
+	vector<tsOtherBox> atsTmp;
+	int nSize = atsOtherBoxes.size();
+	for (int nI = 0; nI < nSize; nI++)
+	{
+
+	}
+}
+
+
+//----------------------------------------------------------------------
