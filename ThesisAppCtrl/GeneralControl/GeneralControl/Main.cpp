@@ -111,6 +111,10 @@ bool IsB1Balanced(Rect B1);
 // and the B2.area() / B1.area() <= 3
 bool IsB1insideB2(Rect B1, Rect B2);
 
+// check if tsOtherBox A is inside tsLineBox B, use in case rROI only, not ACVowel
+// true: inside, false: otherwise
+bool IsOtherBoxAInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB);
+
 // check if a point is inside a Rect
 bool IsPointAInsideRectB(int nXA, int nYA, Rect rB);
 
@@ -1001,7 +1005,28 @@ void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLi
 
 void RemoveOtherBoxesInsideLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
-
+	int nS1 = atsOtherBoxes.size();
+	int nS2 = atsLines.size();
+	vector<tsOtherBox> atsTmp;
+	for (int nI = 0; nI < nS1; nI++)
+	{
+		bool bChecked = false;
+		for (int nJ = 0; nJ < nS2; nJ++)
+		{
+			// check condition
+			bChecked = IsOtherBoxAInsideLineBoxB(atsOtherBoxes[nI], atsLines[nJ]);
+			if (bChecked == true)
+				break;
+		}
+		// add to atsTmp if satisfy the condition
+		if (bChecked == false)
+		{
+			atsTmp.push_back(atsOtherBoxes[nI]);
+		}
+	}
+	atsOtherBoxes.clear();
+	atsOtherBoxes = atsTmp;
+	atsTmp.clear();
 }
 
 void SortYCoordinate(vector<Rect> &arBBoxes)
@@ -1059,6 +1084,20 @@ bool IsB1insideB2(Rect B1, Rect B2)
 		return true;
 	return false;
 
+}
+
+bool IsOtherBoxAInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB)
+{
+	// check basic condition for x, y of tsA to x, y of tsB
+	if (tsA.rROI.nX >= tsB.tsCore.rROI.nX && tsA.rROI.nY >= tsB.tsCore.rROI.nY)
+	{
+		if ((tsA.rROI.nX + tsA.rROI.nWidth) <= (tsB.tsCore.rROI.nX + tsB.tsCore.rROI.nWidth)
+			&& (tsA.rROI.nY + tsA.rROI.nHeight) <= (tsB.tsCore.rROI.nY + tsB.tsCore.rROI.nHeight))
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 bool IsPointAInsideRectB(int nXA, int nYA, Rect rB)
@@ -1439,7 +1478,7 @@ void TestGetLineIntersect()
 	vector<tsLineBox> atsLines;
 	string strImagePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250.jpg";
 	string strTestOBPath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-OtherBoxes.txt";
-
+	string strTestLinePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-Lines.txt";
 	ReadOtherBoxesDataFile(strOtherBoxPath, atsOtherBoxes);
 
 	CutDownOtherBoxesByX(atsOtherBoxes, 100, 0);
@@ -1451,7 +1490,7 @@ void TestGetLineIntersect()
 	RemoveOtherBoxesInsideLines(atsOtherBoxes, atsLines);
 
 	AddRectToOriginalImage(strImagePath, atsOtherBoxes, atsLines);
-	
+	WriteDataToTxtFile(strTestOBPath, strTestLinePath, atsOtherBoxes, atsLines);
 
 
 }
