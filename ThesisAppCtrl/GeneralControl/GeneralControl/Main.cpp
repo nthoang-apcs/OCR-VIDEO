@@ -179,6 +179,9 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 // read otherboxes from txt file
 void ReadOtherBoxesDataFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes);
 
+// read line boxes from txt file
+void ReadLinesDataFile(string strLinePath, vector<tsLineBox> &atsOtherBoxes);
+
 // write otherboxes to text file
 void WriteOtherBoxesToFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes);
 
@@ -197,8 +200,22 @@ void CropROIByDataToFolderImage(string strTmpImage, string strInput,
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Test function		*/
 
+// Simulate otherboxes which may create a situation that cause bug
+/*		The test rect:
+	102 4 27 26;
+	127 6 23 27;
+	141 9 10 25;
+	148 10 24 25;
+	170 11 23 26;
+	172 21 10 16;
+*/
+void TestSimulateOtherBoxesC1(vector<tsOtherBox> &atsOtherBoxes);
+
 // Test get a line from intersect box
 void TestGetLineIntersect();
+
+// Add target line to image => purpose to identify where the line is lying on.
+void TestLocationLineLying();
 
 // reduce a number of otherboxes by a width range
 // max = 0 => NOT have upper limit
@@ -224,10 +241,10 @@ void CutDownOtherBoxesByY(vector<tsOtherBox> &atsOtherBoxes, int start, int max)
 int main(int argc, char **argv)
 {
 	// program Run 
-	//Run(argc, argv, true);
+	Run(argc, argv, true);
 
 	// Test part
-	TestGetLineIntersect();
+	//TestGetLineIntersect();
 
 	return 1;
 }
@@ -1121,11 +1138,13 @@ bool CheckConditionOfMergIntersectBoxes(tsOtherBox A, tsOtherBox B)
 			if (((float)A.rROI.nHeight / (float)B.rROI.nHeight) > 0.8 && ((float)B.rROI.nHeight / (float)A.rROI.nHeight) < 1.25)
 			{
 				// check width ratio
-				if (((float)A.rROI.nWidth / (float)B.rROI.nWidth) > 0.7 && ((float)B.rROI.nWidth / (float)A.rROI.nWidth) < 1.43)
+				/*if (((float)A.rROI.nWidth / (float)B.rROI.nWidth) > 0.7 && ((float)B.rROI.nWidth / (float)A.rROI.nWidth) < 1.43)
 				{
 					
 					return true;
-				}
+				}*/
+
+				return true;
 			}
 		}
 	}
@@ -1376,21 +1395,8 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 	// Remove OtherBoxes which have been merge into Lines
 	RemoveOtherBoxesMergeInLines(atsOtherBoxes, atsLines);
 
-	// init again
-	//aFreeList.clear();
-	//nSize = atsOtherBoxes.size();
-	//for (int nI = 0; nI < nSize; nI++)
-	//{
-	//	aFreeList.push_back(nI);
-	//}
-	//// for seperated boxes
-	//while(nPos < nSize && nSize != 0)
-	//{
-	//	// handle function for seperated boxes
-	//	GetALineBoxFromSeperateBoxes(nPos, nSize, aFreeList, atsOtherBoxes, atsLines);
-	//}
-	//// Remove OtherBoxes which have been merge into Lines
-	//RemoveOtherBoxesMergeInLines(atsOtherBoxes, atsLines);
+	// Remove OtherBoxes which are completely inside Line Boxes
+	RemoveOtherBoxesInsideLines(atsOtherBoxes, atsLines);
 
 	// clear
 	aFreeList.clear();
@@ -1408,6 +1414,11 @@ void ReadOtherBoxesDataFile(string strOtherBoxPath, vector<tsOtherBox> &atsOther
 	BBoxIOStream bboxTmp;
 	// get list info
 	bboxTmp.ReadOtherBoxes(atsOtherBoxes, strOtherBoxPath);
+}
+
+void ReadLinesDataFile(string strLinePath, vector<tsLineBox> &atsOtherBoxes)
+{
+
 }
 
 void WriteOtherBoxesToFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes)
@@ -1470,6 +1481,25 @@ void CropROIByDataToFolderImage(string strTmpImage, string strInput,
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*		Test function		*/
 
+
+/*		The test rect:
+102 4 27 26;
+127 6 23 27;
+141 9 10 25;
+148 10 24 25;
+170 11 23 26;
+172 21 10 16;
+*/
+void TestSimulateOtherBoxesC1(vector<tsOtherBox> &atsOtherBoxes)
+{
+	atsOtherBoxes.push_back(tsOtherBox(0, 102, 4, 27, 26, "img250", 1, 0));
+	atsOtherBoxes.push_back(tsOtherBox(1, 127, 6, 23, 27, "img250", 1, 0));
+	atsOtherBoxes.push_back(tsOtherBox(2, 141, 9, 10, 25, "img250", 1, 0));
+	atsOtherBoxes.push_back(tsOtherBox(3, 148, 10, 24, 25, "img250", 1, 0));
+	atsOtherBoxes.push_back(tsOtherBox(4, 170, 11, 23, 26, "img250", 1, 0));
+	atsOtherBoxes.push_back(tsOtherBox(5, 172, 21, 10, 16, "img250", 1, 0));
+}
+
 // Test get a line from intersect box
 void TestGetLineIntersect()
 {
@@ -1479,19 +1509,23 @@ void TestGetLineIntersect()
 	string strImagePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250.jpg";
 	string strTestOBPath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-OtherBoxes.txt";
 	string strTestLinePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-Lines.txt";
-	ReadOtherBoxesDataFile(strOtherBoxPath, atsOtherBoxes);
+	
+	//ReadOtherBoxesDataFile(strOtherBoxPath, atsOtherBoxes);
+	//TestSimulateOtherBoxesC1(atsOtherBoxes);
 
 	CutDownOtherBoxesByX(atsOtherBoxes, 100, 0);
 	CutDownOtherBoxesByY(atsOtherBoxes, 0, 70);
 
 	MergeLineBox(atsOtherBoxes, atsLines);
 
-	RemoveOtherBoxesMergeInLines(atsOtherBoxes, atsLines);
-	RemoveOtherBoxesInsideLines(atsOtherBoxes, atsLines);
-
 	AddRectToOriginalImage(strImagePath, atsOtherBoxes, atsLines);
 	WriteDataToTxtFile(strTestOBPath, strTestLinePath, atsOtherBoxes, atsLines);
 
+
+}
+
+void TestLocationLineLying()
+{
 
 }
 
