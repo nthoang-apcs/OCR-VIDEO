@@ -91,7 +91,7 @@ void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B);
 void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 // After merge otherboxes into lines, there are many otherboxes which do not have enough condition
-// and completely stay inside a Line box => remove these OtherBoxes
+// and completely(or at least 85% area) stay inside a Line box => remove these OtherBoxes
 void RemoveOtherBoxesInsideLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 void SortYCoordinate(vector<Rect> &arBBoxes);
@@ -114,6 +114,10 @@ bool IsB1insideB2(Rect B1, Rect B2);
 // check if tsOtherBox A is inside tsLineBox B, use in case rROI only, not ACVowel
 // true: inside, false: otherwise
 bool IsOtherBoxAInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB);
+
+// check if >= 85% of tsOtherBox A area is inside tsLineBox B, use in case rROI only, not ACVowel
+// true: inside, false: otherwise
+bool IsOtherBoxAMostlyInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB);
 
 // check if a point is inside a Rect
 bool IsPointAInsideRectB(int nXA, int nYA, Rect rB);
@@ -1034,6 +1038,10 @@ void RemoveOtherBoxesInsideLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLin
 			bChecked = IsOtherBoxAInsideLineBoxB(atsOtherBoxes[nI], atsLines[nJ]);
 			if (bChecked == true)
 				break;
+			// check at least 85% area
+			bChecked = IsOtherBoxAMostlyInsideLineBoxB(atsOtherBoxes[nI], atsLines[nJ]);
+			if (bChecked == true)
+				break;
 		}
 		// add to atsTmp if satisfy the condition
 		if (bChecked == false)
@@ -1113,6 +1121,19 @@ bool IsOtherBoxAInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB)
 		{
 			return true;
 		}
+	}
+	return false;
+}
+
+bool IsOtherBoxAMostlyInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB)
+{
+	// check basic condition for x, y of tsA to x, y of tsB
+	if ((tsA.rROI.nX >= tsB.tsCore.rROI.nX) && (tsA.rROI.nY >= tsB.tsCore.rROI.nY)
+		&& (tsA.rROI.nX < (tsB.tsCore.rROI.nX + tsB.tsCore.rROI.nWidth))
+		&& (tsA.rROI.nY < (tsB.tsCore.rROI.nY + tsB.tsCore.rROI.nHeight)) )
+	{
+		// check area inside
+
 	}
 	return false;
 }
@@ -1395,7 +1416,7 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 	// Remove OtherBoxes which have been merge into Lines
 	RemoveOtherBoxesMergeInLines(atsOtherBoxes, atsLines);
 
-	// Remove OtherBoxes which are completely inside Line Boxes
+	// Remove OtherBoxes which are completely (or at least 85% area) inside Line Boxes
 	RemoveOtherBoxesInsideLines(atsOtherBoxes, atsLines);
 
 	// clear
