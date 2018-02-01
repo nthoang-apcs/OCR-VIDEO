@@ -65,10 +65,14 @@ void IncreaseRectToBoxes(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &a
 void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, 
 	vector<tsLineBox> &atsLines);
 
-// add all current rect to the original image and write the image to folder Root/Debug
+// Add all current rect to the original image and write the image to folder Root/Debug
+// with the format [strInput]-debug.jpg
 // strInput is the absolute path of the image file.
 void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
 	vector<tsLineBox> &atsLines);
+// strOutput is the file path of output image file
+void AddRectToOriginalImage(string strInput, string strOutput, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 // nPos is the start search position
 // nSize is the size of aFreeList
@@ -115,7 +119,7 @@ bool IsB1insideB2(Rect B1, Rect B2);
 // true: inside, false: otherwise
 bool IsOtherBoxAInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB);
 
-// check if >= 85% of tsOtherBox A area is inside tsLineBox B, use in case rROI only, not ACVowel
+// check if >= 75% of tsOtherBox A area is inside tsLineBox B, use in case rROI only, not ACVowel
 // true: inside, false: otherwise
 bool IsOtherBoxAMostlyInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB);
 
@@ -184,7 +188,7 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 void ReadOtherBoxesDataFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes);
 
 // read line boxes from txt file
-void ReadLinesDataFile(string strLinePath, vector<tsLineBox> &atsOtherBoxes);
+void ReadLinesDataFile(string strLinePath, vector<tsLineBox> &atsLines);
 
 // write otherboxes to text file
 void WriteOtherBoxesToFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes);
@@ -218,8 +222,15 @@ void TestSimulateOtherBoxesC1(vector<tsOtherBox> &atsOtherBoxes);
 // Test get a line from intersect box
 void TestGetLineIntersect();
 
-// Add target line to image => purpose to identify where the line is lying on.
-void TestLocationLineLying();
+// Test get a line from intersect boxes which are detected by mser
+void TestGetLineIntersectFromImage();
+
+// Input:
+// - The original image path
+// - The output path to write down
+// - The ID of linebox in Lines txt file
+// Output: the image write as the output path.
+void TestShowLineBoxOnImage();
 
 // reduce a number of otherboxes by a width range
 // max = 0 => NOT have upper limit
@@ -245,10 +256,10 @@ void CutDownOtherBoxesByY(vector<tsOtherBox> &atsOtherBoxes, int start, int max)
 int main(int argc, char **argv)
 {
 	// program Run 
-	Run(argc, argv, true);
+	//Run(argc, argv, true);
 
-	// Test part
-	//TestGetLineIntersect();
+	// Test function
+	TestShowLineBoxOnImage();
 
 	return 1;
 }
@@ -741,6 +752,38 @@ void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes,
 	return;
 }
 
+void AddRectToOriginalImage(string strInput, string strOutput,
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+	// get root folder
+	string strRootFolder = GetRootFolder(strInput);
+	Mat mInput = imread(strInput);
+	int nSize = atsOtherBoxes.size();
+	Rect rTmp = Rect(0, 0, 0, 0);
+	// copy rects from OtherBoxes to the image
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		rTmp.x = atsOtherBoxes[nI].rROI.nX;
+		rTmp.y = atsOtherBoxes[nI].rROI.nY;
+		rTmp.width = atsOtherBoxes[nI].rROI.nWidth;
+		rTmp.height = atsOtherBoxes[nI].rROI.nHeight;
+		rectangle(mInput, rTmp, CV_RGB(0, 255, 0), 2);
+	}
+	nSize = atsLines.size();
+	// copy rects from Lines to the image
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		rTmp.x = atsLines[nI].tsCore.rROI.nX;
+		rTmp.y = atsLines[nI].tsCore.rROI.nY;
+		rTmp.width = atsLines[nI].tsCore.rROI.nWidth;
+		rTmp.height = atsLines[nI].tsCore.rROI.nHeight;
+		rectangle(mInput, rTmp, CV_RGB(0, 255, 0), 2);
+	}
+	// write image to file
+	imwrite(strOutput, mInput);
+	return;
+}
+
 void GetALineBoxFromIntersectBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
@@ -1133,7 +1176,13 @@ bool IsOtherBoxAMostlyInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB)
 		&& (tsA.rROI.nY < (tsB.tsCore.rROI.nY + tsB.tsCore.rROI.nHeight)) )
 	{
 		// check area inside
-
+		Rect B = Rect(tsA.rROI.nX, tsA.rROI.nY, tsA.rROI.nWidth, tsA.rROI.nHeight);
+		Rect C = Rect(tsB.tsCore.rROI.nX, tsB.tsCore.rROI.nY, tsB.tsCore.rROI.nWidth, tsB.tsCore.rROI.nHeight);
+		Rect A = B & C;
+		if ((float)A.area() > (0.75 * ((float)(tsA.rROI.GetArea()))))
+		{
+			return true;
+		}
 	}
 	return false;
 }
@@ -1437,9 +1486,11 @@ void ReadOtherBoxesDataFile(string strOtherBoxPath, vector<tsOtherBox> &atsOther
 	bboxTmp.ReadOtherBoxes(atsOtherBoxes, strOtherBoxPath);
 }
 
-void ReadLinesDataFile(string strLinePath, vector<tsLineBox> &atsOtherBoxes)
+void ReadLinesDataFile(string strLinePath, vector<tsLineBox> &atsLines)
 {
-
+	BBoxIOStream bboxTmp;
+	// get list info
+	bboxTmp.ReadLines(atsLines, strLinePath);
 }
 
 void WriteOtherBoxesToFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes)
@@ -1531,7 +1582,7 @@ void TestGetLineIntersect()
 	string strTestOBPath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-OtherBoxes.txt";
 	string strTestLinePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-Lines.txt";
 	
-	//ReadOtherBoxesDataFile(strOtherBoxPath, atsOtherBoxes);
+	ReadOtherBoxesDataFile(strOtherBoxPath, atsOtherBoxes);
 	//TestSimulateOtherBoxesC1(atsOtherBoxes);
 
 	CutDownOtherBoxesByX(atsOtherBoxes, 100, 0);
@@ -1541,13 +1592,89 @@ void TestGetLineIntersect()
 
 	AddRectToOriginalImage(strImagePath, atsOtherBoxes, atsLines);
 	WriteDataToTxtFile(strTestOBPath, strTestLinePath, atsOtherBoxes, atsLines);
-
-
 }
 
-void TestLocationLineLying()
+void TestGetLineIntersectFromImage()
 {
+	vector<Rect> arBBoxes;
+	string strOtherBoxPath = "E:\\Code\\OCR-Five-Git\\Root\\TmpRect\\img250-OtherBoxes.txt";
+	vector<tsOtherBox> atsOtherBoxes;
+	vector<tsLineBox> atsLines;
+	string strImagePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250.jpg";
+	string strTestOBPath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-OtherBoxes.txt";
+	string strTestLinePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-Lines.txt";
 
+	// read image and output OtherBoxes
+	Mat mOriGS;					// original gray scale image
+	Mat mOriSharpGS;			// original sharpening grayscale image
+
+								// read image in gray scale
+	ReadImageGrayScale(strImagePath, mOriGS);
+	// sharpen image
+	SharpenImage(mOriGS, mOriSharpGS);
+
+	// MSER
+	MSEROneImage(mOriSharpGS, arBBoxes);
+
+	// sort area ascending
+	SortArea(arBBoxes);
+	// remove areas of stand alone single box
+	RemoveUnusualAreaBoxes(arBBoxes);
+	// remove unbalanced ratio width, height
+	RemoveUnbalancedRatio(arBBoxes);
+	// sort y coordinate ascending
+	SortYCoordinate(arBBoxes);
+	// remove single box text line
+	RemoveSingleBoxTextLine(arBBoxes);
+	// merge inside box
+	MergeInsideBoxes(arBBoxes);
+	// sort x coordinate ascending
+	SortXCoordinate(arBBoxes);
+
+	// convert to tsOtherBox and tsLine
+	ConvertFromBBoxesToOtherBoxes(GetFileNameFromPath(strImagePath), arBBoxes, atsOtherBoxes);
+	arBBoxes.clear();
+
+	CutDownOtherBoxesByX(atsOtherBoxes, 100, 0);
+	CutDownOtherBoxesByY(atsOtherBoxes, 0, 70);
+
+	MergeLineBox(atsOtherBoxes, atsLines);
+
+	// increase each rect: left, right, top, bottom value + 1 pixel if all of them < 10, else + 2 pixels
+	// it make the OCR recognize text easier
+	IncreaseRectToBoxes(atsOtherBoxes, atsLines);
+
+	AddRectToOriginalImage(strImagePath, atsOtherBoxes, atsLines);
+	WriteDataToTxtFile(strTestOBPath, strTestLinePath, atsOtherBoxes, atsLines);
+}
+
+void TestShowLineBoxOnImage()
+{
+	vector<tsLineBox> atsLines;
+	vector<tsOtherBox> atsOtherBoxes;
+	string strInImPath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250.jpg";
+	string strOutImPath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-outputline.jpg";
+	string strTestLinePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-OtherBoxes.txt";
+	int nID = 58;
+	
+	//ReadLinesDataFile(strTestLinePath, atsLines);
+	ReadOtherBoxesDataFile(strTestLinePath, atsOtherBoxes);
+
+	// get need Line
+	vector<tsOtherBox> atsTmp;
+	size_t nSize = atsOtherBoxes.size();
+	for (size_t nI = 0; nI < nSize; nI++)
+	{
+		if (atsOtherBoxes[nI].nID == nID)
+		{
+			atsTmp.push_back(atsOtherBoxes[nI]);
+			break;
+		}
+	}
+	
+	AddRectToOriginalImage(strInImPath, strOutImPath, atsTmp, atsLines);
+	atsTmp.clear();
+	atsLines.clear();
 }
 
 void CutDownOtherBoxesByX(vector<tsOtherBox> &atsOtherBoxes, int start, int max)
