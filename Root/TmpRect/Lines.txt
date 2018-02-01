@@ -1,70 +1,110 @@
 <Rect>
-<ID>161</ID>
-<ROI>70 332 54 38</ROI>
-<NewROI>72 334 50 34</NewROI>
-<SubID>3 5 8 </SubID>
-<SubROI>72 334 21 34;96 341 18 18;114 341 8 17;</SubROI>
-<Name>img278</Name>
+<ID>155</ID>
+<ROI>105 405 108 47</ROI>
+<NewROI>107 407 104 43</NewROI>
+<SubID>14 20 21 23 27 </SubID>
+<SubROI>107 438 103 41;144 430 26 43;145 413 25 18;171 409 27 19;199 407 12 17;</SubROI>
+<Name>img267</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00678524</TimeRunning>
+<TimeRunning>0.0087803</TimeRunning>
+</Rect>
+<Rect>
+<ID>156</ID>
+<ROI>266 509 35 25</ROI>
+<NewROI>268 511 31 21</NewROI>
+<SubID>44 51 52 </SubID>
+<SubROI>268 511 31 21;291 512 8 18;293 515 3 11;</SubROI>
+<Name>img267</Name>
+<NumberVersion>1</NumberVersion>
+<TimeRunning>0.0087803</TimeRunning>
+</Rect>
+<Rect>
+<ID>157</ID>
+<ROI>280 10 119 71</ROI>
+<NewROI>282 12 115 67</NewROI>
+<SubID>49 50 55 70 </SubID>
+<SubROI>282 58 42 67;283 27 53 45;311 12 86 52;350 35 15 13;</SubROI>
+<Name>img267</Name>
+<NumberVersion>1</NumberVersion>
+<TimeRunning>0.0087803</TimeRunning>
+</Rect>
+<Rect>
+<ID>158</ID>
+<ROI>331 506 30 23</ROI>
+<NewROI>333 508 26 19</NewROI>
+<SubID>63 64 69 </SubID>
+<SubROI>333 509 10 19;341 508 11 19;350 508 9 19;</SubROI>
+<Name>img267</Name>
+<NumberVersion>1</NumberVersion>
+<TimeRunning>0.0087803</TimeRunning>
+</Rect>
+<Rect>
+<ID>159</ID>
+<ROI>412 188 50 40</ROI>
+<NewROI>414 190 46 36</NewROI>
+<SubID>81 100 105 </SubID>
+<SubROI>414 190 21 32;437 194 23 32;447 203 4 9;</SubROI>
+<Name>img267</Name>
+<NumberVersion>1</NumberVersion>
+<TimeRunning>0.0087803</TimeRunning>
+</Rect>
+<Rect>
+<ID>160</ID>
+<ROI>413 136 93 46</ROI>
+<NewROI>415 138 89 42</NewROI>
+<SubID>83 101 114 122 </SubID>
+<SubROI>415 138 20 29;438 142 21 31;461 146 19 30;483 149 21 31;</SubROI>
+<Name>img267</Name>
+<NumberVersion>1</NumberVersion>
+<TimeRunning>0.0087803</TimeRunning>
+</Rect>
+<Rect>
+<ID>161</ID>
+<ROI>413 570 36 20</ROI>
+<NewROI>415 572 32 16</NewROI>
+<SubID>84 90 96 </SubID>
+<SubROI>415 573 13 14;424 572 4 12;431 574 16 14;</SubROI>
+<Name>img267</Name>
+<NumberVersion>1</NumberVersion>
+<TimeRunning>0.0087803</TimeRunning>
 </Rect>
 <Rect>
 <ID>162</ID>
-<ROI>188 211 72 33</ROI>
-<NewROI>190 213 68 29</NewROI>
-<SubID>22 25 32 </SubID>
-<SubROI>190 213 26 29;214 213 23 28;240 213 18 28;</SubROI>
-<Name>img278</Name>
+<ROI>420 241 77 43</ROI>
+<NewROI>422 243 73 39</NewROI>
+<SubID>88 104 117 </SubID>
+<SubROI>422 243 21 33;445 247 22 31;469 249 26 33;</SubROI>
+<Name>img267</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00678524</TimeRunning>
+<TimeRunning>0.0087803</TimeRunning>
 </Rect>
 <Rect>
 <ID>163</ID>
-<ROI>443 461 149 211</ROI>
-<NewROI>445 463 145 207</NewROI>
-<SubID>77 89 92 </SubID>
-<SubROI>445 463 145 207;490 517 35 70;503 532 9 39;</SubROI>
-<Name>img278</Name>
+<ROI>422 294 73 40</ROI>
+<NewROI>424 296 69 36</NewROI>
+<SubID>89 110 118 </SubID>
+<SubROI>424 296 27 33;452 300 23 31;472 301 21 31;</SubROI>
+<Name>img267</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00678524</TimeRunning>
+<TimeRunning>0.0087803</TimeRunning>
 </Rect>
 <Rect>
 <ID>164</ID>
-<ROI>456 207 67 33</ROI>
-<NewROI>458 209 63 29</NewROI>
-<SubID>81 86 91 95 </SubID>
-<SubROI>458 209 21 29;480 209 20 29;502 209 19 29;509 213 5 20;</SubROI>
-<Name>img278</Name>
+<ROI>459 359 36 36</ROI>
+<NewROI>461 361 32 32</NewROI>
+<SubID>115 120 123 </SubID>
+<SubROI>461 361 16 31;478 363 15 30;483 370 5 17;</SubROI>
+<Name>img267</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00678524</TimeRunning>
+<TimeRunning>0.0087803</TimeRunning>
 </Rect>
 <Rect>
 <ID>165</ID>
-<ROI>604 259 53 35</ROI>
-<NewROI>606 261 49 31</NewROI>
-<SubID>113 119 122 </SubID>
-<SubROI>606 261 24 31;632 261 23 31;641 266 4 15;</SubROI>
-<Name>img278</Name>
+<ROI>477 412 35 38</ROI>
+<NewROI>479 414 31 34</NewROI>
+<SubID>121 128 129 </SubID>
+<SubROI>479 425 15 33;494 427 14 32;497 414 13 12;</SubROI>
+<Name>img267</Name>
 <NumberVersion>1</NumberVersion>
-<TimeRunning>0.00678524</TimeRunning>
-</Rect>
-<Rect>
-<ID>166</ID>
-<ROI>705 333 48 22</ROI>
-<NewROI>707 335 44 18</NewROI>
-<SubID>134 137 141 </SubID>
-<SubROI>707 335 14 18;722 335 14 18;737 335 14 18;</SubROI>
-<Name>img278</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00678524</TimeRunning>
-</Rect>
-<Rect>
-<ID>167</ID>
-<ROI>758 254 54 39</ROI>
-<NewROI>760 256 50 35</NewROI>
-<SubID>146 149 150 </SubID>
-<SubROI>760 256 26 35;787 259 23 32;794 264 5 16;</SubROI>
-<Name>img278</Name>
-<NumberVersion>1</NumberVersion>
-<TimeRunning>0.00678524</TimeRunning>
+<TimeRunning>0.0087803</TimeRunning>
 </Rect>
