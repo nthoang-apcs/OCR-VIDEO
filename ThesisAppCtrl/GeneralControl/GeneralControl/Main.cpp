@@ -193,10 +193,12 @@ void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes,
 void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 // there are > 3 otherboxes intersect each other -> merge them together
+// need atsOtherBoxes size > 0
 void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 // after merge line box, there are cases that line box are intersect with otherboxes on horizontal -> check
 // condition of these pair to decide to merge them or not
+// need atsLines size > 0
 void MergeLinesAndOtherBoxesHorizontally(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 // merge if 2 line box are intersect and satisfy some condition
@@ -283,6 +285,9 @@ int main(int argc, char **argv)
 
 	// Test function
 	//TestShowLineBoxOnImage();
+	char a;
+	cout << "Press any key to continue ... ";
+	cin >> a;
 
 	return 1;
 }
@@ -1351,13 +1356,11 @@ tsLineBox MergeOtherBoxesIntoALine(vector<tsOtherBox> &atsTmp, int nID)
 	size_t nSize = atsTmp.size();
 	if (nSize = 0)
 		return tsALine;
-	cout << nSize << endl;
 	for (size_t nI = 0; nI < nSize; nI++)
 	{
 		tsALine.anSubID.push_back(atsTmp[nI].nID);
 		tsALine.atsSubROI.push_back(atsTmp[nI].rROI);
 	}
-	cout << "endl add list." << endl;
 	tsALine.tsCore.nNumberVersion = 1;
 	tsALine.tsCore.strNameImage = atsTmp[0].strNameImage;
 	tsALine.tsCore.InputROIByCreateCoverRect(tsALine.atsSubROI);
@@ -1497,9 +1500,7 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	arBBoxes.clear();
 	// merge line box
 	MergeLineBox(atsOtherBoxes, atsLines);
-	// increase each rect: left, right, top, bottom value + 1 pixel if all of them < 10, else + 2 pixels
-	// it make the OCR recognize text easier
-	IncreaseRectToBoxes(atsOtherBoxes, atsLines);
+	
 	// calculate running time
 	fTimeRunning += (float)(clock() - start) / (float)CLOCKS_PER_SEC;
 	// binding running time
@@ -1594,9 +1595,12 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 
 	// Remove OtherBoxes which are completely (or at least 75% area) inside Line Boxes
 	RemoveOtherBoxesInsideLines(atsOtherBoxes, atsLines);
-	cout << atsLines.size() << endl;
 	// clear
 	aFreeList.clear();
+	// increase each rect: left, right, top, bottom value + 1 pixel if all of them < 10, else + 2 pixels
+	// it make the OCR recognize text easier
+	IncreaseRectToBoxes(atsOtherBoxes, atsLines);
+	/*		Re-check 2nd time		*/
 	// merge > 3 otherboxes intersect
 	MergeALotOtherBoxesIntersect(atsOtherBoxes, atsLines);
 	// merge intersect lines and otherbox
@@ -1611,8 +1615,23 @@ void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLi
 	vector<size_t> aIndexIntersect;
 	size_t nSize = 0;
 	size_t nPos = 0;
+	int nNextID = 0;
+	if (atsOtherBoxes.size() == 0)
+		return;
+	// get first nNextID
+	if (atsLines.size() != 0)
+	{
+		nNextID = atsLines[atsLines.size() - 1].tsCore.nID + 1;
+	}
+	else
+	{
+		nNextID = atsOtherBoxes[atsOtherBoxes.size() - 1].nID + 1;
+	}
 	do
 	{
+		// prepare next ID
+		nNextID++;
+		// loop
 		nSize = atsOtherBoxes.size();
 		for (size_t nI = nPos + 1; nI < nSize; nI++)
 		{
@@ -1633,8 +1652,6 @@ void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLi
 				atsTmp.push_back(atsOtherBoxes[aIndexIntersect[nI]]);
 			}
 			// merge them into an Line box
-			cout << atsLines.size() << endl;
-			int nNextID = atsLines[atsLines.size() - 1].tsCore.nID + 1;
 			atsLines.push_back(MergeOtherBoxesIntoALine(atsTmp, nNextID));
 			// remove used index in atsOtherBoxes
 			RemoveSameIDFromAInB(atsTmp, atsOtherBoxes);
@@ -1650,6 +1667,8 @@ void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLi
 
 void MergeLinesAndOtherBoxesHorizontally(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
+	if (atsLines.size() == 0)
+		return;
 
 }
 
