@@ -91,6 +91,9 @@ void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 // Remove similar indexes from vector A inside vector B
 void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B);
 
+// Remove similar ID from A inside B
+void RemoveSameIDFromAInB(vector<tsOtherBox> &A, vector<tsOtherBox> &B);
+
 // Remove OtherBoxes which have been merge into Lines
 void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
@@ -115,6 +118,9 @@ bool IsB1Balanced(Rect B1);
 // and the B2.area() / B1.area() <= 3
 bool IsB1insideB2(Rect B1, Rect B2);
 
+// check if 2 otherboxes intersect or lying next - seperate < 3 pixels
+bool IsOtherBoxAIntersectOtherBoxB(tsOtherBox tsA, tsOtherBox tsB);
+
 // check if tsOtherBox A is inside tsLineBox B, use in case rROI only, not ACVowel
 // true: inside, false: otherwise
 bool IsOtherBoxAInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB);
@@ -125,6 +131,10 @@ bool IsOtherBoxAMostlyInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB);
 
 // check if a point is inside a Rect
 bool IsPointAInsideRectB(int nXA, int nYA, Rect rB);
+
+// check if tsA intersect tsB on a horizontal definition:
+//
+bool IsIntersectHorizontally(tsLineBox tsA, tsLineBox tsB);
 
 // intersect or less than 4 pixels seperate rect
 // h / h > 0.8 & < 1.25
@@ -141,6 +151,9 @@ bool CompareArea(Rect B1, Rect B2);
 
 // return true if B1.x < B2.x
 bool CompareXCoordinate(Rect B1, Rect B2);
+
+// Merge multiple otherbox into a line
+tsLineBox MergeOtherBoxesIntoALine(vector<tsOtherBox> &atsTmp, int nID);
 
 
 //----------------------------------------------------------------------
@@ -178,6 +191,16 @@ void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes,
 
 // from OtherBoxes, merge possible boxes that can be assemble into a line
 void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
+// there are > 3 otherboxes intersect each other -> merge them together
+void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
+// after merge line box, there are cases that line box are intersect with otherboxes on horizontal -> check
+// condition of these pair to decide to merge them or not
+void MergeLinesAndOtherBoxesHorizontally(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
+// merge if 2 line box are intersect and satisfy some condition
+void MergeLineIntersectHorizontally(vector<tsLineBox> &atsLines);
 
 //----------------------------------------------------------------------
 
@@ -256,10 +279,10 @@ void CutDownOtherBoxesByY(vector<tsOtherBox> &atsOtherBoxes, int start, int max)
 int main(int argc, char **argv)
 {
 	// program Run 
-	//Run(argc, argv, true);
+	Run(argc, argv, true);
 
 	// Test function
-	TestShowLineBoxOnImage();
+	//TestShowLineBoxOnImage();
 
 	return 1;
 }
@@ -745,7 +768,7 @@ void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes,
 		rTmp.y = atsLines[nI].tsCore.rROI.nY;
 		rTmp.width = atsLines[nI].tsCore.rROI.nWidth;
 		rTmp.height = atsLines[nI].tsCore.rROI.nHeight;
-		rectangle(mInput, rTmp, CV_RGB(0, 255, 0), 2);
+		rectangle(mInput, rTmp, CV_RGB(255, 0, 0), 2);
 	}
 	// write image to file
 	imwrite(strFilePath, mInput);
@@ -1020,6 +1043,36 @@ void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B)
 	B = aTmp;
 }
 
+void RemoveSameIDFromAInB(vector<tsOtherBox> &A, vector<tsOtherBox> &B)
+{
+	size_t nS1 = A.size();
+	size_t nS2 = B.size();
+	if (nS1 == 0 || nS2 == 0)
+		return;
+	vector<tsOtherBox> atsC;
+	size_t nPosA = 0;
+	for (size_t nI = 0; nI < nS2; nI++)
+	{
+		bool bChecked = false;
+		for (size_t nJ = nPosA; nJ < nS1; nJ++)
+		{
+			if (B[nI].nID == A[nJ].nID)
+			{
+				bChecked = true;
+				nPosA = nJ;		// all list are sorted in ascending order of ID
+				break;
+			}
+		}
+		if (bChecked == false)
+		{
+			atsC.push_back(B[nI]);
+		}
+	}
+	B.clear();
+	B = atsC;
+	atsC.clear();
+}
+
 void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
 	int nSize = atsLines.size();
@@ -1154,6 +1207,55 @@ bool IsB1insideB2(Rect B1, Rect B2)
 
 }
 
+bool IsOtherBoxAIntersectOtherBoxB(tsOtherBox tsA, tsOtherBox tsB)
+{
+	// check area
+	Rect B = Rect(tsA.rROI.nX, tsA.rROI.nY, tsA.rROI.nWidth, tsA.rROI.nHeight);
+	Rect A = Rect(tsB.rROI.nX, tsB.rROI.nY, tsB.rROI.nWidth, tsB.rROI.nHeight);
+	Rect C = A & B;
+	if (C.area() > 0)
+		return true;
+	if (tsA.rROI.nX < tsB.rROI.nX)
+	{
+		if ((tsA.rROI.nX + tsA.rROI.nWidth + 3) > tsB.rROI.nX)
+		{
+			// between the upper 50% height and the height of B range = 200% -> 0% of height of A
+			if ((tsA.rROI.nY < tsB.rROI.nY) && ((tsA.rROI.nY + 0.5* tsA.rROI.nHeight) > tsB.rROI.nY)
+				&& ((tsA.rROI.nHeight / tsB.rROI.nHeight) < 2) && ((tsB.rROI.nHeight / tsA.rROI.nHeight) < 2) )
+			{
+				return true;
+			}
+			else if ((tsA.rROI.nY > tsB.rROI.nY) && ((tsA.rROI.nY + tsA.rROI.nHeight) > (tsB.rROI.nY + tsB.rROI.nHeight))
+				&& ((tsB.rROI.nY + tsB.rROI.nHeight) > tsA.rROI.nY) && ((tsA.rROI.nHeight / tsB.rROI.nHeight) < 2)
+				&& ((tsB.rROI.nHeight / tsA.rROI.nHeight) < 2))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	else
+	{
+		if ((tsB.rROI.nX + tsB.rROI.nWidth + 3) > tsA.rROI.nX)
+		{
+			if ((tsB.rROI.nY < tsA.rROI.nY) && ((tsB.rROI.nY + 0.5* tsB.rROI.nHeight) > tsA.rROI.nY)
+				&& ((tsB.rROI.nHeight / tsA.rROI.nHeight) < 2) && ((tsA.rROI.nHeight / tsB.rROI.nHeight) < 2)
+				)
+			{
+				return true;
+			}
+			else if ((tsB.rROI.nY > tsA.rROI.nY) && ((tsB.rROI.nY + tsB.rROI.nHeight) > (tsA.rROI.nY + tsA.rROI.nHeight))
+				&& ((tsA.rROI.nY + tsA.rROI.nHeight) > tsB.rROI.nY) && ((tsB.rROI.nHeight / tsA.rROI.nHeight) < 2)
+				&& ((tsA.rROI.nHeight / tsB.rROI.nHeight) < 2))
+			{
+				return true;
+			}
+			return false;
+		}
+	}
+	return false;
+}
+
 bool IsOtherBoxAInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB)
 {
 	// check basic condition for x, y of tsA to x, y of tsB
@@ -1193,6 +1295,12 @@ bool IsPointAInsideRectB(int nXA, int nYA, Rect rB)
 	{
 		return true;
 	}
+	return false;
+}
+
+// not finish
+bool IsIntersectHorizontally(tsLineBox tsA, tsLineBox tsB)
+{
 	return false;
 }
 
@@ -1236,6 +1344,25 @@ bool CompareXCoordinate(Rect B1, Rect B2)
 	return (B1.x < B2.x);
 }
 
+tsLineBox MergeOtherBoxesIntoALine(vector<tsOtherBox> &atsTmp, int nID)
+{
+	tsLineBox tsALine;
+	tsALine.tsCore.nID = nID;
+	size_t nSize = atsTmp.size();
+	if (nSize = 0)
+		return tsALine;
+	cout << nSize << endl;
+	for (size_t nI = 0; nI < nSize; nI++)
+	{
+		tsALine.anSubID.push_back(atsTmp[nI].nID);
+		tsALine.atsSubROI.push_back(atsTmp[nI].rROI);
+	}
+	cout << "endl add list." << endl;
+	tsALine.tsCore.nNumberVersion = 1;
+	tsALine.tsCore.strNameImage = atsTmp[0].strNameImage;
+	tsALine.tsCore.InputROIByCreateCoverRect(tsALine.atsSubROI);
+	return tsALine;
+}
 
 
 //----------------------------------------------------------------------
@@ -1465,14 +1592,97 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 	// Remove OtherBoxes which have been merge into Lines
 	RemoveOtherBoxesMergeInLines(atsOtherBoxes, atsLines);
 
-	// Remove OtherBoxes which are completely (or at least 85% area) inside Line Boxes
+	// Remove OtherBoxes which are completely (or at least 75% area) inside Line Boxes
 	RemoveOtherBoxesInsideLines(atsOtherBoxes, atsLines);
-
+	cout << atsLines.size() << endl;
 	// clear
 	aFreeList.clear();
+	// merge > 3 otherboxes intersect
+	MergeALotOtherBoxesIntersect(atsOtherBoxes, atsLines);
+	// merge intersect lines and otherbox
+	MergeLinesAndOtherBoxesHorizontally(atsOtherBoxes, atsLines);
+
+	// merge lines intersect
+	MergeLineIntersectHorizontally(atsLines);
 }
 
+void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+	vector<size_t> aIndexIntersect;
+	size_t nSize = 0;
+	size_t nPos = 0;
+	do
+	{
+		nSize = atsOtherBoxes.size();
+		for (size_t nI = nPos + 1; nI < nSize; nI++)
+		{
+			// check with the rest of this list
+			if (IsOtherBoxAIntersectOtherBoxB(atsOtherBoxes[nPos], atsOtherBoxes[nI]) == true)
+			{
+				aIndexIntersect.push_back(nI);
+			}
+		}
+		// check if > 3 otherboxes
+		if (aIndexIntersect.size() > 3)
+		{
+			// take them out as a seperate array
+			vector<tsOtherBox> atsTmp;
+			nSize = aIndexIntersect.size();
+			for (size_t nI = 0; nI < nSize; nI++)
+			{
+				atsTmp.push_back(atsOtherBoxes[aIndexIntersect[nI]]);
+			}
+			// merge them into an Line box
+			cout << atsLines.size() << endl;
+			int nNextID = atsLines[atsLines.size() - 1].tsCore.nID + 1;
+			atsLines.push_back(MergeOtherBoxesIntoALine(atsTmp, nNextID));
+			// remove used index in atsOtherBoxes
+			RemoveSameIDFromAInB(atsTmp, atsOtherBoxes);
+			// clear atsTmp
+			atsTmp.clear();
+			nPos--;
+		}
+		aIndexIntersect.clear();
+		nPos++;
+	} while (nPos < nSize);
+	
+}
 
+void MergeLinesAndOtherBoxesHorizontally(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+
+}
+
+void MergeLineIntersectHorizontally(vector<tsLineBox> &atsLines)
+{
+	size_t nSize = atsLines.size();
+	if (nSize == 0)
+		return;
+	size_t nPos = 0;
+	vector<tsLineBox> atsTmp;
+	do
+	{
+		if ((nPos + 1) == nSize)
+			break;
+		atsTmp.push_back(atsLines[nPos]);
+		for (size_t nI = nPos + 1; nI < nSize; nI++)
+		{
+			if (IsIntersectHorizontally(atsLines[nPos], atsLines[nI]) == true)
+			{
+				atsTmp.push_back(atsLines[nI]);
+			}
+		}
+		if (atsTmp.size() > 1)
+		{
+			// merge and create new atsLines
+
+			// keep position
+			nPos--;
+		}
+		atsTmp.clear();
+		nPos++;
+	} while (nPos < nSize);
+}
 
 //----------------------------------------------------------------------
 
