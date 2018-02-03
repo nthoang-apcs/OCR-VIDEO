@@ -101,6 +101,10 @@ void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLi
 // and completely(or at least 85% area) stay inside a Line box => remove these OtherBoxes
 void RemoveOtherBoxesInsideLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
+// merge all lines in atsNeedMerge into 1 line, push_back that line to atsLine
+// remove merging lines from atsLines
+void MergeLineBoxesIntoALine(vector<tsLineBox> &atsNeedMerge, vector<tsLineBox> &atsLines);
+
 void SortYCoordinate(vector<Rect> &arBBoxes);
 
 void SortArea(vector<Rect> &arBBoxes);
@@ -865,7 +869,7 @@ void GetALineBoxFromIntersectBoxes(int &nPos, int &nSize, vector<int> &aFreeList
 	// default number version is 1
 	tsLineTmp.tsCore.nNumberVersion = 1;
 	// copy IDs and Rects from tsOtherBoxes to new tsLineBox
-	for (int nJ = 0; nJ < aCurLine.size(); nJ++)
+	for (size_t nJ = 0; nJ < aCurLine.size(); nJ++)
 	{
 		tsLineTmp.anSubID.push_back(atsOtherBoxes[aFreeList[aCurLine[nJ]]].nID);
 		tsLineTmp.atsSubROI.push_back(tsRect(atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nX,
@@ -886,7 +890,6 @@ void GetALineBoxFromIntersectBoxes(int &nPos, int &nSize, vector<int> &aFreeList
 	aCurLine.clear();
 }
 
-// have bugs
 void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList, 
 	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
@@ -937,7 +940,7 @@ void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 				{
 					// check condition of width - not too far from the average width
 					int nAverWidth = 0;
-					for (int nJ = 0; nJ < aCurLine.size(); nJ++)
+					for (size_t nJ = 0; nJ < aCurLine.size(); nJ++)
 					{
 						nAverWidth += atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nWidth;
 					}
@@ -992,7 +995,7 @@ void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 		// default number version is 1
 		tsLineTmp.tsCore.nNumberVersion = 1;
 		// copy IDs and Rects from tsOtherBoxes to new tsLineBox
-		for (int nJ = 0; nJ < aCurLine.size(); nJ++)
+		for (size_t nJ = 0; nJ < aCurLine.size(); nJ++)
 		{
 			tsLineTmp.anSubID.push_back(atsOtherBoxes[aFreeList[aCurLine[nJ]]].nID);
 			tsLineTmp.atsSubROI.push_back(tsRect(atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nX, 
@@ -1080,12 +1083,12 @@ void RemoveSameIDFromAInB(vector<tsOtherBox> &A, vector<tsOtherBox> &B)
 
 void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
-	int nSize = atsLines.size();
+	size_t nSize = atsLines.size();
 	vector<int> aRemoveIndexes;
 	// get remove indexes list
-	for (int nI = 0; nI < nSize; nI++)
+	for (size_t nI = 0; nI < nSize; nI++)
 	{
-		for (int nJ = 0; nJ < atsLines[nI].anSubID.size(); nJ++)
+		for (size_t nJ = 0; nJ < atsLines[nI].anSubID.size(); nJ++)
 		{
 			aRemoveIndexes.push_back(atsLines[nI].anSubID[nJ]);
 		}
@@ -1153,6 +1156,12 @@ void RemoveOtherBoxesInsideLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLin
 	atsOtherBoxes.clear();
 	atsOtherBoxes = atsTmp;
 	atsTmp.clear();
+}
+
+// not finish
+void MergeLineBoxesIntoALine(vector<tsLineBox> &atsNeedMerge, vector<tsLineBox> &atsLines)
+{
+
 }
 
 void SortYCoordinate(vector<Rect> &arBBoxes)
@@ -1669,6 +1678,10 @@ void MergeLinesAndOtherBoxesHorizontally(vector<tsOtherBox> &atsOtherBoxes, vect
 {
 	if (atsLines.size() == 0)
 		return;
+	size_t nS1 = atsOtherBoxes.size();
+	size_t nS2 = atsLines.size();
+
+
 
 }
 
