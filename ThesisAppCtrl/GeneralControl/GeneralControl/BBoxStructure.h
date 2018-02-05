@@ -54,7 +54,30 @@ typedef struct sRect
 	{
 		return (nWidth*nHeight);
 	}
+	bool IsTwoRectIntersectHorizontally(tsRect tsOther)
+	{
+		if (nX < tsOther.nX)
+		{
 
+		}
+		else
+		{
+
+		}
+		return false;
+	}
+	bool IsTwoRectIntersectVertically(tsRect tsOther)
+	{
+		if (nX < tsOther.nX)
+		{
+
+		}
+		else
+		{
+
+		}
+		return false;
+	}
 }tsRect;
 
 //////////////////////////////////////////////////////////////////////

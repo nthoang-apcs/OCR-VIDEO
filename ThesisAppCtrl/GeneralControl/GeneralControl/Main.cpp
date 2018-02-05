@@ -137,8 +137,9 @@ bool IsOtherBoxAMostlyInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB);
 bool IsPointAInsideRectB(int nXA, int nYA, Rect rB);
 
 // check if tsA intersect tsB on a horizontal definition:
-//
+// based on 2 tsRect
 bool IsIntersectHorizontally(tsLineBox tsA, tsLineBox tsB);
+bool IsIntersectHorizontally(tsLineBox tsA, tsOtherBox tsB);
 
 // intersect or less than 4 pixels seperate rect
 // h / h > 0.8 & < 1.25
@@ -1312,10 +1313,16 @@ bool IsPointAInsideRectB(int nXA, int nYA, Rect rB)
 	return false;
 }
 
-// not finish
 bool IsIntersectHorizontally(tsLineBox tsA, tsLineBox tsB)
 {
-	return false;
+	// check if 2 tsRect intersect horizontally
+	return tsA.tsCore.rROI.IsTwoRectIntersectHorizontally(tsB.tsCore.rROI);
+}
+
+bool IsIntersectHorizontally(tsLineBox tsA, tsOtherBox tsB)
+{
+	// check if 2 tsRect intersect horizontally
+	return tsA.tsCore.rROI.IsTwoRectIntersectHorizontally(tsB.rROI);
 }
 
 bool CheckConditionOfMergIntersectBoxes(tsOtherBox A, tsOtherBox B)
@@ -1707,7 +1714,7 @@ void MergeLineIntersectHorizontally(vector<tsLineBox> &atsLines)
 		if (atsTmp.size() > 1)
 		{
 			// merge and create new atsLines
-
+			MergeLineBoxesIntoALine(atsTmp, atsLines);
 			// keep position
 			nPos--;
 		}
@@ -1884,7 +1891,7 @@ void TestGetLineIntersectFromImage()
 
 	// increase each rect: left, right, top, bottom value + 1 pixel if all of them < 10, else + 2 pixels
 	// it make the OCR recognize text easier
-	IncreaseRectToBoxes(atsOtherBoxes, atsLines);
+	//IncreaseRectToBoxes(atsOtherBoxes, atsLines);
 
 	AddRectToOriginalImage(strImagePath, atsOtherBoxes, atsLines);
 	WriteDataToTxtFile(strTestOBPath, strTestLinePath, atsOtherBoxes, atsLines);
