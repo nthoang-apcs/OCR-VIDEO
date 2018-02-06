@@ -10,11 +10,13 @@
 
 #include <iostream>
 #include <string>
+#include <locale>
+#include <codecvt>
 using namespace std;
 
 //////////////////////////////////////////////////////////////////////
 //	Struct name:	tsLex
-//	Description:	Contain the information of a string after lexicon
+//	Description:	Contain the information of a string after lexicon, limit for C++11 or newer only
 //	Notes:			Format sample:
 //<Lex>
 //	<Name>[Name of the original image without extension]</Name>
@@ -37,8 +39,8 @@ typedef struct sLex
 		nID = 0;
 		fTimeRunning = 0;
 		strNameImage = "";
-		wstrOldStr = "";
-		wstrNewStr = "";
+		wstrOldStr = L"";
+		wstrNewStr = L"";
 	}
 	sLex(int ID, string ImageName, wstring BeforeLex, wstring AfterLex, float TimeRunning = 0.0)
 	{
@@ -46,8 +48,15 @@ typedef struct sLex
 		nID = ID;
 		wstrOldStr = BeforeLex;
 		wstrNewStr = AfterLex;
-		fTimeRunning TimeRunning;
+		fTimeRunning = TimeRunning;
 	}
 	
-	
+	wstring GetWstrImageName()
+	{
+		wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+		wstring wstrRes = converter.from_bytes(strNameImage);
+		return wstrRes;
+	}
+
+
 }tsLex;
