@@ -103,13 +103,19 @@ void RemoveOtherBoxesInsideLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLin
 
 // merge all lines in atsNeedMerge into 1 line, push_back that line to atsLine
 // remove merging lines from atsLines
+// need not empty atsLines 
 void MergeLineBoxesIntoALine(vector<tsLineBox> &atsNeedMerge, vector<tsLineBox> &atsLines);
+
+// the ID of atsLines is not in an order, need to distribute again after MergeLineBox function
+void ReDistributeIDForLines(vector<tsLineBox> &atsLines);
 
 void SortYCoordinate(vector<Rect> &arBBoxes);
 
 void SortArea(vector<Rect> &arBBoxes);
 
 void SortXCoordinate(vector<Rect> &arBBoxes);
+
+void SortXCoordinate(vector<tsLineBox> &atsLines);
 
 // check if any boxes in the same line - +- 50% height
 bool IsB1onsamelineB2(Rect B1, Rect B2);
@@ -156,6 +162,9 @@ bool CompareArea(Rect B1, Rect B2);
 
 // return true if B1.x < B2.x
 bool CompareXCoordinate(Rect B1, Rect B2);
+
+// return true if B1.tsCore.rROI.nX < B2.tsCore.rROI.nX
+bool CompareXCoordinate(tsLineBox B1, tsLineBox B2);
 
 // Merge multiple otherbox into a line
 tsLineBox MergeOtherBoxesIntoALine(vector<tsOtherBox> &atsTmp, int nID);
@@ -204,6 +213,7 @@ void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLi
 // after merge line box, there are cases that line box are intersect with otherboxes on horizontal -> check
 // condition of these pair to decide to merge them or not
 // need atsLines size > 0
+// merge lines and otherboxes into a new line
 void MergeLinesAndOtherBoxesHorizontally(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 // merge if 2 line box are intersect and satisfy some condition
@@ -1159,10 +1169,76 @@ void RemoveOtherBoxesInsideLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLin
 	atsTmp.clear();
 }
 
-// not finish
 void MergeLineBoxesIntoALine(vector<tsLineBox> &atsNeedMerge, vector<tsLineBox> &atsLines)
 {
+	if (atsLines.size() == 0)
+		return;
+	int nNextID = atsLines[atsLines.size() - 1].tsCore.nID + 1;
+	tsLineBox tsNewLine;
+	size_t nS1 = atsNeedMerge.size();
+	// add list sub ID
+	for (size_t nI = 0; nI < nS1; nI++)
+	{
+		size_t nS2 = atsNeedMerge[nI].anSubID.size();
+		for (size_t nJ = 0; nJ < nS2; nJ++)
+		{
+			tsNewLine.anSubID.push_back(atsNeedMerge[nI].anSubID[nJ]);
+		}
+	}
+	// add list sub Rect
+	for (size_t nI = 0; nI < nS1; nI++)
+	{
+		size_t nS2 = atsNeedMerge[nI].atsSubROI.size();
+		for (size_t nJ = 0; nJ < nS2; nJ++)
+		{
+			tsNewLine.atsSubROI.push_back(atsNeedMerge[nI].atsSubROI[nJ]);
+		}
+	}
+	// add to tsCore information
+	tsNewLine.tsCore.nID = nNextID;
+	tsNewLine.tsCore.InputROIByCreateCoverRect(tsNewLine.atsSubROI);
+	tsLineTmp.tsCore.rACVROI = tsRect(0, 0, 0, 0);
+	tsNewLine.tsCore.strNameImage = atsNeedMerge[0].tsCore.strNameImage;
+	tsNewLine.tsCore.nNumberVersion = 1;
+	tsNewLine.tsCore.fTimeRunning = 0.0;
+	// add to atsLines
+	atsLines.push_back(tsNewLine);
+	
+	// remove merge lines
+	vector<tsLineBox> atsTmp;
+	nS1 = atsLines.size();
+	size_t nS3 = atsNeedMerge.size();
+	for (size_t nI = 0; nI < nS1; nI++)
+	{
+		bool bChecked = false;
+		for (size_t nJ = 0; nJ < nS3; nJ++)
+		{
+			if (atsLines[nI].tsCore.nID == atsNeedMerge[nJ].tsCore.nID)
+			{
+				bChecked = true;
+				break;
+			}
+		}
+		if(bChecked == false)
+		{
+			atsTmp.push_back(atsLines[nI]);
+		}
+	}
+	atsLines.clear();
+	atsLines = atsTmp;
+}
 
+void ReDistributeIDForLines(vector<tsLineBox> &atsLines)
+{
+	if(atsLines.size() == 0)
+		return;
+	int nStartID = atsLines[0].tsCore.nID;
+	size_t nSize = atsLines.size();
+	for (size_t nI = 0; nI < nSize; nI++)
+	{
+		atsLines[nI].tsCore.nID = nStartID + nI;
+	}
+	return;
 }
 
 void SortYCoordinate(vector<Rect> &arBBoxes)
@@ -1178,6 +1254,11 @@ void SortArea(vector<Rect> &arBBoxes)
 void SortXCoordinate(vector<Rect> &arBBoxes)
 {
 	sort(arBBoxes.begin(), arBBoxes.end(), CompareXCoordinate);
+}
+
+void SortXCoordinate(vector<tsLineBox> &atsLines)
+{
+	sort(atsLines.begin(), atsLines.end(), CompareXCoordinate);
 }
 
 bool IsB1onsamelineB2(Rect B1, Rect B2)
@@ -1363,6 +1444,11 @@ bool CompareArea(Rect B1, Rect B2)
 bool CompareXCoordinate(Rect B1, Rect B2)
 {
 	return (B1.x < B2.x);
+}
+
+bool CompareXCoordinate(tsLineBox B1, tsLineBox B2)
+{
+	return (B1.tsCore.rROI.nX < B2.tsCore.rROI.nX);
 }
 
 tsLineBox MergeOtherBoxesIntoALine(vector<tsOtherBox> &atsTmp, int nID)
@@ -1619,11 +1705,17 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 	/*		Re-check 2nd time		*/
 	// merge > 3 otherboxes intersect
 	MergeALotOtherBoxesIntersect(atsOtherBoxes, atsLines);
+	
 	// merge intersect lines and otherbox
 	MergeLinesAndOtherBoxesHorizontally(atsOtherBoxes, atsLines);
 
 	// merge lines intersect
 	MergeLineIntersectHorizontally(atsLines);
+	
+	// sort atsLines by x coordinate
+	SortXCoordinate(atsLines);
+	// re-distribute nID for all atsLines
+	ReDistributeIDForLines(atsLines);
 }
 
 void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
@@ -1681,13 +1773,14 @@ void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLi
 	
 }
 
+// not finish
 void MergeLinesAndOtherBoxesHorizontally(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
 	if (atsLines.size() == 0)
 		return;
 	size_t nS1 = atsOtherBoxes.size();
 	size_t nS2 = atsLines.size();
-
+	
 
 
 }

@@ -55,15 +55,95 @@ typedef struct sRect
 		return (nWidth*nHeight);
 	}
 	// more height intersect than width
+	// true: 2 rect are intersecting each other horizontally
+	// false: other case (vertically or even not intersect)
 	bool IsTwoRectIntersectHorizontally(tsRect tsOther)
 	{
 		if (nX < tsOther.nX)
 		{
-
+			if (ny < tsOther.nY)
+			{
+				// check if 2 rect are at least intersected
+				if ((tsOther.nX < (nX + nWidth)) && (tsOther.nY < (nY + nHeight)))
+				{
+					// check condition
+					if ((nX + nWidth - tsOther.nX) < (nY + nHeight - tsOther.nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else  // nY >= tsOther.nY
+			{
+				// check if 2 rect are at least intersected
+				if ((tsOther.nX < (nX + nWidth)) && (nY < (tsOther.nY + tsOther.nHeight)))
+				{
+					// check condition
+					if ((nX + nWidth - tsOther.nX) < (tsOther.nY + tsOther.nHeight - nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
 		}
-		else
+		else  //nX >= tsOther.nX
 		{
-
+			if (tsOther.nY < nY)
+			{
+				// check if 2 rect are at least intersected
+				if ((nX < (tsOther.nX + tsOther.nWidth)) && (nY < (tsOther.nY + tsOther.nHeight)))
+				{
+					// check condition
+					if ((tsOther.nX + tsOther.nWidth - nX) < (tsOther.nY + tsOther.nHeight - nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else  // nY >= tsOther.nY
+			{
+				// check if 2 rect are at least intersected
+				if ((nX < (tsOther.nX + tsOther.nWidth)) && (tsOther.nY < (nY + nHeight)))
+				{
+					// check condition
+					if ((tsOther.nX + tsOther.nWidth - nX) < (nY + nHeight - tsOther.nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
 		}
 		return false;
 	}
@@ -71,11 +151,89 @@ typedef struct sRect
 	{
 		if (nX < tsOther.nX)
 		{
-
+			if (ny < tsOther.nY)
+			{
+				// check if 2 rect are at least intersected
+				if ((tsOther.nX < (nX + nWidth)) && (tsOther.nY < (nY + nHeight)))
+				{
+					// check condition
+					if ((nX + nWidth - tsOther.nX) > (nY + nHeight - tsOther.nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else  // nY >= tsOther.nY
+			{
+				// check if 2 rect are at least intersected
+				if ((tsOther.nX < (nX + nWidth)) && (nY < (tsOther.nY + tsOther.nHeight)))
+				{
+					// check condition
+					if ((nX + nWidth - tsOther.nX) > (tsOther.nY + tsOther.nHeight - nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
 		}
-		else
+		else  //nX >= tsOther.nX
 		{
-
+			if (tsOther.nY < nY)
+			{
+				// check if 2 rect are at least intersected
+				if ((nX < (tsOther.nX + tsOther.nWidth)) && (nY < (tsOther.nY + tsOther.nHeight)))
+				{
+					// check condition
+					if ((tsOther.nX + tsOther.nWidth - nX) > (tsOther.nY + tsOther.nHeight - nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else  // nY >= tsOther.nY
+			{
+				// check if 2 rect are at least intersected
+				if ((nX < (tsOther.nX + tsOther.nWidth)) && (tsOther.nY < (nY + nHeight)))
+				{
+					// check condition
+					if ((tsOther.nX + tsOther.nWidth - nX) > (nY + nHeight - tsOther.nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
 		}
 		return false;
 	}
