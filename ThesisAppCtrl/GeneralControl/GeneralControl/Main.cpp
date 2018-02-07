@@ -94,6 +94,9 @@ void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B);
 // Remove similar ID from A inside B
 void RemoveSameIDFromAInB(vector<tsOtherBox> &A, vector<tsOtherBox> &B);
 
+// Remove similar ID from A inside B
+void RemoveSameIDFromAInB(vector<tsLineBox> &A, vector<tsLineBox> &B);
+
 // Remove OtherBoxes which have been merge into Lines
 void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
@@ -108,6 +111,10 @@ void MergeLineBoxesIntoALine(vector<tsLineBox> &atsNeedMerge, vector<tsLineBox> 
 
 // the ID of atsLines is not in an order, need to distribute again after MergeLineBox function
 void ReDistributeIDForLines(vector<tsLineBox> &atsLines);
+
+// merge a line with other otherboxes for a condition, they intersect horizontally
+// nIndex is the index of merging line
+void MergeLineAndOtherBoxes(vector<tsOtherBox> &atsNeedMerge, vector<tsLineBox> &atsLines, int nIndex);
 
 void SortYCoordinate(vector<Rect> &arBBoxes);
 
@@ -1066,7 +1073,7 @@ void RemoveSameIDFromAInB(vector<tsOtherBox> &A, vector<tsOtherBox> &B)
 {
 	size_t nS1 = A.size();
 	size_t nS2 = B.size();
-	if (nS1 == 0 || nS2 == 0)
+	if ((nS1 == 0) || (nS2 == 0))
 		return;
 	vector<tsOtherBox> atsC;
 	size_t nPosA = 0;
@@ -1081,6 +1088,62 @@ void RemoveSameIDFromAInB(vector<tsOtherBox> &A, vector<tsOtherBox> &B)
 				nPosA = nJ;		// all list are sorted in ascending order of ID
 				break;
 			}
+		}
+		if (bChecked == false)
+		{
+			atsC.push_back(B[nI]);
+		}
+	}
+	B.clear();
+	B = atsC;
+	atsC.clear();
+}
+
+void RemoveSameIDFromAInB(vector<tsLineBox> &A, vector<tsLineBox> &B)
+{
+	size_t nS1 = A.size();
+	size_t nS2 = B.size();
+	if ((nS1 == 0) || (nS2 == 0))
+		return;
+	vector<tsLineBox> atsC;
+	size_t nPosA = 0;
+	for (size_t nI = 0; nI < nS2; nI++)
+	{
+		bool bChecked = false;
+		for (size_t nJ = nPosA; nJ < nS1; nJ++)
+		{
+			if (B[nI].tsCore.nID == A[nJ].tsCore.nID)
+			{
+				bChecked = true;
+				nPosA = nJ;		// all list are sorted in ascending order of ID
+				break;
+			}
+		}
+		if (bChecked == false)
+		{
+			atsC.push_back(B[nI]);
+		}
+	}
+	B.clear();
+	B = atsC;
+	atsC.clear();
+}
+
+void RemoveSameIDFromAInB(tsLineBox A, vector<tsLineBox> &B)
+{
+	size_t nS2 = B.size();
+	if (nS2 == 0)
+		return;
+	vector<tsLineBox> atsC;
+	size_t nPosA = 0;
+	for (size_t nI = 0; nI < nS2; nI++)
+	{
+		bool bChecked = false;
+		if (B[nI].tsCore.nID == A.tsCore.nID)
+		{
+			bChecked = true;
+			nPosA = nJ;		// all list are sorted in ascending order of ID
+			break;
 		}
 		if (bChecked == false)
 		{
@@ -1239,6 +1302,12 @@ void ReDistributeIDForLines(vector<tsLineBox> &atsLines)
 		atsLines[nI].tsCore.nID = nStartID + nI;
 	}
 	return;
+}
+
+// not finish
+void MergeLineAndOtherBoxes(vector<tsOtherBox> &atsNeedMerge, vector<tsLineBox> &atsLines, int nIndex)
+{
+	
 }
 
 void SortYCoordinate(vector<Rect> &arBBoxes)
@@ -1773,14 +1842,42 @@ void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLi
 	
 }
 
-// not finish
 void MergeLinesAndOtherBoxesHorizontally(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
 	if (atsLines.size() == 0)
 		return;
 	size_t nS1 = atsOtherBoxes.size();
 	size_t nS2 = atsLines.size();
-	
+	// use this loop outside because each line is searched 1 time only
+	for (size_t nI = 0; nI < nS2; nI++)
+	{
+		vector<tsOtherBox> atsNeedMerge;
+		for (size_t nJ = 0; nJ < nS1; nJ++)
+		{
+			// check if they are intersect horizontally
+			if (IsIntersectHorizontally(atsLines[nI], atsOtherBoxes[nJ]) == true)
+			{
+				atsNeedMerge.push_back(atsOtherBoxes[nJ]);
+			}
+		}
+		// check condition of atsNeedMerge
+		if(atsNeedMerge.size() > 0)
+		{
+			// merge into a new line
+			MergeLineAndOtherBoxes(atsNeedMerge, atsLines, nI);
+			// remove existing tsOtherBoxes in atsOtherBoxes
+			RemoveSameIDFromAInB(atsNeedMerge, atsOtherBoxes);
+			// remove existing the line in atsLines
+			RemoveSameIDFromAInB(atsLines[nI], atsLines);
+			// reduce number position
+			nI--;
+			// update size
+			nS2 = atsLines.size();
+			nS1 = atsOtherBoxes.size();
+			// clean
+			atsNeedMerge.clear();
+		}
+	}
 
 
 }
