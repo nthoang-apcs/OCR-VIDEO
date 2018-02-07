@@ -93,9 +93,8 @@ void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B);
 
 // Remove similar ID from A inside B
 void RemoveSameIDFromAInB(vector<tsOtherBox> &A, vector<tsOtherBox> &B);
-
-// Remove similar ID from A inside B
 void RemoveSameIDFromAInB(vector<tsLineBox> &A, vector<tsLineBox> &B);
+void RemoveSameIDFromAInB(tsLineBox A, vector<tsLineBox> &B);
 
 // Remove OtherBoxes which have been merge into Lines
 void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
