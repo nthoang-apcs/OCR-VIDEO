@@ -83,6 +83,7 @@ protected:
 		bool bPositive = true;
 		size_t nSize = aContent.size();
 		size_t nPos = 0;
+		// check sign
 		if(aContent[nPos] == L'-')
 		{
 			bPositive = false;
@@ -109,12 +110,33 @@ protected:
 	}
 
 	// convert vector of wchar_t to float
+	// not finish
 	float ConvertWCharArrayToFloat(vector<wchar_t> &aContent)
 	{
 		float nRes = 0.0;
 		size_t nSize = aContent.size();
 		if(nSize == 0)
 			return nRes;
+		size_t nPos = 0;
+		bool bPositive = true;
+		// check sign
+		if(aContent[nPos] == L'-')
+		{
+			bPositive = false;
+			nPos++;
+		}
+		else if (aContent[nPos] == L'+')
+		{
+			bPositive = true;
+			nPos++;
+		}
+		else if ((aContent[nPos] < L'0') || (aContent[nPos] > L'9'))
+		{
+			return nRes;
+		}
+		// get number before '.'
+
+
 
 		return nRes;
 	}
