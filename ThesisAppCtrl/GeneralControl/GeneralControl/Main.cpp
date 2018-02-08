@@ -170,7 +170,7 @@ bool CompareArea(Rect B1, Rect B2);
 bool CompareXCoordinate(Rect B1, Rect B2);
 
 // return true if B1.tsCore.rROI.nX < B2.tsCore.rROI.nX
-bool CompareXCoordinate(tsLineBox B1, tsLineBox B2);
+bool CompareXCoordinateLineBox(tsLineBox B1, tsLineBox B2);
 
 // Merge multiple otherbox into a line
 tsLineBox MergeOtherBoxesIntoALine(vector<tsOtherBox> &atsTmp, int nID);
@@ -1326,7 +1326,7 @@ void SortXCoordinate(vector<Rect> &arBBoxes)
 
 void SortXCoordinate(vector<tsLineBox> &atsLines)
 {
-	sort(atsLines.begin(), atsLines.end(), CompareXCoordinate);
+	sort(atsLines.begin(), atsLines.end(), CompareXCoordinateLineBox);
 }
 
 bool IsB1onsamelineB2(Rect B1, Rect B2)
@@ -1514,7 +1514,7 @@ bool CompareXCoordinate(Rect B1, Rect B2)
 	return (B1.x < B2.x);
 }
 
-bool CompareXCoordinate(tsLineBox B1, tsLineBox B2)
+bool CompareXCoordinateLineBox(tsLineBox B1, tsLineBox B2)
 {
 	return (B1.tsCore.rROI.nX < B2.tsCore.rROI.nX);
 }
