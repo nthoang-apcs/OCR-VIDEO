@@ -407,7 +407,7 @@ void OutputToInputCheckVowel(string strPath, vector<string> &ListFiles)
 		int nSize = ListFiles.size();
 		for(int nI = 0; nI < nSize; nI++)
 		{
-			ofsWrite << ListFiles[nI] << ".txt\n";
+			ofsWrite << strPath << ListFiles[nI] << ".txt\n";
 		}
 		ofsWrite.close();
 	}

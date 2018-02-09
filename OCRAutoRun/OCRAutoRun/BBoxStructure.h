@@ -54,7 +54,189 @@ typedef struct sRect
 	{
 		return (nWidth*nHeight);
 	}
-
+	// more height intersect than width
+	// true: 2 rect are intersecting each other horizontally
+	// false: other case (vertically or even not intersect)
+	bool IsTwoRectIntersectHorizontally(tsRect tsOther)
+	{
+		if (nX < tsOther.nX)
+		{
+			if (ny < tsOther.nY)
+			{
+				// check if 2 rect are at least intersected
+				if ((tsOther.nX < (nX + nWidth)) && (tsOther.nY < (nY + nHeight)))
+				{
+					// check condition
+					if ((nX + nWidth - tsOther.nX) < (nY + nHeight - tsOther.nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else  // nY >= tsOther.nY
+			{
+				// check if 2 rect are at least intersected
+				if ((tsOther.nX < (nX + nWidth)) && (nY < (tsOther.nY + tsOther.nHeight)))
+				{
+					// check condition
+					if ((nX + nWidth - tsOther.nX) < (tsOther.nY + tsOther.nHeight - nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		else  //nX >= tsOther.nX
+		{
+			if (tsOther.nY < nY)
+			{
+				// check if 2 rect are at least intersected
+				if ((nX < (tsOther.nX + tsOther.nWidth)) && (nY < (tsOther.nY + tsOther.nHeight)))
+				{
+					// check condition
+					if ((tsOther.nX + tsOther.nWidth - nX) < (tsOther.nY + tsOther.nHeight - nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else  // nY >= tsOther.nY
+			{
+				// check if 2 rect are at least intersected
+				if ((nX < (tsOther.nX + tsOther.nWidth)) && (tsOther.nY < (nY + nHeight)))
+				{
+					// check condition
+					if ((tsOther.nX + tsOther.nWidth - nX) < (nY + nHeight - tsOther.nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		return false;
+	}
+	bool IsTwoRectIntersectVertically(tsRect tsOther)
+	{
+		if (nX < tsOther.nX)
+		{
+			if (ny < tsOther.nY)
+			{
+				// check if 2 rect are at least intersected
+				if ((tsOther.nX < (nX + nWidth)) && (tsOther.nY < (nY + nHeight)))
+				{
+					// check condition
+					if ((nX + nWidth - tsOther.nX) > (nY + nHeight - tsOther.nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else  // nY >= tsOther.nY
+			{
+				// check if 2 rect are at least intersected
+				if ((tsOther.nX < (nX + nWidth)) && (nY < (tsOther.nY + tsOther.nHeight)))
+				{
+					// check condition
+					if ((nX + nWidth - tsOther.nX) > (tsOther.nY + tsOther.nHeight - nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		else  //nX >= tsOther.nX
+		{
+			if (tsOther.nY < nY)
+			{
+				// check if 2 rect are at least intersected
+				if ((nX < (tsOther.nX + tsOther.nWidth)) && (nY < (tsOther.nY + tsOther.nHeight)))
+				{
+					// check condition
+					if ((tsOther.nX + tsOther.nWidth - nX) > (tsOther.nY + tsOther.nHeight - nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else  // nY >= tsOther.nY
+			{
+				// check if 2 rect are at least intersected
+				if ((nX < (tsOther.nX + tsOther.nWidth)) && (tsOther.nY < (nY + nHeight)))
+				{
+					// check condition
+					if ((tsOther.nX + tsOther.nWidth - nX) > (nY + nHeight - tsOther.nY))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		return false;
+	}
 }tsRect;
 
 //////////////////////////////////////////////////////////////////////
@@ -169,7 +351,33 @@ typedef struct sBBoxInfo
 	// Input rROI =  a cover rect from multiple inside rects
 	void InputROIByCreateCoverRect(vector<tsRect> atsInsideRect)
 	{
-
+		// find the most left x and the most right x
+		// find the most top and the most bottom
+		int nSize = atsInsideRect.size();
+		int nX = 0;
+		int nY = 0;
+		int nW = 0;
+		int nH = 0;
+		for (int nI = 0; nI < nSize; nI++)
+		{
+			if (atsInsideRect[nI].nX < nX || nI == 0)
+			{
+				nX = atsInsideRect[nI].nX;
+			}
+			if (atsInsideRect[nI].nY < nY || nI == 0)
+			{
+				nY = atsInsideRect[nI].nY;
+			}
+			if ((atsInsideRect[nI].nWidth + atsInsideRect[nI].nX) > (nX + nW) || nI == 0)
+			{
+				nW = (atsInsideRect[nI].nWidth + atsInsideRect[nI].nX) - nX;
+			}
+			if ((atsInsideRect[nI].nHeight + atsInsideRect[nI].nY) > (nY + nH) || nI == 0)
+			{
+				nH = (atsInsideRect[nI].nHeight + atsInsideRect[nI].nY) - nY;
+			}
+		}
+		rROI = tsRect(nX, nY, nW, nH);
 	}
 
 }tsBBoxInfo, tsOtherBox;

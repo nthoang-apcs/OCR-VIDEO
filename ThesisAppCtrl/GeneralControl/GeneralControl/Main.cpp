@@ -65,10 +65,14 @@ void IncreaseRectToBoxes(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &a
 void BindingRunningTimeToBox(float fTime, vector<tsOtherBox> &atsOtherBoxes, 
 	vector<tsLineBox> &atsLines);
 
-// add all current rect to the original image and write the image to folder Root/Debug
+// Add all current rect to the original image and write the image to folder Root/Debug
+// with the format [strInput]-debug.jpg
 // strInput is the absolute path of the image file.
 void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes, 
 	vector<tsLineBox> &atsLines);
+// strOutput is the file path of output image file
+void AddRectToOriginalImage(string strInput, string strOutput, 
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
 // nPos is the start search position
 // nSize is the size of aFreeList
@@ -87,6 +91,11 @@ void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 // Remove similar indexes from vector A inside vector B
 void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B);
 
+// Remove similar ID from A inside B
+void RemoveSameIDFromAInB(vector<tsOtherBox> &A, vector<tsOtherBox> &B);
+void RemoveSameIDFromAInB(vector<tsLineBox> &A, vector<tsLineBox> &B);
+void RemoveSameIDFromAInB(tsLineBox A, vector<tsLineBox> &B);
+
 // Remove OtherBoxes which have been merge into Lines
 void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
@@ -94,11 +103,25 @@ void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLi
 // and completely(or at least 85% area) stay inside a Line box => remove these OtherBoxes
 void RemoveOtherBoxesInsideLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
+// merge all lines in atsNeedMerge into 1 line, push_back that line to atsLine
+// remove merging lines from atsLines
+// need not empty atsLines 
+void MergeLineBoxesIntoALine(vector<tsLineBox> &atsNeedMerge, vector<tsLineBox> &atsLines);
+
+// the ID of atsLines is not in an order, need to distribute again after MergeLineBox function
+void ReDistributeIDForLines(vector<tsLineBox> &atsLines);
+
+// merge a line with other otherboxes for a condition, they intersect horizontally
+// nIndex is the index of merging line
+void MergeLineAndOtherBoxes(vector<tsOtherBox> &atsNeedMerge, vector<tsLineBox> &atsLines, int nIndex);
+
 void SortYCoordinate(vector<Rect> &arBBoxes);
 
 void SortArea(vector<Rect> &arBBoxes);
 
 void SortXCoordinate(vector<Rect> &arBBoxes);
+
+void SortXCoordinate(vector<tsLineBox> &atsLines);
 
 // check if any boxes in the same line - +- 50% height
 bool IsB1onsamelineB2(Rect B1, Rect B2);
@@ -111,16 +134,24 @@ bool IsB1Balanced(Rect B1);
 // and the B2.area() / B1.area() <= 3
 bool IsB1insideB2(Rect B1, Rect B2);
 
+// check if 2 otherboxes intersect or lying next - seperate < 3 pixels
+bool IsOtherBoxAIntersectOtherBoxB(tsOtherBox tsA, tsOtherBox tsB);
+
 // check if tsOtherBox A is inside tsLineBox B, use in case rROI only, not ACVowel
 // true: inside, false: otherwise
 bool IsOtherBoxAInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB);
 
-// check if >= 85% of tsOtherBox A area is inside tsLineBox B, use in case rROI only, not ACVowel
+// check if >= 75% of tsOtherBox A area is inside tsLineBox B, use in case rROI only, not ACVowel
 // true: inside, false: otherwise
 bool IsOtherBoxAMostlyInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB);
 
 // check if a point is inside a Rect
 bool IsPointAInsideRectB(int nXA, int nYA, Rect rB);
+
+// check if tsA intersect tsB on a horizontal definition:
+// based on 2 tsRect
+bool IsIntersectHorizontally(tsLineBox tsA, tsLineBox tsB);
+bool IsIntersectHorizontally(tsLineBox tsA, tsOtherBox tsB);
 
 // intersect or less than 4 pixels seperate rect
 // h / h > 0.8 & < 1.25
@@ -137,6 +168,12 @@ bool CompareArea(Rect B1, Rect B2);
 
 // return true if B1.x < B2.x
 bool CompareXCoordinate(Rect B1, Rect B2);
+
+// return true if B1.tsCore.rROI.nX < B2.tsCore.rROI.nX
+bool CompareXCoordinateLineBox(tsLineBox B1, tsLineBox B2);
+
+// Merge multiple otherbox into a line
+tsLineBox MergeOtherBoxesIntoALine(vector<tsOtherBox> &atsTmp, int nID);
 
 
 //----------------------------------------------------------------------
@@ -175,6 +212,19 @@ void ConvertFromBBoxesToOtherBoxes(string strImagename, vector<Rect> &arBBoxes,
 // from OtherBoxes, merge possible boxes that can be assemble into a line
 void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
 
+// there are > 3 otherboxes intersect each other -> merge them together
+// need atsOtherBoxes size > 0
+void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
+// after merge line box, there are cases that line box are intersect with otherboxes on horizontal -> check
+// condition of these pair to decide to merge them or not
+// need atsLines size > 0
+// merge lines and otherboxes into a new line
+void MergeLinesAndOtherBoxesHorizontally(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines);
+
+// merge if 2 line box are intersect and satisfy some condition
+void MergeLineIntersectHorizontally(vector<tsLineBox> &atsLines);
+
 //----------------------------------------------------------------------
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -184,7 +234,7 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 void ReadOtherBoxesDataFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes);
 
 // read line boxes from txt file
-void ReadLinesDataFile(string strLinePath, vector<tsLineBox> &atsOtherBoxes);
+void ReadLinesDataFile(string strLinePath, vector<tsLineBox> &atsLines);
 
 // write otherboxes to text file
 void WriteOtherBoxesToFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes);
@@ -218,8 +268,15 @@ void TestSimulateOtherBoxesC1(vector<tsOtherBox> &atsOtherBoxes);
 // Test get a line from intersect box
 void TestGetLineIntersect();
 
-// Add target line to image => purpose to identify where the line is lying on.
-void TestLocationLineLying();
+// Test get a line from intersect boxes which are detected by mser
+void TestGetLineIntersectFromImage();
+
+// Input:
+// - The original image path
+// - The output path to write down
+// - The ID of linebox in Lines txt file
+// Output: the image write as the output path.
+void TestShowLineBoxOnImage();
 
 // reduce a number of otherboxes by a width range
 // max = 0 => NOT have upper limit
@@ -247,8 +304,11 @@ int main(int argc, char **argv)
 	// program Run 
 	Run(argc, argv, true);
 
-	// Test part
-	//TestGetLineIntersect();
+	// Test function
+	//TestShowLineBoxOnImage();
+	char a;
+	cout << "Press any key to continue ... ";
+	cin >> a;
 
 	return 1;
 }
@@ -734,10 +794,42 @@ void AddRectToOriginalImage(string strInput, vector<tsOtherBox> &atsOtherBoxes,
 		rTmp.y = atsLines[nI].tsCore.rROI.nY;
 		rTmp.width = atsLines[nI].tsCore.rROI.nWidth;
 		rTmp.height = atsLines[nI].tsCore.rROI.nHeight;
-		rectangle(mInput, rTmp, CV_RGB(0, 255, 0), 2);
+		rectangle(mInput, rTmp, CV_RGB(255, 0, 0), 2);
 	}
 	// write image to file
 	imwrite(strFilePath, mInput);
+	return;
+}
+
+void AddRectToOriginalImage(string strInput, string strOutput,
+	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+	// get root folder
+	string strRootFolder = GetRootFolder(strInput);
+	Mat mInput = imread(strInput);
+	int nSize = atsOtherBoxes.size();
+	Rect rTmp = Rect(0, 0, 0, 0);
+	// copy rects from OtherBoxes to the image
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		rTmp.x = atsOtherBoxes[nI].rROI.nX;
+		rTmp.y = atsOtherBoxes[nI].rROI.nY;
+		rTmp.width = atsOtherBoxes[nI].rROI.nWidth;
+		rTmp.height = atsOtherBoxes[nI].rROI.nHeight;
+		rectangle(mInput, rTmp, CV_RGB(0, 255, 0), 2);
+	}
+	nSize = atsLines.size();
+	// copy rects from Lines to the image
+	for (int nI = 0; nI < nSize; nI++)
+	{
+		rTmp.x = atsLines[nI].tsCore.rROI.nX;
+		rTmp.y = atsLines[nI].tsCore.rROI.nY;
+		rTmp.width = atsLines[nI].tsCore.rROI.nWidth;
+		rTmp.height = atsLines[nI].tsCore.rROI.nHeight;
+		rectangle(mInput, rTmp, CV_RGB(0, 255, 0), 2);
+	}
+	// write image to file
+	imwrite(strOutput, mInput);
 	return;
 }
 
@@ -794,7 +886,7 @@ void GetALineBoxFromIntersectBoxes(int &nPos, int &nSize, vector<int> &aFreeList
 	// default number version is 1
 	tsLineTmp.tsCore.nNumberVersion = 1;
 	// copy IDs and Rects from tsOtherBoxes to new tsLineBox
-	for (int nJ = 0; nJ < aCurLine.size(); nJ++)
+	for (size_t nJ = 0; nJ < aCurLine.size(); nJ++)
 	{
 		tsLineTmp.anSubID.push_back(atsOtherBoxes[aFreeList[aCurLine[nJ]]].nID);
 		tsLineTmp.atsSubROI.push_back(tsRect(atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nX,
@@ -815,7 +907,6 @@ void GetALineBoxFromIntersectBoxes(int &nPos, int &nSize, vector<int> &aFreeList
 	aCurLine.clear();
 }
 
-// have bugs
 void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList, 
 	vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
@@ -866,7 +957,7 @@ void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 				{
 					// check condition of width - not too far from the average width
 					int nAverWidth = 0;
-					for (int nJ = 0; nJ < aCurLine.size(); nJ++)
+					for (size_t nJ = 0; nJ < aCurLine.size(); nJ++)
 					{
 						nAverWidth += atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nWidth;
 					}
@@ -921,7 +1012,7 @@ void GetALineBoxFromSeperateBoxes(int &nPos, int &nSize, vector<int> &aFreeList,
 		// default number version is 1
 		tsLineTmp.tsCore.nNumberVersion = 1;
 		// copy IDs and Rects from tsOtherBoxes to new tsLineBox
-		for (int nJ = 0; nJ < aCurLine.size(); nJ++)
+		for (size_t nJ = 0; nJ < aCurLine.size(); nJ++)
 		{
 			tsLineTmp.anSubID.push_back(atsOtherBoxes[aFreeList[aCurLine[nJ]]].nID);
 			tsLineTmp.atsSubROI.push_back(tsRect(atsOtherBoxes[aFreeList[aCurLine[nJ]]].rROI.nX, 
@@ -977,14 +1068,100 @@ void RemoveSameIndexesFromAInB(vector<int> &A, vector<int> &B)
 	B = aTmp;
 }
 
+void RemoveSameIDFromAInB(vector<tsOtherBox> &A, vector<tsOtherBox> &B)
+{
+	size_t nS1 = A.size();
+	size_t nS2 = B.size();
+	if ((nS1 == 0) || (nS2 == 0))
+		return;
+	vector<tsOtherBox> atsC;
+	size_t nPosA = 0;
+	for (size_t nI = 0; nI < nS2; nI++)
+	{
+		bool bChecked = false;
+		for (size_t nJ = nPosA; nJ < nS1; nJ++)
+		{
+			if (B[nI].nID == A[nJ].nID)
+			{
+				bChecked = true;
+				nPosA = nJ;		// all list are sorted in ascending order of ID
+				break;
+			}
+		}
+		if (bChecked == false)
+		{
+			atsC.push_back(B[nI]);
+		}
+	}
+	B.clear();
+	B = atsC;
+	atsC.clear();
+}
+
+void RemoveSameIDFromAInB(vector<tsLineBox> &A, vector<tsLineBox> &B)
+{
+	size_t nS1 = A.size();
+	size_t nS2 = B.size();
+	if ((nS1 == 0) || (nS2 == 0))
+		return;
+	vector<tsLineBox> atsC;
+	size_t nPosA = 0;
+	for (size_t nI = 0; nI < nS2; nI++)
+	{
+		bool bChecked = false;
+		for (size_t nJ = nPosA; nJ < nS1; nJ++)
+		{
+			if (B[nI].tsCore.nID == A[nJ].tsCore.nID)
+			{
+				bChecked = true;
+				nPosA = nJ;		// all list are sorted in ascending order of ID
+				break;
+			}
+		}
+		if (bChecked == false)
+		{
+			atsC.push_back(B[nI]);
+		}
+	}
+	B.clear();
+	B = atsC;
+	atsC.clear();
+}
+
+void RemoveSameIDFromAInB(tsLineBox A, vector<tsLineBox> &B)
+{
+	size_t nS2 = B.size();
+	if (nS2 == 0)
+		return;
+	vector<tsLineBox> atsC;
+	size_t nPosA = 0;
+	for (size_t nI = 0; nI < nS2; nI++)
+	{
+		bool bChecked = false;
+		if (B[nI].tsCore.nID == A.tsCore.nID)
+		{
+			bChecked = true;
+			nPosA = nJ;		// all list are sorted in ascending order of ID
+			break;
+		}
+		if (bChecked == false)
+		{
+			atsC.push_back(B[nI]);
+		}
+	}
+	B.clear();
+	B = atsC;
+	atsC.clear();
+}
+
 void RemoveOtherBoxesMergeInLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
 {
-	int nSize = atsLines.size();
+	size_t nSize = atsLines.size();
 	vector<int> aRemoveIndexes;
 	// get remove indexes list
-	for (int nI = 0; nI < nSize; nI++)
+	for (size_t nI = 0; nI < nSize; nI++)
 	{
-		for (int nJ = 0; nJ < atsLines[nI].anSubID.size(); nJ++)
+		for (size_t nJ = 0; nJ < atsLines[nI].anSubID.size(); nJ++)
 		{
 			aRemoveIndexes.push_back(atsLines[nI].anSubID[nJ]);
 		}
@@ -1054,6 +1231,84 @@ void RemoveOtherBoxesInsideLines(vector<tsOtherBox> &atsOtherBoxes, vector<tsLin
 	atsTmp.clear();
 }
 
+void MergeLineBoxesIntoALine(vector<tsLineBox> &atsNeedMerge, vector<tsLineBox> &atsLines)
+{
+	if (atsLines.size() == 0)
+		return;
+	int nNextID = atsLines[atsLines.size() - 1].tsCore.nID + 1;
+	tsLineBox tsNewLine;
+	size_t nS1 = atsNeedMerge.size();
+	// add list sub ID
+	for (size_t nI = 0; nI < nS1; nI++)
+	{
+		size_t nS2 = atsNeedMerge[nI].anSubID.size();
+		for (size_t nJ = 0; nJ < nS2; nJ++)
+		{
+			tsNewLine.anSubID.push_back(atsNeedMerge[nI].anSubID[nJ]);
+		}
+	}
+	// add list sub Rect
+	for (size_t nI = 0; nI < nS1; nI++)
+	{
+		size_t nS2 = atsNeedMerge[nI].atsSubROI.size();
+		for (size_t nJ = 0; nJ < nS2; nJ++)
+		{
+			tsNewLine.atsSubROI.push_back(atsNeedMerge[nI].atsSubROI[nJ]);
+		}
+	}
+	// add to tsCore information
+	tsNewLine.tsCore.nID = nNextID;
+	tsNewLine.tsCore.InputROIByCreateCoverRect(tsNewLine.atsSubROI);
+	tsLineTmp.tsCore.rACVROI = tsRect(0, 0, 0, 0);
+	tsNewLine.tsCore.strNameImage = atsNeedMerge[0].tsCore.strNameImage;
+	tsNewLine.tsCore.nNumberVersion = 1;
+	tsNewLine.tsCore.fTimeRunning = 0.0;
+	// add to atsLines
+	atsLines.push_back(tsNewLine);
+	
+	// remove merge lines
+	vector<tsLineBox> atsTmp;
+	nS1 = atsLines.size();
+	size_t nS3 = atsNeedMerge.size();
+	for (size_t nI = 0; nI < nS1; nI++)
+	{
+		bool bChecked = false;
+		for (size_t nJ = 0; nJ < nS3; nJ++)
+		{
+			if (atsLines[nI].tsCore.nID == atsNeedMerge[nJ].tsCore.nID)
+			{
+				bChecked = true;
+				break;
+			}
+		}
+		if(bChecked == false)
+		{
+			atsTmp.push_back(atsLines[nI]);
+		}
+	}
+	atsLines.clear();
+	atsLines = atsTmp;
+}
+
+void ReDistributeIDForLines(vector<tsLineBox> &atsLines)
+{
+	if(atsLines.size() == 0)
+		return;
+	int nStartID = atsLines[0].tsCore.nID;
+	size_t nSize = atsLines.size();
+	for (size_t nI = 0; nI < nSize; nI++)
+	{
+		atsLines[nI].tsCore.nID = nStartID + nI;
+	}
+	return;
+}
+
+// not finish
+void MergeLineAndOtherBoxes(vector<tsOtherBox> &atsNeedMerge, vector<tsLineBox> &atsLines, int nIndex)
+{
+	
+}
+
 void SortYCoordinate(vector<Rect> &arBBoxes)
 {
 	sort(arBBoxes.begin(), arBBoxes.end(), CompareYCoordinate);
@@ -1067,6 +1322,11 @@ void SortArea(vector<Rect> &arBBoxes)
 void SortXCoordinate(vector<Rect> &arBBoxes)
 {
 	sort(arBBoxes.begin(), arBBoxes.end(), CompareXCoordinate);
+}
+
+void SortXCoordinate(vector<tsLineBox> &atsLines)
+{
+	sort(atsLines.begin(), atsLines.end(), CompareXCoordinateLineBox);
 }
 
 bool IsB1onsamelineB2(Rect B1, Rect B2)
@@ -1111,6 +1371,55 @@ bool IsB1insideB2(Rect B1, Rect B2)
 
 }
 
+bool IsOtherBoxAIntersectOtherBoxB(tsOtherBox tsA, tsOtherBox tsB)
+{
+	// check area
+	Rect B = Rect(tsA.rROI.nX, tsA.rROI.nY, tsA.rROI.nWidth, tsA.rROI.nHeight);
+	Rect A = Rect(tsB.rROI.nX, tsB.rROI.nY, tsB.rROI.nWidth, tsB.rROI.nHeight);
+	Rect C = A & B;
+	if (C.area() > 0)
+		return true;
+	if (tsA.rROI.nX < tsB.rROI.nX)
+	{
+		if ((tsA.rROI.nX + tsA.rROI.nWidth + 3) > tsB.rROI.nX)
+		{
+			// between the upper 50% height and the height of B range = 200% -> 0% of height of A
+			if ((tsA.rROI.nY < tsB.rROI.nY) && ((tsA.rROI.nY + 0.5* tsA.rROI.nHeight) > tsB.rROI.nY)
+				&& ((tsA.rROI.nHeight / tsB.rROI.nHeight) < 2) && ((tsB.rROI.nHeight / tsA.rROI.nHeight) < 2) )
+			{
+				return true;
+			}
+			else if ((tsA.rROI.nY > tsB.rROI.nY) && ((tsA.rROI.nY + tsA.rROI.nHeight) > (tsB.rROI.nY + tsB.rROI.nHeight))
+				&& ((tsB.rROI.nY + tsB.rROI.nHeight) > tsA.rROI.nY) && ((tsA.rROI.nHeight / tsB.rROI.nHeight) < 2)
+				&& ((tsB.rROI.nHeight / tsA.rROI.nHeight) < 2))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	else
+	{
+		if ((tsB.rROI.nX + tsB.rROI.nWidth + 3) > tsA.rROI.nX)
+		{
+			if ((tsB.rROI.nY < tsA.rROI.nY) && ((tsB.rROI.nY + 0.5* tsB.rROI.nHeight) > tsA.rROI.nY)
+				&& ((tsB.rROI.nHeight / tsA.rROI.nHeight) < 2) && ((tsA.rROI.nHeight / tsB.rROI.nHeight) < 2)
+				)
+			{
+				return true;
+			}
+			else if ((tsB.rROI.nY > tsA.rROI.nY) && ((tsB.rROI.nY + tsB.rROI.nHeight) > (tsA.rROI.nY + tsA.rROI.nHeight))
+				&& ((tsA.rROI.nY + tsA.rROI.nHeight) > tsB.rROI.nY) && ((tsB.rROI.nHeight / tsA.rROI.nHeight) < 2)
+				&& ((tsA.rROI.nHeight / tsB.rROI.nHeight) < 2))
+			{
+				return true;
+			}
+			return false;
+		}
+	}
+	return false;
+}
+
 bool IsOtherBoxAInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB)
 {
 	// check basic condition for x, y of tsA to x, y of tsB
@@ -1133,7 +1442,13 @@ bool IsOtherBoxAMostlyInsideLineBoxB(tsOtherBox tsA, tsLineBox tsB)
 		&& (tsA.rROI.nY < (tsB.tsCore.rROI.nY + tsB.tsCore.rROI.nHeight)) )
 	{
 		// check area inside
-
+		Rect B = Rect(tsA.rROI.nX, tsA.rROI.nY, tsA.rROI.nWidth, tsA.rROI.nHeight);
+		Rect C = Rect(tsB.tsCore.rROI.nX, tsB.tsCore.rROI.nY, tsB.tsCore.rROI.nWidth, tsB.tsCore.rROI.nHeight);
+		Rect A = B & C;
+		if ((float)A.area() > (0.75 * ((float)(tsA.rROI.GetArea()))))
+		{
+			return true;
+		}
 	}
 	return false;
 }
@@ -1145,6 +1460,18 @@ bool IsPointAInsideRectB(int nXA, int nYA, Rect rB)
 		return true;
 	}
 	return false;
+}
+
+bool IsIntersectHorizontally(tsLineBox tsA, tsLineBox tsB)
+{
+	// check if 2 tsRect intersect horizontally
+	return tsA.tsCore.rROI.IsTwoRectIntersectHorizontally(tsB.tsCore.rROI);
+}
+
+bool IsIntersectHorizontally(tsLineBox tsA, tsOtherBox tsB)
+{
+	// check if 2 tsRect intersect horizontally
+	return tsA.tsCore.rROI.IsTwoRectIntersectHorizontally(tsB.rROI);
 }
 
 bool CheckConditionOfMergIntersectBoxes(tsOtherBox A, tsOtherBox B)
@@ -1187,6 +1514,28 @@ bool CompareXCoordinate(Rect B1, Rect B2)
 	return (B1.x < B2.x);
 }
 
+bool CompareXCoordinateLineBox(tsLineBox B1, tsLineBox B2)
+{
+	return (B1.tsCore.rROI.nX < B2.tsCore.rROI.nX);
+}
+
+tsLineBox MergeOtherBoxesIntoALine(vector<tsOtherBox> &atsTmp, int nID)
+{
+	tsLineBox tsALine;
+	tsALine.tsCore.nID = nID;
+	size_t nSize = atsTmp.size();
+	if (nSize = 0)
+		return tsALine;
+	for (size_t nI = 0; nI < nSize; nI++)
+	{
+		tsALine.anSubID.push_back(atsTmp[nI].nID);
+		tsALine.atsSubROI.push_back(atsTmp[nI].rROI);
+	}
+	tsALine.tsCore.nNumberVersion = 1;
+	tsALine.tsCore.strNameImage = atsTmp[0].strNameImage;
+	tsALine.tsCore.InputROIByCreateCoverRect(tsALine.atsSubROI);
+	return tsALine;
+}
 
 
 //----------------------------------------------------------------------
@@ -1321,9 +1670,7 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	arBBoxes.clear();
 	// merge line box
 	MergeLineBox(atsOtherBoxes, atsLines);
-	// increase each rect: left, right, top, bottom value + 1 pixel if all of them < 10, else + 2 pixels
-	// it make the OCR recognize text easier
-	IncreaseRectToBoxes(atsOtherBoxes, atsLines);
+	
 	// calculate running time
 	fTimeRunning += (float)(clock() - start) / (float)CLOCKS_PER_SEC;
 	// binding running time
@@ -1416,14 +1763,154 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 	// Remove OtherBoxes which have been merge into Lines
 	RemoveOtherBoxesMergeInLines(atsOtherBoxes, atsLines);
 
-	// Remove OtherBoxes which are completely (or at least 85% area) inside Line Boxes
+	// Remove OtherBoxes which are completely (or at least 75% area) inside Line Boxes
 	RemoveOtherBoxesInsideLines(atsOtherBoxes, atsLines);
-
 	// clear
 	aFreeList.clear();
+	// increase each rect: left, right, top, bottom value + 1 pixel if all of them < 10, else + 2 pixels
+	// it make the OCR recognize text easier
+	IncreaseRectToBoxes(atsOtherBoxes, atsLines);
+	/*		Re-check 2nd time		*/
+	// merge > 3 otherboxes intersect
+	MergeALotOtherBoxesIntersect(atsOtherBoxes, atsLines);
+	
+	// merge intersect lines and otherbox
+	MergeLinesAndOtherBoxesHorizontally(atsOtherBoxes, atsLines);
+
+	// merge lines intersect
+	MergeLineIntersectHorizontally(atsLines);
+	
+	// sort atsLines by x coordinate
+	SortXCoordinate(atsLines);
+	// re-distribute nID for all atsLines
+	ReDistributeIDForLines(atsLines);
 }
 
+void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+	vector<size_t> aIndexIntersect;
+	size_t nSize = 0;
+	size_t nPos = 0;
+	int nNextID = 0;
+	if (atsOtherBoxes.size() == 0)
+		return;
+	// get first nNextID
+	if (atsLines.size() != 0)
+	{
+		nNextID = atsLines[atsLines.size() - 1].tsCore.nID + 1;
+	}
+	else
+	{
+		nNextID = atsOtherBoxes[atsOtherBoxes.size() - 1].nID + 1;
+	}
+	do
+	{
+		// prepare next ID
+		nNextID++;
+		// loop
+		nSize = atsOtherBoxes.size();
+		for (size_t nI = nPos + 1; nI < nSize; nI++)
+		{
+			// check with the rest of this list
+			if (IsOtherBoxAIntersectOtherBoxB(atsOtherBoxes[nPos], atsOtherBoxes[nI]) == true)
+			{
+				aIndexIntersect.push_back(nI);
+			}
+		}
+		// check if > 3 otherboxes
+		if (aIndexIntersect.size() > 3)
+		{
+			// take them out as a seperate array
+			vector<tsOtherBox> atsTmp;
+			nSize = aIndexIntersect.size();
+			for (size_t nI = 0; nI < nSize; nI++)
+			{
+				atsTmp.push_back(atsOtherBoxes[aIndexIntersect[nI]]);
+			}
+			// merge them into an Line box
+			atsLines.push_back(MergeOtherBoxesIntoALine(atsTmp, nNextID));
+			// remove used index in atsOtherBoxes
+			RemoveSameIDFromAInB(atsTmp, atsOtherBoxes);
+			// clear atsTmp
+			atsTmp.clear();
+			nPos--;
+		}
+		aIndexIntersect.clear();
+		nPos++;
+	} while (nPos < nSize);
+	
+}
 
+void MergeLinesAndOtherBoxesHorizontally(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines)
+{
+	if (atsLines.size() == 0)
+		return;
+	size_t nS1 = atsOtherBoxes.size();
+	size_t nS2 = atsLines.size();
+	// use this loop outside because each line is searched 1 time only
+	for (size_t nI = 0; nI < nS2; nI++)
+	{
+		vector<tsOtherBox> atsNeedMerge;
+		for (size_t nJ = 0; nJ < nS1; nJ++)
+		{
+			// check if they are intersect horizontally
+			if (IsIntersectHorizontally(atsLines[nI], atsOtherBoxes[nJ]) == true)
+			{
+				atsNeedMerge.push_back(atsOtherBoxes[nJ]);
+			}
+		}
+		// check condition of atsNeedMerge
+		if(atsNeedMerge.size() > 0)
+		{
+			// merge into a new line
+			MergeLineAndOtherBoxes(atsNeedMerge, atsLines, nI);
+			// remove existing tsOtherBoxes in atsOtherBoxes
+			RemoveSameIDFromAInB(atsNeedMerge, atsOtherBoxes);
+			// remove existing the line in atsLines
+			RemoveSameIDFromAInB(atsLines[nI], atsLines);
+			// reduce number position
+			nI--;
+			// update size
+			nS2 = atsLines.size();
+			nS1 = atsOtherBoxes.size();
+			// clean
+			atsNeedMerge.clear();
+		}
+	}
+
+
+}
+
+void MergeLineIntersectHorizontally(vector<tsLineBox> &atsLines)
+{
+	size_t nSize = atsLines.size();
+	if (nSize == 0)
+		return;
+	size_t nPos = 0;
+	vector<tsLineBox> atsTmp;
+	do
+	{
+		if ((nPos + 1) == nSize)
+			break;
+		atsTmp.push_back(atsLines[nPos]);
+		for (size_t nI = nPos + 1; nI < nSize; nI++)
+		{
+			if (IsIntersectHorizontally(atsLines[nPos], atsLines[nI]) == true)
+			{
+				atsTmp.push_back(atsLines[nI]);
+			}
+		}
+		if (atsTmp.size() > 1)
+		{
+			// merge and create new atsLines
+			MergeLineBoxesIntoALine(atsTmp, atsLines);
+			// keep position
+			nPos--;
+		}
+		atsTmp.clear();
+		nPos++;
+	} while (nPos < nSize);
+}
 
 //----------------------------------------------------------------------
 
@@ -1437,9 +1924,11 @@ void ReadOtherBoxesDataFile(string strOtherBoxPath, vector<tsOtherBox> &atsOther
 	bboxTmp.ReadOtherBoxes(atsOtherBoxes, strOtherBoxPath);
 }
 
-void ReadLinesDataFile(string strLinePath, vector<tsLineBox> &atsOtherBoxes)
+void ReadLinesDataFile(string strLinePath, vector<tsLineBox> &atsLines)
 {
-
+	BBoxIOStream bboxTmp;
+	// get list info
+	bboxTmp.ReadLines(atsLines, strLinePath);
 }
 
 void WriteOtherBoxesToFile(string strOtherBoxPath, vector<tsOtherBox> &atsOtherBoxes)
@@ -1531,7 +2020,7 @@ void TestGetLineIntersect()
 	string strTestOBPath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-OtherBoxes.txt";
 	string strTestLinePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-Lines.txt";
 	
-	//ReadOtherBoxesDataFile(strOtherBoxPath, atsOtherBoxes);
+	ReadOtherBoxesDataFile(strOtherBoxPath, atsOtherBoxes);
 	//TestSimulateOtherBoxesC1(atsOtherBoxes);
 
 	CutDownOtherBoxesByX(atsOtherBoxes, 100, 0);
@@ -1541,13 +2030,89 @@ void TestGetLineIntersect()
 
 	AddRectToOriginalImage(strImagePath, atsOtherBoxes, atsLines);
 	WriteDataToTxtFile(strTestOBPath, strTestLinePath, atsOtherBoxes, atsLines);
-
-
 }
 
-void TestLocationLineLying()
+void TestGetLineIntersectFromImage()
 {
+	vector<Rect> arBBoxes;
+	string strOtherBoxPath = "E:\\Code\\OCR-Five-Git\\Root\\TmpRect\\img250-OtherBoxes.txt";
+	vector<tsOtherBox> atsOtherBoxes;
+	vector<tsLineBox> atsLines;
+	string strImagePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250.jpg";
+	string strTestOBPath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-OtherBoxes.txt";
+	string strTestLinePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-Lines.txt";
 
+	// read image and output OtherBoxes
+	Mat mOriGS;					// original gray scale image
+	Mat mOriSharpGS;			// original sharpening grayscale image
+
+								// read image in gray scale
+	ReadImageGrayScale(strImagePath, mOriGS);
+	// sharpen image
+	SharpenImage(mOriGS, mOriSharpGS);
+
+	// MSER
+	MSEROneImage(mOriSharpGS, arBBoxes);
+
+	// sort area ascending
+	SortArea(arBBoxes);
+	// remove areas of stand alone single box
+	RemoveUnusualAreaBoxes(arBBoxes);
+	// remove unbalanced ratio width, height
+	RemoveUnbalancedRatio(arBBoxes);
+	// sort y coordinate ascending
+	SortYCoordinate(arBBoxes);
+	// remove single box text line
+	RemoveSingleBoxTextLine(arBBoxes);
+	// merge inside box
+	MergeInsideBoxes(arBBoxes);
+	// sort x coordinate ascending
+	SortXCoordinate(arBBoxes);
+
+	// convert to tsOtherBox and tsLine
+	ConvertFromBBoxesToOtherBoxes(GetFileNameFromPath(strImagePath), arBBoxes, atsOtherBoxes);
+	arBBoxes.clear();
+
+	CutDownOtherBoxesByX(atsOtherBoxes, 100, 0);
+	CutDownOtherBoxesByY(atsOtherBoxes, 0, 70);
+
+	MergeLineBox(atsOtherBoxes, atsLines);
+
+	// increase each rect: left, right, top, bottom value + 1 pixel if all of them < 10, else + 2 pixels
+	// it make the OCR recognize text easier
+	//IncreaseRectToBoxes(atsOtherBoxes, atsLines);
+
+	AddRectToOriginalImage(strImagePath, atsOtherBoxes, atsLines);
+	WriteDataToTxtFile(strTestOBPath, strTestLinePath, atsOtherBoxes, atsLines);
+}
+
+void TestShowLineBoxOnImage()
+{
+	vector<tsLineBox> atsLines;
+	vector<tsOtherBox> atsOtherBoxes;
+	string strInImPath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250.jpg";
+	string strOutImPath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-outputline.jpg";
+	string strTestLinePath = "E:\\Code\\OCR-Five-Git\\Root\\Test\\img250-OtherBoxes.txt";
+	int nID = 58;
+	
+	//ReadLinesDataFile(strTestLinePath, atsLines);
+	ReadOtherBoxesDataFile(strTestLinePath, atsOtherBoxes);
+
+	// get need Line
+	vector<tsOtherBox> atsTmp;
+	size_t nSize = atsOtherBoxes.size();
+	for (size_t nI = 0; nI < nSize; nI++)
+	{
+		if (atsOtherBoxes[nI].nID == nID)
+		{
+			atsTmp.push_back(atsOtherBoxes[nI]);
+			break;
+		}
+	}
+	
+	AddRectToOriginalImage(strInImPath, strOutImPath, atsTmp, atsLines);
+	atsTmp.clear();
+	atsLines.clear();
 }
 
 void CutDownOtherBoxesByX(vector<tsOtherBox> &atsOtherBoxes, int start, int max)
