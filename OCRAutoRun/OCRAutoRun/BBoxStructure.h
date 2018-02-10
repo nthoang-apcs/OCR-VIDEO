@@ -54,14 +54,15 @@ typedef struct sRect
 	{
 		return (nWidth*nHeight);
 	}
+
 	// more height intersect than width
 	// true: 2 rect are intersecting each other horizontally
 	// false: other case (vertically or even not intersect)
-	bool IsTwoRectIntersectHorizontally(tsRect tsOther)
+	bool IsTwoRectIntersectHorizontally(sRect tsOther)
 	{
 		if (nX < tsOther.nX)
 		{
-			if (ny < tsOther.nY)
+			if (nY < tsOther.nY)
 			{
 				// check if 2 rect are at least intersected
 				if ((tsOther.nX < (nX + nWidth)) && (tsOther.nY < (nY + nHeight)))
@@ -147,11 +148,11 @@ typedef struct sRect
 		}
 		return false;
 	}
-	bool IsTwoRectIntersectVertically(tsRect tsOther)
+	bool IsTwoRectIntersectVertically(sRect tsOther)
 	{
 		if (nX < tsOther.nX)
 		{
-			if (ny < tsOther.nY)
+			if (nY < tsOther.nY)
 			{
 				// check if 2 rect are at least intersected
 				if ((tsOther.nX < (nX + nWidth)) && (tsOther.nY < (nY + nHeight)))
