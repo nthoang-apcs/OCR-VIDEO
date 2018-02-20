@@ -283,7 +283,7 @@ string GetTmpCheckVowelFolderPath(string strInput)
 	{
 		return strResult;
 	}
-	char* aTmp = new char[nPos + 15];
+	char* aTmp = new char[nPos + 16];
 	for (int nI = 0; nI <= nPos; nI++)
 	{
 		aTmp[nI] = strInput[nI];
@@ -291,18 +291,19 @@ string GetTmpCheckVowelFolderPath(string strInput)
 	// add TmpRect
 	aTmp[nPos + 1] = 'T';
 	aTmp[nPos + 2] = 'm';
-	aTmp[nPos + 3] = 'C';
-	aTmp[nPos + 4] = 'h';
-	aTmp[nPos + 5] = 'e';
-	aTmp[nPos + 6] = 'c';
-	aTmp[nPos + 7] = 'k';
-	aTmp[nPos + 8] = 'V';
-	aTmp[nPos + 9] = 'o';
-	aTmp[nPos + 10] = 'w';
-	aTmp[nPos + 11] = 'e';
-	aTmp[nPos + 12] = 'l';
-	aTmp[nPos + 13] = '\\';
-	aTmp[nPos + 14] = 0;
+	aTmp[nPos + 3] = 'p';
+	aTmp[nPos + 4] = 'C';
+	aTmp[nPos + 5] = 'h';
+	aTmp[nPos + 6] = 'e';
+	aTmp[nPos + 7] = 'c';
+	aTmp[nPos + 8] = 'k';
+	aTmp[nPos + 9] = 'V';
+	aTmp[nPos + 10] = 'o';
+	aTmp[nPos + 11] = 'w';
+	aTmp[nPos + 12] = 'e';
+	aTmp[nPos + 13] = 'l';
+	aTmp[nPos + 14] = '\\';
+	aTmp[nPos + 15] = 0;
 	strResult = string(aTmp);
 	delete[] aTmp;
 	return strResult;
@@ -316,6 +317,7 @@ string GetTmpCheckVowelFolderPath(string strInput)
 bool ResampleFiles(string strTmpImageFolder, vector<string> &ListFilesInput)
 {
 	int nSize = ListFilesInput.size();
+	cout << "list file size: " << ListFilesInput.size() << endl;
 	for(int i = 0; i < nSize; i++)
 	{
 		Image image;
@@ -330,12 +332,10 @@ bool ResampleFiles(string strTmpImageFolder, vector<string> &ListFilesInput)
 			image.resample(Point(300, 300));
 			image.resize(gm);
 			image.write(pathOut);
-			return true;
 		}
 		catch (Exception &error_)
 		{
 			cout << "Caught resample exception: " << error_.what() << endl;
-			return false;
 		}
 	}
 	return false;
@@ -347,7 +347,8 @@ void OCRRun(vector<string> &ListFiles)
 	for(int nI = 0; nI < nSize; nI++)
 	{
 		// prepare string command, vie for vietnamese
-		string strCmd = "tesseract " + ListFiles[nI] + ".tiff " + ListFiles[nI] + " -l vie -psm 7";
+		// or vie
+		string strCmd = "tesseract " + ListFiles[nI] + ".tiff " + ListFiles[nI] + " -l eng -psm 7";
 		// copy to char array
 		int nLen = strCmd.length();
 		char* aTmp = new char[nLen + 1];
@@ -401,7 +402,7 @@ void RemoveDoneImageFile(string strTmpImageFolder, vector<string> &ListFileInput
 void OutputToInputCheckVowel(string strPath, vector<string> &ListFiles)
 {
 	ofstream ofsWrite;
-	ofsWrite.open(strPath + "InputCVowel.txt", std::ofstream::out);
+	ofsWrite.open(strPath, std::ofstream::out);
 	if (ofsWrite.is_open())
 	{
 		int nSize = ListFiles.size();
@@ -414,6 +415,7 @@ void OutputToInputCheckVowel(string strPath, vector<string> &ListFiles)
 	else
 	{
 		cout << "Unable to create and write to file InputCVowel.txt" << endl;
+		cout << strPath << endl;
 	}
 }
 
@@ -494,14 +496,14 @@ void Run(int ac, char** av)
 		// Process
 		OCRRun(ListFileNames);
 		// output to file InputCVowel.txt in TmpCheckVowel folder
-		OutputToInputCheckVowel(GetTmpCheckVowelFolderPath(string(av[0])), ListFileNames);
+		OutputToInputCheckVowel(GetTmpCheckVowelFolderPath(string(av[0])) + "InputCVowel.txt", ListFileNames);
 	}
 	// clear
 	ListFileNames.clear();
 	ListFileTIFF.clear();
 
 	// Read Lines.txt
-	bChecked = ReadFileLines(strPathOtherBoxes, strTmpRectFolder, ListFileNames);
+	bChecked = ReadFileLines(strPathLines, strTmpRectFolder, ListFileNames);
 	if (bChecked == false)
 	{
 		cout << "Failed to read Lines.txt file." << endl;
@@ -515,11 +517,14 @@ void Run(int ac, char** av)
 		// Process
 		OCRRun(ListFileNames);
 		// output to file InputCVowel.txt in TmpCheckVowel folder
-		OutputToInputCheckVowel(GetTmpCheckVowelFolderPath(string(av[0])), ListFileNames);
+		OutputToInputCheckVowel(GetTmpCheckVowelFolderPath(string(av[0])) + "InputCVowel.txt", ListFileNames);
 	}
 	// clear
 	ListFileNames.clear();
 	ListFileTIFF.clear();
+	
+	char cTmp;
+	cin >> cTmp;
 }
 
 void TestBBoxStreamWriting()

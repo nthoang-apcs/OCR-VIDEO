@@ -302,13 +302,15 @@ void CutDownOtherBoxesByY(vector<tsOtherBox> &atsOtherBoxes, int start, int max)
 int main(int argc, char **argv)
 {
 	// program Run 
-	Run(argc, argv, true);
+	Run(argc, argv, false);
 
 	// Test function
+	//TestGetLineIntersectFromImage();
 	//TestShowLineBoxOnImage();
-	char a;
+
+	/*char a;
 	cout << "Press any key to continue ... ";
-	cin >> a;
+	cin >> a;*/
 
 	return 1;
 }
@@ -1141,7 +1143,7 @@ void RemoveSameIDFromAInB(tsLineBox A, vector<tsLineBox> &B)
 		if (B[nI].tsCore.nID == A.tsCore.nID)
 		{
 			bChecked = true;
-			nPosA = nJ;		// all list are sorted in ascending order of ID
+			nPosA = nI;		// all list are sorted in ascending order of ID
 			break;
 		}
 		if (bChecked == false)
@@ -1259,7 +1261,7 @@ void MergeLineBoxesIntoALine(vector<tsLineBox> &atsNeedMerge, vector<tsLineBox> 
 	// add to tsCore information
 	tsNewLine.tsCore.nID = nNextID;
 	tsNewLine.tsCore.InputROIByCreateCoverRect(tsNewLine.atsSubROI);
-	tsLineTmp.tsCore.rACVROI = tsRect(0, 0, 0, 0);
+	tsNewLine.tsCore.rACVROI = tsRect(0, 0, 0, 0);
 	tsNewLine.tsCore.strNameImage = atsNeedMerge[0].tsCore.strNameImage;
 	tsNewLine.tsCore.nNumberVersion = 1;
 	tsNewLine.tsCore.fTimeRunning = 0.0;
@@ -1601,6 +1603,7 @@ void Run(int argc, char **argv, bool bDebug)
 	}
 
 	// start processing
+	vector<int> aNumberBoxes;
 	vector<tsLineBox> atsLines;
 	vector<tsOtherBox> atsOtherBoxes;
 	float fTimeRun = 0.00;
@@ -1619,6 +1622,7 @@ void Run(int argc, char **argv, bool bDebug)
 		// write to file
 		WriteDataToTxtFile(strOBPath, strLinesPath, atsOtherBoxes, atsLines);
 		WriteDataToTxtFile(strOBImagePath, strLinesImagePath, atsOtherBoxes, atsLines);
+		aNumberBoxes.push_back((atsLines.size() + atsOtherBoxes.size()));
 		// make images
 		if (bDebug == false)
 		{
@@ -1630,6 +1634,18 @@ void Run(int argc, char **argv, bool bDebug)
 		atsOtherBoxes.clear();
 	}
 	astrListPaths.clear();
+	// cout average number boxes for each image
+	int nS1 = aNumberBoxes.size();
+	int nTotal = 0;
+	for (int nI = 0; nI < nS1; nI++)
+	{
+		nTotal += aNumberBoxes[nI];
+	}
+	nTotal = (int)((float)nTotal / (float)nS1);
+	cout << "Average number boxes for each image of set 250 images is: " << nTotal << endl;
+	char cTmp;
+	cin >> cTmp;
+	aNumberBoxes.clear();
 }
 
 void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &atsLines, 
@@ -1678,6 +1694,7 @@ void ProcessOneImage(string strInput, float &fTimeRunning, vector<tsLineBox> &at
 	// debug mode
 	if (bDebug == true)
 	{
+		cout << "atsLines size: " << atsLines.size() << " ; atsOtherBoxes size: " << atsOtherBoxes.size() << endl;
 		// add current rect to the origin image, then write image to folder which has the original image
 		AddRectToOriginalImage(strInput, atsOtherBoxes, atsLines);
 	}
@@ -1773,13 +1790,11 @@ void MergeLineBox(vector<tsOtherBox> &atsOtherBoxes, vector<tsLineBox> &atsLines
 	/*		Re-check 2nd time		*/
 	// merge > 3 otherboxes intersect
 	MergeALotOtherBoxesIntersect(atsOtherBoxes, atsLines);
-	
 	// merge intersect lines and otherbox
-	MergeLinesAndOtherBoxesHorizontally(atsOtherBoxes, atsLines);
-
+	// not finish this function yet
+	//MergeLinesAndOtherBoxesHorizontally(atsOtherBoxes, atsLines);
 	// merge lines intersect
 	MergeLineIntersectHorizontally(atsLines);
-	
 	// sort atsLines by x coordinate
 	SortXCoordinate(atsLines);
 	// re-distribute nID for all atsLines
@@ -1834,6 +1849,7 @@ void MergeALotOtherBoxesIntersect(vector<tsOtherBox> &atsOtherBoxes, vector<tsLi
 			// clear atsTmp
 			atsTmp.clear();
 			nPos--;
+			nSize = atsOtherBoxes.size();
 		}
 		aIndexIntersect.clear();
 		nPos++;
@@ -1877,8 +1893,6 @@ void MergeLinesAndOtherBoxesHorizontally(vector<tsOtherBox> &atsOtherBoxes, vect
 			atsNeedMerge.clear();
 		}
 	}
-
-
 }
 
 void MergeLineIntersectHorizontally(vector<tsLineBox> &atsLines)
@@ -1906,6 +1920,7 @@ void MergeLineIntersectHorizontally(vector<tsLineBox> &atsLines)
 			MergeLineBoxesIntoALine(atsTmp, atsLines);
 			// keep position
 			nPos--;
+			nSize = atsLines.size();
 		}
 		atsTmp.clear();
 		nPos++;
@@ -2073,8 +2088,8 @@ void TestGetLineIntersectFromImage()
 	ConvertFromBBoxesToOtherBoxes(GetFileNameFromPath(strImagePath), arBBoxes, atsOtherBoxes);
 	arBBoxes.clear();
 
-	CutDownOtherBoxesByX(atsOtherBoxes, 100, 0);
-	CutDownOtherBoxesByY(atsOtherBoxes, 0, 70);
+	//CutDownOtherBoxesByX(atsOtherBoxes, 100, 0);
+	//CutDownOtherBoxesByY(atsOtherBoxes, 0, 70);
 
 	MergeLineBox(atsOtherBoxes, atsLines);
 
